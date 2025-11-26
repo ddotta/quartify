@@ -1,4 +1,13 @@
-# quartoify
+<!-- badges: start -->
+![GitHub top
+language](https://img.shields.io/github/languages/top/ddotta/quartoify)
+[![R check
+status](https://github.com/ddotta/quartoify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartoify/actions/workflows/check-release.yaml)
+[![codecov](https://codecov.io/gh/ddotta/quartoify/branch/main/graph/badge.svg?token=25MHI8O62M)](https://app.codecov.io/gh/ddotta/quartoify)
+[![CodeFactor](https://www.codefactor.io/repository/github/ddotta/quartoify/badge)](https://www.codefactor.io/repository/github/ddotta/quartoify)
+<!-- badges: end -->
+
+# :package: `quartoify` <img src="man/figures/hex_quartoify.png" width=110 align="right"/>
 
 ## Description
 
