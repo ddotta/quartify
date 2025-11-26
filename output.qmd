@@ -1,6 +1,6 @@
 ---
-title: "My title"
-author: "Damien Dotta"
+title: "Mon analyse statistique"
+author: "Votre nom"
 format: html
 toc: true
 toc-title: Sommaire
