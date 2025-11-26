@@ -7,7 +7,7 @@ status](https://github.com/ddotta/quartoify/workflows/R-CMD-check/badge.svg)](ht
 [![CodeFactor](https://www.codefactor.io/repository/github/ddotta/quartoify/badge)](https://www.codefactor.io/repository/github/ddotta/quartoify)
 <!-- badges: end -->
 
-# :package: `quartoify` <img src="man/figures/hex_quartoify.png" width=110 align="right"/>
+# :package: `quartoify` <img src="man/figures/hex_quartoify.png" width=90 align="right"/>
 
 ## Description
 

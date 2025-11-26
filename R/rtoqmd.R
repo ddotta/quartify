@@ -62,8 +62,12 @@ rtoqmd <- function(input_file, output_file = NULL,
   while (i <= length(lines)) {
     line <- lines[i]
     
+    # Skip roxygen comments completely
+    if (grepl("^#'", line)) {
+      # Ignore roxygen comments - do nothing
+      
     # Check if line is a header comment (# ## or # ###)
-    if (grepl("^#\\s*#{2,}", line)) {
+    } else if (grepl("^#\\s*#{2,}", line)) {
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{.r}")
@@ -78,8 +82,8 @@ rtoqmd <- function(input_file, output_file = NULL,
       output <- c(output, header)
       output <- c(output, "")
       
-    } else if (grepl("^#", line) && !grepl("^#'", line)) {
-      # Regular comment (not roxygen comment)
+    } else if (grepl("^#", line)) {
+      # Regular comment
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{.r}")
