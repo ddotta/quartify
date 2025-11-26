@@ -9,7 +9,7 @@ The package facilitates the transformation of your R analyses into reproducible 
 ## Features
 
 - **Automatic conversion**: Transforms your R scripts (.R) into Quarto documents (.qmd)
-- **Title management**: Special comments `# ##` and `# ###` become level 2 and 3 markdown headers
+- **Title management**: Special comments `# ##` to `# ######` become level 2 to 6 markdown headers
 - **Comment preservation**: Regular comments are converted into explanatory text
 - **Code organization**: R code is automatically organized into executable blocks
 - **Customizable YAML header**: Ability to define title, author, and output format
@@ -85,7 +85,7 @@ iris |>
 
 ### Conversion rules
 
-- **Titles**: Comments `# ##` and `# ###` become markdown headers
+- **Titles**: Comments `# ##` to `# ######` become markdown headers (levels 2 to 6)
 - **Comments**: Simple comments `#` become explanatory text
 - **Code**: Uncommented code is grouped into Quarto code blocks
 - **Consecutive blocks**: Consecutive code lines are grouped in the same block
