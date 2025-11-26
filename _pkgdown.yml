@@ -1,0 +1,46 @@
+url: https://ddotta.github.io/quartoify/
+template:
+  bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    primary: "#0054AD"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+
+home:
+  title: quartoify
+  description: Convert R scripts to Quarto markdown documents
+
+navbar:
+  structure:
+    left:  [home, reference, articles, news]
+    right: [search, github]
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Articles
+      menu:
+      - text: Getting Started
+        href: articles/getting-started.html
+    news:
+      text: Changelog
+      href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/ddotta/quartoify
+      aria-label: GitHub
+
+reference:
+  - title: Main function
+    desc: Convert R scripts to Quarto markdown
+    contents:
+    - rtoqmd
+
+authors:
+  Damien Dotta:
+    href: https://github.com/ddotta
