@@ -13,7 +13,8 @@ RoxygenNote: 7.2.3
 URL: https://ddotta.github.io/quartify/, https://github.com/ddotta/quartify
 BugReports: https://github.com/ddotta/quartify/issues
 Imports:
-    rstudioapi
+    rstudioapi,
+    cli
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

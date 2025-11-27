@@ -20,6 +20,7 @@
 #' @param open_html Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)
 #' @return Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
 #' @importFrom utils browseURL
+#' @importFrom cli cli_alert_success cli_alert_info cli_alert_danger cli_alert_warning cli_progress_step cli_progress_done
 #' @export
 #' @examples
 #' \dontrun{
@@ -41,7 +42,8 @@ rtoqmd <- function(input_file, output_file = NULL,
   
   # Check if input file exists
   if (!file.exists(input_file)) {
-    stop("Input file does not exist: ", input_file)
+    cli::cli_alert_danger("Input file does not exist: {.file {input_file}}")
+    stop("Input file does not exist: ", input_file, call. = FALSE)
   }
   
   # Set output file if not provided
@@ -178,11 +180,11 @@ rtoqmd <- function(input_file, output_file = NULL,
   # Write output file
   writeLines(output, output_file)
   
-  message("Quarto markdown file created: ", output_file)
+  cli::cli_alert_success("Quarto markdown file created: {.file {output_file}}")
   
   # Render to HTML if requested
   if (render) {
-    message("Rendering Quarto document to HTML...")
+    cli::cli_progress_step("Rendering Quarto document to HTML")
     
     # Check if quarto is available
     quarto_available <- tryCatch({
@@ -193,8 +195,8 @@ rtoqmd <- function(input_file, output_file = NULL,
     })
     
     if (!quarto_available) {
-      warning("Quarto is not installed or not available in PATH. Skipping rendering.\n",
-              "Install Quarto from https://quarto.org/docs/get-started/")
+      cli::cli_alert_warning("Quarto is not installed or not available in PATH")
+      cli::cli_alert_info("Install Quarto from {.url https://quarto.org/docs/get-started/}")
       return(invisible(NULL))
     }
     
@@ -205,16 +207,17 @@ rtoqmd <- function(input_file, output_file = NULL,
       system2("quarto", args = c("render", shQuote(output_file)), 
               stdout = TRUE, stderr = TRUE)
       
-      message("HTML file created: ", html_file)
+      cli::cli_progress_done()
+      cli::cli_alert_success("HTML file created: {.file {html_file}}")
       
       # Open HTML file if requested
       if (open_html && file.exists(html_file)) {
-        message("Opening HTML file in browser...")
+        cli::cli_alert_info("Opening HTML file in browser")
         browseURL(html_file)
       }
       
     }, error = function(e) {
-      warning("Failed to render Quarto document: ", e$message)
+      cli::cli_alert_danger("Failed to render Quarto document: {e$message}")
     })
   }
   
