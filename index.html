@@ -59,7 +59,7 @@
 <div class="page-header"><h1 id="package-quartify-">
 <span class="emoji" data-emoji="package">📦</span> <code>quartify</code> <img src="reference/figures/hex_quartify.png" width="90" align="right"><a class="anchor" aria-label="anchor" href="#package-quartify-"></a>
 </h1></div>
-<p>🇫🇷 <a href="README_FR.html">Version française</a></p>
+<p>🇫🇷 <a href="https://ddotta.github.io/quartify/README_FR.html">Version française</a></p>
 <div class="section level2">
 <h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
 </h2>
@@ -124,8 +124,6 @@
 <ul>
 <li>
 <strong>EN/FR</strong> language selector buttons at the top right</li>
-<li>
-<strong>quartify hex logo</strong> centered at the top</li>
 <li>Form fields to specify:
 <ul>
 <li>Output file path</li>
@@ -161,8 +159,9 @@
 <span>       title <span class="op">=</span> <span class="st">"My statistical analysis"</span>,</span>
 <span>       author <span class="op">=</span> <span class="st">"Your name"</span>,</span>
 <span>       format <span class="op">=</span> <span class="st">"html"</span>,</span>
-<span>       render <span class="op">=</span> <span class="cn">TRUE</span>,      <span class="co"># Render to HTML (default)</span></span>
-<span>       open_html <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>   <span class="co"># Open HTML in browser (default)</span></span></code></pre></div>
+<span>       render <span class="op">=</span> <span class="cn">TRUE</span>,       <span class="co"># Render to HTML (default)</span></span>
+<span>       open_html <span class="op">=</span> <span class="cn">FALSE</span>,   <span class="co"># Open HTML in browser (default: FALSE)</span></span>
+<span>       code_fold <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>   <span class="co"># Fold code blocks (default: FALSE)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="using-the-example-file">Using the example file<a class="anchor" aria-label="anchor" href="#using-the-example-file"></a>
@@ -254,9 +253,9 @@
 <li>Always include a space after <code>#</code> for comments</li>
 <li>Section headers MUST have at least 4 trailing symbols</li>
 <li>
-<strong>Standalone comments</strong> (at line start) → become text outside code blocks</li>
+<strong>Standalone comments with <code>#</code> at line start</strong> → become text outside code blocks</li>
 <li>
-<strong>Inline comments</strong> (within code) → stay inside code blocks</li>
+<strong>Inline comments within code</strong> → stay inside code blocks</li>
 <li>Consecutive code lines are grouped in the same block</li>
 <li>Empty lines between blocks are ignored</li>
 </ul>
@@ -318,6 +317,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/ddotta/quartify/actions/workflows/check-release.yaml" class="external-link"><img src="https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg" alt="R check status"></a></li>
+<li><a href="https://app.codecov.io/gh/ddotta/quartify" class="external-link"><img src="https://codecov.io/gh/ddotta/quartify/branch/main/graph/badge.svg?token=25MHI8O62M" alt="codecov"></a></li>
 </ul>
 </div>
 

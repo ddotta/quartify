@@ -1,6 +1,6 @@
 # 📦 `quartify` ![](reference/figures/hex_quartify.png)
 
-🇫🇷 [Version française](https://ddotta.github.io/quartify/README_FR.md)
+🇫🇷 [Version française](https://ddotta.github.io/quartify/README_FR.html)
 
 ## Description
 
@@ -67,7 +67,6 @@ interactive Shiny interface:
 2.  Go to **Addins** menu → **Convert R Script to Quarto**
 3.  A dialog window will appear (700x800px) with:
     - **EN/FR** language selector buttons at the top right
-    - **quartify hex logo** centered at the top
     - Form fields to specify:
       - Output file path
       - Document title and author name
@@ -98,8 +97,9 @@ rtoqmd("my_script.R",
        title = "My statistical analysis",
        author = "Your name",
        format = "html",
-       render = TRUE,      # Render to HTML (default)
-       open_html = TRUE)   # Open HTML in browser (default)
+       render = TRUE,       # Render to HTML (default)
+       open_html = FALSE,   # Open HTML in browser (default: FALSE)
+       code_fold = FALSE)   # Fold code blocks (default: FALSE)
 ```
 
 ### Using the example file
@@ -201,9 +201,9 @@ iris %>%
 
 - Always include a space after `#` for comments
 - Section headers MUST have at least 4 trailing symbols
-- **Standalone comments** (at line start) → become text outside code
-  blocks
-- **Inline comments** (within code) → stay inside code blocks
+- **Standalone comments with `#` at line start** → become text outside
+  code blocks
+- **Inline comments within code** → stay inside code blocks
 - Consecutive code lines are grouped in the same block
 - Empty lines between blocks are ignored
 

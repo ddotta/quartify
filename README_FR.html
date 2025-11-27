@@ -39,7 +39,7 @@
     </div>
 
 
-<p><a href="https://github.com/ddotta/quartify/actions/workflows/check-release.yaml" class="external-link"><img src="https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg" alt="Statut R check"></a> <!-- badges: end --></p>
+<p><a href="https://github.com/ddotta/quartify/actions/workflows/check-release.yaml" class="external-link"><img src="https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg" alt="Statut R check"></a> <a href="https://app.codecov.io/gh/ddotta/quartify" class="external-link"><img src="https://codecov.io/gh/ddotta/quartify/branch/main/graph/badge.svg?token=25MHI8O62M" alt="codecov"></a> <!-- badges: end --></p>
 <div id="package-quartify-" class="section level1">
 
 <p>🇬🇧 <a href="https://ddotta.github.io/quartify/index.html">English version</a></p>
@@ -94,8 +94,6 @@
 </li>
 <li>Une fenêtre de dialogue apparaîtra (700x800px) avec :
 <ul><li>Boutons de sélection de langue <strong>EN/FR</strong> en haut à droite</li>
-<li>
-<strong>Logo hex quartify</strong> centré en haut</li>
 <li>Formulaire pour spécifier :
 <ul><li>Le chemin du fichier de sortie</li>
 <li>Le titre du document et le nom de l’auteur</li>
@@ -176,12 +174,12 @@
 <h4 id="id_1-sections-de-code-en-têtes">1. Sections de code (En-têtes)<a class="anchor" aria-label="anchor" href="#id_1-sections-de-code-en-t%C3%AAtes"></a></h4>
 <p>Les sections de code RStudio deviennent des en-têtes markdown. <strong>Critique</strong> : les symboles de fin doivent contenir au moins 4 caractères :</p>
 <ul><li>
-<code>## Titre ####</code> → En-tête de niveau 2 (au moins 4 <code>#</code> à la fin)</li>
+<code>## Titre ----</code> → En-tête de niveau 2 (au moins 4 <code>#</code>, <code>=</code> ou <code>-</code> à la fin)</li>
 <li>
-<code>### Titre ====</code> → En-tête de niveau 3 (au moins 4 <code>=</code> à la fin)</li>
+<code>### Titre ----</code> → En-tête de niveau 3 (au moins 4 <code>#</code>, <code>=</code> ou <code>-</code> à la fin)</li>
 <li>
-<code>#### Titre ----</code> → En-tête de niveau 4 (au moins 4 <code>-</code> à la fin)</li>
-</ul><p><strong>Note :</strong> Vous pouvez utiliser <code>#</code>, <code>=</code>, ou <code>-</code> indifféremment comme symboles de fin (ex : <code>## Titre ====</code> ou <code>### Titre ----</code> fonctionneront), mais il est recommandé de suivre la convention RStudio pour la cohérence.</p>
+<code>#### Titre ----</code> → En-tête de niveau 4 (au moins 4 <code>#</code>, <code>=</code> ou <code>-</code> à la fin)</li>
+</ul><p><strong>Note :</strong> Vous pouvez utiliser <code>#</code>, <code>=</code>, ou <code>-</code> indifféremment comme symboles de fin (ex : <code>## Titre ====</code> ou <code>### Titre ----</code> fonctionneront).</p>
 </div>
 <div class="section level4">
 <h4 id="id_2-commentaires-réguliers-texte">2. Commentaires réguliers (Texte)<a class="anchor" aria-label="anchor" href="#id_2-commentaires-r%C3%A9guliers-texte"></a></h4>
@@ -208,9 +206,9 @@
 <ul><li>Toujours inclure un espace après <code>#</code> pour les commentaires</li>
 <li>Les en-têtes de section DOIVENT avoir au moins 4 symboles de fin</li>
 <li>
-<strong>Commentaires autonomes</strong> (en début de ligne) → deviennent du texte en dehors des blocs de code</li>
+<strong>Les commentaires avec un <code>#</code> en début de ligne</strong> → deviennent du texte en dehors des blocs de code</li>
 <li>
-<strong>Commentaires en ligne</strong> (dans le code) → restent à l’intérieur des blocs de code</li>
+<strong>Les commentaires dans le code</strong> → restent à l’intérieur des blocs de code</li>
 <li>Les lignes de code consécutives sont regroupées dans le même bloc</li>
 <li>Les lignes vides entre les blocs sont ignorées</li>
 </ul><p>Ceci suit la <a href="https://docs.posit.co/ide/user/ide/guide/code/code-sections.html" class="external-link">convention des sections de code RStudio</a> qui fournit une indentation appropriée dans la navigation du plan du document RStudio.</p>

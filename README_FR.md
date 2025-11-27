@@ -2,6 +2,7 @@
 
 [![Statut R
 check](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartify/actions/workflows/check-release.yaml)
+[![codecov](https://codecov.io/gh/ddotta/quartify/branch/main/graph/badge.svg?token=25MHI8O62M)](https://app.codecov.io/gh/ddotta/quartify)
 
 🇬🇧 [English version](https://ddotta.github.io/quartify/index.html)
 
@@ -73,7 +74,6 @@ avec son interface Shiny interactive :
 2.  Allez dans le menu **Addins** → **Convert R Script to Quarto**
 3.  Une fenêtre de dialogue apparaîtra (700x800px) avec :
     - Boutons de sélection de langue **EN/FR** en haut à droite
-    - **Logo hex quartify** centré en haut
     - Formulaire pour spécifier :
       - Le chemin du fichier de sortie
       - Le titre du document et le nom de l’auteur
@@ -166,14 +166,16 @@ Les sections de code RStudio deviennent des en-têtes markdown.
 **Critique** : les symboles de fin doivent contenir au moins 4
 caractères :
 
-- `## Titre ####` → En-tête de niveau 2 (au moins 4 `#` à la fin)
-- `### Titre ====` → En-tête de niveau 3 (au moins 4 `=` à la fin)
-- `#### Titre ----` → En-tête de niveau 4 (au moins 4 `-` à la fin)
+- `## Titre ----` → En-tête de niveau 2 (au moins 4 `#`, `=` ou `-` à la
+  fin)
+- `### Titre ----` → En-tête de niveau 3 (au moins 4 `#`, `=` ou `-` à
+  la fin)
+- `#### Titre ----` → En-tête de niveau 4 (au moins 4 `#`, `=` ou `-` à
+  la fin)
 
 **Note :** Vous pouvez utiliser `#`, `=`, ou `-` indifféremment comme
 symboles de fin (ex : `## Titre ====` ou `### Titre ----`
-fonctionneront), mais il est recommandé de suivre la convention RStudio
-pour la cohérence.
+fonctionneront).
 
 #### 2. Commentaires réguliers (Texte)
 
@@ -213,10 +215,10 @@ iris %>%
 
 - Toujours inclure un espace après `#` pour les commentaires
 - Les en-têtes de section DOIVENT avoir au moins 4 symboles de fin
-- **Commentaires autonomes** (en début de ligne) → deviennent du texte
-  en dehors des blocs de code
-- **Commentaires en ligne** (dans le code) → restent à l’intérieur des
-  blocs de code
+- **Les commentaires avec un `#` en début de ligne** → deviennent du
+  texte en dehors des blocs de code
+- **Les commentaires dans le code** → restent à l’intérieur des blocs de
+  code
 - Les lignes de code consécutives sont regroupées dans le même bloc
 - Les lignes vides entre les blocs sont ignorées
 
