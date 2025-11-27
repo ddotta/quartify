@@ -68,6 +68,14 @@ rtoqmd_addin <- function() {
     author <- Sys.getenv("USER")
   }
   
+  # Ask if user wants to render to HTML
+  render_html <- rstudioapi::showQuestion(
+    title = "Render to HTML",
+    message = "Do you want to render the Quarto document to HTML after conversion?",
+    ok = "Yes",
+    cancel = "No"
+  )
+  
   # Convert the file
   tryCatch({
     rtoqmd(
@@ -75,13 +83,24 @@ rtoqmd_addin <- function() {
       output_file = output_path,
       title = title,
       author = author,
-      format = "html"
+      format = "html",
+      render = render_html,
+      open_html = render_html
     )
     
-    # Ask if user wants to open the generated file
+    # Determine success message
+    if (render_html) {
+      success_msg <- paste0("Quarto document created and rendered successfully:\n",
+                           output_path, "\n",
+                           sub("\\.qmd$", ".html", output_path))
+    } else {
+      success_msg <- paste0("Quarto document created successfully:\n", output_path)
+    }
+    
+    # Ask if user wants to open the generated QMD file
     open_file <- rstudioapi::showQuestion(
       title = "Conversion Complete",
-      message = paste0("Quarto document created successfully:\n", output_path, "\n\nWould you like to open it?"),
+      message = paste0(success_msg, "\n\nWould you like to open the .qmd file in editor?"),
       ok = "Yes",
       cancel = "No"
     )

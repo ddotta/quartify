@@ -14,18 +14,27 @@
 #' @param title Title for the Quarto document (default: "My title")
 #' @param author Author name (default: "Damien Dotta")
 #' @param format Output format (default: "html")
-#' @return NULL (creates output file)
+#' @param render Logical, whether to render the .qmd file to HTML after creation (default: TRUE)
+#' @param open_html Logical, whether to open the HTML file in browser after rendering (default: TRUE, only used if render = TRUE)
+#' @return NULL (creates output file and optionally renders it)
 #' @export
 #' @examples
 #' \dontrun{
 #' # Use example file included in package
 #' example_file <- system.file("examples", "example.R", package = "quartify")
+#' 
+#' # Convert and render to HTML
 #' rtoqmd(example_file, "output.qmd")
+#' 
+#' # Convert only, without rendering
+#' rtoqmd(example_file, "output.qmd", render = FALSE)
 #' }
 rtoqmd <- function(input_file, output_file = NULL, 
                    title = "My title", 
                    author = "Damien Dotta",
-                   format = "html") {
+                   format = "html",
+                   render = TRUE,
+                   open_html = TRUE) {
   
   # Check if input file exists
   if (!file.exists(input_file)) {
@@ -162,5 +171,44 @@ rtoqmd <- function(input_file, output_file = NULL,
   writeLines(output, output_file)
   
   message("Quarto markdown file created: ", output_file)
+  
+  # Render to HTML if requested
+  if (render) {
+    message("Rendering Quarto document to HTML...")
+    
+    # Check if quarto is available
+    quarto_available <- tryCatch({
+      system("quarto --version", intern = TRUE, ignore.stderr = TRUE)
+      TRUE
+    }, error = function(e) {
+      FALSE
+    })
+    
+    if (!quarto_available) {
+      warning("Quarto is not installed or not available in PATH. Skipping rendering.\n",
+              "Install Quarto from https://quarto.org/docs/get-started/")
+      return(invisible(NULL))
+    }
+    
+    # Render the document
+    html_file <- sub("\\.qmd$", ".html", output_file)
+    
+    tryCatch({
+      system2("quarto", args = c("render", shQuote(output_file)), 
+              stdout = TRUE, stderr = TRUE)
+      
+      message("HTML file created: ", html_file)
+      
+      # Open HTML file if requested
+      if (open_html && file.exists(html_file)) {
+        message("Opening HTML file in browser...")
+        browseURL(html_file)
+      }
+      
+    }, error = function(e) {
+      warning("Failed to render Quarto document: ", e$message)
+    })
+  }
+  
   invisible(NULL)
 }
