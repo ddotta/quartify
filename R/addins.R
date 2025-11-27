@@ -146,20 +146,41 @@ rtoqmd_addin <- function() {
               value = ifelse(Sys.getenv("USER") != "", Sys.getenv("USER"), "Your name"),
               width = "100%"
             ),
-            shiny::checkboxInput(
-              "render",
-              shiny::textOutput("label_render"),
-              value = TRUE
+            shiny::div(
+              style = "width: 100%;",
+              shiny::checkboxInput(
+                "render",
+                shiny::textOutput("label_render"),
+                value = TRUE,
+                width = "100%"
+              )
             ),
-            shiny::checkboxInput(
-              "open_html",
-              shiny::textOutput("label_open_html"),
-              value = FALSE
+            shiny::div(
+              style = "width: 100%;",
+              shiny::checkboxInput(
+                "open_html",
+                shiny::textOutput("label_open_html"),
+                value = FALSE,
+                width = "100%"
+              )
             ),
-            shiny::checkboxInput(
-              "open_qmd",
-              shiny::textOutput("label_open_qmd"),
-              value = TRUE
+            shiny::div(
+              style = "width: 100%;",
+              shiny::checkboxInput(
+                "open_qmd",
+                shiny::textOutput("label_open_qmd"),
+                value = TRUE,
+                width = "100%"
+              )
+            ),
+            shiny::div(
+              style = "width: 100%;",
+              shiny::checkboxInput(
+                "code_fold",
+                shiny::textOutput("label_code_fold"),
+                value = FALSE,
+                width = "100%"
+              )
             )
           )
         )
@@ -191,7 +212,8 @@ rtoqmd_addin <- function() {
         author = "Author name:",
         render = "Render to HTML after conversion",
         open_html = "Open HTML file in browser (if rendered)",
-        open_qmd = "Open .qmd file in editor after conversion"
+        open_qmd = "Open .qmd file in editor after conversion",
+        code_fold = "Fold code blocks by default"
       ),
       fr = list(
         input_file = "Fichier d'entrée :",
@@ -200,7 +222,8 @@ rtoqmd_addin <- function() {
         author = "Nom de l'auteur :",
         render = "Générer le HTML après conversion",
         open_html = "Ouvrir le fichier HTML dans le navigateur (si généré)",
-        open_qmd = "Ouvrir le fichier .qmd dans l'éditeur après conversion"
+        open_qmd = "Ouvrir le fichier .qmd dans l'éditeur après conversion",
+        code_fold = "Replier les blocs de code par défaut"
       )
     )
     
@@ -212,6 +235,7 @@ rtoqmd_addin <- function() {
     output$label_render <- shiny::renderText({ translations[[lang()]]$render })
     output$label_open_html <- shiny::renderText({ translations[[lang()]]$open_html })
     output$label_open_qmd <- shiny::renderText({ translations[[lang()]]$open_qmd })
+    output$label_code_fold <- shiny::renderText({ translations[[lang()]]$code_fold })
     
     # When done button is pressed
     shiny::observeEvent(input$done, {
@@ -226,6 +250,7 @@ rtoqmd_addin <- function() {
       render <- input$render
       open_html <- input$open_html
       open_qmd <- input$open_qmd
+      code_fold <- input$code_fold
       
       # Convert the file
       tryCatch({
@@ -236,7 +261,8 @@ rtoqmd_addin <- function() {
           author = author,
           format = "html",
           render = render,
-          open_html = open_html && render
+          open_html = open_html && render,
+          code_fold = code_fold
         )
         
         # Open QMD file if requested

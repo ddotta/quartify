@@ -11,7 +11,8 @@ rtoqmd(
   author = "Your name",
   format = "html",
   render = TRUE,
-  open_html = FALSE
+  open_html = FALSE,
+  code_fold = FALSE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ rtoqmd(
 \item{render}{Logical, whether to render the .qmd file to HTML after creation (default: TRUE)}
 
 \item{open_html}{Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)}
+
+\item{code_fold}{Logical, whether to fold code blocks in HTML output (default: FALSE)}
 }
 \value{
 Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.

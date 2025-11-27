@@ -18,6 +18,7 @@
 #' @param format Output format (default: "html")
 #' @param render Logical, whether to render the .qmd file to HTML after creation (default: TRUE)
 #' @param open_html Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)
+#' @param code_fold Logical, whether to fold code blocks in HTML output (default: FALSE)
 #' @return Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
 #' @importFrom utils browseURL
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_danger cli_alert_warning
@@ -38,7 +39,8 @@ rtoqmd <- function(input_file, output_file = NULL,
                    author = "Your name",
                    format = "html",
                    render = TRUE,
-                   open_html = FALSE) {
+                   open_html = FALSE,
+                   code_fold = FALSE) {
   
   # Check if input file exists
   if (!file.exists(input_file)) {
@@ -64,6 +66,7 @@ rtoqmd <- function(input_file, output_file = NULL,
   output <- c(output, paste0('format:'))
   output <- c(output, paste0('  ', format, ':'))
   output <- c(output, "    embed-resources: true")
+  output <- c(output, paste0("    code-fold: ", tolower(as.character(code_fold))))
   output <- c(output, "toc: true")
   output <- c(output, "toc-title: Sommaire")
   output <- c(output, "toc-depth: 4")
