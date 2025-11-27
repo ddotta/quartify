@@ -149,10 +149,10 @@ iris %>%
   select(Species)
 ```
 
-Ceci sera rendu comme :
+Cela sera rendu comme :
 
 ````markdown
-```{r}
+```{r, eval=FALSE}
 #| eval: false
 #| echo: true
 iris %>% 
@@ -271,7 +271,7 @@ output:
   output-file: analyse_iris.html
 ---
 
-```{r}
+```{r, eval=FALSE}
 library(dplyr)
 ```
 

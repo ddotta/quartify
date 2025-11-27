@@ -152,7 +152,7 @@ iris %>%
 This will render as:
 
 ````markdown
-```{r}
+```{r, eval=FALSE}
 #| eval: false
 #| echo: true
 iris %>% 
@@ -271,7 +271,7 @@ output:
   output-file: iris_analysis.html
 ---
 
-```{r}
+```{r, eval=FALSE}
 library(dplyr)
 ```
 
