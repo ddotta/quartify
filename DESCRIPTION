@@ -1,11 +1,11 @@
 Package: quartify
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Convert R Scripts to Quarto Markdown Documents
 Version: 0.1.0
-Author: Your Name
-Maintainer: Your Name <your.email@example.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Damien Dotta
+Maintainer: Damien Dotta <damien.dotta@live.fr>
+Description: Automatically converts R scripts into Quarto markdown documents (.qmd).
+    Transforms code and comments into structured Quarto format with proper YAML headers and code chunks.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
