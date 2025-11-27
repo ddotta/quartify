@@ -1,6 +1,6 @@
 # 📦 `quartify` ![](reference/figures/hex_quartify.png)
 
-[Version française](https://ddotta.github.io/quartify/README_FR.md)
+🇫🇷 [Version française](https://ddotta.github.io/quartify/README_FR.md)
 
 ## Description
 

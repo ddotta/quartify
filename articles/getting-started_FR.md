@@ -1,6 +1,6 @@
 # Démarrage avec quartify
 
-**[English version
+🇬🇧 **[English version
 available](https://ddotta.github.io/quartify/articles/getting-started.md)**
 / **Version anglaise disponible**
 

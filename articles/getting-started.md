@@ -1,6 +1,6 @@
 # Getting Started with quartify
 
-**[Version française
+🇫🇷 **[Version française
 disponible](https://ddotta.github.io/quartify/articles/getting-started_FR.md)**
 / **French version available**
 

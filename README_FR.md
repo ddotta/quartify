@@ -1,11 +1,9 @@
 # 📦 quartify
 
-![Langage principal
-GitHub](https://img.shields.io/github/languages/top/ddotta/quartify)[![Statut
-R
+[![Statut R
 check](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartify/actions/workflows/check-release.yaml)
 
-[English version](https://ddotta.github.io/quartify/README.md)
+🇬🇧 [English version](https://ddotta.github.io/quartify/README.md)
 
 ## Description
 
