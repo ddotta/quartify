@@ -11,7 +11,7 @@ rtoqmd(
   author = "Damien Dotta",
   format = "html",
   render = TRUE,
-  open_html = TRUE
+  open_html = FALSE
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ rtoqmd(
 
 \item{render}{Logical, whether to render the .qmd file to HTML after creation (default: TRUE)}
 
-\item{open_html}{Logical, whether to open the HTML file in browser after rendering (default: TRUE, only used if render = TRUE)}
+\item{open_html}{Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)}
 }
 \value{
 Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
@@ -39,8 +39,8 @@ It recognizes RStudio code sections with different levels:
 - ### Title ==== creates a level 3 header
 - #### Title ---- creates a level 4 header
 Regular comments are converted to plain text.
-Code blocks are wrapped in non-executable code chunks (\code{\{.r\}} syntax)
-for static documentation purposes.
+Code blocks are wrapped in code chunks with \code{#| eval: false} and \code{#| echo: true}
+options for static documentation purposes.
 }
 \examples{
 \dontrun{

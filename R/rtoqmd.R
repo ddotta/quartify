@@ -6,8 +6,8 @@
 #' - ### Title ==== creates a level 3 header
 #' - #### Title ---- creates a level 4 header
 #' Regular comments are converted to plain text.
-#' Code blocks are wrapped in non-executable code chunks (\code{\{.r\}} syntax)
-#' for static documentation purposes.
+#' Code blocks are wrapped in code chunks with \code{#| eval: false} and \code{#| echo: true}
+#' options for static documentation purposes.
 #'
 #' @param input_file Path to the input R script file
 #' @param output_file Path to the output Quarto markdown file (optional, defaults to same name with .qmd extension)
@@ -15,7 +15,7 @@
 #' @param author Author name (default: "Damien Dotta")
 #' @param format Output format (default: "html")
 #' @param render Logical, whether to render the .qmd file to HTML after creation (default: TRUE)
-#' @param open_html Logical, whether to open the HTML file in browser after rendering (default: TRUE, only used if render = TRUE)
+#' @param open_html Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)
 #' @return Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
 #' @importFrom utils browseURL
 #' @export
@@ -35,7 +35,7 @@ rtoqmd <- function(input_file, output_file = NULL,
                    author = "Damien Dotta",
                    format = "html",
                    render = TRUE,
-                   open_html = TRUE) {
+                   open_html = FALSE) {
   
   # Check if input file exists
   if (!file.exists(input_file)) {
@@ -85,7 +85,9 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Level 2: ## Title ####
       # Flush any accumulated code
       if (length(code_block) > 0) {
-        output <- c(output, "```{.r}")
+        output <- c(output, "```{r}")
+        output <- c(output, "#| eval: false")
+        output <- c(output, "#| echo: true")
         output <- c(output, code_block)
         output <- c(output, "```")
         output <- c(output, "")
@@ -101,7 +103,9 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Level 3: ### Title ====
       # Flush any accumulated code
       if (length(code_block) > 0) {
-        output <- c(output, "```{.r}")
+        output <- c(output, "```{r}")
+        output <- c(output, "#| eval: false")
+        output <- c(output, "#| echo: true")
         output <- c(output, code_block)
         output <- c(output, "```")
         output <- c(output, "")
@@ -117,7 +121,9 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Level 4: #### Title ----
       # Flush any accumulated code
       if (length(code_block) > 0) {
-        output <- c(output, "```{.r}")
+        output <- c(output, "```{r}")
+        output <- c(output, "#| eval: false")
+        output <- c(output, "#| echo: true")
         output <- c(output, code_block)
         output <- c(output, "```")
         output <- c(output, "")
@@ -133,7 +139,9 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Regular comment
       # Flush any accumulated code
       if (length(code_block) > 0) {
-        output <- c(output, "```{.r}")
+        output <- c(output, "```{r}")
+        output <- c(output, "#| eval: false")
+        output <- c(output, "#| echo: true")
         output <- c(output, code_block)
         output <- c(output, "```")
         output <- c(output, "")
@@ -163,7 +171,9 @@ rtoqmd <- function(input_file, output_file = NULL,
   
   # Flush any remaining code
   if (length(code_block) > 0) {
-    output <- c(output, "```{.r}")
+    output <- c(output, "```{r}")
+    output <- c(output, "#| eval: false")
+    output <- c(output, "#| echo: true")
     output <- c(output, code_block)
     output <- c(output, "```")
   }

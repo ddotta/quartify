@@ -126,7 +126,9 @@ iris %>%
 This will render as:
 
 ````markdown
-```{.r}
+```{r}
+#| eval: false
+#| echo: true
 iris %>% 
   # Select a column
   select(Species)
@@ -238,7 +240,9 @@ output:
   output-file: iris_analysis.html
 ---
 
-```{.r}
+```{r}
+#| eval: false
+#| echo: true
 library(dplyr)
 ```
 
@@ -250,7 +254,9 @@ Start of statistical processing
 
 Counting the number of observations by species
 
-```{.r}
+```{r}
+#| eval: false
+#| echo: true
 iris |> 
   count(Species)
 ```
@@ -259,7 +265,9 @@ iris |>
 
 Filter the data.frame on Species "setosa"
 
-```{.r}
+```{r}
+#| eval: false
+#| echo: true
 iris |> 
   filter(Species == "setosa")
 ```
@@ -268,7 +276,9 @@ iris |>
 
 Select column Species
 
-```{.r}
+```{r}
+#| eval: false
+#| echo: true
 iris %>% 
   # Select a column
   select(Species)
@@ -283,7 +293,7 @@ Notice how:
 - Code blocks are properly formatted with syntax highlighting
 - The table of contents will show the hierarchical structure
 
-**Important note about code chunks:** The generated code chunks use the `{.r}` syntax, which creates **non-executable** code blocks. This is intentional - `quartify` is designed to create **static documentation** of your R script, not an executable notebook. The code is displayed with syntax highlighting for reading and documentation purposes, but won't be executed when rendering the Quarto document. This approach is ideal for:
+**Important note about code chunks:** The generated code chunks use standard R chunks with the Quarto options `#| eval: false` and `#| echo: true`, which creates **non-executable** code blocks. This is intentional - `quartify` is designed to create **static documentation** of your R script, not an executable notebook. The code is displayed with syntax highlighting for reading and documentation purposes, but won't be executed when rendering the Quarto document. This approach is ideal for:
 
 - Documenting existing scripts without modifying their execution
 - Creating static references of your code

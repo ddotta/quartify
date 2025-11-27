@@ -34,8 +34,10 @@ test_that("rtoqmd converts basic R script to Quarto markdown", {
   # Check comment conversion
   expect_true(any(grepl("This is a comment", output)))
   
-  # Check code block
-  expect_true(any(grepl("```\\{\\.r\\}", output)))
+  # Check code block with Quarto options
+  expect_true(any(grepl("```\\{r\\}", output)))
+  expect_true(any(grepl("#\\| eval: false", output)))
+  expect_true(any(grepl("#\\| echo: true", output)))
   
   # Cleanup
   unlink(temp_r)
@@ -82,7 +84,7 @@ test_that("rtoqmd groups consecutive code lines", {
   output <- readLines(temp_qmd)
   
   # Find code blocks
-  code_start <- grep("```\\{\\.r\\}", output)
+  code_start <- grep("```\\{r\\}", output)
   code_end <- grep("^```$", output)
   
   # Should have one code block containing all three lines
@@ -156,7 +158,7 @@ test_that("rtoqmd handles empty lines correctly", {
   output <- readLines(temp_qmd)
   
   # Should group code despite empty lines between
-  code_start <- grep("```\\{\\.r\\}", output)
+  code_start <- grep("```\\{r\\}", output)
   expect_equal(length(code_start), 1)
   
   unlink(temp_r)
@@ -177,7 +179,7 @@ test_that("rtoqmd separates code blocks by comments", {
   output <- readLines(temp_qmd)
   
   # Should have two separate code blocks
-  code_start <- grep("```\\{\\.r\\}", output)
+  code_start <- grep("```\\{r\\}", output)
   expect_equal(length(code_start), 2)
   
   unlink(temp_r)
