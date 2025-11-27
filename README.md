@@ -173,79 +173,16 @@ iris %>%
 
 This follows the [RStudio code sections convention](https://docs.posit.co/ide/user/ide/guide/code/code-sections.html) which provides proper indentation in RStudio's document outline navigation.
 
-## Generated Quarto document structure
+## Output and Documentation
 
 The generated .qmd document contains:
-
 - A complete YAML header with table of contents configuration
 - Properly structured headers from RStudio code sections
 - Textual explanations from your regular comments
-- Formatted and executable R code blocks
-
-## Output example
-
-From the example R script shown above, `quartify` generates:
-
-```markdown
----
-title: "My title"
-author: "Damien Dotta"
-format: html
-toc: true
-toc-title: Sommaire
-toc-depth: 4  
-toc-location: left
-output: 
-  html_document:
-  number_sections: TRUE
-  output-file: example.html
----
-
-```{.r}
-library(dplyr)
-```
-
-## Title 2
-
-### Title 3
-
-Start of statistical processing
-Counting the number of observations by species
-
-```{.r}
-iris |> 
-  count(Species)
-```
-
-### Title 3
-
-Filter the data.frame on Species "setosa"
-
-```{.r}
-iris |> 
-  filter(Species == "setosa")
-```
-
-#### Title 4
-
-Select column Species
-
-```{.r}
-iris %>% 
-  # Select a column
-  select(Species)
-```
-```
-
-The generated document includes:
-- Navigable table of contents with proper hierarchy
-- Code organized into reusable blocks
-- Inline comments preserved within code blocks
-- Clear documentation between code sections
 - **Non-executable code chunks** (`{.r}` syntax) for static documentation
 - Ready for HTML, PDF, or other formats supported by Quarto
 
-**Note:** Code chunks are intentionally non-executable to provide static documentation of your R script without executing the code during rendering.
+📝 **For a complete example of the generated output**, see the [Getting Started vignette](https://ddotta.github.io/quartify/articles/getting-started.html#generated-output)
 
 ## License
 
