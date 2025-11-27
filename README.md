@@ -7,6 +7,8 @@ status](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](htt
 
 # :package: `quartify` <img src="man/figures/hex_quartify.png" width=90 align="right"/>
 
+[Version française](README_FR.md)
+
 ## Description
 
 `quartify` is an R package that automatically converts R scripts into Quarto markdown documents (.qmd).
