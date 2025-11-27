@@ -2,7 +2,7 @@
 
 [![Statut R
 check](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartify/actions/workflows/check-release.yaml)
-[![codecov](https://codecov.io/gh/ddotta/quartify/branch/main/graph/badge.svg?token=25MHI8O62M)](https://app.codecov.io/gh/ddotta/quartify)
+[![CodeFactor](https://www.codefactor.io/repository/github/ddotta/quartify/badge)](https://www.codefactor.io/repository/github/ddotta/quartify)
 
 🇬🇧 [English version](https://ddotta.github.io/quartify/index.html)
 
