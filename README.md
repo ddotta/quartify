@@ -115,15 +115,41 @@ iris %>%
   select(Species)
 ```
 
-### Conversion rules
+### Commenting Rules
 
-- **Code sections**: RStudio code sections become markdown headers
-  - `## Title ####` creates a level 2 header
-  - `### Title ====` creates a level 3 header  
-  - `#### Title ----` creates a level 4 header
-- **Comments**: Simple comments `#` become explanatory text
-- **Code**: Uncommented code is grouped into Quarto code blocks
-- **Consecutive blocks**: Consecutive code lines are grouped in the same block
+`quartify` recognizes three types of lines in your R script:
+
+#### 1. Code Sections (Headers)
+
+RStudio code sections become markdown headers. **Critical**: trailing symbols must be at least 4 characters long:
+
+- `## Title ####` → Level 2 header (at least 4 `#` at the end)
+- `### Title ====` → Level 3 header (at least 4 `=` at the end)
+- `#### Title ----` → Level 4 header (at least 4 `-` at the end)
+
+#### 2. Regular Comments (Text)
+
+Single `#` comments become explanatory text:
+
+```r
+# This is a regular comment
+# It becomes plain text in the Quarto document
+```
+
+#### 3. Code Lines
+
+Uncommented lines become executable R code chunks:
+
+```r
+iris |> filter(Species == "setosa")
+```
+
+**Important rules:**
+
+- Always include a space after `#` for comments
+- Section headers MUST have at least 4 trailing symbols
+- Consecutive code lines are grouped in the same block
+- Empty lines between blocks are ignored
 
 This follows the [RStudio code sections convention](https://docs.posit.co/ide/user/ide/guide/code/code-sections.html) which provides proper indentation in RStudio's document outline navigation.
 
