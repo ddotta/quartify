@@ -45,6 +45,10 @@ reference:
     desc: Convert R scripts to Quarto markdown
     contents:
     - rtoqmd
+  - title: RStudio Add-in
+    desc: Interactive conversion via RStudio
+    contents:
+    - rtoqmd_addin
 
 authors:
   Damien Dotta:
