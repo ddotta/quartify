@@ -1,7 +1,7 @@
 <!-- badges: start -->
 [![R check
 status](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartify/actions/workflows/check-release.yaml)
-[![codecov](https://codecov.io/gh/ddotta/quartify/branch/main/graph/badge.svg?token=25MHI8O62M)](https://app.codecov.io/gh/ddotta/quartify)
+[![CodeFactor](https://www.codefactor.io/repository/github/ddotta/quartify/badge)](https://www.codefactor.io/repository/github/ddotta/quartify)
 <!-- badges: end -->
 
 # :package: `quartify` <img src="man/figures/hex_quartify.png" width=90 align="right"/>
