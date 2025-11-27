@@ -14,7 +14,10 @@ URL: https://ddotta.github.io/quartify/, https://github.com/ddotta/quartify
 BugReports: https://github.com/ddotta/quartify/issues
 Imports:
     rstudioapi,
-    cli
+    cli,
+    shiny,
+    miniUI,
+    base64enc
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

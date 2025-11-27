@@ -20,7 +20,7 @@
 #' @param open_html Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)
 #' @return Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
 #' @importFrom utils browseURL
-#' @importFrom cli cli_alert_success cli_alert_info cli_alert_danger cli_alert_warning cli_progress_step cli_progress_done
+#' @importFrom cli cli_alert_success cli_alert_info cli_alert_danger cli_alert_warning
 #' @export
 #' @examples
 #' \dontrun{
@@ -184,7 +184,7 @@ rtoqmd <- function(input_file, output_file = NULL,
   
   # Render to HTML if requested
   if (render) {
-    cli::cli_progress_step("Rendering Quarto document to HTML")
+    cat("Rendering Quarto document to HTML...\n")
     
     # Check if quarto is available
     quarto_available <- tryCatch({
@@ -207,7 +207,6 @@ rtoqmd <- function(input_file, output_file = NULL,
       system2("quarto", args = c("render", shQuote(output_file)), 
               stdout = TRUE, stderr = TRUE)
       
-      cli::cli_progress_done()
       cli::cli_alert_success("HTML file created: {.file {html_file}}")
       
       # Open HTML file if requested

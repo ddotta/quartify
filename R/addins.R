@@ -1,8 +1,11 @@
 #' Convert Active R Script to Quarto Markdown
 #'
 #' RStudio add-in that converts the currently active R script in the editor
-#' to a Quarto markdown document.
+#' to a Quarto markdown document. Uses a Shiny interface for parameter input.
 #'
+#' @importFrom shiny runGadget stopApp observeEvent reactive req textInput checkboxInput actionButton renderText reactiveVal tags
+#' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel miniTitleBarButton miniTitleBarCancelButton
+#' @importFrom base64enc base64encode
 #' @export
 rtoqmd_addin <- function() {
   # Get the active document context
@@ -32,89 +35,238 @@ rtoqmd_addin <- function() {
   # Propose output filename
   output_path <- sub("\\.R$", ".qmd", input_path, ignore.case = TRUE)
   
-  # Ask user for confirmation and customization
-  result <- rstudioapi::showPrompt(
-    title = "Convert to Quarto",
-    message = "Output file path:",
-    default = output_path
-  )
-  
-  # If user cancelled
-  if (is.null(result)) {
-    return(invisible())
+  # Get hex logo path
+  hex_path <- system.file("man", "figures", "hex_quartify.png", package = "quartify")
+  if (hex_path == "") {
+    hex_path <- file.path("man", "figures", "hex_quartify.png")
   }
   
-  output_path <- result
-  
-  # Ask for title
-  title <- rstudioapi::showPrompt(
-    title = "Document Title",
-    message = "Enter the document title:",
-    default = "My Analysis"
-  )
-  
-  if (is.null(title)) {
-    title <- "My Analysis"
+  # Create base64 encoded image if file exists
+  logo_html <- if (file.exists(hex_path)) {
+    img_base64 <- paste0("data:image/png;base64,", base64enc::base64encode(hex_path))
+    shiny::tags$img(src = img_base64, width = "150px", style = "max-width: 150px;")
+  } else {
+    shiny::h3("quartify", style = "color: #0073e6; font-weight: bold;")
   }
   
-  # Ask for author
-  author <- rstudioapi::showPrompt(
-    title = "Document Author",
-    message = "Enter the author name:",
-    default = Sys.getenv("USER")
+  # Define UI
+  ui <- miniUI::miniPage(
+    shiny::tags$head(
+      shiny::tags$style(shiny::HTML("
+        .loader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.9);
+          display: none;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+        }
+        .loader.active {
+          display: flex;
+        }
+        .spinner {
+          border: 8px solid #f3f3f3;
+          border-top: 8px solid #0073e6;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      ")),
+      shiny::tags$script(shiny::HTML("
+        Shiny.addCustomMessageHandler('toggleLoader', function(show) {
+          var loader = document.getElementById('loader');
+          if (show) {
+            loader.classList.add('active');
+          } else {
+            loader.classList.remove('active');
+          }
+        });
+      "))
+    ),
+    miniUI::gadgetTitleBar(
+      "Convert R Script to Quarto",
+      left = miniUI::miniTitleBarCancelButton("cancel", "↩"),
+      right = miniUI::miniTitleBarButton("done", shiny::HTML("GO ▶"), primary = TRUE)
+    ),
+    shiny::div(id = "loader", class = "loader", shiny::div(class = "spinner")),
+    miniUI::miniContentPanel(
+      shiny::fillCol(
+        flex = c(NA, 1),
+        shiny::fillRow(
+          shiny::div(
+            style = "padding: 20px; overflow-y: auto;",
+            # Language selector
+            shiny::div(
+              style = "text-align: right; margin-bottom: 10px;",
+              shiny::actionButton(
+                "lang_en",
+                "EN",
+                style = "margin-right: 5px; padding: 5px 10px; font-size: 12px;",
+                class = "btn-sm"
+              ),
+              shiny::actionButton(
+                "lang_fr",
+                "FR",
+                style = "padding: 5px 10px; font-size: 12px;",
+                class = "btn-sm"
+              )
+            ),
+            # Logo centered
+            shiny::div(
+              style = "text-align: center; margin-bottom: 20px;",
+              logo_html
+            ),
+            shiny::h4(shiny::textOutput("label_input_file")),
+            shiny::p(basename(input_path), style = "font-family: monospace; color: #666;"),
+            shiny::hr(),
+            shiny::textInput(
+              "output_file",
+              shiny::textOutput("label_output_file"),
+              value = output_path,
+              width = "100%"
+            ),
+            shiny::textInput(
+              "title",
+              shiny::textOutput("label_title"),
+              value = "My Analysis",
+              width = "100%"
+            ),
+            shiny::textInput(
+              "author",
+              shiny::textOutput("label_author"),
+              value = ifelse(Sys.getenv("USER") != "", Sys.getenv("USER"), "Your name"),
+              width = "100%"
+            ),
+            shiny::checkboxInput(
+              "render",
+              shiny::textOutput("label_render"),
+              value = TRUE
+            ),
+            shiny::checkboxInput(
+              "open_html",
+              shiny::textOutput("label_open_html"),
+              value = FALSE
+            ),
+            shiny::checkboxInput(
+              "open_qmd",
+              shiny::textOutput("label_open_qmd"),
+              value = TRUE
+            )
+          )
+        )
+      )
+    )
   )
   
-  if (is.null(author)) {
-    author <- Sys.getenv("USER")
+  # Define server logic
+  server <- function(input, output, session) {
+    
+    # Reactive language
+    lang <- shiny::reactiveVal("en")
+    
+    # Language switchers
+    shiny::observeEvent(input$lang_en, {
+      lang("en")
+    })
+    
+    shiny::observeEvent(input$lang_fr, {
+      lang("fr")
+    })
+    
+    # Translations
+    translations <- list(
+      en = list(
+        input_file = "Input file:",
+        output_file = "Output file path:",
+        title = "Document title:",
+        author = "Author name:",
+        render = "Render to HTML after conversion",
+        open_html = "Open HTML file in browser (if rendered)",
+        open_qmd = "Open .qmd file in editor after conversion"
+      ),
+      fr = list(
+        input_file = "Fichier d'entrée :",
+        output_file = "Chemin du fichier de sortie :",
+        title = "Titre du document :",
+        author = "Nom de l'auteur :",
+        render = "Générer le HTML après conversion",
+        open_html = "Ouvrir le fichier HTML dans le navigateur (si généré)",
+        open_qmd = "Ouvrir le fichier .qmd dans l'éditeur après conversion"
+      )
+    )
+    
+    # Dynamic labels
+    output$label_input_file <- shiny::renderText({ translations[[lang()]]$input_file })
+    output$label_output_file <- shiny::renderText({ translations[[lang()]]$output_file })
+    output$label_title <- shiny::renderText({ translations[[lang()]]$title })
+    output$label_author <- shiny::renderText({ translations[[lang()]]$author })
+    output$label_render <- shiny::renderText({ translations[[lang()]]$render })
+    output$label_open_html <- shiny::renderText({ translations[[lang()]]$open_html })
+    output$label_open_qmd <- shiny::renderText({ translations[[lang()]]$open_qmd })
+    
+    # When done button is pressed
+    shiny::observeEvent(input$done, {
+      
+      # Show loader
+      session$sendCustomMessage('toggleLoader', TRUE)
+      
+      # Get values
+      output_file <- shiny::req(input$output_file)
+      title <- shiny::req(input$title)
+      author <- shiny::req(input$author)
+      render <- input$render
+      open_html <- input$open_html
+      open_qmd <- input$open_qmd
+      
+      # Convert the file
+      tryCatch({
+        rtoqmd(
+          input_file = input_path,
+          output_file = output_file,
+          title = title,
+          author = author,
+          format = "html",
+          render = render,
+          open_html = open_html && render
+        )
+        
+        # Open QMD file if requested
+        if (open_qmd && file.exists(output_file)) {
+          rstudioapi::navigateToFile(output_file)
+        }
+        
+        # Stop the app
+        shiny::stopApp()
+        
+      }, error = function(e) {
+        # Hide loader on error
+        session$sendCustomMessage('toggleLoader', FALSE)
+        shiny::showNotification(
+          paste0("Error: ", e$message),
+          type = "error",
+          duration = 10
+        )
+      })
+    })
+    
+    # When cancel button is pressed
+    shiny::observeEvent(input$cancel, {
+      shiny::stopApp()
+    })
   }
   
-  # Ask if user wants to render to HTML
-  render_html <- rstudioapi::showQuestion(
-    title = "Render to HTML",
-    message = "Do you want to render the Quarto document to HTML after conversion?",
-    ok = "Yes",
-    cancel = "No"
-  )
-  
-  # Convert the file
-  tryCatch({
-    rtoqmd(
-      input_file = input_path,
-      output_file = output_path,
-      title = title,
-      author = author,
-      format = "html",
-      render = render_html,
-      open_html = render_html
-    )
-    
-    # Determine success message
-    if (render_html) {
-      success_msg <- paste0("Quarto document created and rendered successfully:\n",
-                           output_path, "\n",
-                           sub("\\.qmd$", ".html", output_path))
-    } else {
-      success_msg <- paste0("Quarto document created successfully:\n", output_path)
-    }
-    
-    # Ask if user wants to open the generated QMD file
-    open_file <- rstudioapi::showQuestion(
-      title = "Conversion Complete",
-      message = paste0(success_msg, "\n\nWould you like to open the .qmd file in editor?"),
-      ok = "Yes",
-      cancel = "No"
-    )
-    
-    if (open_file) {
-      rstudioapi::navigateToFile(output_path)
-    }
-    
-  }, error = function(e) {
-    rstudioapi::showDialog(
-      title = "Conversion Error",
-      message = paste0("An error occurred during conversion:\n", e$message)
-    )
-  })
+  # Run the gadget
+  viewer <- shiny::dialogViewer("Convert to Quarto", width = 700, height = 800)
+  shiny::runGadget(ui, server, viewer = viewer)
   
   invisible()
 }

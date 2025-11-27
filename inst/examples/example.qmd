@@ -1,18 +1,23 @@
 ---
 title: "My Analysis"
-author: "cd"
-format: html
+author: "Your name"
+format:
+  html:
+    embed-resources: true
 toc: true
 toc-title: Sommaire
 toc-depth: 4
 toc-location: left
+execute: 
+  eval: false
+  echo: true
 output:
   html_document:
   number_sections: TRUE
   output-file: example.html
 ---
 
-```{.r}
+```{r}
 library(dplyr)
 ```
 
@@ -24,7 +29,7 @@ Start of statistical processing
 
 Counting the number of observations by species
 
-```{.r}
+```{r}
 iris |> 
   count(Species)
 ```
@@ -33,7 +38,7 @@ iris |>
 
 Filter the data.frame on Species "setosa"
 
-```{.r}
+```{r}
 iris |> 
   filter(Species == "setosa")
 ```
@@ -42,7 +47,8 @@ iris |>
 
 Select column Species
 
-```{.r}
+```{r}
 iris %>% 
+  # Select a column
   select(Species)
 ```

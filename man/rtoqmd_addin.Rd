@@ -8,5 +8,5 @@ rtoqmd_addin()
 }
 \description{
 RStudio add-in that converts the currently active R script in the editor
-to a Quarto markdown document.
+to a Quarto markdown document. Uses a Shiny interface for parameter input.
 }
