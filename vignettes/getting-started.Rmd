@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ::: {.alert .alert-info}
-**[Version française disponible](getting-started_FR.html)** / **French version available**
+🇫🇷 **[Version française disponible](getting-started_FR.html)** / **French version available**
 :::
 
 ## Introduction

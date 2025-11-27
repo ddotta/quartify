@@ -11,7 +11,7 @@ home:
   title: quartify
   description: Convert R scripts to Quarto markdown documents
   links:
-  - text: Documentation en français
+  - text: 🇫🇷 Documentation en français
     href: articles/getting-started_FR.html
 
 navbar:
