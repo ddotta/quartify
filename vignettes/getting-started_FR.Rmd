@@ -252,13 +252,14 @@ rtoqmd(
 
 Ceci produit le document Quarto suivant :
 
-```markdown
+````markdown
 ---
 title: "Analyse du jeu de données Iris"
 author: "Analyste de données"
 format:
   html:
     embed-resources: true
+    code-fold: false
 toc: true
 toc-title: Sommaire
 toc-depth: 4  
@@ -313,7 +314,7 @@ iris %>%
   # Select a column
   select(Species)
 ```
-```
+````
 
 Notez comment :
 
