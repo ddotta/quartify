@@ -134,8 +134,11 @@ symboles <code>-</code> à la fin)</li>
 <ul>
 <li>Il doit y avoir au moins un espace entre le texte du titre et les
 symboles de fin</li>
-<li>Les symboles de fin (<code>####</code>, <code>====</code>,
-<code>----</code>) doivent contenir au moins 4 caractères</li>
+<li>Les symboles de fin doivent contenir au moins 4 caractères</li>
+<li>Vous pouvez utiliser <code>#</code>, <code>=</code>, ou
+<code>-</code> indifféremment (ex : <code>## Titre ====</code>
+fonctionne), mais il est recommandé de suivre la convention RStudio pour
+la cohérence</li>
 <li>Ceci suit la <a href="https://docs.posit.co/ide/user/ide/guide/code/code-sections.html" class="external-link">convention
 des sections de code RStudio</a>
 </li>
@@ -164,6 +167,10 @@ explicatif dans le document Quarto :</p>
 paragraphe séparé</li>
 <li>Les lignes de commentaires vides sont ignorées</li>
 </ul>
+<p><strong>Astuce :</strong> Utilisez le <a href="https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment" class="external-link">raccourci
+Commenter/Décommenter</a> de RStudio (<code>Ctrl+Shift+C</code> sur
+Windows/Linux ou <code>Cmd+Shift+C</code> sur Mac) pour ajouter ou
+retirer rapidement des commentaires de votre code.</p>
 </div>
 <div class="section level3">
 <h3 id="lignes-de-code">3. Lignes de code<a class="anchor" aria-label="anchor" href="#lignes-de-code"></a>
@@ -489,11 +496,12 @@ plus accessible</li>
 <code>#</code> pour les commentaires et en-têtes de section</li>
 <li>
 <strong>Symboles de fin</strong> : Les en-têtes de section DOIVENT
-avoir au moins 4 symboles de fin (<code>####</code>, <code>====</code>,
-ou <code>----</code>)</li>
+avoir au moins 4 symboles de fin</li>
 <li>
-<strong>Pas de mélange</strong> : Ne mélangez pas la syntaxe des
-sections (ex : n’utilisez pas <code>## Titre ====</code>)</li>
+<strong>Flexibilité des symboles</strong> : Vous pouvez utiliser
+<code>#</code>, <code>=</code>, ou <code>-</code> indifféremment pour
+les symboles de fin, mais suivre la convention RStudio est
+recommandé</li>
 <li>
 <strong>Commentaires Roxygen</strong> : Les lignes commençant par
 <code>#'</code> sont ignorées (pour développement de packages)</li>
@@ -501,6 +509,10 @@ sections (ex : n’utilisez pas <code>## Titre ====</code>)</li>
 <strong>Contexte du commentaire</strong> : Les commentaires en début
 de ligne deviennent du texte ; les commentaires dans le code restent
 dans les blocs de code</li>
+<li>
+<strong>Raccourci clavier</strong> : Utilisez
+<code>Ctrl+Shift+C</code> (Windows/Linux) ou <code>Cmd+Shift+C</code>
+(Mac) pour commenter/décommenter rapidement</li>
 </ol>
 </div>
 <div class="section level2">

@@ -172,13 +172,15 @@
 <code>### Titre ====</code> → En-tête de niveau 3 (au moins 4 <code>=</code> à la fin)</li>
 <li>
 <code>#### Titre ----</code> → En-tête de niveau 4 (au moins 4 <code>-</code> à la fin)</li>
-</ul></div>
+</ul><p><strong>Note :</strong> Vous pouvez utiliser <code>#</code>, <code>=</code>, ou <code>-</code> indifféremment comme symboles de fin (ex : <code>## Titre ====</code> ou <code>### Titre ----</code> fonctionneront), mais il est recommandé de suivre la convention RStudio pour la cohérence.</p>
+</div>
 <div class="section level4">
 <h4 id="id_2-commentaires-réguliers-texte">2. Commentaires réguliers (Texte)<a class="anchor" aria-label="anchor" href="#id_2-commentaires-r%C3%A9guliers-texte"></a></h4>
 <p>Les commentaires simples avec <code>#</code> <strong>en début de ligne</strong> deviennent du texte explicatif :</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ceci est un commentaire autonome</span></span>
 <span><span class="co"># Il devient du texte simple dans le document Quarto</span></span></code></pre></div>
+<p><strong>Astuce :</strong> Utilisez le <a href="https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment" class="external-link">raccourci Commenter/Décommenter</a> de RStudio (<code>Ctrl+Shift+C</code> sur Windows/Linux ou <code>Cmd+Shift+C</code> sur Mac) pour ajouter ou retirer rapidement des commentaires.</p>
 </div>
 <div class="section level4">
 <h4 id="id_3-lignes-de-code">3. Lignes de code<a class="anchor" aria-label="anchor" href="#id_3-lignes-de-code"></a></h4>
@@ -207,60 +209,9 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="structure-du-document-quarto-généré">Structure du document Quarto généré<a class="anchor" aria-label="anchor" href="#structure-du-document-quarto-g%C3%A9n%C3%A9r%C3%A9"></a></h2>
-<p>Le document .qmd généré contient :</p>
-<ul><li>Un en-tête YAML complet avec configuration de la table des matières</li>
-<li>Des en-têtes correctement structurés à partir des sections de code RStudio</li>
-<li>Des explications textuelles à partir de vos commentaires réguliers</li>
-<li>Des blocs de code R formatés et exécutables</li>
-</ul></div>
-<div class="section level2">
-<h2 id="exemple-de-sortie">Exemple de sortie<a class="anchor" aria-label="anchor" href="#exemple-de-sortie"></a></h2>
-<p>À partir du script R exemple montré ci-dessus, <code>quartify</code> génère :</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mon titre"</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Damien Dotta"</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="an">toc-title:</span><span class="co"> Sommaire</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="an">toc-depth:</span><span class="co"> 4  </span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="an">toc-location:</span><span class="co"> left</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="an">output:</span><span class="co"> </span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">  html_document:</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">  number_sections: TRUE</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">  output-file: example.html</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="in">```{.r}</span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="in">library(dplyr)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="titre-2">Titre 2<a class="anchor" aria-label="anchor" href="#titre-2"></a></h2>
-<div class="section level3">
-<h3 id="titre-3">Titre 3<a class="anchor" aria-label="anchor" href="#titre-3"></a></h3>
-<p>Début du traitement statistique Comptage du nombre d’observations par espèce</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">count</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="titre-3-1">Titre 3<a class="anchor" aria-label="anchor" href="#titre-3-1"></a></h3>
-<p>Filtrer le data.frame sur l’espèce “setosa”</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="titre-4">Titre 4<a class="anchor" aria-label="anchor" href="#titre-4"></a></h4>
-<p>Sélectionner la colonne Species</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="co"># Sélectionner une colonne</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-<p>```</p>
-<p>Le document généré inclut : - Une table des matières navigable avec hiérarchie appropriée - Du code organisé en blocs réutilisables - Des commentaires en ligne préservés dans les blocs de code - Une documentation claire entre les sections de code - <strong>Chunks de code non exécutables</strong> (syntaxe <code>{.r}</code>) pour une documentation statique - Prêt pour HTML, PDF ou d’autres formats supportés par Quarto</p>
-<p><strong>Note :</strong> Les chunks de code sont intentionnellement non exécutables pour fournir une documentation statique de votre script R sans exécuter le code lors du rendu.</p>
-</div>
-</div>
+<h2 id="sortie-et-documentation">Sortie et documentation<a class="anchor" aria-label="anchor" href="#sortie-et-documentation"></a></h2>
+<p>Le document .qmd généré contient : - Un en-tête YAML complet avec configuration de la table des matières - Des en-têtes correctement structurés à partir des sections de code RStudio - Des explications textuelles à partir de vos commentaires réguliers - <strong>Chunks de code non exécutables</strong> (syntaxe <code>{.r}</code>) pour une documentation statique - Prêt pour HTML, PDF ou d’autres formats supportés par Quarto</p>
+<p>📝 <strong>Pour un exemple complet de la sortie générée</strong>, consultez la <a href="https://ddotta.github.io/quartify/articles/getting-started_FR.html#sortie-g%C3%A9n%C3%A9r%C3%A9e">vignette Démarrage</a></p>
 </div>
 <div class="section level2">
 <h2 id="licence">Licence<a class="anchor" aria-label="anchor" href="#licence"></a></h2>

@@ -131,8 +131,10 @@ levels. These sections MUST follow this exact pattern:</p>
 <ul>
 <li>There must be at least one space between the title text and the
 trailing symbols</li>
-<li>The trailing symbols (<code>####</code>, <code>====</code>,
-<code>----</code>) must be at least 4 characters long</li>
+<li>The trailing symbols must be at least 4 characters long</li>
+<li>You can use <code>#</code>, <code>=</code>, or <code>-</code>
+interchangeably (e.g., <code>## Title ====</code> works), but following
+the RStudio convention is recommended for consistency</li>
 <li>This follows the <a href="https://docs.posit.co/ide/user/ide/guide/code/code-sections.html" class="external-link">RStudio
 code sections convention</a>
 </li>
@@ -161,6 +163,10 @@ document:</p>
 paragraph</li>
 <li>Empty comment lines are ignored</li>
 </ul>
+<p><strong>Tip:</strong> Use RStudio’s <a href="https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment" class="external-link">Comment/Uncomment
+shortcut</a> (<code>Ctrl+Shift+C</code> on Windows/Linux or
+<code>Cmd+Shift+C</code> on Mac) to quickly add or remove comments from
+your code.</p>
 </div>
 <div class="section level3">
 <h3 id="code-lines">3. Code Lines<a class="anchor" aria-label="anchor" href="#code-lines"></a>
@@ -478,17 +484,21 @@ format</li>
 <code>#</code> for comments and section headers</li>
 <li>
 <strong>Trailing symbols</strong>: Section headers MUST have at
-least 4 trailing symbols (<code>####</code>, <code>====</code>, or
-<code>----</code>)</li>
+least 4 trailing symbols</li>
 <li>
-<strong>No mixing</strong>: Don’t mix section syntax (e.g., don’t
-use <code>## Title ====</code>)</li>
+<strong>Symbol flexibility</strong>: You can use <code>#</code>,
+<code>=</code>, or <code>-</code> interchangeably for trailing symbols,
+but following the RStudio convention is recommended</li>
 <li>
 <strong>Roxygen comments</strong>: Lines starting with
 <code>#'</code> are ignored (for package development)</li>
 <li>
 <strong>Comment context</strong>: Comments at the start of a line
 become text; comments within code stay in code blocks</li>
+<li>
+<strong>Keyboard shortcut</strong>: Use <code>Ctrl+Shift+C</code>
+(Windows/Linux) or <code>Cmd+Shift+C</code> (Mac) to comment/uncomment
+lines quickly</li>
 </ol>
 </div>
 <div class="section level2">

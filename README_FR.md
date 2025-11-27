@@ -161,6 +161,11 @@ caractères :
 - `### Titre ====` → En-tête de niveau 3 (au moins 4 `=` à la fin)
 - `#### Titre ----` → En-tête de niveau 4 (au moins 4 `-` à la fin)
 
+**Note :** Vous pouvez utiliser `#`, `=`, ou `-` indifféremment comme
+symboles de fin (ex : `## Titre ====` ou `### Titre ----`
+fonctionneront), mais il est recommandé de suivre la convention RStudio
+pour la cohérence.
+
 #### 2. Commentaires réguliers (Texte)
 
 Les commentaires simples avec `#` **en début de ligne** deviennent du
@@ -170,6 +175,11 @@ texte explicatif :
 # Ceci est un commentaire autonome
 # Il devient du texte simple dans le document Quarto
 ```
+
+**Astuce :** Utilisez le [raccourci
+Commenter/Décommenter](https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment)
+de RStudio (`Ctrl+Shift+C` sur Windows/Linux ou `Cmd+Shift+C` sur Mac)
+pour ajouter ou retirer rapidement des commentaires.
 
 #### 3. Lignes de code
 
@@ -206,82 +216,18 @@ RStudio](https://docs.posit.co/ide/user/ide/guide/code/code-sections.html)
 qui fournit une indentation appropriée dans la navigation du plan du
 document RStudio.
 
-## Structure du document Quarto généré
+## Sortie et documentation
 
-Le document .qmd généré contient :
-
-- Un en-tête YAML complet avec configuration de la table des matières
-- Des en-têtes correctement structurés à partir des sections de code
-  RStudio
-- Des explications textuelles à partir de vos commentaires réguliers
-- Des blocs de code R formatés et exécutables
-
-## Exemple de sortie
-
-À partir du script R exemple montré ci-dessus, `quartify` génère :
-
-``` markdown
----
-title: "Mon titre"
-author: "Damien Dotta"
-format: html
-toc: true
-toc-title: Sommaire
-toc-depth: 4  
-toc-location: left
-output: 
-  html_document:
-  number_sections: TRUE
-  output-file: example.html
----
-
-```{.r}
-library(dplyr)
-```
-
-## Titre 2
-
-### Titre 3
-
-Début du traitement statistique Comptage du nombre d’observations par
-espèce
-
-``` r
-iris |> 
-  count(Species)
-```
-
-### Titre 3
-
-Filtrer le data.frame sur l’espèce “setosa”
-
-``` r
-iris |> 
-  filter(Species == "setosa")
-```
-
-#### Titre 4
-
-Sélectionner la colonne Species
-
-``` r
-iris %>% 
-  # Sélectionner une colonne
-  select(Species)
-```
-
-\`\`\`
-
-Le document généré inclut : - Une table des matières navigable avec
-hiérarchie appropriée - Du code organisé en blocs réutilisables - Des
-commentaires en ligne préservés dans les blocs de code - Une
-documentation claire entre les sections de code - **Chunks de code non
+Le document .qmd généré contient : - Un en-tête YAML complet avec
+configuration de la table des matières - Des en-têtes correctement
+structurés à partir des sections de code RStudio - Des explications
+textuelles à partir de vos commentaires réguliers - **Chunks de code non
 exécutables** (syntaxe `{.r}`) pour une documentation statique - Prêt
 pour HTML, PDF ou d’autres formats supportés par Quarto
 
-**Note :** Les chunks de code sont intentionnellement non exécutables
-pour fournir une documentation statique de votre script R sans exécuter
-le code lors du rendu.
+📝 **Pour un exemple complet de la sortie générée**, consultez la
+[vignette
+Démarrage](https://ddotta.github.io/quartify/articles/getting-started_FR.html#sortie-g%C3%A9n%C3%A9r%C3%A9e)
 
 ## Licence
 
