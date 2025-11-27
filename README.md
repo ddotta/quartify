@@ -112,6 +112,7 @@ iris |>
 # Select column Species
 
 iris %>% 
+  # Select a column
   select(Species)
 ```
 
@@ -129,10 +130,10 @@ RStudio code sections become markdown headers. **Critical**: trailing symbols mu
 
 #### 2. Regular Comments (Text)
 
-Single `#` comments become explanatory text:
+Single `#` comments **at the start of a line** become explanatory text:
 
 ```r
-# This is a regular comment
+# This is a standalone comment
 # It becomes plain text in the Quarto document
 ```
 
@@ -144,10 +145,22 @@ Uncommented lines become executable R code chunks:
 iris |> filter(Species == "setosa")
 ```
 
+#### 4. Inline Comments (Within Code)
+
+Comments **within code blocks** are preserved inside the R code chunk:
+
+```r
+iris %>% 
+  # This comment stays in the code block
+  select(Species)
+```
+
 **Important rules:**
 
 - Always include a space after `#` for comments
 - Section headers MUST have at least 4 trailing symbols
+- **Standalone comments** (at line start) → become text outside code blocks
+- **Inline comments** (within code) → stay inside code blocks
 - Consecutive code lines are grouped in the same block
 - Empty lines between blocks are ignored
 
@@ -212,6 +225,7 @@ Select column Species
 
 ```{.r}
 iris %>% 
+  # Select a column
   select(Species)
 ```
 ```
@@ -219,6 +233,7 @@ iris %>%
 The generated document includes:
 - Navigable table of contents with proper hierarchy
 - Code organized into reusable blocks
+- Inline comments preserved within code blocks
 - Clear documentation between code sections
 - Ready for HTML, PDF, or other formats supported by Quarto
 

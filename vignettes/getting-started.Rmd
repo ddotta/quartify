@@ -100,6 +100,28 @@ iris |>
 - Empty lines between code blocks are ignored
 - Code blocks are separated by comments or section headers
 
+**Important:** You can include comments WITHIN code blocks. These comments will be preserved inside the R code chunk:
+
+```r
+iris %>% 
+  # Select a column
+  select(Species)
+```
+
+This will render as:
+
+````markdown
+```{.r}
+iris %>% 
+  # Select a column
+  select(Species)
+```
+````
+
+The difference:
+- **Comments at the start of a line** (standalone) → become text OUTSIDE code blocks
+- **Comments within code** (indented or part of a pipeline) → stay INSIDE code blocks
+
 ## Complete Example: example.R
 
 Here's the complete example R script included in the package:
@@ -129,6 +151,7 @@ iris |>
 # Select column Species
 
 iris %>% 
+  # Select a column
   select(Species)
 ```
 
@@ -136,8 +159,9 @@ This script demonstrates:
 
 1. **Code without section**: `library(dplyr)` becomes a code chunk
 2. **Section headers**: `## Title 2 ####`, `### Title 3 ====`, `#### Title 4 ----`
-3. **Explanatory comments**: Become readable text
-4. **Code blocks**: Separated by comments or sections
+3. **Standalone comments**: `# Select column Species` becomes readable text
+4. **Inline comments**: `# Select a column` stays inside the code block
+5. **Code blocks**: Separated by standalone comments or sections
 
 ## Customization Options
 
@@ -229,6 +253,7 @@ Select column Species
 
 ```{.r}
 iris %>% 
+  # Select a column
   select(Species)
 ```
 ```
@@ -236,7 +261,8 @@ iris %>%
 Notice how:
 
 - Each code section becomes a proper markdown header
-- Comments become readable text paragraphs
+- Standalone comments become readable text paragraphs
+- Inline comments (within code) are preserved in code blocks
 - Code blocks are properly formatted with syntax highlighting
 - The table of contents will show the hierarchical structure
 
@@ -270,8 +296,9 @@ quarto::quarto_render("iris_analysis.qmd")
 | **Level 2 Header** | `## Title ####` | Markdown `## Title` | `## Data Analysis ####` |
 | **Level 3 Header** | `### Title ====` | Markdown `### Title` | `### Preprocessing ====` |
 | **Level 4 Header** | `#### Title ----` | Markdown `#### Title` | `#### Remove NA ----` |
-| **Explanatory Text** | `# Text` | Plain text paragraph | `# This filters the data` |
+| **Standalone Comment** | `# Text` | Plain text paragraph | `# This filters the data` |
 | **Code** | No `#` prefix | R code chunk | `iris %>% filter(...)` |
+| **Inline Comment** | `  # Text` in code | Stays in code chunk | `iris %>% # comment` |
 
 **Critical rules to avoid errors:**
 
@@ -279,6 +306,7 @@ quarto::quarto_render("iris_analysis.qmd")
 2. **Trailing symbols**: Section headers MUST have at least 4 trailing symbols (`####`, `====`, or `----`)
 3. **No mixing**: Don't mix section syntax (e.g., don't use `## Title ====`)
 4. **Roxygen comments**: Lines starting with `#'` are ignored (for package development)
+5. **Comment context**: Comments at the start of a line become text; comments within code stay in code blocks
 
 ## Tips and Best Practices
 

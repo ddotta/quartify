@@ -1,6 +1,6 @@
 ---
-title: "Iris Dataset Analysis"
-author: "Data Analyst"
+title: "My Analysis"
+author: "cd"
 format: html
 toc: true
 toc-title: Sommaire
@@ -9,7 +9,7 @@ toc-location: left
 output:
   html_document:
   number_sections: TRUE
-  output-file: iris_analysis.html
+  output-file: example.html
 ---
 
 ```{.r}
@@ -44,6 +44,5 @@ Select column Species
 
 ```{.r}
 iris %>% 
-  # Select a column
   select(Species)
 ```

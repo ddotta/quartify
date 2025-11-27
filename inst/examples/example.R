@@ -22,4 +22,5 @@ iris |>
 # Select column Species
 
 iris %>% 
+  # Select a column
   select(Species)
