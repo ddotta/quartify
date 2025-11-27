@@ -3,7 +3,7 @@
 [![Statut R
 check](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartify/actions/workflows/check-release.yaml)
 
-🇬🇧 [English version](https://ddotta.github.io/quartify/README.md)
+🇬🇧 [English version](https://ddotta.github.io/quartify/index.html)
 
 ## Description
 
@@ -227,12 +227,12 @@ document RStudio.
 
 ## Sortie et documentation
 
-Le document .qmd généré contient : - Un en-tête YAML complet avec
-configuration de la table des matières - Des en-têtes correctement
-structurés à partir des sections de code RStudio - Des explications
-textuelles à partir de vos commentaires réguliers - **Chunks de code non
-exécutables** (syntaxe `{.r}`) pour une documentation statique - Prêt
-pour HTML, PDF ou d’autres formats supportés par Quarto
+Le document .qmd généré contient :  
+- Un en-tête YAML complet avec configuration de la table des matières  
+- Des en-têtes correctement structurés à partir des sections de code
+RStudio  
+- Des explications textuelles à partir de vos commentaires  
+- **Chunks de code non exécutables** pour une documentation statique
 
 📝 **Pour un exemple complet de la sortie générée**, consultez la
 [vignette

@@ -235,10 +235,11 @@ rtoqmd(
 - `input_file`: Path to your R script
 - `output_file`: Path for the output Quarto document (optional)
 - `title`: Title for the document (default: “My title”)
-- `author`: Author name (default: “Damien Dotta”)
+- `author`: Author name (default: “Your name”)
 - `format`: Output format (default: “html”)
 - `render`: Whether to render the .qmd to HTML (default: TRUE)
-- `open_html`: Whether to open the HTML in browser (default: TRUE)
+- `open_html`: Whether to open the HTML in browser (default: FALSE)
+- `code_fold`: Whether to fold code blocks by default (default: FALSE)
 
 ## Converting the Example
 
@@ -261,13 +262,14 @@ rtoqmd(
 
 This produces the following Quarto document:
 
-``` markdown
+```` markdown
 ---
 title: "Iris Dataset Analysis"
 author: "Data Analyst"
 format:
   html:
     embed-resources: true
+    code-fold: false
 toc: true
 toc-title: Sommaire
 toc-depth: 4  
@@ -294,6 +296,7 @@ Start of statistical processing
 
 Counting the number of observations by species
 
+
 ``` r
 iris |> 
   count(Species)
@@ -301,7 +304,8 @@ iris |>
 
 ### Title 3
 
-Filter the data.frame on Species “setosa”
+Filter the data.frame on Species "setosa"
+
 
 ``` r
 iris |> 
@@ -312,37 +316,53 @@ iris |>
 
 Select column Species
 
+
 ``` r
 iris %>% 
   # Select a column
   select(Species)
 ```
+````
 
-    Notice how:
+Notice how:
 
-    - Each code section becomes a proper markdown header
-    - Standalone comments become readable text paragraphs
-    - Inline comments (within code) are preserved in code blocks
-    - Code blocks are properly formatted with syntax highlighting
-    - The table of contents will show the hierarchical structure
+- Each code section becomes a proper markdown header
+- Standalone comments become readable text paragraphs
+- Inline comments (within code) are preserved in code blocks
+- Code blocks are properly formatted with syntax highlighting
+- The table of contents will show the hierarchical structure
 
-    **Important note about code chunks:** The generated code chunks use standard R chunks. The YAML header includes global `execute` options (`eval: false` and `echo: true`), which creates **non-executable** code blocks. Additionally, the HTML format uses `embed-resources: true` to create **self-contained HTML files** (see [Quarto documentation](https://quarto.org/docs/output-formats/html-basics.html#self-contained)). This is intentional - `quartify` is designed to create **static documentation** of your R script, not an executable notebook. The code is displayed with syntax highlighting for reading and documentation purposes, but won't be executed when rendering the Quarto document. This approach is ideal for:
+**Important note about code chunks:** The generated code chunks use
+standard R chunks. The YAML header includes global `execute` options
+(`eval: false` and `echo: true`), which creates **non-executable** code
+blocks. Additionally, the HTML format uses `embed-resources: true` to
+create **self-contained HTML files** (see [Quarto
+documentation](https://quarto.org/docs/output-formats/html-basics.html#self-contained)).
+This is intentional - `quartify` is designed to create **static
+documentation** of your R script, not an executable notebook. The code
+is displayed with syntax highlighting for reading and documentation
+purposes, but won’t be executed when rendering the Quarto document. This
+approach is ideal for:
 
-    - Documenting existing scripts without modifying their execution
-    - Creating static references of your code
-    - Sharing code examples that readers can copy and run in their own environment
-    - Ensuring the documentation process doesn't interfere with your original script's behavior
+- Documenting existing scripts without modifying their execution
+- Creating static references of your code
+- Sharing code examples that readers can copy and run in their own
+  environment
+- Ensuring the documentation process doesn’t interfere with your
+  original script’s behavior
 
-    ## Rendering the Output
+## Rendering the Output
 
-    ### Automatic Rendering (Recommended)
+### Automatic Rendering (Recommended)
 
-    By default, `rtoqmd()` automatically renders your Quarto document to HTML:
+By default,
+[`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md)
+automatically renders your Quarto document to HTML:
 
-
-    ``` r
-    # This will create both .qmd and .html files, then open the HTML
-    rtoqmd(example_file, "iris_analysis.qmd")
+``` r
+# This will create both .qmd and .html files, then open the HTML
+rtoqmd(example_file, "iris_analysis.qmd")
+```
 
 The function will: 1. Check if Quarto is installed 2. Render the .qmd
 file to HTML 3. Open the HTML file in your default browser

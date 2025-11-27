@@ -214,12 +214,11 @@ navigation.
 
 ## Output and Documentation
 
-The generated .qmd document contains: - A complete YAML header with
-table of contents configuration - Properly structured headers from
-RStudio code sections - Textual explanations from your regular
-comments - **Non-executable code chunks** (`{.r}` syntax) for static
-documentation - Ready for HTML, PDF, or other formats supported by
-Quarto
+The generated .qmd document contains:  
+- A complete YAML header with table of contents configuration  
+- Properly structured headers from RStudio code sections  
+- Textual explanations from your comments  
+- **Non-executable code chunks** for static documentation
 
 📝 **For a complete example of the generated output**, see the [Getting
 Started

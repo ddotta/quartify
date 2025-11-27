@@ -246,10 +246,12 @@ rtoqmd(
 - `input_file` : Chemin vers votre script R
 - `output_file` : Chemin pour le document Quarto de sortie (optionnel)
 - `title` : Titre du document (par défaut : “My title”)
-- `author` : Nom de l’auteur (par défaut : “Damien Dotta”)
+- `author` : Nom de l’auteur (par défaut : “Your name”)
 - `format` : Format de sortie (par défaut : “html”)
 - `render` : Générer le HTML à partir du .qmd (par défaut : TRUE)
-- `open_html` : Ouvrir le HTML dans le navigateur (par défaut : TRUE)
+- `open_html` : Ouvrir le HTML dans le navigateur (par défaut : FALSE)
+- `code_fold` : Replier les blocs de code par défaut (par défaut :
+  FALSE)
 
 ## Conversion de l’exemple
 
@@ -272,13 +274,14 @@ rtoqmd(
 
 Ceci produit le document Quarto suivant :
 
-``` markdown
+```` markdown
 ---
 title: "Analyse du jeu de données Iris"
 author: "Analyste de données"
 format:
   html:
     embed-resources: true
+    code-fold: false
 toc: true
 toc-title: Sommaire
 toc-depth: 4  
@@ -305,6 +308,7 @@ Start of statistical processing
 
 Counting the number of observations by species
 
+
 ``` r
 iris |> 
   count(Species)
@@ -312,7 +316,8 @@ iris |>
 
 ### Title 3
 
-Filter the data.frame on Species “setosa”
+Filter the data.frame on Species "setosa"
+
 
 ``` r
 iris |> 
@@ -323,37 +328,56 @@ iris |>
 
 Select column Species
 
+
 ``` r
 iris %>% 
   # Select a column
   select(Species)
 ```
+````
 
-    Notez comment :
+Notez comment :
 
-    - Chaque section de code devient un en-tête markdown approprié
-    - Les commentaires autonomes deviennent des paragraphes de texte lisible
-    - Les commentaires en ligne (dans le code) sont préservés dans les blocs de code
-    - Les blocs de code sont correctement formatés avec coloration syntaxique
-    - La table des matières montrera la structure hiérarchique
+- Chaque section de code devient un en-tête markdown approprié
+- Les commentaires autonomes deviennent des paragraphes de texte lisible
+- Les commentaires en ligne (dans le code) sont préservés dans les blocs
+  de code
+- Les blocs de code sont correctement formatés avec coloration
+  syntaxique
+- La table des matières montrera la structure hiérarchique
 
-    **Note importante sur les chunks de code :** Les chunks de code générés utilisent des chunks R standard. L'en-tête YAML inclut des options globales `execute` (`eval: false` et `echo: true`), qui créent des blocs de code **non exécutables**. De plus, le format HTML utilise `embed-resources: true` pour créer des **fichiers HTML autonomes** (voir la [documentation Quarto](https://quarto.org/docs/output-formats/html-basics.html#self-contained)). C'est intentionnel - `quartify` est conçu pour créer une **documentation statique** de votre script R, pas un notebook exécutable. Le code est affiché avec coloration syntaxique à des fins de lecture et de documentation, mais ne sera pas exécuté lors du rendu du document Quarto. Cette approche est idéale pour :
+**Note importante sur les chunks de code :** Les chunks de code générés
+utilisent des chunks R standard. L’en-tête YAML inclut des options
+globales `execute` (`eval: false` et `echo: true`), qui créent des blocs
+de code **non exécutables**. De plus, le format HTML utilise
+`embed-resources: true` pour créer des **fichiers HTML autonomes** (voir
+la [documentation
+Quarto](https://quarto.org/docs/output-formats/html-basics.html#self-contained)).
+C’est intentionnel - `quartify` est conçu pour créer une **documentation
+statique** de votre script R, pas un notebook exécutable. Le code est
+affiché avec coloration syntaxique à des fins de lecture et de
+documentation, mais ne sera pas exécuté lors du rendu du document
+Quarto. Cette approche est idéale pour :
 
-    - Documenter des scripts existants sans modifier leur exécution
-    - Créer des références statiques de votre code
-    - Partager des exemples de code que les lecteurs peuvent copier et exécuter dans leur propre environnement
-    - S'assurer que le processus de documentation n'interfère pas avec le comportement de votre script original
+- Documenter des scripts existants sans modifier leur exécution
+- Créer des références statiques de votre code
+- Partager des exemples de code que les lecteurs peuvent copier et
+  exécuter dans leur propre environnement
+- S’assurer que le processus de documentation n’interfère pas avec le
+  comportement de votre script original
 
-    ## Rendu de la sortie
+## Rendu de la sortie
 
-    ### Rendu automatique (Recommandé)
+### Rendu automatique (Recommandé)
 
-    Par défaut, `rtoqmd()` génère automatiquement votre document Quarto en HTML :
+Par défaut,
+[`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md)
+génère automatiquement votre document Quarto en HTML :
 
-
-    ``` r
-    # Ceci créera les fichiers .qmd et .html, puis ouvrira le HTML
-    rtoqmd(example_file, "analyse_iris.qmd")
+``` r
+# Ceci créera les fichiers .qmd et .html, puis ouvrira le HTML
+rtoqmd(example_file, "analyse_iris.qmd")
+```
 
 La fonction va : 1. Vérifier si Quarto est installé 2. Générer le
 fichier .qmd en HTML 3. Ouvrir le fichier HTML dans votre navigateur par
