@@ -43,6 +43,38 @@ Par défaut,
 : 1. Créer le fichier .qmd 2. Le générer en HTML avec Quarto 3. Ouvrir
 le fichier HTML dans votre navigateur par défaut
 
+### Emplacement des fichiers de sortie
+
+Comprendre où les fichiers sont créés :
+
+- **Si vous spécifiez un chemin `output_file`** : Le fichier .qmd est
+  créé à cet emplacement exact, et le fichier .html (si rendu) est créé
+  dans le même répertoire avec le même nom de base.
+
+``` r
+# Crée : /chemin/vers/mon_analyse.qmd et /chemin/vers/mon_analyse.html
+rtoqmd("script.R", "/chemin/vers/mon_analyse.qmd")
+```
+
+- **Si vous ne spécifiez pas `output_file`** : Le fichier .qmd est créé
+  dans le même répertoire que votre script R d’entrée, avec l’extension
+  `.R` remplacée par `.qmd`.
+
+``` r
+# Si script.R est dans /home/utilisateur/scripts/
+# Crée : /home/utilisateur/scripts/script.qmd et /home/utilisateur/scripts/script.html
+rtoqmd("/home/utilisateur/scripts/script.R")
+```
+
+- **Chemins relatifs** : Si vous utilisez des chemins relatifs, les
+  fichiers sont créés relativement à votre répertoire de travail actuel
+  (vérifiez avec [`getwd()`](https://rdrr.io/r/base/getwd.html)).
+
+``` r
+# Crée les fichiers dans votre répertoire de travail actuel
+rtoqmd("script.R", "sortie.qmd")
+```
+
 ## Structurer votre script R
 
 Pour une conversion optimale, vous devez suivre des règles de
@@ -132,10 +164,10 @@ iris %>%
   select(Species)
 ```
 
-Ceci sera rendu comme :
+Cela sera rendu comme :
 
 ```` markdown
-```{.r}
+``` r
 iris %>% 
   # Sélectionner une colonne
   select(Species)
@@ -244,18 +276,24 @@ Ceci produit le document Quarto suivant :
 ---
 title: "Analyse du jeu de données Iris"
 author: "Analyste de données"
-format: html
+format:
+  html:
+    embed-resources: true
 toc: true
 toc-title: Sommaire
 toc-depth: 4  
 toc-location: left
+execute: 
+  eval: false
+  echo: true
 output: 
   html_document:
   number_sections: TRUE
   output-file: analyse_iris.html
 ---
 
-```{.r}
+
+``` r
 library(dplyr)
 ```
 
@@ -299,7 +337,7 @@ iris %>%
     - Les blocs de code sont correctement formatés avec coloration syntaxique
     - La table des matières montrera la structure hiérarchique
 
-    **Note importante sur les chunks de code :** Les chunks de code générés utilisent la syntaxe `{.r}`, qui crée des blocs de code **non exécutables**. C'est intentionnel - `quartify` est conçu pour créer une **documentation statique** de votre script R, pas un notebook exécutable. Le code est affiché avec coloration syntaxique à des fins de lecture et de documentation, mais ne sera pas exécuté lors du rendu du document Quarto. Cette approche est idéale pour :
+    **Note importante sur les chunks de code :** Les chunks de code générés utilisent des chunks R standard. L'en-tête YAML inclut des options globales `execute` (`eval: false` et `echo: true`), qui créent des blocs de code **non exécutables**. De plus, le format HTML utilise `embed-resources: true` pour créer des **fichiers HTML autonomes** (voir la [documentation Quarto](https://quarto.org/docs/output-formats/html-basics.html#self-contained)). C'est intentionnel - `quartify` est conçu pour créer une **documentation statique** de votre script R, pas un notebook exécutable. Le code est affiché avec coloration syntaxique à des fins de lecture et de documentation, mais ne sera pas exécuté lors du rendu du document Quarto. Cette approche est idéale pour :
 
     - Documenter des scripts existants sans modifier leur exécution
     - Créer des références statiques de votre code

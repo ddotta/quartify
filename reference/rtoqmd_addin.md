@@ -1,7 +1,8 @@
 # Convert Active R Script to Quarto Markdown
 
 RStudio add-in that converts the currently active R script in the editor
-to a Quarto markdown document.
+to a Quarto markdown document. Uses a Shiny interface for parameter
+input.
 
 ## Usage
 

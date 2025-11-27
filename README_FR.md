@@ -66,15 +66,24 @@ devtools::install_github("ddotta/quartify")
 
 ### Add-in RStudio (Recommandé)
 
-La façon la plus simple d’utiliser `quartify` est via l’add-in RStudio :
+La façon la plus simple d’utiliser `quartify` est via l’add-in RStudio
+avec son interface Shiny interactive :
 
 1.  Ouvrez votre script R dans RStudio
 2.  Allez dans le menu **Addins** → **Convert R Script to Quarto**
-3.  Suivez les instructions pour spécifier le fichier de sortie, le
-    titre et l’auteur
-4.  Choisissez si vous voulez générer le HTML
-5.  Le document Quarto sera créé, optionnellement généré en HTML, et
-    ouvert dans votre navigateur
+3.  Une fenêtre de dialogue apparaîtra (700x800px) avec :
+    - Boutons de sélection de langue **EN/FR** en haut à droite
+    - **Logo hex quartify** centré en haut
+    - Formulaire pour spécifier :
+      - Le chemin du fichier de sortie
+      - Le titre du document et le nom de l’auteur
+      - Les options de génération (générer HTML, ouvrir HTML, ouvrir
+        QMD)
+4.  Cliquez sur **GO** pour convertir votre script (ou ↩︎ pour annuler)
+
+L’interface s’adapte à votre choix de langue, affichant tous les
+libellés en anglais ou en français. Le format de sortie est toujours
+HTML.
 
 ### Exemple basique
 

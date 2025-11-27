@@ -5,15 +5,19 @@ It recognizes RStudio code sections with different levels:
 - ### Title ==== creates a level 3 header
 - #### Title —- creates a level 4 header
 Regular comments are converted to plain text.
-Code blocks are wrapped in non-executable code chunks (.r syntax)
-for static documentation purposes."><meta property="og:description" content="This function converts an R script to Quarto markdown format.
+Code blocks are wrapped in standard R code chunks. The YAML header includes
+execute: eval: false and execute: echo: true options for static
+documentation purposes, and embed-resources: true to create self-contained
+HTML files. See https://quarto.org/docs/output-formats/html-basics.html#self-contained."><meta property="og:description" content="This function converts an R script to Quarto markdown format.
 It recognizes RStudio code sections with different levels:
 - ## Title #### creates a level 2 header
 - ### Title ==== creates a level 3 header
 - #### Title —- creates a level 4 header
 Regular comments are converted to plain text.
-Code blocks are wrapped in non-executable code chunks (.r syntax)
-for static documentation purposes."></head><body>
+Code blocks are wrapped in standard R code chunks. The YAML header includes
+execute: eval: false and execute: echo: true options for static
+documentation purposes, and embed-resources: true to create self-contained
+HTML files. See https://quarto.org/docs/output-formats/html-basics.html#self-contained."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -60,8 +64,10 @@ It recognizes RStudio code sections with different levels:
 - ### Title ==== creates a level 3 header
 - #### Title —- creates a level 4 header
 Regular comments are converted to plain text.
-Code blocks are wrapped in non-executable code chunks (.r syntax)
-for static documentation purposes.</p>
+Code blocks are wrapped in standard R code chunks. The YAML header includes
+<code>execute: eval: false</code> and <code>execute: echo: true</code> options for static
+documentation purposes, and <code>embed-resources: true</code> to create self-contained
+HTML files. See <a href="https://quarto.org/docs/output-formats/html-basics.html#self-contained" class="external-link">https://quarto.org/docs/output-formats/html-basics.html#self-contained</a>.</p>
     </div>
 
     <div class="section level2">
@@ -70,8 +76,11 @@ for static documentation purposes.</p>
 <span>  <span class="va">input_file</span>,</span>
 <span>  output_file <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"My title"</span>,</span>
-<span>  author <span class="op">=</span> <span class="st">"Damien Dotta"</span>,</span>
-<span>  format <span class="op">=</span> <span class="st">"html"</span></span>
+<span>  author <span class="op">=</span> <span class="st">"Your name"</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>  render <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  open_html <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  code_fold <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -92,16 +101,28 @@ for static documentation purposes.</p>
 
 
 <dt id="arg-author">author<a class="anchor" aria-label="anchor" href="#arg-author"></a></dt>
-<dd><p>Author name (default: "Damien Dotta")</p></dd>
+<dd><p>Author name (default: "Your name")</p></dd>
 
 
 <dt id="arg-format">format<a class="anchor" aria-label="anchor" href="#arg-format"></a></dt>
 <dd><p>Output format (default: "html")</p></dd>
 
+
+<dt id="arg-render">render<a class="anchor" aria-label="anchor" href="#arg-render"></a></dt>
+<dd><p>Logical, whether to render the .qmd file to HTML after creation (default: TRUE)</p></dd>
+
+
+<dt id="arg-open-html">open_html<a class="anchor" aria-label="anchor" href="#arg-open-html"></a></dt>
+<dd><p>Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)</p></dd>
+
+
+<dt id="arg-code-fold">code_fold<a class="anchor" aria-label="anchor" href="#arg-code-fold"></a></dt>
+<dd><p>Logical, whether to fold code blocks in HTML output (default: FALSE)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>NULL (creates output file)</p>
+    <p>Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.</p>
     </div>
 
     <div class="section level2">
@@ -109,7 +130,12 @@ for static documentation purposes.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># Use example file included in package</span></span></span>
 <span class="r-in"><span><span class="va">example_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example.R"</span>, package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Convert and render to HTML</span></span></span>
 <span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"output.qmd"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Convert only, without rendering</span></span></span>
+<span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"output.qmd"</span>, render <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

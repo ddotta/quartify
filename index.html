@@ -115,15 +115,29 @@
 <div class="section level3">
 <h3 id="rstudio-add-in-recommended">RStudio Add-in (Recommended)<a class="anchor" aria-label="anchor" href="#rstudio-add-in-recommended"></a>
 </h3>
-<p>The easiest way to use <code>quartify</code> is through the RStudio add-in:</p>
+<p>The easiest way to use <code>quartify</code> is through the RStudio add-in with its interactive Shiny interface:</p>
 <ol style="list-style-type: decimal">
 <li>Open your R script in RStudio</li>
 <li>Go to <strong>Addins</strong> menu → <strong>Convert R Script to Quarto</strong>
 </li>
-<li>Follow the prompts to specify output file, title, and author</li>
-<li>Choose whether to render to HTML</li>
-<li>The Quarto document will be created, optionally rendered to HTML, and opened in your browser</li>
+<li>A dialog window will appear (700x800px) with:
+<ul>
+<li>
+<strong>EN/FR</strong> language selector buttons at the top right</li>
+<li>
+<strong>quartify hex logo</strong> centered at the top</li>
+<li>Form fields to specify:
+<ul>
+<li>Output file path</li>
+<li>Document title and author name</li>
+<li>Rendering options (render to HTML, open HTML, open QMD)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Click <strong>GO</strong> to convert your script (or ↩︎ to cancel)</li>
 </ol>
+<p>The interface adapts to your language choice, displaying all labels in English or French. The output format is always HTML.</p>
 </div>
 <div class="section level3">
 <h3 id="basic-example">Basic example<a class="anchor" aria-label="anchor" href="#basic-example"></a>
@@ -177,22 +191,22 @@
 <span><span class="co"># Counting the number of observations by species</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">count</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">### Title 3 ====</span></span>
 <span></span>
 <span><span class="co"># Filter the data.frame on Species "setosa"</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#### Title 4 ----</span></span>
 <span></span>
 <span><span class="co"># Select column Species</span></span>
 <span></span>
-<span><span class="va">iris</span> <span class="op">%&gt;%</span> </span>
+<span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="co"># Select a column</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="commenting-rules">Commenting Rules<a class="anchor" aria-label="anchor" href="#commenting-rules"></a>
 </h3>
@@ -225,16 +239,16 @@
 </h4>
 <p>Uncommented lines become executable R code chunks:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="id_4-inline-comments-within-code">4. Inline Comments (Within Code)<a class="anchor" aria-label="anchor" href="#id_4-inline-comments-within-code"></a>
 </h4>
 <p>Comments <strong>within code blocks</strong> are preserved inside the R code chunk:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="co"># This comment stays in the code block</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Important rules:</strong></p>
 <ul>
 <li>Always include a space after <code>#</code> for comments</li>

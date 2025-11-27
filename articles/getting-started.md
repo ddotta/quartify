@@ -42,6 +42,38 @@ By default,
 will: 1. Create the .qmd file 2. Render it to HTML using Quarto 3. Open
 the HTML file in your default browser
 
+### Output File Locations
+
+Understanding where files are created:
+
+- **If you specify an `output_file` path**: The .qmd file is created at
+  that exact location, and the .html file (if rendered) is created in
+  the same directory with the same base name.
+
+``` r
+# Creates: /path/to/my_analysis.qmd and /path/to/my_analysis.html
+rtoqmd("script.R", "/path/to/my_analysis.qmd")
+```
+
+- **If you don’t specify `output_file`**: The .qmd file is created in
+  the same directory as your input R script, with the `.R` extension
+  replaced by `.qmd`.
+
+``` r
+# If script.R is in /home/user/scripts/
+# Creates: /home/user/scripts/script.qmd and /home/user/scripts/script.html
+rtoqmd("/home/user/scripts/script.R")
+```
+
+- **Relative paths**: If you use relative paths, files are created
+  relative to your current working directory (check with
+  [`getwd()`](https://rdrr.io/r/base/getwd.html)).
+
+``` r
+# Creates files in your current working directory
+rtoqmd("script.R", "output.qmd")
+```
+
 ## Structuring Your R Script
 
 For optimal conversion, you need to follow specific commenting rules in
@@ -129,7 +161,7 @@ iris %>%
 This will render as:
 
 ```` markdown
-```{.r}
+``` r
 iris %>% 
   # Select a column
   select(Species)
@@ -233,18 +265,24 @@ This produces the following Quarto document:
 ---
 title: "Iris Dataset Analysis"
 author: "Data Analyst"
-format: html
+format:
+  html:
+    embed-resources: true
 toc: true
 toc-title: Sommaire
 toc-depth: 4  
 toc-location: left
+execute: 
+  eval: false
+  echo: true
 output: 
   html_document:
   number_sections: TRUE
   output-file: iris_analysis.html
 ---
 
-```{.r}
+
+``` r
 library(dplyr)
 ```
 
@@ -288,7 +326,7 @@ iris %>%
     - Code blocks are properly formatted with syntax highlighting
     - The table of contents will show the hierarchical structure
 
-    **Important note about code chunks:** The generated code chunks use the `{.r}` syntax, which creates **non-executable** code blocks. This is intentional - `quartify` is designed to create **static documentation** of your R script, not an executable notebook. The code is displayed with syntax highlighting for reading and documentation purposes, but won't be executed when rendering the Quarto document. This approach is ideal for:
+    **Important note about code chunks:** The generated code chunks use standard R chunks. The YAML header includes global `execute` options (`eval: false` and `echo: true`), which creates **non-executable** code blocks. Additionally, the HTML format uses `embed-resources: true` to create **self-contained HTML files** (see [Quarto documentation](https://quarto.org/docs/output-formats/html-basics.html#self-contained)). This is intentional - `quartify` is designed to create **static documentation** of your R script, not an executable notebook. The code is displayed with syntax highlighting for reading and documentation purposes, but won't be executed when rendering the Quarto document. This approach is ideal for:
 
     - Documenting existing scripts without modifying their execution
     - Creating static references of your code
