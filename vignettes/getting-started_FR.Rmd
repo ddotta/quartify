@@ -229,11 +229,16 @@ Ceci produit le document Quarto suivant :
 ---
 title: "Analyse du jeu de données Iris"
 author: "Analyste de données"
-format: html
+format:
+  html:
+    embed-resources: true
 toc: true
 toc-title: Sommaire
 toc-depth: 4  
 toc-location: left
+execute: 
+  eval: false
+  echo: true
 output: 
   html_document:
   number_sections: TRUE
@@ -241,8 +246,6 @@ output:
 ---
 
 ```{r}
-#| eval: false
-#| echo: true
 library(dplyr)
 ```
 
@@ -293,7 +296,7 @@ Notez comment :
 - Les blocs de code sont correctement formatés avec coloration syntaxique
 - La table des matières montrera la structure hiérarchique
 
-**Note importante sur les chunks de code :** Les chunks de code générés utilisent des chunks R standard avec les options Quarto `#| eval: false` et `#| echo: true`, qui créent des blocs de code **non exécutables**. C'est intentionnel - `quartify` est conçu pour créer une **documentation statique** de votre script R, pas un notebook exécutable. Le code est affiché avec coloration syntaxique à des fins de lecture et de documentation, mais ne sera pas exécuté lors du rendu du document Quarto. Cette approche est idéale pour :
+**Note importante sur les chunks de code :** Les chunks de code générés utilisent des chunks R standard. L'en-tête YAML inclut des options globales `execute` (`eval: false` et `echo: true`), qui créent des blocs de code **non exécutables**. De plus, le format HTML utilise `embed-resources: true` pour créer des **fichiers HTML autonomes** (voir la [documentation Quarto](https://quarto.org/docs/output-formats/html-basics.html#self-contained)). C'est intentionnel - `quartify` est conçu pour créer une **documentation statique** de votre script R, pas un notebook exécutable. Le code est affiché avec coloration syntaxique à des fins de lecture et de documentation, mais ne sera pas exécuté lors du rendu du document Quarto. Cette approche est idéale pour :
 
 - Documenter des scripts existants sans modifier leur exécution
 - Créer des références statiques de votre code

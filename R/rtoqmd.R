@@ -6,13 +6,15 @@
 #' - ### Title ==== creates a level 3 header
 #' - #### Title ---- creates a level 4 header
 #' Regular comments are converted to plain text.
-#' Code blocks are wrapped in code chunks with \code{#| eval: false} and \code{#| echo: true}
-#' options for static documentation purposes.
+#' Code blocks are wrapped in standard R code chunks. The YAML header includes
+#' \code{execute: eval: false} and \code{execute: echo: true} options for static
+#' documentation purposes, and \code{embed-resources: true} to create self-contained
+#' HTML files. See \url{https://quarto.org/docs/output-formats/html-basics.html#self-contained}.
 #'
 #' @param input_file Path to the input R script file
 #' @param output_file Path to the output Quarto markdown file (optional, defaults to same name with .qmd extension)
 #' @param title Title for the Quarto document (default: "My title")
-#' @param author Author name (default: "Damien Dotta")
+#' @param author Author name (default: "Your name")
 #' @param format Output format (default: "html")
 #' @param render Logical, whether to render the .qmd file to HTML after creation (default: TRUE)
 #' @param open_html Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)
@@ -32,7 +34,7 @@
 #' }
 rtoqmd <- function(input_file, output_file = NULL, 
                    title = "My title", 
-                   author = "Damien Dotta",
+                   author = "Your name",
                    format = "html",
                    render = TRUE,
                    open_html = FALSE) {
@@ -57,11 +59,16 @@ rtoqmd <- function(input_file, output_file = NULL,
   output <- c(output, "---")
   output <- c(output, paste0('title: "', title, '"'))
   output <- c(output, paste0('author: "', author, '"'))
-  output <- c(output, paste0('format: ', format))
+  output <- c(output, paste0('format:'))
+  output <- c(output, paste0('  ', format, ':'))
+  output <- c(output, "    embed-resources: true")
   output <- c(output, "toc: true")
   output <- c(output, "toc-title: Sommaire")
   output <- c(output, "toc-depth: 4")
   output <- c(output, "toc-location: left")
+  output <- c(output, "execute: ")
+  output <- c(output, "  eval: false")
+  output <- c(output, "  echo: true")
   output <- c(output, "output:")
   output <- c(output, "  html_document:")
   output <- c(output, "  number_sections: TRUE")
@@ -86,8 +93,6 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
-        output <- c(output, "#| eval: false")
-        output <- c(output, "#| echo: true")
         output <- c(output, code_block)
         output <- c(output, "```")
         output <- c(output, "")
@@ -104,8 +109,6 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
-        output <- c(output, "#| eval: false")
-        output <- c(output, "#| echo: true")
         output <- c(output, code_block)
         output <- c(output, "```")
         output <- c(output, "")
@@ -122,8 +125,6 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
-        output <- c(output, "#| eval: false")
-        output <- c(output, "#| echo: true")
         output <- c(output, code_block)
         output <- c(output, "```")
         output <- c(output, "")
@@ -140,8 +141,6 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
-        output <- c(output, "#| eval: false")
-        output <- c(output, "#| echo: true")
         output <- c(output, code_block)
         output <- c(output, "```")
         output <- c(output, "")
@@ -172,8 +171,6 @@ rtoqmd <- function(input_file, output_file = NULL,
   # Flush any remaining code
   if (length(code_block) > 0) {
     output <- c(output, "```{r}")
-    output <- c(output, "#| eval: false")
-    output <- c(output, "#| echo: true")
     output <- c(output, code_block)
     output <- c(output, "```")
   }

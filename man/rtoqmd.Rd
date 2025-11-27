@@ -8,7 +8,7 @@ rtoqmd(
   input_file,
   output_file = NULL,
   title = "My title",
-  author = "Damien Dotta",
+  author = "Your name",
   format = "html",
   render = TRUE,
   open_html = FALSE
@@ -21,7 +21,7 @@ rtoqmd(
 
 \item{title}{Title for the Quarto document (default: "My title")}
 
-\item{author}{Author name (default: "Damien Dotta")}
+\item{author}{Author name (default: "Your name")}
 
 \item{format}{Output format (default: "html")}
 
@@ -39,8 +39,10 @@ It recognizes RStudio code sections with different levels:
 - ### Title ==== creates a level 3 header
 - #### Title ---- creates a level 4 header
 Regular comments are converted to plain text.
-Code blocks are wrapped in code chunks with \code{#| eval: false} and \code{#| echo: true}
-options for static documentation purposes.
+Code blocks are wrapped in standard R code chunks. The YAML header includes
+\code{execute: eval: false} and \code{execute: echo: true} options for static
+documentation purposes, and \code{embed-resources: true} to create self-contained
+HTML files. See \url{https://quarto.org/docs/output-formats/html-basics.html#self-contained}.
 }
 \examples{
 \dontrun{

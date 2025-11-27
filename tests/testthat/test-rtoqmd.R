@@ -34,10 +34,11 @@ test_that("rtoqmd converts basic R script to Quarto markdown", {
   # Check comment conversion
   expect_true(any(grepl("This is a comment", output)))
   
-  # Check code block with Quarto options
+  # Check code block and YAML execute options
   expect_true(any(grepl("```\\{r\\}", output)))
-  expect_true(any(grepl("#\\| eval: false", output)))
-  expect_true(any(grepl("#\\| echo: true", output)))
+  expect_true(any(grepl("execute:", output)))
+  expect_true(any(grepl("eval: false", output)))
+  expect_true(any(grepl("echo: true", output)))
   
   # Cleanup
   unlink(temp_r)
@@ -201,7 +202,9 @@ test_that("rtoqmd customizes YAML header", {
   
   expect_true(any(grepl('title: "Custom Title"', output)))
   expect_true(any(grepl('author: "Custom Author"', output)))
-  expect_true(any(grepl('format: pdf', output)))
+  expect_true(any(grepl('format:', output)))
+  expect_true(any(grepl('pdf:', output)))
+  expect_true(any(grepl('embed-resources: true', output)))
   
   unlink(temp_r)
   unlink(temp_qmd)
