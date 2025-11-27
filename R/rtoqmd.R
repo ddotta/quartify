@@ -6,7 +6,8 @@
 #' - ### Title ==== creates a level 3 header
 #' - #### Title ---- creates a level 4 header
 #' Regular comments are converted to plain text.
-#' Code blocks are wrapped in code chunks.
+#' Code blocks are wrapped in non-executable code chunks ({.r} syntax)
+#' for static documentation purposes.
 #'
 #' @param input_file Path to the input R script file
 #' @param output_file Path to the output Quarto markdown file (optional, defaults to same name with .qmd extension)

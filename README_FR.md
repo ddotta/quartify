@@ -236,7 +236,10 @@ Le document généré inclut :
 - Du code organisé en blocs réutilisables
 - Des commentaires en ligne préservés dans les blocs de code
 - Une documentation claire entre les sections de code
+- **Chunks de code non exécutables** (syntaxe `{.r}`) pour une documentation statique
 - Prêt pour HTML, PDF ou d'autres formats supportés par Quarto
+
+**Note :** Les chunks de code sont intentionnellement non exécutables pour fournir une documentation statique de votre script R sans exécuter le code lors du rendu.
 
 ## Licence
 

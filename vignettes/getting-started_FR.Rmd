@@ -270,6 +270,13 @@ Notez comment :
 - Les blocs de code sont correctement formatés avec coloration syntaxique
 - La table des matières montrera la structure hiérarchique
 
+**Note importante sur les chunks de code :** Les chunks de code générés utilisent la syntaxe `{.r}`, qui crée des blocs de code **non exécutables**. C'est intentionnel - `quartify` est conçu pour créer une **documentation statique** de votre script R, pas un notebook exécutable. Le code est affiché avec coloration syntaxique à des fins de lecture et de documentation, mais ne sera pas exécuté lors du rendu du document Quarto. Cette approche est idéale pour :
+
+- Documenter des scripts existants sans modifier leur exécution
+- Créer des références statiques de votre code
+- Partager des exemples de code que les lecteurs peuvent copier et exécuter dans leur propre environnement
+- S'assurer que le processus de documentation n'interfère pas avec le comportement de votre script original
+
 ## Rendu de la sortie
 
 Une fois que vous avez votre fichier `.qmd`, vous pouvez le rendre en HTML en utilisant Quarto :

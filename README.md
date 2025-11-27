@@ -237,7 +237,10 @@ The generated document includes:
 - Code organized into reusable blocks
 - Inline comments preserved within code blocks
 - Clear documentation between code sections
+- **Non-executable code chunks** (`{.r}` syntax) for static documentation
 - Ready for HTML, PDF, or other formats supported by Quarto
+
+**Note:** Code chunks are intentionally non-executable to provide static documentation of your R script without executing the code during rendering.
 
 ## License
 
