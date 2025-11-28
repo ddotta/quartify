@@ -184,18 +184,18 @@ rtoqmd_addin <- function() {
             shiny::div(
               style = "width: 100%;",
               shiny::checkboxInput(
-                "open_html",
-                shiny::textOutput("label_open_html"),
-                value = FALSE,
+                "open_qmd",
+                shiny::textOutput("label_open_qmd"),
+                value = TRUE,
                 width = "100%"
               )
             ),
             shiny::div(
               style = "width: 100%;",
               shiny::checkboxInput(
-                "open_qmd",
-                shiny::textOutput("label_open_qmd"),
-                value = TRUE,
+                "open_html",
+                shiny::textOutput("label_open_html"),
+                value = FALSE,
                 width = "100%"
               )
             ),
