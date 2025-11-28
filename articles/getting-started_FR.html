@@ -210,14 +210,24 @@ tableaux Markdown dans les commentaires. Les lignes consécutives de
 commentaires seront préservées ensemble, permettant un rendu correct des
 tableaux</li>
 </ul>
+<div class="alert alert-info">
+<p><strong>Important pour les tableaux Markdown :</strong> Les lignes
+formant un tableau doivent être <strong>isolées des autres
+commentaires</strong> par une ligne vide avant et après le tableau. Cela
+garantit que le tableau est traité comme un bloc séparé et sera
+correctement rendu.</p>
+</div>
 <p><strong>Exemple de tableau Markdown :</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Résultats de l'analyse :</span></span>
+<span></span>
 <span><span class="co"># | fruit  | prix   |</span></span>
 <span><span class="co"># |--------|--------|</span></span>
 <span><span class="co"># | pomme  | 2.05   |</span></span>
 <span><span class="co"># | poire  | 1.37   |</span></span>
-<span><span class="co"># | orange | 3.09   |</span></span></code></pre></div>
+<span><span class="co"># | orange | 3.09   |</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># Le tableau ci-dessus est correctement isolé.</span></span></code></pre></div>
 <p><strong>Astuce :</strong> Utilisez le <a href="https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment" class="external-link">raccourci
 Commenter/Décommenter</a> de RStudio (<code>Ctrl+Shift+C</code> sur
 Windows/Linux ou <code>Cmd+Shift+C</code> sur Mac) pour ajouter ou

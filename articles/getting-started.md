@@ -129,15 +129,23 @@ Single `#` comments become explanatory text in the Quarto document:
   Consecutive comment lines will be preserved together, allowing proper
   table rendering
 
+**Important for Markdown Tables:** Table lines must be **isolated from
+other comments** with an empty line before and after the table. This
+ensures the table is treated as a separate block and will render
+correctly.
+
 **Markdown table example:**
 
 ``` r
 # Analysis results:
+
 # | fruit  | price  |
 # |--------|--------|
 # | apple  | 2.05   |
 # | pear   | 1.37   |
 # | orange | 3.09   |
+#
+# The table above is properly isolated.
 ```
 
 **Tip:** Use RStudio’s [Comment/Uncomment
@@ -250,10 +258,12 @@ rtoqmd(
 - `output_file`: Path for the output Quarto document (optional)
 - `title`: Title for the document (default: “My title”)
 - `author`: Author name (default: “Your name”)
-- `format`: Output format (default: “html”)
-- `render`: Whether to render the .qmd to HTML (default: TRUE)
-- `open_html`: Whether to open the HTML in browser (default: FALSE)
-- `code_fold`: Whether to fold code blocks by default (default: FALSE)
+- `format`: Output format - “html” or “pdf” (default: “html”)
+- `render`: Whether to render the .qmd to output file (default: TRUE)
+- `open_html`: Whether to open the output file after rendering (default:
+  FALSE)
+- `code_fold`: Whether to fold code blocks by default (default: FALSE,
+  HTML only)
 - `number_sections`: Whether to number sections automatically (default:
   TRUE)
 

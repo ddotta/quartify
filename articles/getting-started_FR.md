@@ -132,15 +132,23 @@ document Quarto :
   les commentaires. Les lignes consécutives de commentaires seront
   préservées ensemble, permettant un rendu correct des tableaux
 
+**Important pour les tableaux Markdown :** Les lignes formant un tableau
+doivent être **isolées des autres commentaires** par une ligne vide
+avant et après le tableau. Cela garantit que le tableau est traité comme
+un bloc séparé et sera correctement rendu.
+
 **Exemple de tableau Markdown :**
 
 ``` r
 # Résultats de l'analyse :
+
 # | fruit  | prix   |
 # |--------|--------|
 # | pomme  | 2.05   |
 # | poire  | 1.37   |
 # | orange | 3.09   |
+#
+# Le tableau ci-dessus est correctement isolé.
 ```
 
 **Astuce :** Utilisez le [raccourci

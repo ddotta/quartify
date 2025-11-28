@@ -202,14 +202,23 @@ empty lines between them)</li>
 comments. Consecutive comment lines will be preserved together, allowing
 proper table rendering</li>
 </ul>
+<div class="alert alert-info">
+<p><strong>Important for Markdown Tables:</strong> Table lines must be
+<strong>isolated from other comments</strong> with an empty line before
+and after the table. This ensures the table is treated as a separate
+block and will render correctly.</p>
+</div>
 <p><strong>Markdown table example:</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Analysis results:</span></span>
+<span></span>
 <span><span class="co"># | fruit  | price  |</span></span>
 <span><span class="co"># |--------|--------|</span></span>
 <span><span class="co"># | apple  | 2.05   |</span></span>
 <span><span class="co"># | pear   | 1.37   |</span></span>
-<span><span class="co"># | orange | 3.09   |</span></span></code></pre></div>
+<span><span class="co"># | orange | 3.09   |</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># The table above is properly isolated.</span></span></code></pre></div>
 <p><strong>Tip:</strong> Use RStudio’s <a href="https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment" class="external-link">Comment/Uncomment
 shortcut</a> (<code>Ctrl+Shift+C</code> on Windows/Linux or
 <code>Cmd+Shift+C</code> on Mac) to quickly add or remove comments from
@@ -328,16 +337,17 @@ title”)</li>
 <li>
 <code>author</code>: Author name (default: “Your name”)</li>
 <li>
-<code>format</code>: Output format (default: “html”)</li>
+<code>format</code>: Output format - “html” or “pdf” (default:
+“html”)</li>
 <li>
-<code>render</code>: Whether to render the .qmd to HTML (default:
-TRUE)</li>
+<code>render</code>: Whether to render the .qmd to output file
+(default: TRUE)</li>
 <li>
-<code>open_html</code>: Whether to open the HTML in browser
-(default: FALSE)</li>
+<code>open_html</code>: Whether to open the output file after
+rendering (default: FALSE)</li>
 <li>
 <code>code_fold</code>: Whether to fold code blocks by default
-(default: FALSE)</li>
+(default: FALSE, HTML only)</li>
 <li>
 <code>number_sections</code>: Whether to number sections
 automatically (default: TRUE)</li>
