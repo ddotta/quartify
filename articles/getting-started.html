@@ -194,10 +194,22 @@ document:</p>
 <p><strong>Rules:</strong></p>
 <ul>
 <li>Start with a single <code>#</code> followed by a space</li>
-<li>Multiple consecutive comment lines will each become a separate
-paragraph</li>
-<li>Empty comment lines are ignored</li>
+<li>Multiple consecutive comment lines are grouped together (with no
+empty lines between them)</li>
+<li>Empty comment lines separate comment blocks</li>
+<li>
+<strong>Markdown Tables</strong>: You can include Markdown tables in
+comments. Consecutive comment lines will be preserved together, allowing
+proper table rendering</li>
 </ul>
+<p><strong>Markdown table example:</strong></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Analysis results:</span></span>
+<span><span class="co"># | fruit  | price  |</span></span>
+<span><span class="co"># |--------|--------|</span></span>
+<span><span class="co"># | apple  | 2.05   |</span></span>
+<span><span class="co"># | pear   | 1.37   |</span></span>
+<span><span class="co"># | orange | 3.09   |</span></span></code></pre></div>
 <p><strong>Tip:</strong> Use RStudio’s <a href="https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment" class="external-link">Comment/Uncomment
 shortcut</a> (<code>Ctrl+Shift+C</code> on Windows/Linux or
 <code>Cmd+Shift+C</code> on Mac) to quickly add or remove comments from
@@ -207,7 +219,7 @@ your code.</p>
 <h3 id="code-lines">3. Code Lines<a class="anchor" aria-label="anchor" href="#code-lines"></a>
 </h3>
 <p>Any line that is NOT a comment becomes executable R code:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
@@ -221,17 +233,17 @@ your code.</p>
 </ul>
 <p><strong>Important:</strong> You can include comments WITHIN code
 blocks. These comments will be preserved inside the R code chunk:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="co"># Select a column</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <p>This will render as:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="co"># Select a column</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="co"># Select a column</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>The difference: - <strong>Comments at the start of a line</strong>
 (standalone) → become text OUTSIDE code blocks - <strong>Comments within
 code</strong> (indented or part of a pipeline) → stay INSIDE code
@@ -242,7 +254,7 @@ blocks</p>
 <h2 id="complete-example-example-r">Complete Example: example.R<a class="anchor" aria-label="anchor" href="#complete-example-example-r"></a>
 </h2>
 <p>Here’s the complete example R script included in the package:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Title 2 ####</span></span>
@@ -293,7 +305,7 @@ sections</li>
 <h2 id="customization-options">Customization Options<a class="anchor" aria-label="anchor" href="#customization-options"></a>
 </h2>
 <p>You can customize the output document with several parameters:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span></span>
 <span>  input_file <span class="op">=</span> <span class="st">"my_script.R"</span>,</span>
 <span>  output_file <span class="op">=</span> <span class="st">"my_document.qmd"</span>,</span>
@@ -326,6 +338,9 @@ TRUE)</li>
 <li>
 <code>code_fold</code>: Whether to fold code blocks by default
 (default: FALSE)</li>
+<li>
+<code>number_sections</code>: Whether to number sections
+automatically (default: TRUE)</li>
 </ul>
 </div>
 </div>
@@ -333,7 +348,7 @@ TRUE)</li>
 <h2 id="converting-the-example">Converting the Example<a class="anchor" aria-label="anchor" href="#converting-the-example"></a>
 </h2>
 <p>To convert the example script above:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the example file path</span></span>
 <span><span class="va">example_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example.R"</span>, package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span>
 <span></span>
@@ -348,65 +363,65 @@ TRUE)</li>
 <h3 id="generated-output">Generated Output<a class="anchor" aria-label="anchor" href="#generated-output"></a>
 </h3>
 <p>This produces the following Quarto document:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Iris Dataset Analysis"</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Data Analyst"</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">    embed-resources: true</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">    code-fold: false</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="an">toc-title:</span><span class="co"> Sommaire</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="an">toc-depth:</span><span class="co"> 4  </span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="an">toc-location:</span><span class="co"> left</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">  eval: false</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">  echo: true</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="an">output:</span><span class="co"> </span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">  html_document:</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">  number_sections: TRUE</span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">  output-file: iris_analysis.html</span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a></span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="fu">## Title 2</span></span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a></span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="fu">### Title 3</span></span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a></span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a>Start of statistical processing</span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a></span>
-<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a>Counting the number of observations by species</span>
-<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a></span>
-<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a></span>
-<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
-<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a>  <span class="fu">count</span>(Species)</span>
-<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a></span>
-<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a><span class="fu">### Title 3</span></span>
-<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a></span>
-<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a>Filter the data.frame on Species "setosa"</span>
-<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a></span>
-<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a></span>
-<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
-<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>)</span>
-<span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a></span>
-<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a><span class="fu">#### Title 4</span></span>
-<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a></span>
-<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a>Select column Species</span>
-<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a></span>
-<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a></span>
-<span id="cb14-55"><a href="#cb14-55" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb14-56"><a href="#cb14-56" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
-<span id="cb14-57"><a href="#cb14-57" tabindex="-1"></a>  <span class="co"># Select a column</span></span>
-<span id="cb14-58"><a href="#cb14-58" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
-<span id="cb14-59"><a href="#cb14-59" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Iris Dataset Analysis"</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Data Analyst"</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">    embed-resources: true</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">    code-fold: false</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="an">toc-title:</span><span class="co"> Sommaire</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="an">toc-depth:</span><span class="co"> 4  </span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="an">toc-location:</span><span class="co"> left</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">  eval: false</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">  echo: true</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="an">output:</span><span class="co"> </span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">  html_document:</span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">  number_sections: TRUE</span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">  output-file: iris_analysis.html</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="fu">## Title 2</span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a></span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a><span class="fu">### Title 3</span></span>
+<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a>Start of statistical processing</span>
+<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" tabindex="-1"></a>Counting the number of observations by species</span>
+<span id="cb15-33"><a href="#cb15-33" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="#cb15-34" tabindex="-1"></a></span>
+<span id="cb15-35"><a href="#cb15-35" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb15-36"><a href="#cb15-36" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb15-37"><a href="#cb15-37" tabindex="-1"></a>  <span class="fu">count</span>(Species)</span>
+<span id="cb15-38"><a href="#cb15-38" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-39"><a href="#cb15-39" tabindex="-1"></a></span>
+<span id="cb15-40"><a href="#cb15-40" tabindex="-1"></a><span class="fu">### Title 3</span></span>
+<span id="cb15-41"><a href="#cb15-41" tabindex="-1"></a></span>
+<span id="cb15-42"><a href="#cb15-42" tabindex="-1"></a>Filter the data.frame on Species "setosa"</span>
+<span id="cb15-43"><a href="#cb15-43" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" tabindex="-1"></a></span>
+<span id="cb15-45"><a href="#cb15-45" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb15-46"><a href="#cb15-46" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb15-47"><a href="#cb15-47" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>)</span>
+<span id="cb15-48"><a href="#cb15-48" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-49"><a href="#cb15-49" tabindex="-1"></a></span>
+<span id="cb15-50"><a href="#cb15-50" tabindex="-1"></a><span class="fu">#### Title 4</span></span>
+<span id="cb15-51"><a href="#cb15-51" tabindex="-1"></a></span>
+<span id="cb15-52"><a href="#cb15-52" tabindex="-1"></a>Select column Species</span>
+<span id="cb15-53"><a href="#cb15-53" tabindex="-1"></a></span>
+<span id="cb15-54"><a href="#cb15-54" tabindex="-1"></a></span>
+<span id="cb15-55"><a href="#cb15-55" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb15-56"><a href="#cb15-56" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb15-57"><a href="#cb15-57" tabindex="-1"></a>  <span class="co"># Select a column</span></span>
+<span id="cb15-58"><a href="#cb15-58" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
+<span id="cb15-59"><a href="#cb15-59" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Notice how:</p>
 <ul>
 <li>Each code section becomes a proper markdown header</li>
@@ -448,23 +463,23 @@ original script’s behavior</li>
 </h3>
 <p>By default, <code><a href="../reference/rtoqmd.html">rtoqmd()</a></code> automatically renders your Quarto
 document to HTML:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># This will create both .qmd and .html files, then open the HTML</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"iris_analysis.qmd"</span><span class="op">)</span></span></code></pre></div>
 <p>The function will: 1. Check if Quarto is installed 2. Render the .qmd
 file to HTML 3. Open the HTML file in your default browser (if
 <code>open_html = TRUE</code>)</p>
 <p>If you don’t want automatic rendering:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"iris_analysis.qmd"</span>, render <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="manual-rendering">Manual Rendering<a class="anchor" aria-label="anchor" href="#manual-rendering"></a>
 </h3>
 <p>You can also render manually using Quarto:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">quarto</span> render iris_analysis.qmd</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="ex">quarto</span> render iris_analysis.qmd</span></code></pre></div>
 <p>Or from R:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">quarto</span><span class="fu">::</span><span class="fu">quarto_render</span><span class="op">(</span><span class="st">"iris_analysis.qmd"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Note:</strong> Quarto must be installed on your system.
 Download it from <a href="https://quarto.org/docs/get-started/" class="external-link">quarto.org</a>.</p>

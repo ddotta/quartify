@@ -125,9 +125,23 @@ document Quarto :
 **Règles :**
 
 - Commencez par un seul `#` suivi d’un espace
-- Plusieurs lignes de commentaires consécutives deviendront chacune un
-  paragraphe séparé
-- Les lignes de commentaires vides sont ignorées
+- Plusieurs lignes de commentaires consécutives sont regroupées ensemble
+  (sans ligne vide entre elles)
+- Les lignes de commentaires vides séparent les blocs de commentaires
+- **Tableaux Markdown** : Vous pouvez inclure des tableaux Markdown dans
+  les commentaires. Les lignes consécutives de commentaires seront
+  préservées ensemble, permettant un rendu correct des tableaux
+
+**Exemple de tableau Markdown :**
+
+``` r
+# Résultats de l'analyse :
+# | fruit  | prix   |
+# |--------|--------|
+# | pomme  | 2.05   |
+# | poire  | 1.37   |
+# | orange | 3.09   |
+```
 
 **Astuce :** Utilisez le [raccourci
 Commenter/Décommenter](https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment)
@@ -253,6 +267,8 @@ rtoqmd(
 - `open_html` : Ouvrir le HTML dans le navigateur (par défaut : FALSE)
 - `code_fold` : Replier les blocs de code par défaut (par défaut :
   FALSE)
+- `number_sections` : Numéroter les sections automatiquement (par défaut
+  : TRUE)
 
 ## Conversion de l’exemple
 

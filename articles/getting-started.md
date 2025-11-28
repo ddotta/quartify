@@ -122,9 +122,23 @@ Single `#` comments become explanatory text in the Quarto document:
 **Rules:**
 
 - Start with a single `#` followed by a space
-- Multiple consecutive comment lines will each become a separate
-  paragraph
-- Empty comment lines are ignored
+- Multiple consecutive comment lines are grouped together (with no empty
+  lines between them)
+- Empty comment lines separate comment blocks
+- **Markdown Tables**: You can include Markdown tables in comments.
+  Consecutive comment lines will be preserved together, allowing proper
+  table rendering
+
+**Markdown table example:**
+
+``` r
+# Analysis results:
+# | fruit  | price  |
+# |--------|--------|
+# | apple  | 2.05   |
+# | pear   | 1.37   |
+# | orange | 3.09   |
+```
 
 **Tip:** Use RStudio’s [Comment/Uncomment
 shortcut](https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment)
@@ -240,6 +254,8 @@ rtoqmd(
 - `render`: Whether to render the .qmd to HTML (default: TRUE)
 - `open_html`: Whether to open the HTML in browser (default: FALSE)
 - `code_fold`: Whether to fold code blocks by default (default: FALSE)
+- `number_sections`: Whether to number sections automatically (default:
+  TRUE)
 
 ## Converting the Example
 
