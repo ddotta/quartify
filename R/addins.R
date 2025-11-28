@@ -121,7 +121,7 @@ rtoqmd_addin <- function() {
     miniUI::gadgetTitleBar(
       "Convert R Script to Quarto",
       left = miniUI::miniTitleBarCancelButton("cancel", "\u21a9"),
-      right = miniUI::miniTitleBarButton("done", shiny::HTML("GO \u25b6"), primary = TRUE)
+      right = miniUI::miniTitleBarButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GO \u25b6</span>"), primary = TRUE)
     ),
     shiny::div(id = "loader", class = "loader", shiny::div(class = "spinner")),
     miniUI::miniContentPanel(
