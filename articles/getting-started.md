@@ -368,7 +368,8 @@ rtoqmd(example_file, "iris_analysis.qmd")
 ```
 
 The function will: 1. Check if Quarto is installed 2. Render the .qmd
-file to HTML 3. Open the HTML file in your default browser
+file to HTML 3. Open the HTML file in your default browser (if
+`open_html = TRUE`)
 
 If you don’t want automatic rendering:
 
@@ -397,11 +398,8 @@ quarto::quarto_render("iris_analysis.qmd")
 
 `quartify` is particularly useful for:
 
-1.  **Documentation**: Transform working scripts into professional
-    documentation
-2.  **Sharing analyses**: Create readable reports from existing code
-3.  **Reproducible research**: Combine code and narrative seamlessly
-4.  **Code review**: Present code in a more accessible format
+1.  **Documentation**: Transform working scripts into documentation
+2.  **Code review**: Present code in a more accessible format
 
 ## Comment Rules Summary
 

@@ -105,7 +105,7 @@ exemple simple :</p>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"mon_script.R"</span>, <span class="st">"mon_document.qmd"</span>, render <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Par défaut, <code><a href="../reference/rtoqmd.html">rtoqmd()</a></code> va : 1. Créer le fichier .qmd 2. Le
 générer en HTML avec Quarto 3. Ouvrir le fichier HTML dans votre
-navigateur par défaut</p>
+navigateur (si <code>open_html = TRUE</code>)</p>
 <div class="section level3">
 <h3 id="emplacement-des-fichiers-de-sortie">Emplacement des fichiers de sortie<a class="anchor" aria-label="anchor" href="#emplacement-des-fichiers-de-sortie"></a>
 </h3>
@@ -165,7 +165,8 @@ symboles <code>=</code> à la fin)</li>
 <strong>Niveau 4</strong> : <code>#### Titre ----</code> (au moins 4
 symboles <code>-</code> à la fin)</li>
 </ul>
-<p><strong>Règles importantes :</strong></p>
+<div class="alert alert-warning">
+<p><span style="color: red;"><strong>Règles importantes :</strong></span></p>
 <ul>
 <li>Il doit y avoir au moins un espace entre le texte du titre et les
 symboles de fin</li>
@@ -178,6 +179,7 @@ la cohérence</li>
 des sections de code RStudio</a>
 </li>
 </ul>
+</div>
 <p><strong>Exemple :</strong></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Chargement des données ####</span></span>
@@ -420,9 +422,8 @@ défaut : FALSE)</li>
 <span id="cb14-59"><a href="#cb14-59" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Notez comment :</p>
 <ul>
-<li>Chaque section de code devient un en-tête markdown approprié</li>
-<li>Les commentaires autonomes deviennent des paragraphes de texte
-lisible</li>
+<li>Chaque section de code devient un titre markdown approprié</li>
+<li>Les commentaires deviennent des paragraphes de texte lisible</li>
 <li>Les commentaires en ligne (dans le code) sont préservés dans les
 blocs de code</li>
 <li>Les blocs de code sont correctement formatés avec coloration
@@ -446,7 +447,6 @@ Quarto.</p>
 <p>Cette approche est idéale pour :</p>
 <ul>
 <li>Documenter des scripts existants sans modifier leur exécution</li>
-<li>Créer des références statiques de votre code</li>
 <li>Partager des exemples de code que les lecteurs peuvent copier et
 exécuter dans leur propre environnement</li>
 <li>S’assurer que le processus de documentation n’interfère pas avec le
@@ -465,17 +465,19 @@ document Quarto en HTML :</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ceci créera les fichiers .qmd et .html, puis ouvrira le HTML</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"analyse_iris.qmd"</span><span class="op">)</span></span></code></pre></div>
-<p>La fonction va : 1. Vérifier si Quarto est installé 2. Générer le
-fichier .qmd en HTML 3. Ouvrir le fichier HTML dans votre navigateur par
-défaut</p>
-<p>Si vous ne voulez pas de rendu automatique :</p>
+<p>La fonction va : 1. Vérifier si Quarto est installé (par défaut) 2.
+Générer le fichier .qmd en HTML (par défaut) 3. Ouvrir le fichier HTML
+dans votre navigateur par défaut (si <code>open_html = TRUE</code>)</p>
+<p>Si vous ne voulez pas de rendu automatique en HTML, définissez
+<code>render = FALSE</code> :</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"analyse_iris.qmd"</span>, render <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="rendu-manuel">Rendu manuel<a class="anchor" aria-label="anchor" href="#rendu-manuel"></a>
 </h3>
-<p>Vous pouvez également générer manuellement en utilisant Quarto :</p>
+<p>Vous pouvez bien sûr également générer manuellement le fichier HTML
+en utilisant :</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">quarto</span> render analyse_iris.qmd</span></code></pre></div>
 <p>Ou depuis R :</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -491,13 +493,7 @@ Téléchargez-le depuis <a href="https://quarto.org/docs/get-started/" class="ex
 <ol style="list-style-type: decimal">
 <li>
 <strong>Documentation</strong> : Transformer des scripts de travail
-en documentation professionnelle</li>
-<li>
-<strong>Partage d’analyses</strong> : Créer des rapports lisibles à
-partir de code existant</li>
-<li>
-<strong>Recherche reproductible</strong> : Combiner code et
-narration de manière transparente</li>
+en documentation</li>
 <li>
 <strong>Revue de code</strong> : Présenter le code dans un format
 plus accessible</li>
@@ -542,7 +538,7 @@ plus accessible</li>
 <td><code>#### Supprimer NA ----</code></td>
 </tr>
 <tr class="even">
-<td><strong>Commentaire autonome</strong></td>
+<td><strong>Commentaire</strong></td>
 <td><code># Texte</code></td>
 <td>Paragraphe de texte</td>
 <td><code># Ceci filtre les données</code></td>
@@ -595,7 +591,7 @@ dans les blocs de code</li>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Commencez par la structure</strong> : Définissez d’abord vos
-en-têtes de section pour créer le plan du document</li>
+titres de section pour créer le plan du document</li>
 <li>
 <strong>Utilisez des niveaux cohérents</strong> : Suivez une
 hiérarchie logique (2 → 3 → 4, ne sautez pas de niveaux)</li>
@@ -620,10 +616,10 @@ meilleure documentation dans le document Quarto final</li>
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
 <p><code>quartify</code> facilite la transformation de vos scripts R en
-documents Quarto professionnels sans reformatage manuel. En suivant les
-conventions des sections de code RStudio, vous pouvez automatiquement
-générer une documentation bien structurée et reproductible à partir de
-votre code existant avec une hiérarchie de navigation appropriée.</p>
+documents Quarto sans reformatage manuel. En suivant les conventions des
+sections de code RStudio, vous pouvez automatiquement générer une
+documentation bien structurée et reproductible à partir de votre code
+existant avec une hiérarchie de navigation appropriée.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -13,23 +13,20 @@ en documents Quarto markdown (.qmd).
 
 Le package facilite la transformation de vos analyses R en documents
 Quarto reproductibles et bien structurés, en préservant la structure
-logique de votre code grâce aux sections de code RStudio. Il reconnaît
-la syntaxe standard des sections de code RStudio (`####`, `====`,
-`----`) pour créer des structures de navigation correctement indentées.
+logique de votre code grâce aux [sections de code RStudio](NA). Il
+reconnaît la syntaxe standard des sections de code RStudio (`####`,
+`====`, `----`) pour créer des structures de navigation correctement
+indentées.
 
-### Cas d’usage typique
+### Cas d’usage
 
 Si vous avez un script R fonctionnel qui contient des commentaires, vous
 pourriez vouloir générer un document Quarto à partir de ce script qui
 vous permettra de produire automatiquement une documentation HTML
 affichable. Ceci est particulièrement utile pour :
 
-- **Partager des analyses** : Transformez vos scripts de travail en
-  rapports professionnels sans tout réécrire
 - **Documentation** : Générez automatiquement de la documentation à
   partir de votre code commenté
-- **Recherche reproductible** : Créez des analyses auto-documentées où
-  code et explications sont intégrés de manière transparente
 - **Revue de code** : Présentez votre code dans un format plus lisible
   pour les parties prenantes qui préfèrent les documents formatés aux
   scripts bruts
@@ -39,18 +36,18 @@ affichable. Ceci est particulièrement utile pour :
 - **Conversion automatique** : Transforme vos scripts R (.R) en
   documents Quarto (.qmd)
 - **Support des sections de code RStudio** : Reconnaît les sections de
-  code RStudio (`####`, `====`, `----`) et les convertit en en-têtes
+  code RStudio (`####`, `====`, `----`) et les convertit en titres
   markdown appropriés avec les niveaux d’indentation corrects
 - **Préservation des commentaires** : Les commentaires réguliers sont
   convertis en texte explicatif
 - **Organisation du code** : Le code R est automatiquement organisé en
   blocs exécutables
 - **En-tête YAML personnalisable** : Possibilité de définir le titre,
-  l’auteur et le format de sortie
-- **Table des matières** : Génération automatique d’une table des
-  matières dans le document Quarto avec la profondeur appropriée
+  l’auteur et d’autres paramètres  
+- - **Table des matières** : Génération automatique d’une table des
+    matières dans le document Quarto avec la profondeur appropriée
 - **Génération HTML automatique** : Génère optionnellement le fichier
-  HTML à partir du .qmd et l’ouvre dans le navigateur (activé par
+  HTML à partir du .qmd et l’ouvre dans le navigateur (désactivé par
   défaut)
 
 ## Installation
@@ -65,20 +62,19 @@ devtools::install_github("ddotta/quartify")
 
 ## Utilisation
 
-### Add-in RStudio (Recommandé)
+### Add-in RStudio
 
 La façon la plus simple d’utiliser `quartify` est via l’add-in RStudio
 avec son interface Shiny interactive :
 
 1.  Ouvrez votre script R dans RStudio
 2.  Allez dans le menu **Addins** → **Convert R Script to Quarto**
-3.  Une fenêtre de dialogue apparaîtra (700x800px) avec :
+3.  Une fenêtre de dialogue apparaîtra avec :
     - Boutons de sélection de langue **EN/FR** en haut à droite
     - Formulaire pour spécifier :
       - Le chemin du fichier de sortie
       - Le titre du document et le nom de l’auteur
-      - Les options de génération (générer HTML, ouvrir HTML, ouvrir
-        QMD)
+      - Les options de génération
 4.  Cliquez sur **GO** pour convertir votre script (ou ↩︎ pour annuler)
 
 L’interface s’adapte à votre choix de langue, affichant tous les
@@ -106,8 +102,8 @@ rtoqmd("mon_script.R",
        title = "Mon analyse statistique",
        author = "Votre nom",
        format = "html",
-       render = TRUE,      # Générer le HTML (par défaut)
-       open_html = TRUE)   # Ouvrir le HTML dans le navigateur (par défaut)
+       render = TRUE,      # Générer le HTML 
+       open_html = TRUE)   # Ouvrir le HTML dans le navigateur 
 ```
 
 ### Utilisation du fichier exemple
@@ -231,7 +227,7 @@ document RStudio.
 
 Le document .qmd généré contient :  
 - Un en-tête YAML complet avec configuration de la table des matières  
-- Des en-têtes correctement structurés à partir des sections de code
+- Des titres correctement structurés à partir des sections de code
 RStudio  
 - Des explications textuelles à partir de vos commentaires  
 - **Chunks de code non exécutables** pour une documentation statique

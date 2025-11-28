@@ -41,7 +41,7 @@ rtoqmd("mon_script.R", "mon_document.qmd", render = FALSE)
 Par défaut,
 [`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md) va
 : 1. Créer le fichier .qmd 2. Le générer en HTML avec Quarto 3. Ouvrir
-le fichier HTML dans votre navigateur par défaut
+le fichier HTML dans votre navigateur (si `open_html = TRUE`)
 
 ### Emplacement des fichiers de sortie
 
@@ -339,8 +339,8 @@ iris %>%
 
 Notez comment :
 
-- Chaque section de code devient un en-tête markdown approprié
-- Les commentaires autonomes deviennent des paragraphes de texte lisible
+- Chaque section de code devient un titre markdown approprié
+- Les commentaires deviennent des paragraphes de texte lisible
 - Les commentaires en ligne (dans le code) sont préservés dans les blocs
   de code
 - Les blocs de code sont correctement formatés avec coloration
@@ -363,7 +363,6 @@ Quarto.
 Cette approche est idéale pour :
 
 - Documenter des scripts existants sans modifier leur exécution
-- Créer des références statiques de votre code
 - Partager des exemples de code que les lecteurs peuvent copier et
   exécuter dans leur propre environnement
 - S’assurer que le processus de documentation n’interfère pas avec le
@@ -382,11 +381,12 @@ génère automatiquement votre document Quarto en HTML :
 rtoqmd(example_file, "analyse_iris.qmd")
 ```
 
-La fonction va : 1. Vérifier si Quarto est installé 2. Générer le
-fichier .qmd en HTML 3. Ouvrir le fichier HTML dans votre navigateur par
-défaut
+La fonction va : 1. Vérifier si Quarto est installé (par défaut) 2.
+Générer le fichier .qmd en HTML (par défaut) 3. Ouvrir le fichier HTML
+dans votre navigateur par défaut (si `open_html = TRUE`)
 
-Si vous ne voulez pas de rendu automatique :
+Si vous ne voulez pas de rendu automatique en HTML, définissez
+`render = FALSE` :
 
 ``` r
 rtoqmd(example_file, "analyse_iris.qmd", render = FALSE)
@@ -394,7 +394,8 @@ rtoqmd(example_file, "analyse_iris.qmd", render = FALSE)
 
 ### Rendu manuel
 
-Vous pouvez également générer manuellement en utilisant Quarto :
+Vous pouvez bien sûr également générer manuellement le fichier HTML en
+utilisant :
 
 ``` bash
 quarto render analyse_iris.qmd
@@ -414,12 +415,8 @@ depuis [quarto.org](https://quarto.org/docs/get-started/).
 `quartify` est particulièrement utile pour :
 
 1.  **Documentation** : Transformer des scripts de travail en
-    documentation professionnelle
-2.  **Partage d’analyses** : Créer des rapports lisibles à partir de
-    code existant
-3.  **Recherche reproductible** : Combiner code et narration de manière
-    transparente
-4.  **Revue de code** : Présenter le code dans un format plus accessible
+    documentation
+2.  **Revue de code** : Présenter le code dans un format plus accessible
 
 ## Résumé des règles de commentaires
 
@@ -428,7 +425,7 @@ depuis [quarto.org](https://quarto.org/docs/get-started/).
 | **En-tête niveau 2**     | `## Titre ####`     | Markdown `## Titre`   | `## Analyse de données ####` |
 | **En-tête niveau 3**     | `### Titre ====`    | Markdown `### Titre`  | `### Prétraitement ====`     |
 | **En-tête niveau 4**     | `#### Titre ----`   | Markdown `#### Titre` | `#### Supprimer NA ----`     |
-| **Commentaire autonome** | `# Texte`           | Paragraphe de texte   | `# Ceci filtre les données`  |
+| **Commentaire**          | `# Texte`           | Paragraphe de texte   | `# Ceci filtre les données`  |
 | **Code**                 | Sans préfixe `#`    | Chunk de code R       | `iris %>% filter(...)`       |
 | **Commentaire en ligne** | `# Texte` dans code | Reste dans chunk      | `iris %>% # commentaire`     |
 
@@ -451,7 +448,7 @@ depuis [quarto.org](https://quarto.org/docs/get-started/).
 
 ## Conseils et bonnes pratiques
 
-1.  **Commencez par la structure** : Définissez d’abord vos en-têtes de
+1.  **Commencez par la structure** : Définissez d’abord vos titres de
     section pour créer le plan du document
 2.  **Utilisez des niveaux cohérents** : Suivez une hiérarchie logique
     (2 → 3 → 4, ne sautez pas de niveaux)
@@ -469,7 +466,7 @@ depuis [quarto.org](https://quarto.org/docs/get-started/).
 ## Conclusion
 
 `quartify` facilite la transformation de vos scripts R en documents
-Quarto professionnels sans reformatage manuel. En suivant les
-conventions des sections de code RStudio, vous pouvez automatiquement
-générer une documentation bien structurée et reproductible à partir de
-votre code existant avec une hiérarchie de navigation appropriée.
+Quarto sans reformatage manuel. En suivant les conventions des sections
+de code RStudio, vous pouvez automatiquement générer une documentation
+bien structurée et reproductible à partir de votre code existant avec
+une hiérarchie de navigation appropriée.

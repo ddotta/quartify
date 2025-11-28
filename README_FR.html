@@ -46,16 +46,12 @@
 <div class="section level2">
 <h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a></h2>
 <p><code>quartify</code> est un package R qui convertit automatiquement des scripts R en documents Quarto markdown (.qmd).</p>
-<p>Le package facilite la transformation de vos analyses R en documents Quarto reproductibles et bien structurés, en préservant la structure logique de votre code grâce aux sections de code RStudio. Il reconnaît la syntaxe standard des sections de code RStudio (<code>####</code>, <code>====</code>, <code>----</code>) pour créer des structures de navigation correctement indentées.</p>
+<p>Le package facilite la transformation de vos analyses R en documents Quarto reproductibles et bien structurés, en préservant la structure logique de votre code grâce aux <a href="(https://docs.posit.co/ide/user/ide/guide/code/code-sections.html)" class="external-link">sections de code RStudio</a>. Il reconnaît la syntaxe standard des sections de code RStudio (<code>####</code>, <code>====</code>, <code>----</code>) pour créer des structures de navigation correctement indentées.</p>
 <div class="section level3">
-<h3 id="cas-dusage-typique">Cas d’usage typique<a class="anchor" aria-label="anchor" href="#cas-dusage-typique"></a></h3>
+<h3 id="cas-dusage">Cas d’usage<a class="anchor" aria-label="anchor" href="#cas-dusage"></a></h3>
 <p>Si vous avez un script R fonctionnel qui contient des commentaires, vous pourriez vouloir générer un document Quarto à partir de ce script qui vous permettra de produire automatiquement une documentation HTML affichable. Ceci est particulièrement utile pour :</p>
 <ul><li>
-<strong>Partager des analyses</strong> : Transformez vos scripts de travail en rapports professionnels sans tout réécrire</li>
-<li>
 <strong>Documentation</strong> : Générez automatiquement de la documentation à partir de votre code commenté</li>
-<li>
-<strong>Recherche reproductible</strong> : Créez des analyses auto-documentées où code et explications sont intégrés de manière transparente</li>
 <li>
 <strong>Revue de code</strong> : Présentez votre code dans un format plus lisible pour les parties prenantes qui préfèrent les documents formatés aux scripts bruts</li>
 </ul></div>
@@ -65,17 +61,18 @@
 <ul><li>
 <strong>Conversion automatique</strong> : Transforme vos scripts R (.R) en documents Quarto (.qmd)</li>
 <li>
-<strong>Support des sections de code RStudio</strong> : Reconnaît les sections de code RStudio (<code>####</code>, <code>====</code>, <code>----</code>) et les convertit en en-têtes markdown appropriés avec les niveaux d’indentation corrects</li>
+<strong>Support des sections de code RStudio</strong> : Reconnaît les sections de code RStudio (<code>####</code>, <code>====</code>, <code>----</code>) et les convertit en titres markdown appropriés avec les niveaux d’indentation corrects</li>
 <li>
 <strong>Préservation des commentaires</strong> : Les commentaires réguliers sont convertis en texte explicatif</li>
 <li>
 <strong>Organisation du code</strong> : Le code R est automatiquement organisé en blocs exécutables</li>
 <li>
-<strong>En-tête YAML personnalisable</strong> : Possibilité de définir le titre, l’auteur et le format de sortie</li>
-<li>
+<strong>En-tête YAML personnalisable</strong> : Possibilité de définir le titre, l’auteur et d’autres paramètres<br></li>
+<li><ul><li>
 <strong>Table des matières</strong> : Génération automatique d’une table des matières dans le document Quarto avec la profondeur appropriée</li>
+</ul></li>
 <li>
-<strong>Génération HTML automatique</strong> : Génère optionnellement le fichier HTML à partir du .qmd et l’ouvre dans le navigateur (activé par défaut)</li>
+<strong>Génération HTML automatique</strong> : Génère optionnellement le fichier HTML à partir du .qmd et l’ouvre dans le navigateur (désactivé par défaut)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a></h2>
@@ -87,17 +84,17 @@
 <div class="section level2">
 <h2 id="utilisation">Utilisation<a class="anchor" aria-label="anchor" href="#utilisation"></a></h2>
 <div class="section level3">
-<h3 id="add-in-rstudio-recommandé">Add-in RStudio (Recommandé)<a class="anchor" aria-label="anchor" href="#add-in-rstudio-recommand%C3%A9"></a></h3>
+<h3 id="add-in-rstudio">Add-in RStudio<a class="anchor" aria-label="anchor" href="#add-in-rstudio"></a></h3>
 <p>La façon la plus simple d’utiliser <code>quartify</code> est via l’add-in RStudio avec son interface Shiny interactive :</p>
 <ol style="list-style-type: decimal"><li>Ouvrez votre script R dans RStudio</li>
 <li>Allez dans le menu <strong>Addins</strong> → <strong>Convert R Script to Quarto</strong>
 </li>
-<li>Une fenêtre de dialogue apparaîtra (700x800px) avec :
+<li>Une fenêtre de dialogue apparaîtra avec :
 <ul><li>Boutons de sélection de langue <strong>EN/FR</strong> en haut à droite</li>
 <li>Formulaire pour spécifier :
 <ul><li>Le chemin du fichier de sortie</li>
 <li>Le titre du document et le nom de l’auteur</li>
-<li>Les options de génération (générer HTML, ouvrir HTML, ouvrir QMD)</li>
+<li>Les options de génération</li>
 </ul></li>
 </ul></li>
 <li>Cliquez sur <strong>GO</strong> pour convertir votre script (ou ↩︎ pour annuler)</li>
@@ -123,8 +120,8 @@
 <span>       title <span class="op">=</span> <span class="st">"Mon analyse statistique"</span>,</span>
 <span>       author <span class="op">=</span> <span class="st">"Votre nom"</span>,</span>
 <span>       format <span class="op">=</span> <span class="st">"html"</span>,</span>
-<span>       render <span class="op">=</span> <span class="cn">TRUE</span>,      <span class="co"># Générer le HTML (par défaut)</span></span>
-<span>       open_html <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>   <span class="co"># Ouvrir le HTML dans le navigateur (par défaut)</span></span></code></pre></div>
+<span>       render <span class="op">=</span> <span class="cn">TRUE</span>,      <span class="co"># Générer le HTML </span></span>
+<span>       open_html <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>   <span class="co"># Ouvrir le HTML dans le navigateur </span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="utilisation-du-fichier-exemple">Utilisation du fichier exemple<a class="anchor" aria-label="anchor" href="#utilisation-du-fichier-exemple"></a></h3>
@@ -219,7 +216,7 @@
 <h2 id="sortie-et-documentation">Sortie et documentation<a class="anchor" aria-label="anchor" href="#sortie-et-documentation"></a></h2>
 <p>Le document .qmd généré contient :<br>
 - Un en-tête YAML complet avec configuration de la table des matières<br>
-- Des en-têtes correctement structurés à partir des sections de code RStudio<br>
+- Des titres correctement structurés à partir des sections de code RStudio<br>
 - Des explications textuelles à partir de vos commentaires<br>
 - <strong>Chunks de code non exécutables</strong> pour une documentation statique</p>
 <p>📝 <strong>Pour un exemple complet de la sortie générée</strong>, consultez la <a href="https://ddotta.github.io/quartify/articles/getting-started_FR.html#sortie-g%C3%A9n%C3%A9r%C3%A9e">vignette Démarrage</a></p>

@@ -160,7 +160,8 @@ levels. These sections MUST follow this exact pattern:</p>
 <strong>Level 4</strong>: <code>#### Title ----</code> (at least 4
 <code>-</code> symbols at the end)</li>
 </ul>
-<p><strong>Important rules:</strong></p>
+<div class="alert alert-warning">
+<p><span style="color: red;"><strong>Important rules:</strong></span></p>
 <ul>
 <li>There must be at least one space between the title text and the
 trailing symbols</li>
@@ -172,6 +173,7 @@ the RStudio convention is recommended for consistency</li>
 code sections convention</a>
 </li>
 </ul>
+</div>
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Data Loading ####</span></span>
@@ -450,7 +452,8 @@ document to HTML:</p>
 <code class="sourceCode R"><span><span class="co"># This will create both .qmd and .html files, then open the HTML</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"iris_analysis.qmd"</span><span class="op">)</span></span></code></pre></div>
 <p>The function will: 1. Check if Quarto is installed 2. Render the .qmd
-file to HTML 3. Open the HTML file in your default browser</p>
+file to HTML 3. Open the HTML file in your default browser (if
+<code>open_html = TRUE</code>)</p>
 <p>If you don’t want automatic rendering:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"iris_analysis.qmd"</span>, render <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -474,13 +477,7 @@ Download it from <a href="https://quarto.org/docs/get-started/" class="external-
 <ol style="list-style-type: decimal">
 <li>
 <strong>Documentation</strong>: Transform working scripts into
-professional documentation</li>
-<li>
-<strong>Sharing analyses</strong>: Create readable reports from
-existing code</li>
-<li>
-<strong>Reproducible research</strong>: Combine code and narrative
-seamlessly</li>
+documentation</li>
 <li>
 <strong>Code review</strong>: Present code in a more accessible
 format</li>
