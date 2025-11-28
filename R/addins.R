@@ -193,9 +193,9 @@ rtoqmd_addin <- function() {
             shiny::div(
               style = "width: 100%;",
               shiny::checkboxInput(
-                "open_html",
-                shiny::textOutput("label_open_html"),
-                value = FALSE,
+                "number_sections",
+                shiny::textOutput("label_number_sections"),
+                value = TRUE,
                 width = "100%"
               )
             ),
@@ -211,9 +211,9 @@ rtoqmd_addin <- function() {
             shiny::div(
               style = "width: 100%;",
               shiny::checkboxInput(
-                "number_sections",
-                shiny::textOutput("label_number_sections"),
-                value = TRUE,
+                "open_html",
+                shiny::textOutput("label_open_html"),
+                value = FALSE,
                 width = "100%"
               )
             )
