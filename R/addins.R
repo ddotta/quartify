@@ -342,7 +342,7 @@ rtoqmd_addin <- function() {
   }
   
   # Run the gadget
-  viewer <- shiny::dialogViewer("Convert to Quarto", width = 700, height = 800)
+  viewer <- shiny::browserViewer()
   shiny::runGadget(ui, server, viewer = viewer)
   
   invisible()
