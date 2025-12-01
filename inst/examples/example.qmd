@@ -20,6 +20,10 @@ output:
   output-file: example.html
 ---
 
+
+
+
+
 ```{r}
 library(dplyr)
 ```
@@ -69,3 +73,27 @@ You can include markdown tables in comments:
 iris %>%
   count(Species)
 ```
+
+## Callouts
+
+::: {.callout-note title="Important Note"}
+Callouts are special blocks that highlight important information.
+They are converted from R comments to Quarto callout syntax.
+:::
+
+::: {.callout-tip title="Useful Tip"}
+Use callouts to draw attention to key points in your analysis.
+:::
+
+::: {.callout-warning title="Warning"}
+This feature requires Quarto 1.0 or later.
+:::
+
+::: {.callout-caution}
+Callouts can also be used without a title.
+:::
+
+::: {.callout-important title="Key Takeaway"}
+The iris dataset has 150 observations across 3 species.
+:::
+

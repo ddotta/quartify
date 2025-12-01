@@ -22,6 +22,36 @@
 #' If metadata is found in the script, it will override the corresponding function parameters.
 #' These metadata lines are removed from the document body and only appear in the YAML header.
 #'
+#' @section Callouts:
+#' The function converts special comment patterns into Quarto callouts.
+#' Callouts are special blocks that highlight important information.
+#' Supported callout types: \code{note}, \code{tip}, \code{warning}, \code{caution}, \code{important}.
+#' 
+#' Syntax:
+#' \itemize{
+#'   \item \strong{With title}: \code{# callout-tip - Your Title}
+#'   \item \strong{Without title}: \code{# callout-tip}
+#' }
+#' 
+#' All subsequent comment lines become the callout content until an empty line or code is encountered.
+#' 
+#' Example in R script:
+#' \preformatted{
+#' # callout-note - Important Note
+#' # This is the content of the note.
+#' # It can span multiple lines.
+#' 
+#' x <- 1
+#' }
+#' 
+#' Becomes in Quarto:
+#' \preformatted{
+#' ::: {.callout-note title="Important Note"}
+#' This is the content of the note.
+#' It can span multiple lines.
+#' :::
+#' }
+#'
 #' @param input_file Path to the input R script file
 #' @param output_file Path to the output Quarto markdown file (optional, defaults to same name with .qmd extension)
 #' @param title Title for the Quarto document (default: "My title"). Can be overridden by \code{# Title :} or \code{# Titre :} in the script
@@ -160,6 +190,10 @@ rtoqmd <- function(input_file, output_file = NULL,
   i <- 1
   code_block <- character()
   comment_block <- character()
+  in_callout <- FALSE
+  callout_content <- character()
+  callout_type <- ""
+  callout_title <- ""
   
   while (i <= length(lines)) {
     line <- lines[i]
@@ -242,8 +276,8 @@ rtoqmd <- function(input_file, output_file = NULL,
       output <- c(output, paste0("#### ", title_text))
       output <- c(output, "")
       
-    } else if (grepl("^#", line)) {
-      # Regular comment
+    } else if (grepl("^#\\s*callout-(note|tip|warning|caution|important)(?:\\s*-\\s*(.+))?\\s*$", line, ignore.case = TRUE)) {
+      # Callout start: # callout-tip - Title
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
@@ -253,14 +287,6 @@ rtoqmd <- function(input_file, output_file = NULL,
         code_block <- character()
       }
       
-      # Convert to plain text and accumulate in comment block
-      comment_text <- sub("^#\\s*", "", line)
-      if (nzchar(comment_text)) {
-        comment_block <- c(comment_block, comment_text)
-      }
-      
-    } else if (grepl("^\\s*$", line)) {
-      # Empty line
       # Flush any accumulated comments
       if (length(comment_block) > 0) {
         output <- c(output, comment_block)
@@ -268,8 +294,92 @@ rtoqmd <- function(input_file, output_file = NULL,
         comment_block <- character()
       }
       
+      # Extract callout type and optional title
+      callout_match <- regmatches(line, regexec("^#\\s*callout-(note|tip|warning|caution|important)(?:\\s*-\\s*(.+))?\\s*$", line, ignore.case = TRUE))[[1]]
+      callout_type <- tolower(callout_match[2])
+      callout_title <- if (length(callout_match) >= 3 && nzchar(callout_match[3])) trimws(callout_match[3]) else ""
+      
+      in_callout <- TRUE
+      callout_content <- character()
+      
+    } else if (grepl("^#", line)) {
+      # Regular comment
+      if (in_callout) {
+        # If we're in a callout, accumulate the content
+        comment_text <- sub("^#\\s*", "", line)
+        if (nzchar(comment_text)) {
+          callout_content <- c(callout_content, comment_text)
+        } else {
+          # Empty comment line in callout - add blank line
+          callout_content <- c(callout_content, "")
+        }
+      } else {
+        # Flush any accumulated code
+        if (length(code_block) > 0) {
+          output <- c(output, "```{r}")
+          output <- c(output, code_block)
+          output <- c(output, "```")
+          output <- c(output, "")
+          code_block <- character()
+        }
+        
+        # Convert to plain text and accumulate in comment block
+        comment_text <- sub("^#\\s*", "", line)
+        if (nzchar(comment_text)) {
+          comment_block <- c(comment_block, comment_text)
+        } else {
+          # Empty comment line - add blank line
+          comment_block <- c(comment_block, "")
+        }
+      }
+      
+    } else if (grepl("^\\s*$", line)) {
+      # Empty line
+      if (in_callout) {
+        # End of callout - write it out
+        if (nzchar(callout_title)) {
+          output <- c(output, paste0("::: {.callout-", callout_type, ' title="', callout_title, '"}'))
+        } else {
+          output <- c(output, paste0("::: {.callout-", callout_type, "}"))
+        }
+        output <- c(output, callout_content)
+        output <- c(output, ":::")
+        output <- c(output, "")
+        
+        # Reset callout state
+        in_callout <- FALSE
+        callout_content <- character()
+        callout_type <- ""
+        callout_title <- ""
+      } else {
+        # Flush any accumulated comments
+        if (length(comment_block) > 0) {
+          output <- c(output, comment_block)
+          output <- c(output, "")
+          comment_block <- character()
+        }
+      }
+      
     } else {
       # Code line
+      if (in_callout) {
+        # End callout before code
+        if (nzchar(callout_title)) {
+          output <- c(output, paste0("::: {.callout-", callout_type, ' title="', callout_title, '"}'))
+        } else {
+          output <- c(output, paste0("::: {.callout-", callout_type, "}"))
+        }
+        output <- c(output, callout_content)
+        output <- c(output, ":::")
+        output <- c(output, "")
+        
+        # Reset callout state
+        in_callout <- FALSE
+        callout_content <- character()
+        callout_type <- ""
+        callout_title <- ""
+      }
+      
       # Flush any accumulated comments
       if (length(comment_block) > 0) {
         output <- c(output, comment_block)
@@ -281,6 +391,18 @@ rtoqmd <- function(input_file, output_file = NULL,
     }
     
     i <- i + 1
+  }
+  
+  # Flush any remaining callout
+  if (in_callout) {
+    if (nzchar(callout_title)) {
+      output <- c(output, paste0("::: {.callout-", callout_type, ' title="', callout_title, '"}'))
+    } else {
+      output <- c(output, paste0("::: {.callout-", callout_type, "}"))
+    }
+    output <- c(output, callout_content)
+    output <- c(output, ":::")
+    output <- c(output, "")
   }
   
   # Flush any remaining comments

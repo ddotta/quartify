@@ -229,12 +229,46 @@ iris %>%
   select(Species)
 ```
 
+#### 5. Callouts
+
+Callouts are special blocks that highlight important information. Five types are supported: `note`, `tip`, `warning`, `caution`, `important`.
+
+**Syntax in R script:**
+
+```r
+# callout-note - Important Note
+# This is the content of the callout.
+# It can span multiple lines.
+
+# Empty line or code ends the callout
+x <- 1
+```
+
+**Converts to Quarto:**
+
+```markdown
+::: {.callout-note title="Important Note"}
+This is the content of the callout.
+It can span multiple lines.
+:::
+```
+
+**Without title:**
+
+```r
+# callout-tip
+# This is a tip without a title.
+```
+
+Callouts end when encountering an empty line, code, or another section.
+
 **Important rules:**
 
 - Always include a space after `#` for comments
 - Section headers MUST have at least 4 trailing symbols
 - **Standalone comments with `#` at line start** → become text outside code blocks
 - **Inline comments within code** → stay inside code blocks
+- **Callouts** → `# callout-TYPE` or `# callout-TYPE - Title`
 - Consecutive code lines are grouped in the same block
 - Empty lines between blocks are ignored
 

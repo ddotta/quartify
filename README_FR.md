@@ -228,12 +228,46 @@ iris %>%
   select(Species)
 ```
 
+#### 5. Callouts (Encadrés)
+
+Les callouts sont des blocs spéciaux qui mettent en évidence des informations importantes. Cinq types sont supportés : `note`, `tip`, `warning`, `caution`, `important`.
+
+**Syntaxe dans le script R :**
+
+```r
+# callout-note - Note importante
+# Ceci est le contenu du callout.
+# Il peut s'étendre sur plusieurs lignes.
+
+# Une ligne vide ou du code termine le callout
+x <- 1
+```
+
+**Se convertit en Quarto :**
+
+```markdown
+::: {.callout-note title="Note importante"}
+Ceci est le contenu du callout.
+Il peut s'étendre sur plusieurs lignes.
+:::
+```
+
+**Sans titre :**
+
+```r
+# callout-tip
+# Ceci est un conseil sans titre.
+```
+
+Les callouts se terminent lorsqu'on rencontre une ligne vide, du code, ou une autre section.
+
 **Règles importantes :**
 
 - Toujours inclure un espace après `#` pour les commentaires
 - Les en-têtes de section DOIVENT avoir au moins 4 symboles de fin
 - **Les commentaires avec un `#` en début de ligne** → deviennent du texte en dehors des blocs de code
 - **Les commentaires dans le code** → restent à l'intérieur des blocs de code
+- **Callouts** → `# callout-TYPE` ou `# callout-TYPE - Titre`
 - Les lignes de code consécutives sont regroupées dans le même bloc
 - Les lignes vides entre les blocs sont ignorées
 

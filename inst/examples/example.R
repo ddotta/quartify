@@ -37,7 +37,7 @@ iris %>%
 ## Markdown tables in comments ####
 
 # You can include markdown tables in comments:
-
+#
 # | Species    | Count |
 # |------------|-------|
 # | setosa     | 50    |
@@ -46,3 +46,22 @@ iris %>%
 
 iris %>%
   count(Species)
+
+## Callouts ####
+
+# callout-note - Important Note
+# Callouts are special blocks that highlight important information.
+# They are converted from R comments to Quarto callout syntax.
+
+# callout-tip - Useful Tip
+# Use callouts to draw attention to key points in your analysis.
+
+# callout-warning - Warning
+# This feature requires Quarto 1.0 or later.
+
+# callout-caution
+# Callouts can also be used without a title.
+
+# callout-important - Key Takeaway
+# The iris dataset has 150 observations across 3 species.
+

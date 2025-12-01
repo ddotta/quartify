@@ -495,6 +495,94 @@ This function:
 2. **Code review**: Present code in a more accessible format
 3. **Batch conversion**: Automatically convert all scripts in a project
 
+## Callouts
+
+Callouts are special blocks that highlight important information in your Quarto documents. `quartify` supports automatic conversion of callout comments.
+
+### Syntax
+
+In your R script, use this syntax:
+
+```r
+# callout-tip - Tip with Title
+# This is the content of the note.
+# It can span multiple lines.
+
+# Code or empty line ends the callout
+x <- 1
+```
+
+This converts to:
+
+```markdown
+::: {.callout-tip title="Tip with Title"}
+This is the content of the note.
+It can span multiple lines.
+:::
+```
+
+### Callout Types
+
+Five callout types are supported:
+
+- `# callout-note` - Blue information box
+- `# callout-tip` - Green tip box
+- `# callout-warning` - Orange warning box
+- `# callout-caution` - Red caution box
+- `# callout-important` - Red important box
+
+### With or Without Title
+
+**With title:**
+```r
+# callout-tip - Useful Tip
+# Use callouts to highlight key information.
+```
+
+**Without title:**
+```r
+# callout-tip
+# Use callouts to highlight key information.
+```
+
+### Examples
+
+```r
+# callout-note - Data Requirements
+# The input data must contain columns: Species, Sepal.Length, Petal.Length
+
+# callout-warning
+# This operation may take several minutes with large datasets
+
+# callout-tip - Performance Optimization
+# Use data.table for datasets larger than 1GB
+
+library(dplyr)
+iris %>% head()
+```
+
+### Rules
+
+- Callout starts with `# callout-TYPE` (optionally followed by ` - Title`)
+- All subsequent comment lines are part of the callout content
+- Callout ends when encountering:
+  - An empty line
+  - A code line
+  - Another section or callout
+- Title is optional (omit the ` - Title` part)
+
+::: {.alert .alert-info}
+**Tip:** Create RStudio snippets for callouts to speed up your workflow:
+
+```
+snippet callout
+	# callout-${1:note} - ${2:Title}
+	# ${0}
+```
+
+Type `callout` followed by `Tab` to insert the template.
+:::
+
 ## Comment Rules Summary
 
 | Type | Syntax | Result | Example |
@@ -503,6 +591,7 @@ This function:
 | **Level 3 Header** | `### Title ====` | Markdown `### Title` | `### Preprocessing ====` |
 | **Level 4 Header** | `#### Title ----` | Markdown `#### Title` | `#### Remove NA ----` |
 | **Standalone Comment** | `# Text` | Plain text paragraph | `# This filters the data` |
+| **Callout** | `# callout-TYPE - Title` | Quarto callout block | `# callout-note - Important` |
 | **Code** | No `#` prefix | R code chunk | `iris %>% filter(...)` |
 | **Inline Comment** | `  # Text` in code | Stays in code chunk | `iris %>% # comment` |
 

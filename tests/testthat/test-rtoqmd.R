@@ -395,3 +395,146 @@ test_that("rtoqmd metadata overrides function parameters", {
   unlink(temp_r)
   unlink(temp_qmd)
 })
+
+test_that("rtoqmd converts callout-note with title", {
+  temp_r <- tempfile(fileext = ".R")
+  temp_qmd <- tempfile(fileext = ".qmd")
+  
+  writeLines(c(
+    "# callout-note - This is a note",
+    "# This is the content of the note",
+    "# It can have multiple lines",
+    "",
+    "x <- 1"
+  ), temp_r)
+  
+  rtoqmd(temp_r, temp_qmd, render = FALSE)
+  output <- readLines(temp_qmd)
+  
+  expect_true(any(grepl('^::: \\{\\.callout-note title="This is a note"\\}$', output)))
+  expect_true(any(grepl("This is the content of the note", output)))
+  expect_true(any(grepl("It can have multiple lines", output)))
+  expect_true(any(grepl("^:::$", output)))
+  
+  unlink(temp_r)
+  unlink(temp_qmd)
+})
+
+test_that("rtoqmd converts callout-tip without title", {
+  temp_r <- tempfile(fileext = ".R")
+  temp_qmd <- tempfile(fileext = ".qmd")
+  
+  writeLines(c(
+    "# callout-tip",
+    "# Here is a useful tip",
+    "",
+    "x <- 1"
+  ), temp_r)
+  
+  rtoqmd(temp_r, temp_qmd, render = FALSE)
+  output <- readLines(temp_qmd)
+  
+  expect_true(any(grepl("^::: \\{\\.callout-tip\\}$", output)))
+  expect_true(any(grepl("Here is a useful tip", output)))
+  expect_true(any(grepl("^:::$", output)))
+  
+  unlink(temp_r)
+  unlink(temp_qmd)
+})
+
+test_that("rtoqmd converts callout-warning with title", {
+  temp_r <- tempfile(fileext = ".R")
+  temp_qmd <- tempfile(fileext = ".qmd")
+  
+  writeLines(c(
+    "# callout-warning - Important Warning",
+    "# Be careful with this operation",
+    "",
+    "x <- 1"
+  ), temp_r)
+  
+  rtoqmd(temp_r, temp_qmd, render = FALSE)
+  output <- readLines(temp_qmd)
+  
+  expect_true(any(grepl('^::: \\{\\.callout-warning title="Important Warning"\\}$', output)))
+  expect_true(any(grepl("Be careful with this operation", output)))
+  expect_true(any(grepl("^:::$", output)))
+  
+  unlink(temp_r)
+  unlink(temp_qmd)
+})
+
+test_that("rtoqmd converts callout-caution with title", {
+  temp_r <- tempfile(fileext = ".R")
+  temp_qmd <- tempfile(fileext = ".qmd")
+  
+  writeLines(c(
+    "# callout-caution - Proceed with Caution",
+    "# This may cause unexpected results",
+    "",
+    "x <- 1"
+  ), temp_r)
+  
+  rtoqmd(temp_r, temp_qmd, render = FALSE)
+  output <- readLines(temp_qmd)
+  
+  expect_true(any(grepl('^::: \\{\\.callout-caution title="Proceed with Caution"\\}$', output)))
+  expect_true(any(grepl("This may cause unexpected results", output)))
+  expect_true(any(grepl("^:::$", output)))
+  
+  unlink(temp_r)
+  unlink(temp_qmd)
+})
+
+test_that("rtoqmd converts callout-important without title", {
+  temp_r <- tempfile(fileext = ".R")
+  temp_qmd <- tempfile(fileext = ".qmd")
+  
+  writeLines(c(
+    "# callout-important",
+    "# This is very important information",
+    "# Do not ignore this",
+    "",
+    "x <- 1"
+  ), temp_r)
+  
+  rtoqmd(temp_r, temp_qmd, render = FALSE)
+  output <- readLines(temp_qmd)
+  
+  expect_true(any(grepl("^::: \\{\\.callout-important\\}$", output)))
+  expect_true(any(grepl("This is very important information", output)))
+  expect_true(any(grepl("Do not ignore this", output)))
+  expect_true(any(grepl("^:::$", output)))
+  
+  unlink(temp_r)
+  unlink(temp_qmd)
+})
+
+test_that("rtoqmd handles multiple callouts in same file", {
+  temp_r <- tempfile(fileext = ".R")
+  temp_qmd <- tempfile(fileext = ".qmd")
+  
+  writeLines(c(
+    "# callout-note - First Note",
+    "# Content of first note",
+    "",
+    "x <- 1",
+    "",
+    "# callout-tip - Second Tip",
+    "# Content of second tip",
+    "",
+    "y <- 2"
+  ), temp_r)
+  
+  rtoqmd(temp_r, temp_qmd, render = FALSE)
+  output <- readLines(temp_qmd)
+  
+  expect_true(any(grepl('^::: \\{\\.callout-note title="First Note"\\}$', output)))
+  expect_true(any(grepl("Content of first note", output)))
+  expect_true(any(grepl('^::: \\{\\.callout-tip title="Second Tip"\\}$', output)))
+  expect_true(any(grepl("Content of second tip", output)))
+  expect_equal(sum(grepl("^:::$", output)), 2)
+  
+  unlink(temp_r)
+  unlink(temp_qmd)
+})

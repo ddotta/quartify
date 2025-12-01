@@ -494,6 +494,94 @@ Cette fonction :
 2. **Revue de code** : Présenter le code dans un format plus accessible
 3. **Conversion en masse** : Convertir automatiquement tous les scripts d'un projet
 
+## Callouts (Encadrés)
+
+Les callouts sont des blocs spéciaux qui mettent en évidence des informations importantes dans vos documents Quarto. `quartify` supporte la conversion automatique des commentaires callout.
+
+### Syntaxe
+
+Dans votre script R, utilisez cette syntaxe :
+
+```r
+# callout-note - Note importante
+# Ceci est le contenu de la note.
+# Il peut s'étendre sur plusieurs lignes.
+
+# Le code ou une ligne vide termine le callout
+x <- 1
+```
+
+Ceci se convertit en :
+
+```markdown
+::: {.callout-note title="Note importante"}
+Ceci est le contenu de la note.
+Il peut s'étendre sur plusieurs lignes.
+:::
+```
+
+### Types de callouts
+
+Cinq types de callouts sont supportés :
+
+- `# callout-note` - Boîte d'information bleue
+- `# callout-tip` - Boîte de conseil verte
+- `# callout-warning` - Boîte d'avertissement orange
+- `# callout-caution` - Boîte de précaution rouge
+- `# callout-important` - Boîte importante rouge
+
+### Avec ou sans titre
+
+**Avec titre :**
+```r
+# callout-tip - Conseil utile
+# Utilisez les callouts pour mettre en évidence les informations clés.
+```
+
+**Sans titre :**
+```r
+# callout-tip
+# Utilisez les callouts pour mettre en évidence les informations clés.
+```
+
+### Exemples
+
+```r
+# callout-note - Exigences des données
+# Les données d'entrée doivent contenir les colonnes : Species, Sepal.Length, Petal.Length
+
+# callout-warning
+# Cette opération peut prendre plusieurs minutes avec de gros jeux de données
+
+# callout-tip - Optimisation des performances
+# Utilisez data.table pour les jeux de données de plus de 1 Go
+
+library(dplyr)
+iris %>% head()
+```
+
+### Règles
+
+- Le callout commence par `# callout-TYPE` (suivi optionnellement de ` - Titre`)
+- Toutes les lignes de commentaires suivantes font partie du contenu du callout
+- Le callout se termine lorsqu'on rencontre :
+  - Une ligne vide
+  - Une ligne de code
+  - Une autre section ou callout
+- Le titre est optionnel (omettre la partie ` - Titre`)
+
+::: {.alert .alert-info}
+**Conseil :** Créez des snippets RStudio pour les callouts pour accélérer votre flux de travail :
+
+```
+snippet callout
+	# callout-${1:note} - ${2:Titre}
+	# ${0}
+```
+
+Tapez `callout` suivi de `Tab` pour insérer le modèle.
+:::
+
 ## Résumé des règles de commentaires
 
 | Type | Syntaxe | Résultat | Exemple |
@@ -502,6 +590,7 @@ Cette fonction :
 | **En-tête niveau 3** | `### Titre ====` | Markdown `### Titre` | `### Prétraitement ====` |
 | **En-tête niveau 4** | `#### Titre ----` | Markdown `#### Titre` | `#### Supprimer NA ----` |
 | **Commentaire** | `# Texte` | Paragraphe de texte | `# Ceci filtre les données` |
+| **Callout** | `# callout-TYPE - Titre` | Bloc callout Quarto | `# callout-note - Important` |
 | **Code** | Sans préfixe `#` | Chunk de code R | `iris %>% filter(...)` |
 | **Commentaire en ligne** | `  # Texte` dans code | Reste dans chunk | `iris %>% # commentaire` |
 

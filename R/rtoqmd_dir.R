@@ -3,6 +3,16 @@
 #' This function recursively searches for all R script files (.R) in a directory
 #' and its subdirectories, and converts each one to a Quarto markdown document (.qmd).
 #' The output files are created in the same directories as the input files.
+#' 
+#' Supports all features of \code{\link{rtoqmd}}, including:
+#' \itemize{
+#'   \item Metadata detection (Title, Author, Date, Description)
+#'   \item RStudio section headers
+#'   \item Callouts (note, tip, warning, caution, important)
+#'   \item Code blocks and comments
+#' }
+#' 
+#' See \code{\link{rtoqmd}} for details on callout syntax and metadata detection.
 #'
 #' @param dir_path Path to the directory containing R scripts
 #' @param title_prefix Optional prefix to add to all document titles (default: NULL)
