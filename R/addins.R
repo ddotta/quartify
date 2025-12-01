@@ -321,8 +321,24 @@ rtoqmd_addin <- function() {
           rstudioapi::navigateToFile(output_file)
         }
         
-        # Stop the app
-        shiny::stopApp()
+        # Hide loader
+        session$sendCustomMessage('toggleLoader', FALSE)
+        
+        # Show success message based on language
+        success_msg <- if (lang() == "fr") {
+          "\u2714 Conversion termin\u00e9e avec succ\u00e8s ! Vous pouvez fermer cette fen\u00eatre."
+        } else {
+          "\u2714 Conversion completed successfully! You can close this window."
+        }
+        
+        shiny::showModal(shiny::modalDialog(
+          title = if (lang() == "fr") "Conversion termin\u00e9e" else "Conversion completed",
+          success_msg,
+          easyClose = TRUE,
+          footer = shiny::actionButton("close_modal", 
+                                      if (lang() == "fr") "Fermer" else "Close",
+                                      onclick = "setTimeout(function(){window.close();}, 100);")
+        ))
         
       }, error = function(e) {
         # Hide loader on error
@@ -337,6 +353,12 @@ rtoqmd_addin <- function() {
     
     # When cancel button is pressed
     shiny::observeEvent(input$cancel, {
+      shiny::stopApp()
+    })
+    
+    # Close modal and stop app
+    shiny::observeEvent(input$close_modal, {
+      shiny::removeModal()
       shiny::stopApp()
     })
   }
