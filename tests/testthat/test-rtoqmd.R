@@ -538,3 +538,39 @@ test_that("rtoqmd handles multiple callouts in same file", {
   unlink(temp_r)
   unlink(temp_qmd)
 })
+
+test_that("rtoqmd handles multi-line description", {
+  temp_r <- tempfile(fileext = ".R")
+  temp_qmd <- tempfile(fileext = ".qmd")
+  
+  writeLines(c(
+    "# Title : Test Title",
+    "#",
+    "# Author : Test Author",
+    "#",
+    "# Description : This is a long description",
+    "#   that continues on the second line",
+    "#   and even on a third line",
+    "#",
+    "",
+    "x <- 1"
+  ), temp_r)
+  
+  rtoqmd(temp_r, temp_qmd, render = FALSE)
+  output <- readLines(temp_qmd)
+  
+  # Check that description is present and concatenated
+  desc_line <- output[grepl("^description:", output)]
+  expect_length(desc_line, 1)
+  expect_true(grepl("This is a long description", desc_line))
+  expect_true(grepl("that continues on the second line", desc_line))
+  expect_true(grepl("and even on a third line", desc_line))
+  
+  # Check that description lines are not in the body
+  body_start <- which(grepl("^---$", output))[2] + 1
+  body <- output[body_start:length(output)]
+  expect_false(any(grepl("This is a long description", body)))
+  
+  unlink(temp_r)
+  unlink(temp_qmd)
+})

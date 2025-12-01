@@ -21,6 +21,9 @@
 #' }
 #' If metadata is found in the script, it will override the corresponding function parameters.
 #' These metadata lines are removed from the document body and only appear in the YAML header.
+#' 
+#' The Description field supports multi-line content. Continuation lines should start with \code{#}
+#' followed by spaces and the text. The description ends at an empty line or a line without \code{#}.
 #'
 #' @section Callouts:
 #' The function converts special comment patterns into Quarto callouts.
@@ -125,6 +128,7 @@ rtoqmd <- function(input_file, output_file = NULL,
   
   # Track which lines contain metadata (to skip them later)
   metadata_lines <- integer()
+  in_description <- FALSE
   
   for (j in seq_along(lines)) {
     line <- lines[j]
@@ -134,24 +138,39 @@ rtoqmd <- function(input_file, output_file = NULL,
       extracted <- sub("^#\\s*(Title|Titre)\\s*:\\s*(.+)$", "\\2", line, ignore.case = TRUE)
       metadata$title <- trimws(extracted)
       metadata_lines <- c(metadata_lines, j)
+      in_description <- FALSE
     }
     # Check for Author / Auteur
     else if (grepl("^#\\s*(Author|Auteur)\\s*:\\s*(.+)$", line, ignore.case = TRUE)) {
       extracted <- sub("^#\\s*(Author|Auteur)\\s*:\\s*(.+)$", "\\2", line, ignore.case = TRUE)
       metadata$author <- trimws(extracted)
       metadata_lines <- c(metadata_lines, j)
+      in_description <- FALSE
     }
     # Check for Date
     else if (grepl("^#\\s*Date\\s*:\\s*(.+)$", line, ignore.case = TRUE)) {
       extracted <- sub("^#\\s*Date\\s*:\\s*(.+)$", "\\1", line, ignore.case = TRUE)
       metadata$date <- trimws(extracted)
       metadata_lines <- c(metadata_lines, j)
+      in_description <- FALSE
     }
     # Check for Description / Objectif / Purpose
     else if (grepl("^#\\s*(Description|Objectif|Purpose)\\s*:\\s*(.+)$", line, ignore.case = TRUE)) {
       extracted <- sub("^#\\s*(Description|Objectif|Purpose)\\s*:\\s*(.+)$", "\\2", line, ignore.case = TRUE)
       metadata$description <- trimws(extracted)
       metadata_lines <- c(metadata_lines, j)
+      in_description <- TRUE
+    }
+    # Check if we're continuing a description on the next line
+    else if (in_description && grepl("^#\\s+(.+)$", line)) {
+      # This is a continuation of the description
+      continuation <- sub("^#\\s+(.+)$", "\\1", line)
+      metadata$description <- paste(metadata$description, trimws(continuation))
+      metadata_lines <- c(metadata_lines, j)
+    }
+    # Empty comment line or line without # stops description continuation
+    else if (in_description && (grepl("^#\\s*$", line) || !grepl("^#", line))) {
+      in_description <- FALSE
     }
   }
   
