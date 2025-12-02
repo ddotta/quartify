@@ -310,8 +310,8 @@ iris %>%
 ```
 ````
 
-The difference:
-- **Comments at the start of a line** (standalone) → become text OUTSIDE code blocks
+The difference:  
+- **Comments at the start of a line** (standalone) → become text OUTSIDE code blocks  
 - **Comments within code** (indented or part of a pipeline) → stay INSIDE code blocks
 
 ## Complete Example: example.R
@@ -586,7 +586,7 @@ jobs:
       
       - uses: r-lib/actions/setup-r@v2
         with:
-          r-version: '4.3.0'
+          r-version: '4.5.1'
       
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -619,7 +619,7 @@ Create `.gitlab-ci.yml`:
 
 ```yaml
 generate-docs:
-  image: rocker/r-ver:4.3.0
+  image: rocker/r-ver:4.5.1
   
   before_script:
     # Install Quarto
@@ -805,14 +805,16 @@ Type `callout` followed by `Tab` to insert the template.
 | **Code** | No `#` prefix | R code chunk | `iris %>% filter(...)` |
 | **Inline Comment** | `  # Text` in code | Stays in code chunk | `iris %>% # comment` |
 
-**Critical rules to avoid errors:**
+::: {.alert .alert-danger}
+<span style="color: red;">**Critical rules to avoid errors:**
 
 1. **Spacing**: Always include a space after `#` for comments and section headers
 2. **Trailing symbols**: Section headers MUST have at least 4 trailing symbols
 3. **Symbol flexibility**: You can use `#`, `=`, or `-` interchangeably for trailing symbols, but following the RStudio convention is recommended
 4. **Roxygen comments**: Lines starting with `#'` are ignored (for package development)
 5. **Comment context**: Comments at the start of a line become text; comments within code stay in code blocks
-6. **Keyboard shortcut**: Use `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (Mac) to comment/uncomment lines quickly
+6. **Keyboard shortcut**: Use `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (Mac) to comment/uncomment lines quickly</span>
+:::
 
 ## Tips and Best Practices
 

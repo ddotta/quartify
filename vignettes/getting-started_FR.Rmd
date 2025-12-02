@@ -499,9 +499,9 @@ rtoqmd(example_file, "analyse_iris.qmd")
 ```
 
 La fonction va :
-1. Vérifier si Quarto est installé (par défaut)
-2. Générer le fichier .qmd en HTML (par défaut)
-3. Ouvrir le fichier HTML dans votre navigateur par défaut (si `open_html = TRUE`)
+1. Vérifier si Quarto est installé (par défaut)  
+2. Générer le fichier .qmd en HTML (par défaut)  
+3. Ouvrir le fichier HTML dans votre navigateur par défaut (si `open_html = TRUE`)  
 
 Si vous ne voulez pas de rendu automatique en HTML, définissez `render = FALSE` :
 
@@ -804,14 +804,16 @@ Tapez `callout` suivi de `Tab` pour insérer le modèle.
 | **Code** | Sans préfixe `#` | Chunk de code R | `iris %>% filter(...)` |
 | **Commentaire en ligne** | `  # Texte` dans code | Reste dans chunk | `iris %>% # commentaire` |
 
-**Règles critiques pour éviter les erreurs :**
+::: {.alert .alert-danger}
+<span style="color: red;">**Règles critiques pour éviter les erreurs :**
 
 1. **Espacement** : Toujours inclure un espace après `#` pour les commentaires et en-têtes de section
 2. **Symboles de fin** : Les en-têtes de section DOIVENT avoir au moins 4 symboles de fin
 3. **Flexibilité des symboles** : Vous pouvez utiliser `#`, `=`, ou `-` indifféremment pour les symboles de fin, mais suivre la convention RStudio est recommandé
 4. **Commentaires Roxygen** : Les lignes commençant par `#'` sont ignorées (pour développement de packages)
 5. **Contexte du commentaire** : Les commentaires en début de ligne deviennent du texte ; les commentaires dans le code restent dans les blocs de code
-6. **Raccourci clavier** : Utilisez `Ctrl+Shift+C` (Windows/Linux) ou `Cmd+Shift+C` (Mac) pour commenter/décommenter rapidement
+6. **Raccourci clavier** : Utilisez `Ctrl+Shift+C` (Windows/Linux) ou `Cmd+Shift+C` (Mac) pour commenter/décommenter rapidement</span>
+:::
 
 ## Conseils et bonnes pratiques
 
