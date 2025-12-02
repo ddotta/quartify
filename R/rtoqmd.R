@@ -66,7 +66,7 @@
 #' @param code_fold Logical, whether to fold code blocks in HTML output (default: FALSE)
 #' @param number_sections Logical, whether to number sections automatically in the output (default: TRUE)
 #' @param lang Language for interface elements like table of contents title - "en" or "fr" (default: "en")
-#' @return Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
+#' @returns Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
 #' @importFrom utils browseURL
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_danger cli_alert_warning
 #' @export

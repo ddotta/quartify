@@ -2,13 +2,15 @@ Package: quartify
 Type: Package
 Title: Convert R Scripts to Quarto Markdown Documents
 Version: 0.0.2
-Author: Damien Dotta
-Maintainer: Damien Dotta <damien.dotta@live.fr>
-Description: Automatically converts R scripts into Quarto markdown documents (.qmd).
-    Transforms code and comments into structured Quarto format with proper YAML headers and code chunks.
+Authors@R: c(
+    person("Damien", "Dotta", , "damien.dotta@live.fr", role = c("aut", "cre", "cph"))
+    )
+Description: Converts R scripts (.R) into Quarto markdown documents (.qmd) with
+    automatic formatting. Recognizes RStudio code sections, preserves comments as
+    narrative text, extracts metadata from special comments, and provides both
+    programmatic functions and an interactive 'RStudio' add-in for easy conversion.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.2.3
 URL: https://ddotta.github.io/quartify/, https://github.com/ddotta/quartify
 BugReports: https://github.com/ddotta/quartify/issues
@@ -21,8 +23,5 @@ Imports:
     shinyFiles
 Suggests: 
     testthat (>= 3.0.0),
-    knitr,
-    rmarkdown,
     dplyr
 Config/testthat/edition: 3
-VignetteBuilder: knitr

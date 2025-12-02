@@ -22,3 +22,4 @@
 ^test_.*\.html$
 ^output_.*\.qmd$
 ^output_.*\.html$
+^cran-comments\.md$

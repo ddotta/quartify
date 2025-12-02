@@ -26,7 +26,7 @@
 #' @param recursive Logical, whether to search subdirectories recursively (default: TRUE)
 #' @param pattern Regular expression pattern to filter R files (default: "\\.R$")
 #' @param exclude_pattern Optional regular expression pattern to exclude certain files (default: NULL)
-#' @return Invisibly returns a data frame with conversion results (file paths and status)
+#' @returns Invisibly returns a data frame with conversion results (file paths and status)
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_warning cli_alert_danger cli_h1 cli_h2
 #' @export
 #' @examples
