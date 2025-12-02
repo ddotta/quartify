@@ -9,6 +9,7 @@ rtoqmd_dir(
   title_prefix = NULL,
   author = "Your name",
   format = "html",
+  theme = NULL,
   render = FALSE,
   open_html = FALSE,
   code_fold = FALSE,
@@ -25,7 +26,9 @@ rtoqmd_dir(
 
 \item{author}{Author name for all documents (default: "Your name")}
 
-\item{format}{Output format - "html" or "pdf" (default: "html")}
+\item{format}{Output format - always "html" (parameter kept for backward compatibility)}
+
+\item{theme}{Quarto theme for HTML output (default: NULL uses Quarto's default). See \url{https://quarto.org/docs/output-formats/html-themes.html}}
 
 \item{render}{Logical, whether to render the .qmd files after creation (default: FALSE)}
 
@@ -48,6 +51,17 @@ Invisibly returns a data frame with conversion results (file paths and status)
 This function recursively searches for all R script files (.R) in a directory
 and its subdirectories, and converts each one to a Quarto markdown document (.qmd).
 The output files are created in the same directories as the input files.
+}
+\details{
+Supports all features of \code{\link{rtoqmd}}, including:
+\itemize{
+  \item Metadata detection (Title, Author, Date, Description)
+  \item RStudio section headers
+  \item Callouts (note, tip, warning, caution, important)
+  \item Code blocks and comments
+}
+
+See \code{\link{rtoqmd}} for details on callout syntax and metadata detection.
 }
 \examples{
 \dontrun{

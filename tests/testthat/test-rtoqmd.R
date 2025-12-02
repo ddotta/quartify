@@ -195,15 +195,14 @@ test_that("rtoqmd customizes YAML header", {
   
   rtoqmd(temp_r, temp_qmd, 
          title = "Custom Title",
-         author = "Custom Author",
-         format = "pdf")
+         author = "Custom Author")
   
   output <- readLines(temp_qmd)
   
   expect_true(any(grepl('title: "Custom Title"', output)))
   expect_true(any(grepl('author: "Custom Author"', output)))
   expect_true(any(grepl('format:', output)))
-  expect_true(any(grepl('pdf:', output)))
+  expect_true(any(grepl('html:', output)))
   expect_true(any(grepl('embed-resources: true', output)))
   
   unlink(temp_r)

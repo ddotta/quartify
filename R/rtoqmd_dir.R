@@ -17,7 +17,7 @@
 #' @param dir_path Path to the directory containing R scripts
 #' @param title_prefix Optional prefix to add to all document titles (default: NULL)
 #' @param author Author name for all documents (default: "Your name")
-#' @param format Output format - "html" or "pdf" (default: "html")
+#' @param format Output format - always "html" (parameter kept for backward compatibility)
 #' @param theme Quarto theme for HTML output (default: NULL uses Quarto's default). See \url{https://quarto.org/docs/output-formats/html-themes.html}
 #' @param render Logical, whether to render the .qmd files after creation (default: FALSE)
 #' @param open_html Logical, whether to open the HTML files in browser after rendering (default: FALSE)

@@ -375,7 +375,7 @@ rtoqmd(
 - `output_file`: Path for the output Quarto document (optional)
 - `title`: Title for the document (default: "My title")
 - `author`: Author name (default: "Your name")
-- `format`: Output format - "html" or "pdf" (default: "html")
+- `format`: Output format - always "html" (parameter kept for backward compatibility)
 - `render`: Whether to render the .qmd to output file (default: TRUE)
 - `open_html`: Whether to open the output file after rendering (default: FALSE)
 - `code_fold`: Whether to fold code blocks by default (default: FALSE, HTML only)

@@ -173,13 +173,6 @@ rtoqmd_addin <- function() {
               width = "100%"
             ),
             shiny::selectInput(
-              "format",
-              shiny::textOutput("label_format"),
-              choices = c("HTML" = "html", "PDF" = "pdf"),
-              selected = "html",
-              width = "100%"
-            ),
-            shiny::selectInput(
               "theme",
               shiny::textOutput("label_theme"),
               choices = c(
@@ -286,7 +279,6 @@ rtoqmd_addin <- function() {
         output_file = "Output file path:",
         title = "Document title:",
         author = "Author name:",
-        format = "Output format:",
         theme = "HTML theme:",
         render = "Render after conversion",
         open_html = "Open output file after rendering",
@@ -299,7 +291,6 @@ rtoqmd_addin <- function() {
         output_file = "Chemin du fichier de sortie :",
         title = "Titre du document :",
         author = "Nom de l'auteur :",
-        format = "Format de sortie :",
         theme = "Th\u00e8me HTML :",
         render = "G\u00e9n\u00e9rer apr\u00e8s conversion",
         open_html = "Ouvrir le fichier g\u00e9n\u00e9r\u00e9 apr\u00e8s rendu",
@@ -314,7 +305,6 @@ rtoqmd_addin <- function() {
     output$label_output_file <- shiny::renderText({ translations[[lang()]]$output_file })
     output$label_title <- shiny::renderText({ translations[[lang()]]$title })
     output$label_author <- shiny::renderText({ translations[[lang()]]$author })
-    output$label_format <- shiny::renderText({ translations[[lang()]]$format })
     output$label_theme <- shiny::renderText({ translations[[lang()]]$theme })
     output$label_render <- shiny::renderText({ translations[[lang()]]$render })
     output$label_open_html <- shiny::renderText({ translations[[lang()]]$open_html })
@@ -332,7 +322,6 @@ rtoqmd_addin <- function() {
       output_file <- shiny::req(input$output_file)
       title <- shiny::req(input$title)
       author <- shiny::req(input$author)
-      format <- shiny::req(input$format)
       theme <- input$theme
       if (theme == "") theme <- NULL
       render <- input$render
@@ -348,7 +337,7 @@ rtoqmd_addin <- function() {
           output_file = output_file,
           title = title,
           author = author,
-          format = format,
+          format = "html",
           theme = theme,
           render = render,
           open_html = open_html && render,

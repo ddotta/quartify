@@ -18,9 +18,9 @@
 * **Comment Preservation**: Regular comments are converted to explanatory text, while inline comments within code blocks are preserved
 * **Markdown Table Support**: Proper rendering of markdown tables in comments when lines are isolated with empty comment lines
 * **Customizable Output**: 
-  - Choose between HTML and PDF output formats
+  - HTML output format
   - Control section numbering
-  - Enable/disable code folding (HTML only)
+  - Enable/disable code folding
   - Automatic HTML rendering and opening in browser
 * **RStudio Snippet**: Included snippet for quick metadata header insertion in R scripts
 * **Comprehensive Documentation**: 

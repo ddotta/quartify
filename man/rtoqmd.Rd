@@ -10,6 +10,7 @@ rtoqmd(
   title = "My title",
   author = "Your name",
   format = "html",
+  theme = NULL,
   render = TRUE,
   open_html = FALSE,
   code_fold = FALSE,
@@ -25,7 +26,9 @@ rtoqmd(
 
 \item{author}{Author name (default: "Your name"). Can be overridden by \code{# Author :} or \code{# Auteur :} in the script}
 
-\item{format}{Output format (default: "html")}
+\item{format}{Output format - always "html" (parameter kept for backward compatibility)}
+
+\item{theme}{Quarto theme for HTML output (default: NULL uses Quarto's default). See \url{https://quarto.org/docs/output-formats/html-themes.html} for available themes (e.g., "cosmo", "flatly", "darkly", "solar", "united")}
 
 \item{render}{Logical, whether to render the .qmd file to HTML after creation (default: TRUE)}
 
@@ -61,6 +64,41 @@ The function automatically extracts metadata from special comment lines in your 
 }
 If metadata is found in the script, it will override the corresponding function parameters.
 These metadata lines are removed from the document body and only appear in the YAML header.
+
+The Description field supports multi-line content. Continuation lines should start with \code{#}
+followed by spaces and the text. The description ends at an empty line or a line without \code{#}.
+}
+
+\section{Callouts}{
+
+The function converts special comment patterns into Quarto callouts.
+Callouts are special blocks that highlight important information.
+Supported callout types: \code{note}, \code{tip}, \code{warning}, \code{caution}, \code{important}.
+
+Syntax:
+\itemize{
+  \item \strong{With title}: \code{# callout-tip - Your Title}
+  \item \strong{Without title}: \code{# callout-tip}
+}
+
+All subsequent comment lines become the callout content until an empty line or code is encountered.
+
+Example in R script:
+\preformatted{
+# callout-note - Important Note
+# This is the content of the note.
+# It can span multiple lines.
+
+x <- 1
+}
+
+Becomes in Quarto:
+\preformatted{
+::: {.callout-note title="Important Note"}
+This is the content of the note.
+It can span multiple lines.
+:::
+}
 }
 
 \examples{
