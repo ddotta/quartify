@@ -23,8 +23,7 @@ rtoqmd(
   render = TRUE,
   open_html = FALSE,
   code_fold = FALSE,
-  number_sections = TRUE,
-  lang = "en"
+  number_sections = TRUE
 )
 ```
 
@@ -79,11 +78,6 @@ rtoqmd(
 
   Logical, whether to number sections automatically in the output
   (default: TRUE)
-
-- lang:
-
-  Language for interface elements like table of contents title - "en" or
-  "fr" (default: "en")
 
 ## Value
 
