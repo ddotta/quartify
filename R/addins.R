@@ -260,6 +260,9 @@ rtoqmd_addin <- function() {
   # Define server logic
   server <- function(input, output, session) {
     
+    # Stop app when session ends (browser closes)
+    session$onSessionEnded(shiny::stopApp)
+    
     # Reactive language
     lang <- shiny::reactiveVal("en")
     
@@ -394,7 +397,7 @@ rtoqmd_addin <- function() {
   
   # Run the gadget
   viewer <- shiny::browserViewer()
-  shiny::runGadget(ui, server, viewer = viewer)
+  shiny::runGadget(ui, server, viewer = viewer, stopOnCancel = FALSE)
   
   invisible()
 }
