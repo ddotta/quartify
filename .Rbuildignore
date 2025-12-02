@@ -16,3 +16,9 @@
 ^test_addin\.R$
 ^test_output\.qmd$
 ^test_output\.html$
+^examples$
+^test_.*\.R$
+^test_.*\.qmd$
+^test_.*\.html$
+^output_.*\.qmd$
+^output_.*\.html$

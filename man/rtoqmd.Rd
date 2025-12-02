@@ -14,7 +14,8 @@ rtoqmd(
   render = TRUE,
   open_html = FALSE,
   code_fold = FALSE,
-  number_sections = TRUE
+  number_sections = TRUE,
+  lang = "en"
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ rtoqmd(
 \item{code_fold}{Logical, whether to fold code blocks in HTML output (default: FALSE)}
 
 \item{number_sections}{Logical, whether to number sections automatically in the output (default: TRUE)}
+
+\item{lang}{Language for interface elements like table of contents title - "en" or "fr" (default: "en")}
 }
 \value{
 Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
