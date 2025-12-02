@@ -22,6 +22,7 @@ navbar:
     home:
       icon: fas fa-home fa-lg
       href: index.html
+      aria-label: Home
     reference:
       text: Reference
       href: reference/index.html
@@ -41,10 +42,11 @@ navbar:
       aria-label: GitHub
 
 reference:
-  - title: Main function
+  - title: Main functions
     desc: Convert R scripts to Quarto markdown
     contents:
     - rtoqmd
+    - rtoqmd_dir
   - title: RStudio Add-in
     desc: Interactive conversion via RStudio
     contents:
