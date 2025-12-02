@@ -23,8 +23,5 @@ Imports:
     shinyFiles
 Suggests: 
     testthat (>= 3.0.0),
-    dplyr,
-    knitr,
-    rmarkdown
+    dplyr
 Config/testthat/edition: 3
-VignetteBuilder: knitr

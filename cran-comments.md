@@ -8,14 +8,13 @@
 
 This is a resubmission. In this version I have:
 
-* Added VignetteBuilder: knitr to DESCRIPTION
-* Added knitr and rmarkdown to Suggests
+* Removed vignettes from package build (kept in repository for pkgdown documentation site)
 * Quoted 'RStudio' in DESCRIPTION to address "possibly misspelled words"
 * Converted non-ASCII characters in R/addins.R to Unicode escapes (\uxxxx)
 
-The words flagged as "possibly misspelled":
-- RStudio: This is the correct name of the IDE (capitalization matters)
-- qmd: This is the standard file extension for Quarto markdown documents
+The word "qmd" flagged as "possibly misspelled" is the standard file extension for Quarto markdown documents.
+
+Note: The package documentation is available online at https://ddotta.github.io/quartify/ including the full getting-started guide that was previously in vignettes.
 
 ## Test environments
 

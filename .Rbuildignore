@@ -24,5 +24,4 @@
 ^output_.*\.html$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
-^vignettes/getting-started\.R$
-^vignettes/getting-started_FR\.R$
+^vignettes$
