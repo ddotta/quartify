@@ -4,13 +4,13 @@
 
 ### CRAN Preparation
 
-- Added `VignetteBuilder: knitr` to DESCRIPTION
-- Added `knitr` and `rmarkdown` to Suggests for vignette building
+- Removed vignettes from package build (vignettes available online via
+  pkgdown site)
 - Quoted ‘RStudio’ in DESCRIPTION to address CRAN check notes
-- Converted non-ASCII characters in R/addins.R to Unicode escapes () for
-  portability
-- Enhanced vignettes with red-highlighted critical rules sections for
-  better visibility
+- Converted non-ASCII characters in R/addins.R to Unicode escapes
+  (\uxxxx) for portability
+- Enhanced online documentation with red-highlighted critical rules
+  sections for better visibility
 - Fixed R version consistency in CI/CD examples (updated to 4.5.1)
 
 ## quartify 0.0.2
