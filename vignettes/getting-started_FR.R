@@ -36,7 +36,7 @@ knitr::opts_chunk$set(
 ## rtoqmd("script.R", "sortie.qmd")
 
 
-## -----------------------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #| eval: false
 #| echo: true
 ## iris %>%
@@ -106,4 +106,24 @@ knitr::opts_chunk$set(
 
 ## ----eval=FALSE---------------------------------------------------------------
 ## quarto::quarto_render("analyse_iris.qmd")
+
+
+## ----eval=FALSE---------------------------------------------------------------
+## # Convertir tous les scripts R d'un répertoire
+## rtoqmd_dir("chemin/vers/scripts")
+## 
+## # Convertir et générer les fichiers HTML
+## rtoqmd_dir("chemin/vers/scripts", render = TRUE)
+## 
+## # Avec auteur personnalisé et préfixe de titre
+## rtoqmd_dir("chemin/vers/scripts",
+##            title_prefix = "Analyse : ",
+##            author = "Équipe Data")
+## 
+## # Exclure certains fichiers (ex : fichiers de test)
+## rtoqmd_dir("chemin/vers/scripts",
+##            exclude_pattern = "test_.*\\.R$")
+## 
+## # Non récursif (seulement le répertoire courant)
+## rtoqmd_dir("chemin/vers/scripts", recursive = FALSE)
 
