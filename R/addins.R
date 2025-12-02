@@ -366,16 +366,16 @@ rtoqmd_addin <- function() {
         number_sections = "Number sections automatically (not needed if sections already numbered)"
       ),
       fr = list(
-        input_file = "Fichier d'entr\u00e9e :",
+        input_file = "Fichier d'entrée :",
         output_file = "Chemin du fichier de sortie :",
         title = "Titre du document :",
         author = "Nom de l'auteur :",
-        theme = "Th\u00e8me HTML :",
-        render = "G\u00e9n\u00e9rer Html apr\u00e8s conversion",
-        open_html = "Ouvrir le fichier Html apr\u00e8s rendu",
-        open_qmd = "Ouvrir le fichier .qmd dans l'\u00e9diteur apr\u00e8s conversion",
-        code_fold = "Replier les blocs de code par d\u00e9faut",
-        number_sections = "Num\u00e9roter les sections automatiquement (pas utile si vos sections sont d\u00e9j\u00e0 num\u00e9rot\u00e9es)"
+        theme = "Thème HTML :",
+        render = "Générer Html après conversion",
+        open_html = "Ouvrir le fichier Html après rendu",
+        open_qmd = "Ouvrir le fichier .qmd dans l'éditeur après conversion",
+        code_fold = "Replier les blocs de code par défaut",
+        number_sections = "Numéroter les sections automatiquement (pas utile si vos sections sont déjà numérotées)"
       )
     )
     
@@ -436,13 +436,13 @@ rtoqmd_addin <- function() {
         
         # Show success message based on language
         success_msg <- if (lang() == "fr") {
-          "\u2714 Conversion termin\u00e9e avec succ\u00e8s ! Vous pouvez fermer cette fen\u00eatre."
+          "✔ Conversion terminée avec succès ! Vous pouvez fermer cette fenêtre."
         } else {
-          "\u2714 Conversion completed successfully! You can close this window."
+          "✔ Conversion completed successfully! You can close this window."
         }
         
         shiny::showModal(shiny::modalDialog(
-          title = if (lang() == "fr") "Conversion termin\u00e9e" else "Conversion completed",
+          title = if (lang() == "fr") "Conversion terminée" else "Conversion completed",
           success_msg,
           easyClose = TRUE,
           footer = shiny::actionButton("close_modal", 

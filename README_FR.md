@@ -82,10 +82,10 @@ rtoqmd("mon_script.R",
        title = "Mon analyse statistique",
        author = "Votre nom",
        format = "html",
-       theme = "cosmo",          # Th\u00e8me Quarto (optionnel)
-       render = TRUE,            # G\u00e9n\u00e9rer le HTML 
+       theme = "cosmo",          # Thème Quarto (optionnel)
+       render = TRUE,            # Générer le HTML 
        open_html = TRUE,         # Ouvrir le HTML dans le navigateur
-       number_sections = TRUE)   # Num\u00e9roter les sections automatiquement
+       number_sections = TRUE)   # Numéroter les sections automatiquement
 ```
 
 ### Utilisation du fichier exemple
