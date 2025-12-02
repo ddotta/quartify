@@ -209,12 +209,16 @@ RStudio code sections become markdown headers. **Critical**: trailing symbols mu
 
 #### 2. Regular Comments (Text)
 
-Single `#` comments **at the start of a line** become explanatory text:
+Single `#` comments **at the start of a line (no leading space)** become explanatory text:
 
 ```r
 # This is a standalone comment
 # It becomes plain text in the Quarto document
 ```
+
+> **⚠️ Important:** For a comment to be converted to text, the line must start with `#` **without any leading space**. Indented comments (with spaces before `#`) remain in the code.
+
+> **💡 Tip:** To **split a long chunk into multiple parts**, insert a **comment at the start of a line** (no space before `#`) between two code blocks. This comment will be converted to text and naturally create two separate chunks.
 
 **Tip:** Use RStudio's [Comment/Uncomment shortcut](https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment) (`Ctrl+Shift+C` on Windows/Linux or `Cmd+Shift+C` on Mac) to quickly add or remove comments.
 

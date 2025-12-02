@@ -211,10 +211,46 @@ Les commentaires simples avec `#` deviennent du texte explicatif dans le documen
 
 **Règles :**
 
-- Commencez par un seul `#` suivi d'un espace
+- Commencez par un seul `#` **suivi d'un espace** (pas d'espace avant le `#`)
 - Plusieurs lignes de commentaires consécutives sont regroupées ensemble (sans ligne vide entre elles)
 - Les lignes de commentaires vides séparent les blocs de commentaires
 - **Tableaux Markdown** : Vous pouvez inclure des tableaux Markdown dans les commentaires. Les lignes consécutives de commentaires seront préservées ensemble, permettant un rendu correct des tableaux
+
+::: {.alert .alert-warning}
+**⚠️ Important pour la conversion en texte :**
+
+Pour qu'un commentaire soit correctement converti en texte Quarto, la ligne doit commencer par `#` **sans espace avant**. Si vous avez des espaces d'indentation avant le `#`, le commentaire sera ignoré et restera dans le chunk de code.
+
+**Exemple correct :**
+```r
+# Ceci sera converti en texte
+result <- mean(x)
+```
+
+**Exemple incorrect (commentaire dans le code) :**
+```r
+if (condition) {
+  # Ceci restera un commentaire R dans le chunk
+  result <- mean(x)
+}
+```
+:::
+
+::: {.callout-tip title="Astuce : Diviser un long chunk de code"}
+Vous pouvez utiliser cette règle pour **diviser un long chunk de code en plusieurs parties**. En insérant un commentaire **en début de ligne** (sans espace avant le `#`) entre deux blocs de code, ce commentaire sera converti en texte et créera naturellement deux chunks séparés :
+
+```r
+data <- read.csv("file.csv")
+data_clean <- na.omit(data)
+
+# Ce commentaire divise le chunk en deux parties
+
+result <- mean(data_clean$value)
+plot(result)
+```
+
+Ceci créera deux chunks séparés au lieu d'un seul grand chunk.
+:::
 
 ::: {.alert .alert-info}
 **Important pour les tableaux Markdown :** Les lignes formant un tableau doivent être **isolées des autres commentaires** par une ligne vide avant et après le tableau. Cela garantit que le tableau est traité comme un bloc séparé et sera correctement rendu.

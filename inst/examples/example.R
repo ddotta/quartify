@@ -47,6 +47,19 @@ iris %>%
 iris %>%
   count(Species)
 
+## Splitting long chunks ####
+
+# You can split a long code chunk into multiple parts
+# by inserting a comment at the start of a line (no space before #)
+
+data <- iris
+result1 <- mean(data$Sepal.Length)
+
+# This comment splits the chunk into two parts
+
+result2 <- mean(data$Sepal.Width)
+plot(result2)
+
 ## Callouts ####
 
 # callout-note - Important Note

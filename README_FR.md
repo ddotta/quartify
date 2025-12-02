@@ -208,12 +208,16 @@ Les sections de code RStudio deviennent des en-têtes markdown. **Critique** : l
 
 #### 2. Commentaires réguliers (Texte)
 
-Les commentaires simples avec `#` **en début de ligne** deviennent du texte explicatif :
+Les commentaires simples avec `#` **en début de ligne (sans espace avant)** deviennent du texte explicatif :
 
 ```r
 # Ceci est un commentaire autonome
 # Il devient du texte simple dans le document Quarto
 ```
+
+> **⚠️ Important :** Pour qu'un commentaire soit converti en texte, la ligne doit commencer par `#` **sans espace avant**. Les commentaires indentés (avec des espaces avant `#`) restent dans le code.
+
+> **💡 Astuce :** Pour **diviser un long chunk en plusieurs parties**, insérez un **commentaire en début de ligne** (sans espace avant `#`) entre deux blocs de code. Ce commentaire sera converti en texte et créera naturellement deux chunks séparés.
 
 **Astuce :** Utilisez le [raccourci Commenter/Décommenter](https://docs.posit.co/ide/user/ide/guide/productivity/text-editor.html#commentuncomment) de RStudio (`Ctrl+Shift+C` sur Windows/Linux ou `Cmd+Shift+C` sur Mac) pour ajouter ou retirer rapidement des commentaires.
 

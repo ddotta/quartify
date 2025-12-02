@@ -211,10 +211,46 @@ Single `#` comments become explanatory text in the Quarto document:
 
 **Rules:**
 
-- Start with a single `#` followed by a space
+- Start with a single `#` **followed by a space** (no space before the `#`)
 - Multiple consecutive comment lines are grouped together (with no empty lines between them)
 - Empty comment lines separate comment blocks
 - **Markdown Tables**: You can include Markdown tables in comments. Consecutive comment lines will be preserved together, allowing proper table rendering
+
+::: {.alert .alert-warning}
+**⚠️ Important for text conversion:**
+
+For a comment to be correctly converted to Quarto text, the line must start with `#` **without any leading space**. If you have indentation spaces before the `#`, the comment will be ignored and remain in the code chunk.
+
+**Correct example:**
+```r
+# This will be converted to text
+result <- mean(x)
+```
+
+**Incorrect example (comment stays in code) :**
+```r
+if (condition) {
+  # This will remain an R comment in the chunk
+  result <- mean(x)
+}
+```
+:::
+
+::: {.callout-tip title="Tip: Split a long code chunk"}
+You can use this rule to **split a long code chunk into multiple parts**. By inserting a comment **at the start of a line** (no space before `#`) between two code blocks, this comment will be converted to text and naturally create two separate chunks:
+
+```r
+data <- read.csv("file.csv")
+data_clean <- na.omit(data)
+
+# This comment splits the chunk into two parts
+
+result <- mean(data_clean$value)
+plot(result)
+```
+
+This will create two separate chunks instead of one large chunk.
+:::
 
 ::: {.alert .alert-info}
 **Important for Markdown Tables:** Table lines must be **isolated from other comments** with an empty line before and after the table. This ensures the table is treated as a separate block and will render correctly.
