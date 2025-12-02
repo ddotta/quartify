@@ -226,8 +226,8 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Ignore roxygen comments - do nothing
       
     # Check if line is a RStudio code section
-    } else if (grepl("^##\\s+.+\\s+#{4,}\\s*$", line)) {
-      # Level 2: ## Title ####
+    } else if (grepl("^##\\s+.+\\s+[#=-]{4,}\\s*$", line)) {
+      # Level 2: ## Title #### or ## Title ==== or ## Title ----
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
@@ -244,13 +244,13 @@ rtoqmd <- function(input_file, output_file = NULL,
         comment_block <- character()
       }
       
-      # Extract title and create level 2 header
-      title_text <- sub("^##\\s+(.+?)\\s+#{4,}\\s*$", "\\1", line)
+      # Extract title and create level 2 header (remove trailing symbols)
+      title_text <- sub("^##\\s+(.+?)\\s+[#=-]{4,}\\s*$", "\\1", line)
       output <- c(output, paste0("## ", title_text))
       output <- c(output, "")
       
-    } else if (grepl("^###\\s+.+\\s+={4,}\\s*$", line)) {
-      # Level 3: ### Title ====
+    } else if (grepl("^###\\s+.+\\s+[#=-]{4,}\\s*$", line)) {
+      # Level 3: ### Title ==== or ### Title ---- or ### Title ####
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
@@ -267,13 +267,13 @@ rtoqmd <- function(input_file, output_file = NULL,
         comment_block <- character()
       }
       
-      # Extract title and create level 3 header
-      title_text <- sub("^###\\s+(.+?)\\s+={4,}\\s*$", "\\1", line)
+      # Extract title and create level 3 header (remove trailing symbols)
+      title_text <- sub("^###\\s+(.+?)\\s+[#=-]{4,}\\s*$", "\\1", line)
       output <- c(output, paste0("### ", title_text))
       output <- c(output, "")
       
-    } else if (grepl("^####\\s+.+\\s+-{4,}\\s*$", line)) {
-      # Level 4: #### Title ----
+    } else if (grepl("^####\\s+.+\\s+[#=-]{4,}\\s*$", line)) {
+      # Level 4: #### Title ---- or #### Title ==== or #### Title ####
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
@@ -290,8 +290,8 @@ rtoqmd <- function(input_file, output_file = NULL,
         comment_block <- character()
       }
       
-      # Extract title and create level 4 header
-      title_text <- sub("^####\\s+(.+?)\\s+-{4,}\\s*$", "\\1", line)
+      # Extract title and create level 4 header (remove trailing symbols)
+      title_text <- sub("^####\\s+(.+?)\\s+[#=-]{4,}\\s*$", "\\1", line)
       output <- c(output, paste0("#### ", title_text))
       output <- c(output, "")
       

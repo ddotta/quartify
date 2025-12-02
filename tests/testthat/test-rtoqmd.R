@@ -574,3 +574,64 @@ test_that("rtoqmd handles multi-line description", {
   unlink(temp_r)
   unlink(temp_qmd)
 })
+
+test_that("rtoqmd removes trailing symbols from section titles", {
+  temp_r <- tempfile(fileext = ".R")
+  temp_qmd <- tempfile(fileext = ".qmd")
+  
+  # Create R script with various trailing symbols
+  writeLines(c(
+    "## Section with hash ####",
+    "x <- 1",
+    "",
+    "## Section with many hashes ##################",
+    "y <- 2",
+    "",
+    "### Section with equals ====",
+    "z <- 3",
+    "",
+    "### Section with many equals ====================",
+    "a <- 4",
+    "",
+    "#### Section with dashes ----",
+    "b <- 5",
+    "",
+    "#### Section with many dashes --------------------",
+    "c <- 6",
+    "",
+    "## Mixed symbols with hash ====",
+    "d <- 7",
+    "",
+    "### Mixed symbols with equals ----",
+    "e <- 8",
+    "",
+    "#### Mixed symbols with dashes ####",
+    "f <- 9"
+  ), temp_r)
+  
+  # Convert to Quarto
+  rtoqmd(temp_r, output_file = temp_qmd, title = "Test", author = "Test Author")
+  
+  # Read output
+  output <- readLines(temp_qmd)
+  
+  # Check that titles don't contain trailing symbols
+  expect_true(any(output == "## Section with hash"))
+  expect_true(any(output == "## Section with many hashes"))
+  expect_true(any(output == "### Section with equals"))
+  expect_true(any(output == "### Section with many equals"))
+  expect_true(any(output == "#### Section with dashes"))
+  expect_true(any(output == "#### Section with many dashes"))
+  expect_true(any(output == "## Mixed symbols with hash"))
+  expect_true(any(output == "### Mixed symbols with equals"))
+  expect_true(any(output == "#### Mixed symbols with dashes"))
+  
+  # Verify that no trailing symbols remain in titles
+  title_lines <- grep("^#{2,4}\\s+", output, value = TRUE)
+  expect_false(any(grepl("#{4,}\\s*$", title_lines)))
+  expect_false(any(grepl("={4,}\\s*$", title_lines)))
+  expect_false(any(grepl("-{4,}\\s*$", title_lines)))
+  
+  unlink(temp_r)
+  unlink(temp_qmd)
+})
