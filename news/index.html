@@ -50,6 +50,28 @@
 <li>HTML files can now be saved in different location than .qmd files</li>
 <li>Useful for organizing outputs in separate directories (e.g., <code>docs/</code>, <code>html_output/</code>)</li>
 </ul></li>
+<li>
+<strong>Mermaid Diagram Support</strong>:
+<ul><li><p>Added support for Mermaid diagrams to create flowcharts, sequence diagrams, and other visualizations</p></li>
+<li><p>Use <code>#| mermaid</code> comment to start a Mermaid chunk in R scripts</p></li>
+<li><p>Chunk options (lines starting with <code>#|</code>) are automatically converted to Quarto format (<code>%%|</code>)</p></li>
+<li><p>Diagram content follows without <code>#</code> prefix and ends at empty line or comment</p></li>
+<li>
+<p>Example syntax:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>flowchart TD</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    A[Start] <span class="sc">-</span><span class="ot">-&gt;</span> B[Process]</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C[End]</span></code></pre></div>
+</li>
+<li><p>Converted to proper Quarto Mermaid chunks in .qmd output</p></li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-0-4">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-4"></a></h3>
+<ul><li>Fixed issue where Quarto render command needed to run from .qmd file directory</li>
+<li>Improved path handling for custom HTML output locations with relative paths</li>
+<li>Added proper working directory management during Quarto rendering</li>
 </ul></div>
 </div>
     <div class="section level2">

@@ -16,6 +16,37 @@
   - HTML files can now be saved in different location than .qmd files
   - Useful for organizing outputs in separate directories (e.g.,
     `docs/`, `html_output/`)
+- **Mermaid Diagram Support**:
+  - Added support for Mermaid diagrams to create flowcharts, sequence
+    diagrams, and other visualizations
+
+  - Use `#| mermaid` comment to start a Mermaid chunk in R scripts
+
+  - Chunk options (lines starting with `#|`) are automatically converted
+    to Quarto format (`%%|`)
+
+  - Diagram content follows without `#` prefix and ends at empty line or
+    comment
+
+  - Example syntax:
+
+    ``` r
+    #| mermaid
+    #| eval: true
+    flowchart TD
+        A[Start] --> B[Process]
+        B --> C[End]
+    ```
+
+  - Converted to proper Quarto Mermaid chunks in .qmd output
+
+### Bug Fixes
+
+- Fixed issue where Quarto render command needed to run from .qmd file
+  directory
+- Improved path handling for custom HTML output locations with relative
+  paths
+- Added proper working directory management during Quarto rendering
 
 ## quartify 0.0.3
 

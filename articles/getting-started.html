@@ -922,6 +922,103 @@ template.</p>
 </div>
 </div>
 <div class="section level2">
+<h2 id="mermaid-diagrams">Mermaid Diagrams<a class="anchor" aria-label="anchor" href="#mermaid-diagrams"></a>
+</h2>
+<p>Create flowcharts, sequence diagrams, and other visualizations using
+Mermaid syntax. Mermaid diagrams are rendered directly in the HTML
+output.</p>
+<div class="section level3">
+<h3 id="syntax-1">Syntax<a class="anchor" aria-label="anchor" href="#syntax-1"></a>
+</h3>
+<p>In your R script, start with <code>#| mermaid</code>, add options
+with <code>#|</code>, then the diagram content:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>flowchart TD</span>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>    A[Start] <span class="sc">-</span><span class="ot">-&gt;</span> B[Process Data]</span>
+<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C{Valid?}</span>
+<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>Yes<span class="sc">|</span> D[Save Results]</span>
+<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>No<span class="sc">|</span> E[Error]</span>
+<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a>    D <span class="sc">-</span><span class="ot">-&gt;</span> F[End]</span>
+<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a>    E <span class="sc">-</span><span class="ot">-&gt;</span> F</span></code></pre></div>
+<p>This converts to a proper Quarto Mermaid chunk that renders as an
+interactive diagram in HTML.</p>
+</div>
+<div class="section level3">
+<h3 id="diagram-types">Diagram Types<a class="anchor" aria-label="anchor" href="#diagram-types"></a>
+</h3>
+<p>Mermaid supports many diagram types:</p>
+<p><strong>Flowcharts:</strong></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>flowchart LR</span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>    A[Input] <span class="sc">-</span><span class="ot">-&gt;</span> B[Process]</span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C[Output]</span></code></pre></div>
+<p><strong>Sequence Diagrams:</strong></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>sequenceDiagram</span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>    participant User</span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>    participant API</span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>    participant Database</span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a>    User<span class="ot">-&gt;&gt;</span>API<span class="sc">:</span> Request data</span>
+<span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a>    API<span class="ot">-&gt;&gt;</span>Database<span class="sc">:</span> Query</span>
+<span id="cb42-9"><a href="#cb42-9" tabindex="-1"></a>    Database<span class="sc">-</span><span class="ot">-&gt;&gt;</span>API<span class="sc">:</span> Results</span>
+<span id="cb42-10"><a href="#cb42-10" tabindex="-1"></a>    API<span class="sc">-</span><span class="ot">-&gt;&gt;</span>User<span class="sc">:</span> Response</span></code></pre></div>
+<p><strong>Class Diagrams:</strong></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>classDiagram</span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>    class Animal {</span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>        <span class="sc">+</span>String name</span>
+<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a>        <span class="sc">+</span>int age</span>
+<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a>        <span class="sc">+</span><span class="fu">makeSound</span>()</span>
+<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a>    }</span>
+<span id="cb43-9"><a href="#cb43-9" tabindex="-1"></a>    class Dog {</span>
+<span id="cb43-10"><a href="#cb43-10" tabindex="-1"></a>        <span class="sc">+</span>String breed</span>
+<span id="cb43-11"><a href="#cb43-11" tabindex="-1"></a>        <span class="sc">+</span><span class="fu">bark</span>()</span>
+<span id="cb43-12"><a href="#cb43-12" tabindex="-1"></a>    }</span>
+<span id="cb43-13"><a href="#cb43-13" tabindex="-1"></a>    Animal <span class="sc">&lt;</span><span class="er">|</span><span class="sc">--</span> Dog</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="rules-1">Rules<a class="anchor" aria-label="anchor" href="#rules-1"></a>
+</h3>
+<ul>
+<li>Start with <code>#| mermaid</code> comment</li>
+<li>Add chunk options with <code>#|</code> prefix (e.g.,
+<code>#| eval: true</code>)</li>
+<li>Diagram content follows <strong>without <code>#</code>
+prefix</strong>
+</li>
+<li>Chunk ends at first blank line or comment line</li>
+<li>Options are automatically converted to Quarto format
+(<code>%%|</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="complete-example">Complete Example<a class="anchor" aria-label="anchor" href="#complete-example"></a>
+</h3>
+<p>See the complete example file with multiple diagram types:</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Locate the Mermaid example file</span></span>
+<span><span class="va">mermaid_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example_mermaid.R"</span>, package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Convert and render</span></span>
+<span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">mermaid_file</span>, render <span class="op">=</span> <span class="cn">TRUE</span>, open_html <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="alert alert-info">
+<p><strong>More Mermaid Resources:</strong></p>
+<ul>
+<li><a href="https://mermaid.js.org/" class="external-link">Mermaid Documentation</a></li>
+<li>
+<a href="https://mermaid.live/" class="external-link">Mermaid Live Editor</a> - Test your
+diagrams</li>
+<li><a href="https://quarto.org/docs/authoring/diagrams.html" class="external-link">Quarto
+Mermaid Guide</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="comment-rules-summary">Comment Rules Summary<a class="anchor" aria-label="anchor" href="#comment-rules-summary"></a>
 </h2>
 <table class="table">
@@ -972,12 +1069,19 @@ template.</p>
 <td><code># callout-note - Important</code></td>
 </tr>
 <tr class="even">
+<td><strong>Mermaid Diagram</strong></td>
+<td><code>#| mermaid</code></td>
+<td>Mermaid diagram chunk</td>
+<td>
+<code>#| mermaid</code> + content</td>
+</tr>
+<tr class="odd">
 <td><strong>Code</strong></td>
 <td>No <code>#</code> prefix</td>
 <td>R code chunk</td>
 <td><code>iris %&gt;% filter(...)</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Inline Comment</strong></td>
 <td>
 <code># Text</code> in code</td>
