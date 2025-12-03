@@ -55,6 +55,13 @@
 #' :::
 #' }
 #'
+#' @section Mermaid Diagrams:
+#' The function supports Mermaid diagrams for flowcharts, sequence diagrams, and visualizations.
+#' Mermaid chunks start with a special comment, followed by options and diagram content.
+#' Options use hash-pipe syntax and are converted to percent-pipe in the Quarto output.
+#' Diagram content should not start with hash symbols. The chunk ends at a blank line or comment.
+#' Supported types: flowchart, sequence, class, state, etc. See example file in inst/examples/example_mermaid.R.
+#'
 #' @param input_file Path to the input R script file
 #' @param output_file Path to the output Quarto markdown file (optional, defaults to same name with .qmd extension)
 #' @param title Title for the Quarto document (default: "My title"). Can be overridden by \code{# Title :} or \code{# Titre :} in the script
@@ -304,6 +311,54 @@ rtoqmd <- function(input_file, output_file = NULL,
       title_text <- sub("^####\\s+(.+?)\\s+[#=-]{4,}\\s*$", "\\1", line)
       output <- c(output, paste0("#### ", title_text))
       output <- c(output, "")
+      
+    } else if (grepl("^#\\|\\s*mermaid\\s*$", line, ignore.case = TRUE)) {
+      # Mermaid chunk start: #| mermaid
+      # Flush any accumulated code
+      if (length(code_block) > 0) {
+        output <- c(output, "```{r}")
+        output <- c(output, code_block)
+        output <- c(output, "```")
+        output <- c(output, "")
+        code_block <- character()
+      }
+      
+      # Flush any accumulated comments
+      if (length(comment_block) > 0) {
+        output <- c(output, comment_block)
+        output <- c(output, "")
+        comment_block <- character()
+      }
+      
+      # Start collecting mermaid chunk
+      # Look ahead for options and content
+      i <- i + 1
+      mermaid_options <- character()
+      mermaid_content <- character()
+      
+      # Collect options (lines starting with #| )
+      while (i <= length(lines) && grepl("^#\\|", lines[i])) {
+        option_line <- sub("^#\\|\\s*", "", lines[i])
+        # Convert #| eval:true to %%| eval: true
+        mermaid_options <- c(mermaid_options, paste0("%%| ", option_line))
+        i <- i + 1
+      }
+      
+      # Collect mermaid content (non-comment, non-empty lines)
+      while (i <= length(lines) && !grepl("^\\s*$", lines[i]) && !grepl("^#", lines[i])) {
+        mermaid_content <- c(mermaid_content, lines[i])
+        i <- i + 1
+      }
+      
+      # Write mermaid chunk
+      output <- c(output, "```{mermaid}")
+      output <- c(output, mermaid_options)
+      output <- c(output, mermaid_content)
+      output <- c(output, "```")
+      output <- c(output, "")
+      
+      # Continue from current position (don't increment i again)
+      next
       
     } else if (grepl("^#\\s*callout-(note|tip|warning|caution|important)(?:\\s*-\\s*(.+))?\\s*$", line, ignore.case = TRUE)) {
       # Callout start: # callout-tip - Title

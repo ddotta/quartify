@@ -793,6 +793,100 @@ snippet callout
 Type `callout` followed by `Tab` to insert the template.
 :::
 
+## Mermaid Diagrams
+
+Create flowcharts, sequence diagrams, and other visualizations using Mermaid syntax. Mermaid diagrams are rendered directly in the HTML output.
+
+### Syntax
+
+In your R script, start with `#| mermaid`, add options with `#|`, then the diagram content:
+
+```r
+#| mermaid
+#| eval: true
+flowchart TD
+    A[Start] --> B[Process Data]
+    B --> C{Valid?}
+    C -->|Yes| D[Save Results]
+    C -->|No| E[Error]
+    D --> F[End]
+    E --> F
+```
+
+This converts to a proper Quarto Mermaid chunk that renders as an interactive diagram in HTML.
+
+### Diagram Types
+
+Mermaid supports many diagram types:
+
+**Flowcharts:**
+```r
+#| mermaid
+#| eval: true
+flowchart LR
+    A[Input] --> B[Process]
+    B --> C[Output]
+```
+
+**Sequence Diagrams:**
+```r
+#| mermaid
+#| eval: true
+sequenceDiagram
+    participant User
+    participant API
+    participant Database
+    User->>API: Request data
+    API->>Database: Query
+    Database-->>API: Results
+    API-->>User: Response
+```
+
+**Class Diagrams:**
+```r
+#| mermaid
+#| eval: true
+classDiagram
+    class Animal {
+        +String name
+        +int age
+        +makeSound()
+    }
+    class Dog {
+        +String breed
+        +bark()
+    }
+    Animal <|-- Dog
+```
+
+### Rules
+
+- Start with `#| mermaid` comment
+- Add chunk options with `#|` prefix (e.g., `#| eval: true`)
+- Diagram content follows **without `#` prefix**
+- Chunk ends at first blank line or comment line
+- Options are automatically converted to Quarto format (`%%|`)
+
+### Complete Example
+
+See the complete example file with multiple diagram types:
+
+```r
+# Locate the Mermaid example file
+mermaid_file <- system.file("examples", "example_mermaid.R", package = "quartify")
+
+# Convert and render
+rtoqmd(mermaid_file, render = TRUE, open_html = TRUE)
+```
+
+::: {.alert .alert-info}
+**More Mermaid Resources:**
+
+- [Mermaid Documentation](https://mermaid.js.org/)
+- [Mermaid Live Editor](https://mermaid.live/) - Test your diagrams
+- [Quarto Mermaid Guide](https://quarto.org/docs/authoring/diagrams.html)
+:::
+
 ## Comment Rules Summary
 
 | Type | Syntax | Result | Example |
@@ -802,6 +896,7 @@ Type `callout` followed by `Tab` to insert the template.
 | **Level 4 Header** | `#### Title ----` | Markdown `#### Title` | `#### Remove NA ----` |
 | **Standalone Comment** | `# Text` | Plain text paragraph | `# This filters the data` |
 | **Callout** | `# callout-TYPE - Title` | Quarto callout block | `# callout-note - Important` |
+| **Mermaid Diagram** | `#| mermaid` | Mermaid diagram chunk | `#| mermaid` + content |
 | **Code** | No `#` prefix | R code chunk | `iris %>% filter(...)` |
 | **Inline Comment** | `  # Text` in code | Stays in code chunk | `iris %>% # comment` |
 

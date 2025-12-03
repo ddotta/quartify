@@ -83,22 +83,27 @@ rtoqmd("my_script.R",
        title = "My statistical analysis",
        author = "Your name",
        format = "html",
-       theme = "cosmo",       # Quarto theme (optional)
-       render = TRUE,         # Render to HTML 
-       open_html = TRUE,      # Open HTML in browser
-       number_sections = TRUE) # Number sections automatically
+       theme = "cosmo",              # Quarto theme (optional)
+       render = TRUE,                # Render to HTML 
+       output_html_file = "docs/my_analysis.html",  # Custom HTML location
+       open_html = TRUE,             # Open HTML in browser
+       number_sections = TRUE)       # Number sections automatically
 ```
 
-### Using the example file
+### Using the example files
 
-An example file is included in the package to test the function:
+Example files are included in the package to test the function:
 
 ```r
-# Locate the example file
+# Locate the basic example file
 example_file <- system.file("examples", "example.R", package = "quartify")
 
 # Convert the example file
 rtoqmd(example_file, "test_output.qmd")
+
+# Try the Mermaid diagrams example
+mermaid_file <- system.file("examples", "example_mermaid.R", package = "quartify")
+rtoqmd(mermaid_file, "test_mermaid.qmd", render = TRUE)
 ```
 
 ### Batch conversion
@@ -109,8 +114,10 @@ Convert all R scripts in a directory (including subdirectories):
 # Convert all R scripts in a directory
 rtoqmd_dir("path/to/scripts")
 
-# Convert and render all scripts
-rtoqmd_dir("path/to/scripts", render = TRUE)
+# Convert and render all scripts to custom HTML directory
+rtoqmd_dir("path/to/scripts", 
+           render = TRUE,
+           output_html_dir = "docs/html")
 
 # With custom settings
 rtoqmd_dir("path/to/scripts", 
@@ -277,6 +284,38 @@ It can span multiple lines.
 
 Callouts end when encountering an empty line, code, or another section.
 
+#### 6. Mermaid Diagrams
+
+Create flowcharts, sequence diagrams, and other visualizations using Mermaid syntax.
+
+**Syntax in R script:**
+
+```r
+#| mermaid
+#| eval: true
+flowchart TD
+    A[Start] --> B[Process]
+    B --> C{Decision}
+    C -->|Yes| D[End]
+    C -->|No| B
+```
+
+**Converts to Quarto Mermaid chunk** with proper formatting for diagram rendering in HTML output.
+
+**Supported diagram types:**
+- Flowcharts (`flowchart TD`, `flowchart LR`)
+- Sequence diagrams (`sequenceDiagram`)
+- Class diagrams (`classDiagram`)
+- State diagrams, Gantt charts, and more
+
+**Rules:**
+- Start with `#| mermaid` comment
+- Add chunk options with `#|` (e.g., `#| eval: true`)
+- Diagram content follows without `#` prefix
+- Chunk ends at first blank line or comment
+
+See complete example in [`inst/examples/example_mermaid.R`](https://github.com/ddotta/quartify/blob/main/inst/examples/example_mermaid.R)
+
 **Important rules:**
 
 - Always include a space after `#` for comments
@@ -284,6 +323,7 @@ Callouts end when encountering an empty line, code, or another section.
 - **Standalone comments with `#` at line start** → become text outside code blocks
 - **Inline comments within code** → stay inside code blocks
 - **Callouts** → `# callout-TYPE` or `# callout-TYPE - Title`
+- **Mermaid diagrams** → `#| mermaid` followed by options and diagram content
 - Consecutive code lines are grouped in the same block
 - Empty lines between blocks are ignored
 

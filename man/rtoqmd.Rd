@@ -107,6 +107,15 @@ It can span multiple lines.
 }
 }
 
+\section{Mermaid Diagrams}{
+
+The function supports Mermaid diagrams for flowcharts, sequence diagrams, and visualizations.
+Mermaid chunks start with a special comment, followed by options and diagram content.
+Options use hash-pipe syntax and are converted to percent-pipe in the Quarto output.
+Diagram content should not start with hash symbols. The chunk ends at a blank line or comment.
+Supported types: flowchart, sequence, class, state, etc. See example file in inst/examples/example_mermaid.R.
+}
+
 \examples{
 \dontrun{
 # Use example file included in package
