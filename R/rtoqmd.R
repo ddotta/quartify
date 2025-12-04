@@ -84,7 +84,7 @@
 #' @param code_fold Logical, whether to fold code blocks in HTML output (default: FALSE)
 #' @param number_sections Logical, whether to number sections automatically in the output (default: TRUE)
 #' @param lang Language for interface elements like table of contents title - "en" or "fr" (default: "en")
-#' @param show_source_lines Logical, whether to add comments indicating original line numbers from the source R script at the beginning of each code chunk (default: FALSE). This helps maintain traceability between the documentation and the source code.
+#' @param show_source_lines Logical, whether to add comments indicating original line numbers from the source R script at the beginning of each code chunk (default: TRUE). This helps maintain traceability between the documentation and the source code.
 #' @returns Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
 #' @importFrom utils browseURL
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_danger cli_alert_warning
@@ -127,7 +127,7 @@ rtoqmd <- function(input_file, output_file = NULL,
                    code_fold = FALSE,
                    number_sections = TRUE,
                    lang = "en",
-                   show_source_lines = FALSE) {
+                   show_source_lines = TRUE) {
   
   # Check if input file exists
   if (!file.exists(input_file)) {

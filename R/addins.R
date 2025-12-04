@@ -301,7 +301,7 @@ rtoqmd_addin <- function() {
                 shiny::checkboxInput(
                   "show_source_lines",
                   shiny::textOutput("label_show_source_lines"),
-                  value = FALSE
+                  value = TRUE
                 )
               )
             )
