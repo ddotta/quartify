@@ -672,7 +672,8 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         class = "lang-buttons",
         shiny::actionButton("lang_en", english_flag_html, class = "btn-sm"),
         shiny::actionButton("lang_fr", french_flag_html, class = "btn-sm"),
-        shiny::actionButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GO ▶</span>"), class = "btn-primary")
+        shiny::actionButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GO ▶</span>"), class = "btn-primary"),
+        shiny::actionButton("quit_app", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>✕</span>"), class = "btn-danger btn-sm", style = "margin-left: 10px;")
       )
     ),
     
@@ -996,6 +997,16 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
     
     shiny::observeEvent(input$close_modal, {
       shiny::removeModal()
+    })
+    
+    # Quit app button handler
+    shiny::observeEvent(input$quit_app, {
+      shiny::stopApp()
+    })
+    
+    # Handle session end (when browser window is closed)
+    session$onSessionEnded(function() {
+      shiny::stopApp()
     })
   }
   
