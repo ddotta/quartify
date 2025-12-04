@@ -909,6 +909,96 @@ rtoqmd(mermaid_file, render = TRUE, open_html = TRUE)
 - [Quarto Mermaid Guide](https://quarto.org/docs/authoring/diagrams.html)
 :::
 
+## Tabsets
+
+Tabsets allow you to organize related content in interactive tabs, perfect for displaying alternative views, different analyses, or grouped visualizations. This feature uses the same intuitive syntax as callouts.
+
+### Basic Syntax
+
+To create a tabset:
+
+1. **Start tabset container**: Use `# tabset` on its own line
+2. **Define each tab**: Use `# tab - Tab Title` on its own line
+3. **Add content**: Add comments and code for each tab
+4. **Automatic closing**: Tabset closes at the next section header
+
+**Syntax in R script:**
+
+```r
+# tabset
+# tab - Summary Statistics
+# Here are the basic summary statistics for the iris dataset:
+summary(iris)
+
+# tab - Data Structure
+# Let's examine the structure of the data:
+str(iris)
+
+# tab - First Rows
+# Here are the first few rows:
+head(iris)
+```
+
+**Resulting Quarto:**
+
+```markdown
+::: {.panel-tabset}
+
+## Summary Statistics
+
+Here are the basic summary statistics for the iris dataset:
+
+```{r}
+summary(iris)
+```
+
+## Data Structure
+
+Let's examine the structure of the data:
+
+```{r}
+str(iris)
+```
+
+## First Rows
+
+Here are the first few rows:
+
+```{r}
+head(iris)
+```
+
+:::
+```
+
+### Rules
+
+- `# tabset` must be on its own line (with optional leading/trailing whitespace)
+- Each tab starts with `# tab - Title` where `Title` is the tab label
+- Tab content includes all comments and code until the next tab or tabset end
+- Tabsets automatically close at RStudio section headers (`##`, `###`, `####`)
+- You can have multiple tabsets in the same document
+- Empty lines within tabs are preserved
+
+### Complete Example
+
+See the complete example file with multiple tabsets:
+
+```r
+# Locate the tabset example file
+tabset_file <- system.file("examples", "example_tabset.R", package = "quartify")
+
+# Convert and render
+rtoqmd(tabset_file, render = TRUE, open_html = TRUE)
+```
+
+::: {.alert .alert-info}
+**More Tabset Resources:**
+
+- [Quarto Tabset Documentation](https://quarto.org/docs/interactive/layout.html#tabset-panel)
+- Combine tabsets with callouts for rich, organized documentation
+:::
+
 ## Comment Rules Summary
 
 | Type | Syntax | Result | Example |
@@ -919,6 +1009,7 @@ rtoqmd(mermaid_file, render = TRUE, open_html = TRUE)
 | **Standalone Comment** | `# Text` | Plain text paragraph | `# This filters the data` |
 | **Callout** | `# callout-TYPE - Title` | Quarto callout block | `# callout-note - Important` |
 | **Mermaid Diagram** | `#| mermaid` | Mermaid diagram chunk | `#| mermaid` + content |
+| **Tabset** | `# tabset`, `# tab - Title` | Tabbed panel | `# tabset` + tabs |
 | **Code** | No `#` prefix | R code chunk | `iris %>% filter(...)` |
 | **Inline Comment** | `  # Text` in code | Stays in code chunk | `iris %>% # comment` |
 

@@ -289,6 +289,90 @@ Il peut s'étendre sur plusieurs lignes.
 
 Les callouts se terminent lorsqu'on rencontre une ligne vide, du code, ou une autre section.
 
+#### 6. Diagrammes Mermaid
+
+Créez des organigrammes, des diagrammes de séquence et d'autres visualisations avec la syntaxe Mermaid, rendus directement dans la sortie HTML.
+
+**Syntaxe dans le script R :**
+
+```r
+#| mermaid
+#| eval: true
+flowchart LR
+  A[Démarrer] --> B{Décision}
+  B -->|Oui| C[Résultat 1]
+  B -->|Non| D[Résultat 2]
+```
+
+**Se convertit en Quarto :**
+
+```markdown
+```{mermaid}
+%%| eval: true
+flowchart LR
+  A[Démarrer] --> B{Décision}
+  B -->|Oui| C[Résultat 1]
+  B -->|Non| D[Résultat 2]
+```
+```
+
+Pour plus d'informations : [Documentation Mermaid](https://mermaid.js.org/)
+
+#### 7. Tabsets (Onglets)
+
+Organisez du contenu connexe dans des onglets interactifs pour afficher des vues alternatives ou des analyses groupées.
+
+**Syntaxe dans le script R :**
+
+```r
+# tabset
+# tab - Statistiques résumées
+# Voici les statistiques pour iris :
+summary(iris)
+
+# tab - Structure
+# Structure des données :
+str(iris)
+
+# tab - Premières lignes
+# Premières observations :
+head(iris)
+```
+
+**Se convertit en Quarto :**
+
+```markdown
+::: {.panel-tabset}
+
+## Statistiques résumées
+
+Voici les statistiques pour iris :
+
+```{r}
+summary(iris)
+```
+
+## Structure
+
+Structure des données :
+
+```{r}
+str(iris)
+```
+
+## Premières lignes
+
+Premières observations :
+
+```{r}
+head(iris)
+```
+
+:::
+```
+
+Pour plus d'informations : [Quarto Tabsets](https://quarto.org/docs/interactive/layout.html#tabset-panel)
+
 **Règles importantes :**
 
 - Toujours inclure un espace après `#` pour les commentaires
@@ -296,6 +380,8 @@ Les callouts se terminent lorsqu'on rencontre une ligne vide, du code, ou une au
 - **Les commentaires avec un `#` en début de ligne** → deviennent du texte en dehors des blocs de code
 - **Les commentaires dans le code** → restent à l'intérieur des blocs de code
 - **Callouts** → `# callout-TYPE` ou `# callout-TYPE - Titre`
+- **Mermaid** → `#| mermaid` suivi du contenu du diagramme
+- **Tabsets** → `# tabset` puis `# tab - Titre` pour chaque onglet
 - Les lignes de code consécutives sont regroupées dans le même bloc
 - Les lignes vides entre les blocs sont ignorées
 

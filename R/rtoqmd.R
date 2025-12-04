@@ -66,6 +66,12 @@
 #' Diagram content should not start with hash symbols. The chunk ends at a blank line or comment.
 #' Supported types: flowchart, sequence, class, state, etc. See example file in inst/examples/example_mermaid.R.
 #'
+#' @section Tabsets:
+#' Create tabbed content panels for interactive navigation between related content.
+#' Use hash tabset to start a tabset container, then define individual tabs with hash tab - Title.
+#' Each tab can contain text, code, and other content. The tabset closes automatically when a new section starts.
+#' Example: hash tabset, hash tab - Plot A, code or text content, hash tab - Plot B, more content.
+#'
 #' @param input_file Path to the input R script file
 #' @param output_file Path to the output Quarto markdown file (optional, defaults to same name with .qmd extension)
 #' @param title Title for the Quarto document (default: "My title"). Can be overridden by \code{# Title :} or \code{# Titre :} in the script
@@ -234,6 +240,11 @@ rtoqmd <- function(input_file, output_file = NULL,
   callout_content <- character()
   callout_type <- ""
   callout_title <- ""
+  in_tabset <- FALSE
+  in_tab <- FALSE
+  tab_content <- character()
+  tab_title <- ""
+  tabs <- list()
   
   while (i <= length(lines)) {
     line <- lines[i]
@@ -249,6 +260,40 @@ rtoqmd <- function(input_file, output_file = NULL,
     # Check if line is a RStudio code section
     } else if (grepl("^##\\s+.+\\s+[#=-]{4,}\\s*$", line)) {
       # Level 2: ## Title #### or ## Title ==== or ## Title ----
+      
+      # Close any open tabset first
+      if (in_tabset) {
+        if (in_tab) {
+          # Flush code into last tab
+          if (length(code_block) > 0) {
+            tab_content <- c(tab_content, "", "```{r}", code_block, "```", "")
+            code_block <- character()
+          }
+          if (length(tab_content) > 0) {
+            tabs[[length(tabs) + 1]] <- list(title = tab_title, content = tab_content)
+          }
+        }
+        
+        if (length(tabs) > 0) {
+          output <- c(output, "::: {.panel-tabset}")
+          output <- c(output, "")
+          for (tab in tabs) {
+            output <- c(output, paste0("## ", tab$title))
+            output <- c(output, "")
+            output <- c(output, tab$content)
+            output <- c(output, "")
+          }
+          output <- c(output, ":::")
+          output <- c(output, "")
+        }
+        
+        in_tabset <- FALSE
+        in_tab <- FALSE
+        tabs <- list()
+        tab_content <- character()
+        tab_title <- ""
+      }
+      
       # Flush any accumulated code
       if (length(code_block) > 0) {
         output <- c(output, "```{r}")
@@ -364,6 +409,51 @@ rtoqmd <- function(input_file, output_file = NULL,
       # Continue from current position (don't increment i again)
       next
       
+    } else if (grepl("^#\\s*tabset\\s*$", line, ignore.case = TRUE)) {
+      # Tabset start: # tabset
+      # Flush any accumulated code
+      if (length(code_block) > 0) {
+        output <- c(output, "```{r}")
+        output <- c(output, code_block)
+        output <- c(output, "```")
+        output <- c(output, "")
+        code_block <- character()
+      }
+      
+      # Flush any accumulated comments
+      if (length(comment_block) > 0) {
+        output <- c(output, comment_block)
+        output <- c(output, "")
+        comment_block <- character()
+      }
+      
+      in_tabset <- TRUE
+      in_tab <- FALSE
+      tabs <- list()
+      tab_content <- character()
+      tab_title <- ""
+      
+    } else if (grepl("^#\\s*tab\\s*-\\s*(.+)\\s*$", line, ignore.case = TRUE) && in_tabset) {
+      # Tab definition: # tab - Title
+      # Save previous tab if exists (with its content and code)
+      if (in_tab) {
+        # Flush any accumulated code into tab_content
+        if (length(code_block) > 0) {
+          tab_content <- c(tab_content, "", "```{r}", code_block, "```", "")
+          code_block <- character()
+        }
+        
+        if (length(tab_content) > 0) {
+          tabs[[length(tabs) + 1]] <- list(title = tab_title, content = tab_content)
+        }
+      }
+      
+      # Extract tab title
+      tab_match <- regmatches(line, regexec("^#\\s*tab\\s*-\\s*(.+)\\s*$", line, ignore.case = TRUE))[[1]]
+      tab_title <- trimws(tab_match[2])
+      tab_content <- character()
+      in_tab <- TRUE
+      
     } else if (grepl("^#\\s*callout-(note|tip|warning|caution|important)(?:\\s*-\\s*(.+))?\\s*$", line, ignore.case = TRUE)) {
       # Callout start: # callout-tip - Title
       # Flush any accumulated code
@@ -401,6 +491,18 @@ rtoqmd <- function(input_file, output_file = NULL,
           # Empty comment line in callout - add blank line
           callout_content <- c(callout_content, "")
         }
+      } else if (in_tab) {
+        # If we're in a tab, accumulate the content
+        comment_text <- sub("^#\\s*", "", line)
+        if (nzchar(comment_text)) {
+          tab_content <- c(tab_content, comment_text)
+        } else {
+          # Empty comment line in tab - add blank line
+          tab_content <- c(tab_content, "")
+        }
+      } else if (in_tabset) {
+        # If we're in a tabset but not in a tab yet, ignore comments
+        # (waiting for # tab - Title declaration)
       } else {
         # Flush any accumulated code
         if (length(code_block) > 0) {
@@ -439,6 +541,11 @@ rtoqmd <- function(input_file, output_file = NULL,
         callout_content <- character()
         callout_type <- ""
         callout_title <- ""
+      } else if (in_tab) {
+        # Empty line within a tab - just add blank line to tab content
+        tab_content <- c(tab_content, "")
+      } else if (in_tabset) {
+        # Empty line in tabset but not in tab - ignore it (waiting for first tab)
       } else {
         # Flush any accumulated comments
         if (length(comment_block) > 0) {
@@ -468,14 +575,52 @@ rtoqmd <- function(input_file, output_file = NULL,
         callout_title <- ""
       }
       
-      # Flush any accumulated comments
-      if (length(comment_block) > 0) {
-        output <- c(output, comment_block)
-        output <- c(output, "")
-        comment_block <- character()
+      if (in_tab) {
+        # If we're in a tab, accumulate code in code_block first
+        # We'll flush it when we hit next tab or end of tabset
+        code_block <- c(code_block, line)
+      } else if (in_tabset && !in_tab) {
+        # Code before any tab starts = end tabset
+        # End tabset before code
+        if (length(tabs) > 0) {
+          output <- c(output, "::: {.panel-tabset}")
+          output <- c(output, "")
+          for (tab in tabs) {
+            output <- c(output, paste0("## ", tab$title))
+            output <- c(output, "")
+            output <- c(output, tab$content)
+            output <- c(output, "")
+          }
+          output <- c(output, ":::")
+          output <- c(output, "")
+        }
+        
+        # Reset tabset state
+        in_tabset <- FALSE
+        in_tab <- FALSE
+        tabs <- list()
+        tab_content <- character()
+        tab_title <- ""
+        
+        # Flush any accumulated comments
+        if (length(comment_block) > 0) {
+          output <- c(output, comment_block)
+          output <- c(output, "")
+          comment_block <- character()
+        }
+        # Accumulate code
+        code_block <- c(code_block, line)
+      } else {
+        # Normal code - not in tabset or callout
+        # Flush any accumulated comments
+        if (length(comment_block) > 0) {
+          output <- c(output, comment_block)
+          output <- c(output, "")
+          comment_block <- character()
+        }
+        # Accumulate code
+        code_block <- c(code_block, line)
       }
-      # Accumulate code
-      code_block <- c(code_block, line)
     }
     
     i <- i + 1
@@ -491,6 +636,36 @@ rtoqmd <- function(input_file, output_file = NULL,
     output <- c(output, callout_content)
     output <- c(output, ":::")
     output <- c(output, "")
+  }
+  
+  # Flush any remaining tabset
+  if (in_tabset) {
+    # Save last tab if exists
+    if (in_tab) {
+      # Flush any accumulated code into last tab
+      if (length(code_block) > 0) {
+        tab_content <- c(tab_content, "", "```{r}", code_block, "```", "")
+        code_block <- character()
+      }
+      
+      if (length(tab_content) > 0) {
+        tabs[[length(tabs) + 1]] <- list(title = tab_title, content = tab_content)
+      }
+    }
+    
+    # Write tabset
+    if (length(tabs) > 0) {
+      output <- c(output, "::: {.panel-tabset}")
+      output <- c(output, "")
+      for (tab in tabs) {
+        output <- c(output, paste0("## ", tab$title))
+        output <- c(output, "")
+        output <- c(output, tab$content)
+        output <- c(output, "")
+      }
+      output <- c(output, ":::")
+      output <- c(output, "")
+    }
   }
   
   # Flush any remaining comments

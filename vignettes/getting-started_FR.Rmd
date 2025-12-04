@@ -907,6 +907,96 @@ rtoqmd(mermaid_file, render = TRUE, open_html = TRUE)
 - [Guide Quarto Mermaid](https://quarto.org/docs/authoring/diagrams.html)
 :::
 
+## Tabsets (Onglets)
+
+Les tabsets vous permettent d'organiser du contenu connexe dans des onglets interactifs, parfait pour afficher des vues alternatives, différentes analyses ou des visualisations groupées. Cette fonctionnalité utilise la même syntaxe intuitive que les callouts.
+
+### Syntaxe de base
+
+Pour créer un tabset :
+
+1. **Démarrer le conteneur tabset** : Utilisez `# tabset` sur une ligne seule
+2. **Définir chaque onglet** : Utilisez `# tab - Titre de l'onglet` sur une ligne seule
+3. **Ajouter du contenu** : Ajoutez des commentaires et du code pour chaque onglet
+4. **Fermeture automatique** : Le tabset se ferme au prochain en-tête de section
+
+**Syntaxe dans le script R :**
+
+```r
+# tabset
+# tab - Statistiques résumées
+# Voici les statistiques résumées pour le jeu de données iris :
+summary(iris)
+
+# tab - Structure des données
+# Examinons la structure des données :
+str(iris)
+
+# tab - Premières lignes
+# Voici les premières lignes :
+head(iris)
+```
+
+**Quarto résultant :**
+
+```markdown
+::: {.panel-tabset}
+
+## Statistiques résumées
+
+Voici les statistiques résumées pour le jeu de données iris :
+
+```{r}
+summary(iris)
+```
+
+## Structure des données
+
+Examinons la structure des données :
+
+```{r}
+str(iris)
+```
+
+## Premières lignes
+
+Voici les premières lignes :
+
+```{r}
+head(iris)
+```
+
+:::
+```
+
+### Règles
+
+- `# tabset` doit être sur une ligne seule (avec des espaces optionnels au début/fin)
+- Chaque onglet commence par `# tab - Titre` où `Titre` est le label de l'onglet
+- Le contenu de l'onglet inclut tous les commentaires et code jusqu'au prochain onglet ou fin du tabset
+- Les tabsets se ferment automatiquement aux en-têtes de section RStudio (`##`, `###`, `####`)
+- Vous pouvez avoir plusieurs tabsets dans le même document
+- Les lignes vides dans les onglets sont préservées
+
+### Exemple complet
+
+Voir le fichier exemple complet avec plusieurs tabsets :
+
+```r
+# Localiser le fichier exemple tabset
+tabset_file <- system.file("examples", "example_tabset.R", package = "quartify")
+
+# Convertir et rendre
+rtoqmd(tabset_file, render = TRUE, open_html = TRUE)
+```
+
+::: {.alert .alert-info}
+**Plus de ressources sur les tabsets :**
+
+- [Documentation Quarto Tabset](https://quarto.org/docs/interactive/layout.html#tabset-panel)
+- Combinez les tabsets avec les callouts pour une documentation riche et organisée
+:::
+
 ## Résumé des règles de commentaires
 
 | Type | Syntaxe | Résultat | Exemple |
@@ -917,6 +1007,7 @@ rtoqmd(mermaid_file, render = TRUE, open_html = TRUE)
 | **Commentaire** | `# Texte` | Paragraphe de texte | `# Ceci filtre les données` |
 | **Callout** | `# callout-TYPE - Titre` | Bloc callout Quarto | `# callout-note - Important` |
 | **Diagramme Mermaid** | `#| mermaid` | Chunk diagramme Mermaid | `#| mermaid` + contenu |
+| **Tabset** | `# tabset`, `# tab - Titre` | Panneau à onglets | `# tabset` + onglets |
 | **Code** | Sans préfixe `#` | Chunk de code R | `iris %>% filter(...)` |
 | **Commentaire en ligne** | `  # Texte` dans code | Reste dans chunk | `iris %>% # commentaire` |
 
