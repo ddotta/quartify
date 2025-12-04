@@ -47,10 +47,11 @@ reference:
     contents:
     - rtoqmd
     - rtoqmd_dir
-  - title: RStudio Add-in
-    desc: Interactive conversion via RStudio
+  - title: Interactive tools
+    desc: Interactive conversion interfaces
     contents:
     - rtoqmd_addin
+    - quartify_app
 
 authors:
   Damien Dotta:
