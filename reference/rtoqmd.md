@@ -22,7 +22,8 @@ rtoqmd(
   open_html = FALSE,
   code_fold = FALSE,
   number_sections = TRUE,
-  lang = "en"
+  lang = "en",
+  show_source_lines = FALSE
 )
 ```
 
@@ -87,6 +88,13 @@ rtoqmd(
 
   Language for interface elements like table of contents title - "en" or
   "fr" (default: "en")
+
+- show_source_lines:
+
+  Logical, whether to add comments indicating original line numbers from
+  the source R script at the beginning of each code chunk (default:
+  FALSE). This helps maintain traceability between the documentation and
+  the source code.
 
 ## Value
 

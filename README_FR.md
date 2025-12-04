@@ -71,13 +71,15 @@ affichable. Ceci est particulièrement utile pour :
   blocs exécutables
 - **En-tête YAML personnalisable** : Possibilité de définir le titre,
   l’auteur et d’autres paramètres  
-- - **Table des matières** : Génération automatique d’une table des
-    matières dans le document Quarto avec la profondeur appropriée
+- **Table des matières** : Génération automatique d’une table des
+  matières dans le document Quarto avec la profondeur appropriée
 - **Génération HTML automatique** : Génère optionnellement le fichier
   HTML à partir du .qmd et l’ouvre dans le navigateur (désactivé par
   défaut)
 - **Thèmes personnalisables** : Choisissez parmi 25+ thèmes Quarto pour
   personnaliser l’apparence de vos documents HTML
+- **Numéros de ligne source** : Affichage optionnel des numéros de ligne
+  originaux du script R dans les chunks de code pour la traçabilité
 
 ## Installation
 

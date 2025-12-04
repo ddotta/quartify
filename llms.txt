@@ -70,6 +70,8 @@ particularly useful for:
   and opens it in your browser (disabled by default)
 - **Customizable themes**: Choose from 25+ Quarto themes to customize
   the appearance of your HTML documents
+- **Source line numbers**: Optionally display original line numbers from
+  the R script in code chunks for traceability
 
 ## Installation
 
