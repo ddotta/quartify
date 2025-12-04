@@ -542,3 +542,469 @@ rtoqmd_addin <- function() {
   
   invisible()
 }
+
+#' Launch Quartify Shiny Interface
+#'
+#' Opens the Quartify conversion interface in your default web browser.
+#' This function provides the same interface as the RStudio add-in but works
+#' in any R environment including Positron, VS Code, RStudio, or command line.
+#' Unlike the add-in, this function requires you to manually select input files
+#' using the file browser in the interface.
+#'
+#' @param launch.browser Logical, whether to open in browser (default: TRUE).
+#'   Set to FALSE to run in RStudio Viewer pane if available.
+#' @param port The port to run the app on (default: random available port)
+#' @return Invisibly returns NULL when the app is closed
+#' @importFrom shiny runApp fluidPage titlePanel sidebarLayout sidebarPanel mainPanel
+#' @export
+#' @examples
+#' \dontrun{
+#' # Launch the Shiny app in browser (works in any IDE)
+#' quartify_app()
+#' 
+#' # Use in Positron or VS Code
+#' library(quartify)
+#' quartify_app()
+#' 
+#' # Specify a port
+#' quartify_app(port = 3838)
+#' }
+quartify_app <- function(launch.browser = TRUE, port = NULL) {
+  
+  # Get resources for UI
+  hex_path <- system.file("man", "figures", "hex_quartify.png", package = "quartify")
+  if (hex_path == "" || !file.exists(hex_path)) {
+    hex_path <- NULL
+  }
+  
+  english_flag_path <- system.file("man", "figures", "english_flag.png", package = "quartify")
+  if (english_flag_path == "" || !file.exists(english_flag_path)) {
+    english_flag_path <- NULL
+  }
+  
+  french_flag_path <- system.file("man", "figures", "french_flag.png", package = "quartify")
+  if (french_flag_path == "" || !file.exists(french_flag_path)) {
+    french_flag_path <- NULL
+  }
+  
+  # Create UI elements
+  logo_html <- if (!is.null(hex_path)) {
+    img_base64 <- paste0("data:image/png;base64,", base64enc::base64encode(hex_path))
+    shiny::tags$img(src = img_base64, width = "150px", style = "max-width: 150px;")
+  } else {
+    shiny::h3("quartify", style = "color: #0073e6; font-weight: bold;")
+  }
+  
+  english_flag_html <- if (!is.null(english_flag_path)) {
+    flag_base64 <- paste0("data:image/png;base64,", base64enc::base64encode(english_flag_path))
+    shiny::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> EN'))
+  } else {
+    "EN"
+  }
+  
+  french_flag_html <- if (!is.null(french_flag_path)) {
+    flag_base64 <- paste0("data:image/png;base64,", base64enc::base64encode(french_flag_path))
+    shiny::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> FR'))
+  } else {
+    "FR"
+  }
+  
+  # Define UI (similar to add-in but using regular Shiny instead of miniUI)
+  ui <- shiny::fluidPage(
+    title = "Quartify - Convert R Scripts to Quarto",
+    shiny::tags$head(
+      shiny::tags$style(shiny::HTML("
+        body { padding: 20px; }
+        .title-bar {
+          background-color: #0073e6;
+          color: white;
+          padding: 15px 20px;
+          margin: -20px -20px 20px -20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .title-bar h2 { margin: 0; color: white; }
+        .lang-buttons { display: flex; gap: 10px; }
+        .loader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.9);
+          display: none;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+        }
+        .loader.active { display: flex; }
+        .spinner {
+          border: 8px solid #f3f3f3;
+          border-top: 8px solid #0073e6;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      ")),
+      shiny::tags$script(shiny::HTML("
+        Shiny.addCustomMessageHandler('toggleLoader', function(show) {
+          var loader = document.getElementById('loader');
+          if (show) {
+            loader.classList.add('active');
+          } else {
+            loader.classList.remove('active');
+          }
+        });
+      "))
+    ),
+    
+    # Title bar
+    shiny::div(
+      class = "title-bar",
+      shiny::h2("Convert R Script to Quarto"),
+      shiny::div(
+        class = "lang-buttons",
+        shiny::actionButton("lang_en", english_flag_html, class = "btn-sm"),
+        shiny::actionButton("lang_fr", french_flag_html, class = "btn-sm"),
+        shiny::actionButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GO ▶</span>"), class = "btn-primary")
+      )
+    ),
+    
+    # Loader
+    shiny::div(id = "loader", class = "loader", shiny::div(class = "spinner")),
+    
+    # Main content
+    shiny::div(
+      style = "max-width: 1200px; margin: 0 auto;",
+      
+      # Logo centered
+      shiny::div(
+        style = "text-align: center; margin-bottom: 30px;",
+        logo_html
+      ),
+      
+      # File selectors
+      shiny::fluidRow(
+        shiny::column(6,
+          shiny::div(
+            style = "margin-bottom: 15px;",
+            shiny::strong(shiny::textOutput("label_input_file")),
+            shiny::br(),
+            shiny::div(
+              style = "display: flex; align-items: center; margin-top: 5px;",
+              shiny::div(
+                style = "flex: 1; padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;",
+                shiny::textOutput("input_file_display", inline = TRUE)
+              ),
+              shiny::div(
+                style = "margin-left: 10px;",
+                shinyFiles::shinyFilesButton("input_file_btn", "Browse", "Select R script", multiple = FALSE, class = "btn-primary")
+              )
+            )
+          )
+        ),
+        shiny::column(6,
+          shiny::div(
+            style = "margin-bottom: 15px;",
+            shiny::strong(shiny::textOutput("label_output_file")),
+            shiny::br(),
+            shiny::div(
+              style = "display: flex; align-items: center; margin-top: 5px;",
+              shiny::div(
+                style = "flex: 1; padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;",
+                shiny::textOutput("output_file_display", inline = TRUE)
+              ),
+              shiny::div(
+                style = "margin-left: 10px;",
+                shinyFiles::shinySaveButton("output_file_btn", "Browse", "Save .qmd file", filetype = list(qmd = "qmd"), class = "btn-primary")
+              )
+            )
+          )
+        )
+      ),
+      
+      # HTML output file
+      shiny::fluidRow(
+        shiny::column(12,
+          shiny::div(
+            style = "margin-bottom: 15px;",
+            shiny::strong(shiny::textOutput("label_html_file")),
+            shiny::span(
+              style = "margin-left: 5px; font-size: 0.9em; color: #666;",
+              shiny::textOutput("label_html_file_optional", inline = TRUE)
+            ),
+            shiny::br(),
+            shiny::div(
+              style = "display: flex; align-items: center; margin-top: 5px;",
+              shiny::div(
+                style = "flex: 1; padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;",
+                shiny::textOutput("html_file_display", inline = TRUE)
+              ),
+              shiny::div(
+                style = "margin-left: 10px;",
+                shinyFiles::shinySaveButton("html_file_btn", "Browse", "Save HTML file", filetype = list(html = "html"), class = "btn-primary")
+              )
+            )
+          )
+        )
+      ),
+      
+      shiny::hr(),
+      
+      # Parameters
+      shiny::fluidRow(
+        shiny::column(4, shiny::textInput("title", shiny::textOutput("label_title"), value = "My Analysis", width = "100%")),
+        shiny::column(4, shiny::textInput("author", shiny::textOutput("label_author"), 
+                                         value = ifelse(Sys.getenv("USER") != "", Sys.getenv("USER"), "Your name"), width = "100%")),
+        shiny::column(4, shiny::selectInput("theme", shiny::textOutput("label_theme"),
+          choices = c("Default" = "", "Cerulean" = "cerulean", "Cosmo" = "cosmo", "Flatly" = "flatly",
+                     "Journal" = "journal", "Litera" = "litera", "Lumen" = "lumen", "Lux" = "lux",
+                     "Materia" = "materia", "Minty" = "minty", "Morph" = "morph", "Pulse" = "pulse",
+                     "Quartz" = "quartz", "Sandstone" = "sandstone", "Simplex" = "simplex",
+                     "Sketchy" = "sketchy", "Slate" = "slate", "Solar" = "solar", "Spacelab" = "spacelab",
+                     "Superhero" = "superhero", "United" = "united", "Vapor" = "vapor", "Yeti" = "yeti",
+                     "Zephyr" = "zephyr", "Darkly" = "darkly", "Cyborg" = "cyborg"),
+          selected = "", width = "100%"))
+      ),
+      
+      shiny::hr(),
+      
+      # Checkboxes
+      shiny::fluidRow(
+        shiny::column(6,
+          shiny::checkboxInput("render", shiny::textOutput("label_render"), value = TRUE),
+          shiny::checkboxInput("open_qmd", shiny::textOutput("label_open_qmd"), value = FALSE),
+          shiny::checkboxInput("number_sections", shiny::textOutput("label_number_sections"), value = TRUE)
+        ),
+        shiny::column(6,
+          shiny::checkboxInput("code_fold", shiny::textOutput("label_code_fold"), value = FALSE),
+          shiny::checkboxInput("open_html", shiny::textOutput("label_open_html"), value = FALSE),
+          shiny::checkboxInput("show_source_lines", shiny::textOutput("label_show_source_lines"), value = TRUE)
+        )
+      )
+    )
+  )
+  
+  # Define server (reuse logic from add-in)
+  server <- function(input, output, session) {
+    
+    # Detect language
+    detect_lang <- function() {
+      sys_lang <- Sys.getenv("LANG")
+      if (sys_lang == "") {
+        sys_lang <- Sys.getlocale("LC_CTYPE")
+      }
+      if (grepl("^fr", sys_lang, ignore.case = TRUE)) {
+        return("fr")
+      } else {
+        return("en")
+      }
+    }
+    
+    lang <- shiny::reactiveVal(detect_lang())
+    
+    shiny::observeEvent(input$lang_en, { lang("en") })
+    shiny::observeEvent(input$lang_fr, { lang("fr") })
+    
+    input_file_path <- shiny::reactiveVal(NULL)
+    output_file_path <- shiny::reactiveVal(NULL)
+    html_file_path <- shiny::reactiveVal(NULL)
+    
+    volumes <- shinyFiles::getVolumes()()
+    shinyFiles::shinyFileChoose(input, "input_file_btn", roots = volumes, session = session, filetypes = c("", "R"))
+    
+    shiny::observeEvent(input$input_file_btn, {
+      file_selected <- shinyFiles::parseFilePaths(volumes, input$input_file_btn)
+      if (nrow(file_selected) > 0) {
+        new_path <- as.character(file_selected$datapath)
+        input_file_path(new_path)
+        output_file_path(sub("\\.R$", ".qmd", new_path, ignore.case = TRUE))
+      }
+    })
+    
+    shinyFiles::shinyFileSave(input, "output_file_btn", roots = volumes, session = session, filetypes = c(qmd = "qmd"))
+    
+    shiny::observeEvent(input$output_file_btn, {
+      file_selected <- shinyFiles::parseSavePath(volumes, input$output_file_btn)
+      if (nrow(file_selected) > 0) {
+        output_file_path(as.character(file_selected$datapath))
+      }
+    })
+    
+    shinyFiles::shinyFileSave(input, "html_file_btn", roots = volumes, session = session, filetypes = c(html = "html"))
+    
+    shiny::observeEvent(input$html_file_btn, {
+      file_selected <- shinyFiles::parseSavePath(volumes, input$html_file_btn)
+      if (nrow(file_selected) > 0) {
+        html_file_path(as.character(file_selected$datapath))
+      }
+    })
+    
+    output$input_file_display <- shiny::renderText({
+      path <- input_file_path()
+      if (is.null(path)) {
+        if (lang() == "fr") "(sélectionner un fichier)" else "(select a file)"
+      } else {
+        basename(path)
+      }
+    })
+    
+    output$output_file_display <- shiny::renderText({
+      path <- output_file_path()
+      if (is.null(path)) {
+        if (lang() == "fr") "(sélectionner un fichier)" else "(select a file)"
+      } else {
+        basename(path)
+      }
+    })
+    
+    output$html_file_display <- shiny::renderText({
+      path <- html_file_path()
+      if (is.null(path)) {
+        if (lang() == "fr") "(emplacement par défaut)" else "(default location)"
+      } else {
+        basename(path)
+      }
+    })
+    
+    translations <- list(
+      en = list(
+        input_file = "Input file:",
+        output_file = "Output file path:",
+        html_file = "HTML output file path:",
+        html_file_optional = "(optional - leave blank for default location)",
+        title = "Document title:",
+        author = "Author name:",
+        theme = "HTML theme:",
+        render = "Render Html after conversion",
+        open_html = "Open Html output file after rendering",
+        open_qmd = "Open .qmd file in editor after conversion",
+        code_fold = "Fold code blocks by default",
+        number_sections = "Number sections automatically (not needed if sections already numbered)",
+        show_source_lines = "Show original line numbers in code chunks"
+      ),
+      fr = list(
+        input_file = "Fichier d'entrée :",
+        output_file = "Chemin du fichier de sortie :",
+        html_file = "Chemin du fichier HTML :",
+        html_file_optional = "(optionnel - laisser vide pour l'emplacement par défaut)",
+        title = "Titre du document :",
+        author = "Nom de l'auteur :",
+        theme = "Thème HTML :",
+        render = "Générer Html après conversion",
+        open_html = "Ouvrir le fichier Html après rendu",
+        open_qmd = "Ouvrir le fichier .qmd dans l'éditeur après conversion",
+        code_fold = "Replier les blocs de code par défaut",
+        number_sections = "Numéroter les sections automatiquement (pas utile si vos sections sont déjà numérotées)",
+        show_source_lines = "Afficher les numéros de ligne originaux dans les chunks"
+      )
+    )
+    
+    output$label_input_file <- shiny::renderText({ translations[[lang()]]$input_file })
+    output$label_output_file <- shiny::renderText({ translations[[lang()]]$output_file })
+    output$label_html_file <- shiny::renderText({ translations[[lang()]]$html_file })
+    output$label_html_file_optional <- shiny::renderText({ translations[[lang()]]$html_file_optional })
+    output$label_title <- shiny::renderText({ translations[[lang()]]$title })
+    output$label_author <- shiny::renderText({ translations[[lang()]]$author })
+    output$label_theme <- shiny::renderText({ translations[[lang()]]$theme })
+    output$label_render <- shiny::renderText({ translations[[lang()]]$render })
+    output$label_open_html <- shiny::renderText({ translations[[lang()]]$open_html })
+    output$label_open_qmd <- shiny::renderText({ translations[[lang()]]$open_qmd })
+    output$label_code_fold <- shiny::renderText({ translations[[lang()]]$code_fold })
+    output$label_number_sections <- shiny::renderText({ translations[[lang()]]$number_sections })
+    output$label_show_source_lines <- shiny::renderText({ translations[[lang()]]$show_source_lines })
+    
+    shiny::observeEvent(input$done, {
+      
+      input_file_final <- input_file_path()
+      output_file_final <- output_file_path()
+      
+      if (is.null(input_file_final) || is.null(output_file_final)) {
+        shiny::showNotification(
+          if (lang() == "fr") "Veuillez sélectionner les fichiers d'entrée et de sortie" else "Please select input and output files",
+          type = "error",
+          duration = 5
+        )
+        return()
+      }
+      
+      session$sendCustomMessage('toggleLoader', TRUE)
+      
+      html_file_final <- html_file_path()
+      title <- shiny::req(input$title)
+      author <- shiny::req(input$author)
+      theme <- input$theme
+      if (theme == "") theme <- NULL
+      render <- input$render
+      open_html <- input$open_html
+      open_qmd <- input$open_qmd
+      code_fold <- input$code_fold
+      number_sections <- input$number_sections
+      show_source_lines <- input$show_source_lines
+      
+      tryCatch({
+        rtoqmd(
+          input_file = input_file_final,
+          output_file = output_file_final,
+          title = title,
+          author = author,
+          format = "html",
+          theme = theme,
+          render = render,
+          output_html_file = html_file_final,
+          open_html = open_html && render,
+          code_fold = code_fold,
+          number_sections = number_sections,
+          lang = lang(),
+          show_source_lines = show_source_lines
+        )
+        
+        if (open_qmd && file.exists(output_file_final)) {
+          utils::browseURL(output_file_final)
+        }
+        
+        session$sendCustomMessage('toggleLoader', FALSE)
+        
+        success_msg <- if (lang() == "fr") {
+          "✔ Conversion terminée avec succès !"
+        } else {
+          "✔ Conversion completed successfully!"
+        }
+        
+        shiny::showModal(shiny::modalDialog(
+          title = if (lang() == "fr") "Conversion terminée" else "Conversion completed",
+          success_msg,
+          easyClose = TRUE,
+          footer = shiny::actionButton("close_modal", if (lang() == "fr") "Fermer" else "Close")
+        ))
+        
+      }, error = function(e) {
+        session$sendCustomMessage('toggleLoader', FALSE)
+        shiny::showNotification(
+          paste0("Error: ", e$message),
+          type = "error",
+          duration = 10
+        )
+      })
+    })
+    
+    shiny::observeEvent(input$close_modal, {
+      shiny::removeModal()
+    })
+  }
+  
+  # Run app
+  if (is.null(port)) {
+    shiny::runApp(list(ui = ui, server = server), launch.browser = launch.browser)
+  } else {
+    shiny::runApp(list(ui = ui, server = server), launch.browser = launch.browser, port = port)
+  }
+  
+  invisible()
+}
