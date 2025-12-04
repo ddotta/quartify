@@ -28,7 +28,7 @@
 
   - Completely automatic - no modification of R scripts required
 
-  - Default is FALSE to preserve existing behavior
+  - Default is TRUE - enabled by default for better traceability
 
 ## quartify 0.0.4
 
