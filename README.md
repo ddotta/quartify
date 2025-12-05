@@ -24,6 +24,7 @@ While [`knitr::spin()`](https://yihui.org/knitr/demo/stitch/) converts R scripts
 - ✅ **Scientific Publishing**: Built-in support for citations, bibliographies, and academic formatting
 - ✅ **Mermaid Diagrams**: Create flowcharts and diagrams directly in your documentation
 - ✅ **Future-Proof**: Quarto is the next-generation successor to R Markdown, actively developed by Posit
+- ✅ **One-Step HTML Generation**: Unlike `knitr::spin()` which only creates .Rmd files (requiring a separate knitting step), `quartify` can generate HTML output directly in a single step
 
 **Key Difference**: `knitr::spin()` uses `#'` for markdown text and `#+` for chunk options, while `quartify` uses natural R commenting (`#` for text, RStudio sections for headers) making your R scripts more readable and maintainable even before conversion.
 
