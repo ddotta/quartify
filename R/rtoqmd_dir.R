@@ -390,6 +390,13 @@ rtoqmd_dir <- function(dir_path,
     
     # Render book if requested
     if (render) {
+      # Delete existing index.html to force regeneration
+      index_html_path <- file.path(book_output_dir, "index.html")
+      if (file.exists(index_html_path)) {
+        unlink(index_html_path)
+        cli::cli_alert_info("Deleted existing index.html to force regeneration")
+      }
+      
       cli::cli_alert_info("Rendering Quarto book...")
       tryCatch({
         old_wd <- getwd()
