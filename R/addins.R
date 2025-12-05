@@ -1442,7 +1442,6 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
             render = input$render_html,
             code_fold = input$code_fold,
             number_sections = input$number_sections,
-            show_source_lines = input$show_source_lines,
             create_book = create_book_opt,
             book_title = input$doc_title,
             output_dir = if (create_book_opt) output_dir else NULL

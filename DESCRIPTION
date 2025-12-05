@@ -22,7 +22,7 @@ Imports:
     base64enc,
     shinyFiles,
     quarto,
-    yaml
+    utils
 Suggests: 
     testthat (>= 3.0.0),
     dplyr

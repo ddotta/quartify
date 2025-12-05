@@ -34,6 +34,7 @@
 #' @returns Invisibly returns a data frame with conversion results (file paths and status)
 #' @note Existing .qmd and .html files will be automatically overwritten during generation to ensure fresh output.
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_warning cli_alert_danger cli_h1 cli_h2
+#' @importFrom utils capture.output
 #' @export
 #' @examples
 #' \dontrun{
@@ -318,7 +319,7 @@ rtoqmd_dir <- function(dir_path,
     
     # Navigation text based on language
     nav_text <- if (language == "fr") {
-      "Naviguez entre les chapitres en utilisant la barre latérale."
+      "Naviguez entre les chapitres en utilisant la barre lat\u00e9rale."
     } else {
       "Navigate through the chapters using the sidebar."
     }
