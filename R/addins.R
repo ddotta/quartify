@@ -86,7 +86,7 @@ rtoqmd_addin <- function() {
           left: 0;
           width: 100%;
           height: 100%;
-          background-color: rgba(255, 255, 255, 0.9);
+          background-color: rgba(0, 0, 0, 0.6);
           display: none;
           justify-content: center;
           align-items: center;
@@ -96,7 +96,7 @@ rtoqmd_addin <- function() {
           display: flex;
         }
         .spinner {
-          border: 8px solid #f3f3f3;
+          border: 8px solid #e0e0e0;
           border-top: 8px solid #0073e6;
           border-radius: 50%;
           width: 60px;
@@ -156,11 +156,7 @@ rtoqmd_addin <- function() {
               shiny::column(12,
                 shiny::div(
                   style = "margin-bottom: 20px;",
-                  shiny::radioButtons("conversion_mode", 
-                                    shiny::textOutput("label_mode", inline = TRUE),
-                                    choices = c("Single file" = "single", "Directory" = "directory"),
-                                    selected = "single",
-                                    inline = TRUE)
+                  shiny::uiOutput("mode_selector")
                 )
               )
             ),
@@ -183,7 +179,7 @@ rtoqmd_addin <- function() {
                     ),
                     shiny::div(
                       style = "margin-left: 10px;",
-                      shinyFiles::shinyFilesButton("input_file_btn", "Browse", "Select R script", multiple = FALSE, class = "btn-primary", style = "padding: 6px 12px;")
+                      shinyFiles::shinyFilesButton("input_file_btn", "Browse", "Select R script(s)", multiple = TRUE, class = "btn-primary", style = "padding: 6px 12px;")
                     )
                   )
                 )
@@ -238,7 +234,7 @@ rtoqmd_addin <- function() {
             shiny::conditionalPanel(
               condition = "input.conversion_mode == 'directory'",
               shiny::fluidRow(
-                shiny::column(12,
+                shiny::column(6,
                   shiny::div(
                     style = "margin-bottom: 15px;",
                     shiny::strong(shiny::textOutput("label_input_directory")),
@@ -254,18 +250,51 @@ rtoqmd_addin <- function() {
                       shiny::verbatimTextOutput("selected_directory", placeholder = TRUE)
                     )
                   )
+                ),
+                shiny::column(6,
+                  shiny::div(
+                    style = "margin-bottom: 15px;",
+                    shiny::strong(shiny::textOutput("label_output_directory")),
+                    shiny::br(),
+                    shiny::div(
+                      style = "margin-top: 5px;",
+                      shinyFiles::shinyDirButton("output_directory", 
+                                                 "Browse", 
+                                                 "Select output directory for book",
+                                                 class = "btn-primary",
+                                                 style = "margin-bottom: 10px;"),
+                      shiny::br(),
+                      shiny::verbatimTextOutput("selected_output_directory", placeholder = TRUE)
+                    )
+                  )
+                )
+              ),
+              shiny::fluidRow(
+                shiny::column(12,
+                  shiny::checkboxInput(
+                    "create_book",
+                    shiny::textOutput("label_create_book"),
+                    value = TRUE
+                  )
                 )
               )
             ),
             shiny::hr(),
             # Title, Author, Theme on same row
             shiny::fluidRow(
-              shiny::column(4, shiny::textInput(
-                "title",
-                shiny::textOutput("label_title"),
-                value = "My Analysis",
-                width = "100%"
-              )),
+              shiny::conditionalPanel(
+                condition = "input.conversion_mode == 'single'",
+                shiny::column(4, shiny::textInput(
+                  "title",
+                  shiny::textOutput("label_title"),
+                  value = "My Analysis",
+                  width = "100%"
+                ))
+              ),
+              shiny::conditionalPanel(
+                condition = "input.conversion_mode == 'directory'",
+                shiny::column(4)
+              ),
               shiny::column(4, shiny::textInput(
                 "author",
                 shiny::textOutput("label_author"),
@@ -316,10 +345,13 @@ rtoqmd_addin <- function() {
                   shiny::textOutput("label_render"),
                   value = TRUE
                 ),
-                shiny::checkboxInput(
-                  "open_qmd",
-                  shiny::textOutput("label_open_qmd"),
-                  value = TRUE
+                shiny::conditionalPanel(
+                  condition = "input.conversion_mode == 'single'",
+                  shiny::checkboxInput(
+                    "open_qmd",
+                    shiny::textOutput("label_open_qmd"),
+                    value = TRUE
+                  )
                 ),
                 shiny::checkboxInput(
                   "number_sections",
@@ -333,10 +365,13 @@ rtoqmd_addin <- function() {
                   shiny::textOutput("label_code_fold"),
                   value = FALSE
                 ),
-                shiny::checkboxInput(
-                  "open_html",
-                  shiny::textOutput("label_open_html"),
-                  value = FALSE
+                shiny::conditionalPanel(
+                  condition = "input.conversion_mode == 'single'",
+                  shiny::checkboxInput(
+                    "open_html",
+                    shiny::textOutput("label_open_html"),
+                    value = FALSE
+                  )
                 ),
                 shiny::checkboxInput(
                   "show_source_lines",
@@ -443,14 +478,24 @@ rtoqmd_addin <- function() {
     
     # Reactive values for file paths and directory
     selected_dir <- shiny::reactiveVal(NULL)
+    selected_output_dir <- shiny::reactiveVal(NULL)
     
-    # Directory chooser
+    # Directory choosers
     shinyFiles::shinyDirChoose(input, "input_directory", roots = volumes)
+    shinyFiles::shinyDirChoose(input, "output_directory", roots = volumes)
     
     shiny::observeEvent(input$input_directory, {
       dir_path <- shinyFiles::parseDirPath(volumes, input$input_directory)
       if (length(dir_path) > 0) {
-        selected_dir(as.character(dir_path))
+        dir_str <- as.character(dir_path)
+        selected_dir(dir_str)
+      }
+    })
+    
+    shiny::observeEvent(input$output_directory, {
+      dir_path <- shinyFiles::parseDirPath(volumes, input$output_directory)
+      if (length(dir_path) > 0 && !any(is.na(dir_path))) {
+        selected_output_dir(as.character(dir_path))
       }
     })
     
@@ -471,13 +516,31 @@ rtoqmd_addin <- function() {
       }
     })
     
+    output$selected_output_directory <- shiny::renderText({
+      if (!is.null(selected_output_dir())) {
+        if (lang() == "fr") {
+          paste0("S\u00e9lectionn\u00e9 : ", selected_output_dir())
+        } else {
+          paste0("Selected: ", selected_output_dir())
+        }
+      } else {
+        if (lang() == "fr") {
+          "Aucun r\u00e9pertoire (d\u00e9faut : _book)"
+        } else {
+          "None (default: _book)"
+        }
+      }
+    })
+    
     # Translations
     translations <- list(
       en = list(
         mode = "Conversion mode:",
-        input_file = "Input file:",
+        input_file = "Input file(s):",
         input_directory = "Input directory:",
+        output_directory = "Output directory (for book):",
         button_select_directory = "Select Directory",
+        create_book = "Create Quarto Book",
         output_file = "Output file path:",
         html_file = "HTML output file path:",
         html_file_optional = "(optional - leave blank for default location)",
@@ -493,9 +556,11 @@ rtoqmd_addin <- function() {
       ),
       fr = list(
         mode = "Mode de conversion :",
-        input_file = "Fichier d'entr\u00e9e :",
+        input_file = "Fichier(s) d'entr\u00e9e :",
         input_directory = "R\u00e9pertoire d'entr\u00e9e :",
+        output_directory = "R\u00e9pertoire de sortie (pour le book) :",
         button_select_directory = "S\u00e9lectionner un R\u00e9pertoire",
+        create_book = "Cr\u00e9er un Quarto Book",
         output_file = "Chemin du fichier de sortie :",
         html_file = "Chemin du fichier HTML :",
         html_file_optional = "(optionnel - laisser vide pour l'emplacement par d\u00e9faut)",
@@ -511,11 +576,30 @@ rtoqmd_addin <- function() {
       )
     )
     
+    # Dynamic UI for mode selection
+    output$mode_selector <- shiny::renderUI({
+      if (lang() == "fr") {
+        shiny::radioButtons("conversion_mode", 
+                          translations[["fr"]]$mode,
+                          choices = c("Un ou plusieurs fichiers" = "single", "R\u00e9pertoire" = "directory"),
+                          selected = "single",
+                          inline = TRUE)
+      } else {
+        shiny::radioButtons("conversion_mode", 
+                          translations[["en"]]$mode,
+                          choices = c("One or more files" = "single", "Directory" = "directory"),
+                          selected = "single",
+                          inline = TRUE)
+      }
+    })
+    
     # Dynamic labels
     output$label_mode <- shiny::renderText({ translations[[lang()]]$mode })
     output$label_input_file <- shiny::renderText({ translations[[lang()]]$input_file })
     output$label_input_directory <- shiny::renderText({ translations[[lang()]]$input_directory })
+    output$label_output_directory <- shiny::renderText({ translations[[lang()]]$output_directory })
     output$button_select_directory <- shiny::renderText({ translations[[lang()]]$button_select_directory })
+    output$label_create_book <- shiny::renderText({ translations[[lang()]]$create_book })
     output$label_output_file <- shiny::renderText({ translations[[lang()]]$output_file })
     output$label_html_file <- shiny::renderText({ translations[[lang()]]$html_file })
     output$label_html_file_optional <- shiny::renderText({ translations[[lang()]]$html_file_optional })
@@ -535,8 +619,11 @@ rtoqmd_addin <- function() {
       # Show loader
       session$sendCustomMessage('toggleLoader', TRUE)
       
+      # Check mode
+      is_directory_mode <- input$conversion_mode == "directory"
+      
       # Get common values
-      title <- shiny::req(input$title)
+      title <- if (is_directory_mode) "" else shiny::req(input$title)
       author <- shiny::req(input$author)
       theme <- input$theme
       if (theme == "") theme <- NULL
@@ -547,14 +634,13 @@ rtoqmd_addin <- function() {
       number_sections <- input$number_sections
       show_source_lines <- input$show_source_lines
       
-      # Check mode
-      is_directory_mode <- input$conversion_mode == "directory"
-      
       # Convert based on mode
       tryCatch({
         if (is_directory_mode) {
           # Directory mode
           dir_path <- shiny::req(selected_dir())
+          output_dir <- selected_output_dir()
+          create_book_val <- if (!is.null(input$create_book)) input$create_book else TRUE
           
           rtoqmd_dir(
             dir_path = dir_path,
@@ -563,10 +649,31 @@ rtoqmd_addin <- function() {
             format = "html",
             theme = theme,
             render = render,
+            output_dir = output_dir,
+            create_book = create_book_val,
             code_fold = code_fold,
             number_sections = number_sections,
             language = lang()
           )
+          
+          # If rendering, wait for index.html to be created
+          if (render && create_book_val) {
+            book_dir <- if (!is.null(output_dir)) output_dir else "_book"
+            if (!file.path(book_dir) %in% c("_documentation", "_book")) {
+              book_dir <- file.path(dir_path, book_dir)
+            } else {
+              book_dir <- file.path(dir_path, book_dir)
+            }
+            index_file <- file.path(book_dir, "index.html")
+            
+            # Wait up to 60 seconds for index.html to be created
+            max_wait <- 60
+            waited <- 0
+            while (!file.exists(index_file) && waited < max_wait) {
+              Sys.sleep(0.5)
+              waited <- waited + 0.5
+            }
+          }
           
         } else {
           # Single file mode
@@ -601,19 +708,17 @@ rtoqmd_addin <- function() {
         
         # Show success message based on language
         success_msg <- if (lang() == "fr") {
-          "\u2714 Conversion termin\u00e9e avec succ\u00e8s ! Vous pouvez fermer cette fen\u00eatre."
+          "\u2705 Conversion termin\u00e9e avec succ\u00e8s !"
         } else {
-          "\u2714 Conversion completed successfully! You can close this window."
+          "\u2705 Conversion completed successfully!"
         }
         
-        shiny::showModal(shiny::modalDialog(
-          title = if (lang() == "fr") "Conversion termin\u00e9e" else "Conversion completed",
+        shiny::showNotification(
           success_msg,
-          easyClose = TRUE,
-          footer = shiny::actionButton("close_modal", 
-                                      if (lang() == "fr") "Fermer" else "Close",
-                                      onclick = "setTimeout(function(){window.close();}, 100);")
-        ))
+          type = "message",
+          duration = 5,
+          closeButton = TRUE
+        )
         
       }, error = function(e) {
         # Hide loader on error
@@ -628,12 +733,6 @@ rtoqmd_addin <- function() {
     
     # When cancel button is pressed
     shiny::observeEvent(input$cancel, {
-      shiny::stopApp()
-    })
-    
-    # Close modal and stop app
-    shiny::observeEvent(input$close_modal, {
-      shiny::removeModal()
       shiny::stopApp()
     })
   }
@@ -742,7 +841,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         }
         .loader.active { display: flex; }
         .spinner {
-          border: 8px solid #f3f3f3;
+          border: 8px solid #e0e0e0;
           border-top: 8px solid #0073e6;
           border-radius: 50%;
           width: 60px;
@@ -797,11 +896,22 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         shiny::column(12,
           shiny::div(
             style = "margin-bottom: 20px;",
-            shiny::radioButtons("conversion_mode", 
-                              shiny::textOutput("label_mode", inline = TRUE),
-                              choices = c("Single file" = "single", "Directory" = "directory"),
-                              selected = "single",
-                              inline = TRUE)
+            shiny::conditionalPanel(
+              condition = "output.current_lang == 'en'",
+              shiny::radioButtons("conversion_mode", 
+                                shiny::textOutput("label_mode", inline = TRUE),
+                                choices = c("Single file" = "single", "Directory" = "directory"),
+                                selected = "single",
+                                inline = TRUE)
+            ),
+            shiny::conditionalPanel(
+              condition = "output.current_lang == 'fr'",
+              shiny::radioButtons("conversion_mode", 
+                                shiny::textOutput("label_mode", inline = TRUE),
+                                choices = c("Un fichier" = "single", "Répertoire" = "directory"),
+                                selected = "single",
+                                inline = TRUE)
+            )
           )
         )
       ),
@@ -1190,17 +1300,17 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         session$sendCustomMessage('toggleLoader', FALSE)
         
         success_msg <- if (lang() == "fr") {
-          "\u2714 Conversion termin\u00E9e avec succ\u00E8s !"
+          "\u2705 Conversion termin\u00e9e avec succ\u00e8s !"
         } else {
-          "\u2714 Conversion completed successfully!"
+          "\u2705 Conversion completed successfully!"
         }
         
-        shiny::showModal(shiny::modalDialog(
-          title = if (lang() == "fr") "Conversion termin\u00E9e" else "Conversion completed",
+        shiny::showNotification(
           success_msg,
-          easyClose = TRUE,
-          footer = shiny::actionButton("close_modal", if (lang() == "fr") "Fermer" else "Close")
-        ))
+          type = "message",
+          duration = 5,
+          closeButton = TRUE
+        )
         
       }, error = function(e) {
         session$sendCustomMessage('toggleLoader', FALSE)
@@ -1210,10 +1320,6 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
           duration = 10
         )
       })
-    })
-    
-    shiny::observeEvent(input$close_modal, {
-      shiny::removeModal()
     })
     
     # Quit app button handler
@@ -1325,7 +1431,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
           left: 0;
           width: 100%;
           height: 100%;
-          background-color: rgba(255, 255, 255, 0.9);
+          background-color: rgba(0, 0, 0, 0.6);
           display: none;
           justify-content: center;
           align-items: center;
@@ -1333,7 +1439,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         }
         .loader.active { display: flex; }
         .spinner {
-          border: 8px solid #f3f3f3;
+          border: 8px solid #e0e0e0;
           border-top: 8px solid #0073e6;
           border-radius: 50%;
           width: 60px;
@@ -1403,11 +1509,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         shiny::column(12,
           shiny::div(
             style = "margin-bottom: 20px;",
-            shiny::radioButtons("conversion_mode", 
-                              shiny::textOutput("label_mode", inline = TRUE),
-                              choices = c("Single file" = "single", "Batch (multiple files)" = "batch"),
-                              selected = "single",
-                              inline = TRUE)
+            shiny::uiOutput("mode_selector_web")
           )
         )
       ),
@@ -1606,6 +1708,23 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
     # Language management
     shiny::observeEvent(input$lang_en, { rv$lang <- "en" })
     shiny::observeEvent(input$lang_fr, { rv$lang <- "fr" })
+    
+    # Dynamic UI for mode selection
+    output$mode_selector_web <- shiny::renderUI({
+      if (rv$lang == "fr") {
+        shiny::radioButtons("conversion_mode", 
+                          "Mode de conversion :",
+                          choices = c("Un fichier" = "single", "R\u00e9pertoire (plusieurs fichiers)" = "batch"),
+                          selected = "single",
+                          inline = TRUE)
+      } else {
+        shiny::radioButtons("conversion_mode", 
+                          "Conversion mode:",
+                          choices = c("Single file" = "single", "Batch (multiple files)" = "batch"),
+                          selected = "single",
+                          inline = TRUE)
+      }
+    })
     
     # Dynamic labels
     output$label_mode <- shiny::renderText({

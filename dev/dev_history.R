@@ -27,7 +27,7 @@ devtools::check()
 # Charger l'ensemble des fonctions de son package
 devtools::load_all()
 
-# Pour le code coverage
+q# Pour le code coverage
 covr::package_coverage()
 covr::report()
 #------------------------------------------------#

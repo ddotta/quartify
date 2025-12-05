@@ -27,7 +27,7 @@
 #' @param recursive Logical, whether to search subdirectories recursively (default: TRUE)
 #' @param pattern Regular expression pattern to filter R files (default: "\\.R$")
 #' @param exclude_pattern Optional regular expression pattern to exclude certain files (default: NULL)
-#' @param create_book Logical, whether to create a Quarto book structure with _quarto.yml (default: NULL, auto-enabled when output_html_dir is specified with render=TRUE)
+#' @param create_book Logical, whether to create a Quarto book structure with _quarto.yml (default: TRUE)
 #' @param book_title Title for the Quarto book (default: "R Scripts Documentation")
 #' @param output_dir Output directory for the book (required if create_book=TRUE, default: NULL uses input_dir/output)
 #' @param language Language for the documentation ("en" or "fr", default: "en")
@@ -94,13 +94,13 @@ rtoqmd_dir <- function(dir_path,
                        theme = NULL,
                        render = FALSE,
                        output_html_dir = NULL,
-                       open_html = FALSE,
+                       open_html = TRUE,
                        code_fold = FALSE,
                        number_sections = TRUE,
                        recursive = TRUE,
                        pattern = "\\.R$",
                        exclude_pattern = NULL,
-                       create_book = NULL,
+                       create_book = TRUE,
                        book_title = "R Scripts Documentation",
                        output_dir = NULL,
                        language = "en") {
@@ -154,6 +154,33 @@ rtoqmd_dir <- function(dir_path,
   
   cli::cli_alert_success("Found {length(r_files)} R script{?s} to convert")
   cli::cli_h2("Converting files...")
+  
+  # Clean up existing book files to prevent conflicts
+  # If creating a book: clean to start fresh
+  # If NOT creating a book: clean to prevent Quarto from detecting book structure during individual renders
+  quarto_yml <- file.path(dir_path, "_quarto.yml")
+  quarto_yml_backup <- NULL
+  
+  if (create_book) {
+    # Remove old book files completely
+    index_qmd <- file.path(dir_path, "index.qmd")
+    
+    for (file_to_clean in c(index_qmd, quarto_yml)) {
+      if (file.exists(file_to_clean)) {
+        unlink(file_to_clean)
+        cli::cli_alert_info("Cleaned existing book file: {.file {basename(file_to_clean)}}")
+      }
+    }
+  } else {
+    # If not creating a book but _quarto.yml exists, backup and remove it temporarily
+    # to prevent Quarto from treating individual file renders as book chapters
+    if (file.exists(quarto_yml)) {
+      quarto_yml_backup <- file.path(dir_path, "_quarto.yml.backup")
+      file.copy(quarto_yml, quarto_yml_backup, overwrite = TRUE)
+      unlink(quarto_yml)
+      cli::cli_alert_info("Temporarily moved existing _quarto.yml to prevent book detection")
+    }
+  }
   
   # Create HTML output directory if specified and doesn't exist
   if (!is.null(output_html_dir) && !dir.exists(output_html_dir)) {
@@ -242,6 +269,13 @@ rtoqmd_dir <- function(dir_path,
     })
   }
   
+  # Restore backed up _quarto.yml if we didn't create a book
+  if (!create_book && !is.null(quarto_yml_backup) && file.exists(quarto_yml_backup)) {
+    file.copy(quarto_yml_backup, quarto_yml, overwrite = TRUE)
+    unlink(quarto_yml_backup)
+    cli::cli_alert_info("Restored original _quarto.yml")
+  }
+  
   # Summary
   cli::cli_h2("Conversion Summary")
   n_success <- sum(results$status == "success")
@@ -268,6 +302,17 @@ rtoqmd_dir <- function(dir_path,
     # Create book output directory if needed
     if (!dir.exists(book_output_dir)) {
       dir.create(book_output_dir, recursive = TRUE, showWarnings = FALSE)
+    }
+    
+    # Clean up existing HTML files in output directory
+    index_html_output <- file.path(book_output_dir, "index.html")
+    index_html_root <- file.path(dir_path, "index.html")
+    
+    for (html_file_to_clean in c(index_html_output, index_html_root)) {
+      if (file.exists(html_file_to_clean)) {
+        unlink(html_file_to_clean)
+        cli::cli_alert_info("Cleaned existing HTML: {.file {basename(html_file_to_clean)}}")
+      }
     }
     
     # Get successfully converted qmd files relative to dir_path
@@ -317,21 +362,27 @@ rtoqmd_dir <- function(dir_path,
     # Create index.qmd (required for Quarto books)
     index_path <- file.path(dir_path, "index.qmd")
     
-    # Navigation text based on language
-    nav_text <- if (language == "fr") {
-      "Naviguez entre les chapitres en utilisant la barre lat\u00e9rale."
+    # Build index content based on language
+    if (language == "fr") {
+      index_content <- paste0(
+        "# Bienvenue\n\n",
+        "Cette documentation a été générée automatiquement à partir de scripts R.\n\n",
+        "## Navigation\n\n",
+        "Utilisez la barre latérale pour naviguer entre les différents chapitres.\n\n",
+        "## Contenu\n\n",
+        "Cette documentation contient ", length(successful_qmd), " script(s) R converti(s) en Quarto.\n"
+      )
     } else {
-      "Navigate through the chapters using the sidebar."
+      index_content <- paste0(
+        "# Welcome\n\n",
+        "This documentation was automatically generated from R scripts.\n\n",
+        "## Navigation\n\n",
+        "Use the sidebar to navigate through the different chapters.\n\n",
+        "## Contents\n\n",
+        "This documentation contains ", length(successful_qmd), " R script(s) converted to Quarto.\n"
+      )
     }
     
-    index_content <- paste0(
-      "---\n",
-      "title: \"Documentation\"\n",
-      "author: \"", author, "\"\n",
-      "---\n\n",
-      "# ", book_title, "\n\n",
-      nav_text, "\n"
-    )
     writeLines(index_content, index_path)
     cli::cli_alert_success("Created: {.file {index_path}}")
     
@@ -367,6 +418,8 @@ rtoqmd_dir <- function(dir_path,
     }
     
     # Build complete YAML
+    toc_title <- if (language == "fr") "Sommaire" else "Table of contents"
+    
     yaml_content <- paste0(
       "project:\n",
       "  type: book\n",
@@ -381,6 +434,7 @@ rtoqmd_dir <- function(dir_path,
       "format:\n",
       "  html:\n",
       "    theme: ", if (!is.null(theme)) theme else "cosmo", "\n",
+      "    toc-title: \"", toc_title, "\"\n",
       "    code-fold: ", code_fold_yaml, "\n",
       "    number-sections: ", number_sections_yaml, "\n"
     )
@@ -390,13 +444,6 @@ rtoqmd_dir <- function(dir_path,
     
     # Render book if requested
     if (render) {
-      # Delete existing index.html to force regeneration
-      index_html_path <- file.path(book_output_dir, "index.html")
-      if (file.exists(index_html_path)) {
-        unlink(index_html_path)
-        cli::cli_alert_info("Deleted existing index.html to force regeneration")
-      }
-      
       cli::cli_alert_info("Rendering Quarto book...")
       tryCatch({
         old_wd <- getwd()
