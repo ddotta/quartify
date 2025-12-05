@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,16 +101,18 @@
 <div class="section level2">
 <h2 id="utilisation">Utilisation<a class="anchor" aria-label="anchor" href="#utilisation"></a></h2>
 <div class="section level3">
-<h3 id="interface-shiny-interactive">Interface Shiny Interactive<a class="anchor" aria-label="anchor" href="#interface-shiny-interactive"></a></h3>
-<p><code>quartify</code> fournit une interface Shiny interactive qui fonctionne dans n’importe quel environnement R :</p>
-<div class="section level4">
-<h4 id="option-1--application-web-en-ligne-aucune-installation-requise">Option 1 : Application Web en Ligne (aucune installation requise)<a class="anchor" aria-label="anchor" href="#option-1--application-web-en-ligne-aucune-installation-requise"></a></h4>
-<p>Utilisez l’application web déployée directement dans votre navigateur :</p>
-<p><strong>🌐 <a href="https://quartify.lab.sspcloud.fr/" class="external-link">https://quartify.lab.sspcloud.fr/</a></strong></p>
-<p>Cette version web vous permet de : - Télécharger votre script R directement depuis votre ordinateur - Configurer les options de conversion (titre, auteur, thème, etc.) - Télécharger les fichiers .qmd et .html générés - Aucune installation de R nécessaire !</p>
+<h3 id="id_-essayez-lapplication-web-en-ligne-">🌐 Essayez l’Application Web en Ligne !<a class="anchor" aria-label="anchor" href="#id_-essayez-lapplication-web-en-ligne-"></a></h3>
+<p><strong>Aucune installation requise !</strong> Utilisez quartify directement dans votre navigateur :</p>
 </div>
+<div class="section level3">
+<h3 id="id_-httpsquartifylabsspcloudfr-"><strong>→ <a href="https://quartify.lab.sspcloud.fr/" class="external-link">https://quartify.lab.sspcloud.fr/</a> ←</strong><a class="anchor" aria-label="anchor" href="#id_-httpsquartifylabsspcloudfr-"></a></h3>
+<p>La version web vous permet de : - ✅ Télécharger votre script R directement depuis votre ordinateur - ✅ Configurer les options de conversion (titre, auteur, thème, etc.) - ✅ Télécharger les fichiers .qmd et .html générés - ✅ Aucune installation de R nécessaire !</p>
+<hr></div>
+<div class="section level3">
+<h3 id="interface-shiny-interactive-pour-les-utilisateurs-r">Interface Shiny Interactive (pour les utilisateurs R)<a class="anchor" aria-label="anchor" href="#interface-shiny-interactive-pour-les-utilisateurs-r"></a></h3>
+<p><code>quartify</code> fournit également une interface Shiny interactive qui fonctionne dans n’importe quel environnement R :</p>
 <div class="section level4">
-<h4 id="option-2--application-autonome-fonctionne-dans-la-plupart-des-ide">Option 2 : Application Autonome (fonctionne dans la plupart des IDE)<a class="anchor" aria-label="anchor" href="#option-2--application-autonome-fonctionne-dans-la-plupart-des-ide"></a></h4>
+<h4 id="option-1--application-autonome-fonctionne-dans-la-plupart-des-ide">Option 1 : Application Autonome (fonctionne dans la plupart des IDE)<a class="anchor" aria-label="anchor" href="#option-1--application-autonome-fonctionne-dans-la-plupart-des-ide"></a></h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ddotta.github.io/quartify/">quartify</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/quartify_app.html">quartify_app</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># S'ouvre dans votre navigateur par défaut</span></span></code></pre></div>
@@ -118,13 +120,13 @@
 <p><strong>Parfait pour les utilisateurs de Positron, VS Code, ou tout IDE supportant R !</strong></p>
 </div>
 <div class="section level4">
-<h4 id="option-3--add-in-rstudio">Option 3 : Add-in RStudio<a class="anchor" aria-label="anchor" href="#option-3--add-in-rstudio"></a></h4>
+<h4 id="option-2--add-in-rstudio">Option 2 : Add-in RStudio<a class="anchor" aria-label="anchor" href="#option-2--add-in-rstudio"></a></h4>
 <p>Si vous utilisez RStudio, vous pouvez également accéder à la même interface via :</p>
 <ol style="list-style-type: decimal"><li>Ouvrez votre script R dans RStudio</li>
 <li>Allez dans le menu <strong>Addins</strong> → <strong>Convert R Script to Quarto</strong>
 </li>
 <li>Une fenêtre de dialogue apparaîtra avec les mêmes options que l’application autonome</li>
-<li>Cliquez sur <strong>GO</strong> pour convertir votre script</li>
+<li>Cliquez sur <strong>GENERATE</strong> pour convertir votre script</li>
 </ol><p>L’interface détecte automatiquement les préférences de langue de votre session R et affiche tous les libellés en anglais ou en français en conséquence. Vous pouvez changer la langue à tout moment avec les boutons EN/FR. Le format de sortie est toujours HTML.</p>
 </div>
 </div>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,43 @@
       <small>Source: <a href="https://github.com/ddotta/quartify/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.6" id="quartify-006">quartify 0.0.6<a class="anchor" aria-label="anchor" href="#quartify-006"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-0-6">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-6"></a></h3>
+<ul><li>
+<strong>Web Deployment Version</strong> (<code><a href="../reference/quartify_app_web.html">quartify_app_web()</a></code>):
+<ul><li>New web-friendly version designed for deployment on web servers</li>
+<li>Uses file upload/download instead of local file system access</li>
+<li>Deployed on SSP Cloud at <a href="https://quartify.lab.sspcloud.fr/" class="external-link">https://quartify.lab.sspcloud.fr/</a>
+</li>
+<li>No R installation required - use directly in your browser</li>
+<li>Upload your R script, configure options, and download generated .qmd and .html files</li>
+<li>Perfect for sharing quartify with non-R users</li>
+</ul></li>
+<li>
+<strong>Docker Support</strong>:
+<ul><li>Added Dockerfile for containerized deployment</li>
+<li>Based on rocker/r-ver:4.4.1 with Quarto 1.4.549</li>
+<li>Automated CI/CD with GitHub Actions</li>
+<li>Docker images published to Docker Hub: <code>ddottaagr/quartify</code>
+</li>
+<li>Includes Helm chart for Kubernetes deployment</li>
+</ul></li>
+<li>
+<strong>UI Improvements</strong>:
+<ul><li>Changed “GO” button to “GENERATE” across all interfaces for clarity</li>
+<li>Added bilingual support (EN/FR) for web version</li>
+<li>Improved button styling and layout consistency</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-0-6">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-6"></a></h3>
+<ul><li>Fixed Quarto path issues in Docker environment</li>
+<li>Fixed image resource loading (hex logo and language flags) in web version</li>
+<li>Fixed relative path handling for <code>quarto_render()</code> to avoid output path errors</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.5" id="quartify-005">quartify 0.0.5<a class="anchor" aria-label="anchor" href="#quartify-005"></a></h2>
 <div class="section level3">

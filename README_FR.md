@@ -102,23 +102,26 @@ devtools::install_github("ddotta/quartify")
 
 ## Utilisation
 
-### Interface Shiny Interactive
+### 🌐 Essayez l’Application Web en Ligne !
 
-`quartify` fournit une interface Shiny interactive qui fonctionne dans
-n’importe quel environnement R :
+**Aucune installation requise !** Utilisez quartify directement dans
+votre navigateur :
 
-#### Option 1 : Application Web en Ligne (aucune installation requise)
+### **→ <https://quartify.lab.sspcloud.fr/> ←**
 
-Utilisez l’application web déployée directement dans votre navigateur :
+La version web vous permet de : - ✅ Télécharger votre script R
+directement depuis votre ordinateur - ✅ Configurer les options de
+conversion (titre, auteur, thème, etc.) - ✅ Télécharger les fichiers
+.qmd et .html générés - ✅ Aucune installation de R nécessaire !
 
-**🌐 <https://quartify.lab.sspcloud.fr/>**
+------------------------------------------------------------------------
 
-Cette version web vous permet de : - Télécharger votre script R
-directement depuis votre ordinateur - Configurer les options de
-conversion (titre, auteur, thème, etc.) - Télécharger les fichiers .qmd
-et .html générés - Aucune installation de R nécessaire !
+### Interface Shiny Interactive (pour les utilisateurs R)
 
-#### Option 2 : Application Autonome (fonctionne dans la plupart des IDE)
+`quartify` fournit également une interface Shiny interactive qui
+fonctionne dans n’importe quel environnement R :
+
+#### Option 1 : Application Autonome (fonctionne dans la plupart des IDE)
 
 ``` r
 library(quartify)
@@ -134,7 +137,7 @@ et d’affichage - Basculer entre l’interface anglaise/française
 **Parfait pour les utilisateurs de Positron, VS Code, ou tout IDE
 supportant R !**
 
-#### Option 3 : Add-in RStudio
+#### Option 2 : Add-in RStudio
 
 Si vous utilisez RStudio, vous pouvez également accéder à la même
 interface via :
@@ -143,7 +146,7 @@ interface via :
 2.  Allez dans le menu **Addins** → **Convert R Script to Quarto**
 3.  Une fenêtre de dialogue apparaîtra avec les mêmes options que
     l’application autonome
-4.  Cliquez sur **GO** pour convertir votre script
+4.  Cliquez sur **GENERATE** pour convertir votre script
 
 L’interface détecte automatiquement les préférences de langue de votre
 session R et affiche tous les libellés en anglais ou en français en
