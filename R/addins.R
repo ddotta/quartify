@@ -136,7 +136,7 @@ rtoqmd_addin <- function() {
           style = "padding: 5px 10px; font-size: 12px;",
           class = "btn-sm"
         ),
-        miniUI::miniTitleBarButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GO \u25b6</span>"), primary = TRUE)
+        miniUI::miniTitleBarButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GENERATE \u25b6</span>"), primary = TRUE)
       )
     ),
     shiny::div(id = "loader", class = "loader", shiny::div(class = "spinner")),
@@ -672,7 +672,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         class = "lang-buttons",
         shiny::actionButton("lang_en", english_flag_html, class = "btn-sm"),
         shiny::actionButton("lang_fr", french_flag_html, class = "btn-sm"),
-        shiny::actionButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GO \u25B6</span>"), class = "btn-primary"),
+        shiny::actionButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GENERATE \u25B6</span>"), class = "btn-primary"),
         shiny::actionButton("quit_app", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>\u2715</span>"), class = "btn-danger btn-sm", style = "margin-left: 10px;")
       )
     ),
@@ -1056,6 +1056,9 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
   }
   
   french_flag_path <- system.file("man", "figures", "french_flag.png", package = "quartify")
+  if (french_flag_path == "" || !file.exists(french_flag_path)) {
+    french_flag_path <- system.file("figures", "french_flag.png", package = "quartify")
+  }
   if (french_flag_path == "" || !file.exists(french_flag_path)) {
     french_flag_path <- NULL
   }
