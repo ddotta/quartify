@@ -1170,8 +1170,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
             shiny::strong(shiny::textOutput("label_upload_file")),
             shiny::br(),
             shiny::fileInput("input_file", NULL, accept = c(".R", ".r"), 
-                           buttonLabel = shiny::textOutput("button_upload", inline = TRUE),
-                           placeholder = shiny::textOutput("placeholder_upload", inline = TRUE))
+                           buttonLabel = shiny::textOutput("button_upload", inline = TRUE))
           )
         )
       ),
@@ -1195,26 +1194,37 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
       ),
       
       shiny::fluidRow(
-        shiny::column(6,
+        shiny::column(4,
           shiny::div(
             style = "margin-bottom: 15px;",
             shiny::strong(shiny::textOutput("label_theme")),
             shiny::selectInput("theme", NULL, 
-                             choices = c("default", "cerulean", "cosmo", "cyborg", "darkly", 
-                                       "flatly", "journal", "litera", "lumen", "lux",
-                                       "materia", "minty", "morph", "pulse", "quartz",
-                                       "sandstone", "simplex", "sketchy", "slate", "solar",
-                                       "spacelab", "superhero", "united", "vapor", "yeti", "zephyr"),
-                             selected = "default",
+                             choices = c("Default" = "", "Cerulean" = "cerulean", "Cosmo" = "cosmo", 
+                                       "Flatly" = "flatly", "Journal" = "journal", "Litera" = "litera", 
+                                       "Lumen" = "lumen", "Lux" = "lux", "Materia" = "materia", 
+                                       "Minty" = "minty", "Morph" = "morph", "Pulse" = "pulse",
+                                       "Quartz" = "quartz", "Sandstone" = "sandstone", "Simplex" = "simplex",
+                                       "Sketchy" = "sketchy", "Slate" = "slate", "Solar" = "solar",
+                                       "Spacelab" = "spacelab", "Superhero" = "superhero", "United" = "united", 
+                                       "Vapor" = "vapor", "Yeti" = "yeti", "Zephyr" = "zephyr",
+                                       "Darkly" = "darkly", "Cyborg" = "cyborg"),
+                             selected = "",
                              width = "100%")
           )
+        )
+      ),
+      
+      shiny::hr(),
+      
+      # Checkboxes in 2 columns
+      shiny::fluidRow(
+        shiny::column(6,
+          shiny::checkboxInput("render_html", shiny::textOutput("label_render"), value = TRUE),
+          shiny::checkboxInput("number_sections", shiny::textOutput("label_number_sections"), value = TRUE),
+          shiny::checkboxInput("show_source_lines", shiny::textOutput("label_show_source_lines"), value = TRUE)
         ),
         shiny::column(6,
-          shiny::div(
-            style = "margin-bottom: 15px;",
-            shiny::strong(shiny::textOutput("label_render")),
-            shiny::checkboxInput("render_html", NULL, value = TRUE)
-          )
+          shiny::checkboxInput("code_fold", shiny::textOutput("label_code_fold"), value = FALSE)
         )
       ),
       
@@ -1254,10 +1264,6 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
       if (rv$lang == "en") "Browse..." else "Parcourir..."
     })
     
-    output$placeholder_upload <- shiny::renderText({
-      if (rv$lang == "en") "No file selected" else "Aucun fichier s\u00E9lectionn\u00E9"
-    })
-    
     output$label_title <- shiny::renderText({
       if (rv$lang == "en") "Document Title" else "Titre du Document"
     })
@@ -1272,6 +1278,18 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
     
     output$label_render <- shiny::renderText({
       if (rv$lang == "en") "Generate HTML" else "G\u00E9n\u00E9rer le HTML"
+    })
+    
+    output$label_code_fold <- shiny::renderText({
+      if (rv$lang == "en") "Fold code blocks by default" else "Replier les blocs de code par d\u00E9faut"
+    })
+    
+    output$label_number_sections <- shiny::renderText({
+      if (rv$lang == "en") "Number sections automatically" else "Num\u00E9roter les sections automatiquement"
+    })
+    
+    output$label_show_source_lines <- shiny::renderText({
+      if (rv$lang == "en") "Show original line numbers" else "Afficher les num\u00E9ros de ligne originaux"
     })
     
     # Generation process
@@ -1293,14 +1311,22 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         input_path <- input$input_file$datapath
         qmd_path <- file.path(temp_dir, "output.qmd")
         
+        # Get theme value
+        theme_val <- input$theme
+        if (theme_val == "") theme_val <- NULL
+        
         # Call rtoqmd to generate .qmd
         rtoqmd(
           input_file = input_path,
           output_file = qmd_path,
           title = input$doc_title,
           author = if (input$doc_author == "") NULL else input$doc_author,
-          theme = input$theme,
-          quiet = TRUE
+          theme = theme_val,
+          render = FALSE,  # We'll render separately
+          code_fold = input$code_fold,
+          number_sections = input$number_sections,
+          show_source_lines = input$show_source_lines,
+          lang = rv$lang
         )
         
         rv$qmd_file <- qmd_path
@@ -1308,7 +1334,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         # Render HTML if requested
         if (input$render_html) {
           html_path <- file.path(temp_dir, "output.html")
-          quarto::quarto_render(qmd_path, output_file = html_path, quiet = TRUE)
+          quarto::quarto_render(qmd_path, output_file = html_path)
           rv$html_file <- html_path
         } else {
           rv$html_file <- NULL
@@ -1318,9 +1344,9 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         session$sendCustomMessage("toggleLoader", FALSE)
         
         shiny::showNotification(
-          if (rv$lang == "en") "\u2714 Files generated successfully!" else "\u2714 Fichiers g\u00E9n\u00E9r\u00E9s avec succ\u00E8s!",
+          if (rv$lang == "en") "\u2714 Files generated successfully! Check the download section below." else "\u2714 Fichiers g\u00E9n\u00E9r\u00E9s avec succ\u00E8s ! Consultez la section de t\u00E9l\u00E9chargement ci-dessous.",
           type = "message",
-          duration = 5
+          duration = 10
         )
         
       }, error = function(e) {
