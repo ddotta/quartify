@@ -37,14 +37,18 @@ Si vous avez un script R fonctionnel qui contient des commentaires, vous pourrie
 ## Fonctionnalités
 
 - **Conversion automatique** : Transforme vos scripts R (.R) en documents Quarto (.qmd)
+- **Conversion de fichiers multiples** : Convertir des fichiers individuels, plusieurs fichiers, ou des répertoires entiers en une seule fois
+- **Création de Quarto Books** : Génération automatique de livres Quarto navigables à partir de répertoires (activé par défaut)
 - **Support des sections de code RStudio** : Reconnaît les sections de code RStudio (`####`, `====`, `----`) et les convertit en titres markdown appropriés avec les niveaux d'indentation corrects
 - **Préservation des commentaires** : Les commentaires réguliers sont convertis en texte explicatif
 - **Organisation du code** : Le code R est automatiquement organisé en blocs exécutables
 - **En-tête YAML personnalisable** : Possibilité de définir le titre, l'auteur et d'autres paramètres  
 - **Table des matières** : Génération automatique d'une table des matières dans le document Quarto avec la profondeur appropriée
-- **Génération HTML automatique** : Génère optionnellement le fichier HTML à partir du .qmd et l'ouvre dans le navigateur (désactivé par défaut)
+  - Support du français : Affiche "Sommaire" au lieu de "Table of contents" quand la langue est le français
+- **Génération HTML automatique** : Génère optionnellement le fichier HTML à partir du .qmd et l'ouvre dans le navigateur
 - **Thèmes personnalisables** : Choisissez parmi 25+ thèmes Quarto pour personnaliser l'apparence de vos documents HTML
 - **Numéros de ligne source** : Affichage optionnel des numéros de ligne originaux du script R dans les chunks de code pour la traçabilité
+- **Personnalisation du répertoire de sortie** : Spécifiez des répertoires de sortie personnalisés pour la génération de livres (par défaut `_book`)
 - **Prêt pour déploiement web** : Inclut `quartify_app_web()` pour déploiement sur serveurs web avec capacités d'upload/téléchargement
 
 ## Installation
@@ -65,8 +69,9 @@ devtools::install_github("ddotta/quartify")
 ### **→ [https://quartify.lab.sspcloud.fr/](https://quartify.lab.sspcloud.fr/) ←**
 
 La version web vous permet de :
-- ✅ Télécharger votre script R directement depuis votre ordinateur **OU sélectionner un répertoire** contenant des scripts R pour une conversion par lots
-- ✅ Configurer les options de conversion (titre, auteur, thème, etc.)
+- ✅ Télécharger **un ou plusieurs scripts R** directement depuis votre ordinateur **OU sélectionner un répertoire** contenant des scripts R pour une conversion par lots
+- ✅ **Créer des Quarto Books** automatiquement à partir de plusieurs fichiers avec structure de navigation
+- ✅ Configurer les options de conversion (titre, auteur, thème, création de book, etc.)
 - ✅ Télécharger les fichiers .qmd et .html générés (ou une archive .zip en mode batch)
 - ✅ Aucune installation de R nécessaire !
 
@@ -84,8 +89,11 @@ quartify_app()  # S'ouvre dans votre navigateur par défaut
 ```
 
 Cela lance une interface basée sur le navigateur où vous pouvez :
-- Sélectionner le script R d'entrée avec un explorateur de fichiers
-- Choisir l'emplacement du fichier de sortie
+- Convertir **un ou plusieurs fichiers** OU un **répertoire** entier de scripts R
+- **Créer des Quarto Books** avec navigation automatique (activé par défaut pour les répertoires)
+- Sélectionner un **répertoire de sortie** personnalisé pour la génération de books
+- Sélectionner les fichiers/répertoires d'entrée avec un explorateur de fichiers
+- Choisir l'emplacement du fichier de sortie pour les fichiers individuels
 - Personnaliser le titre du document, l'auteur et le thème
 - Activer/désactiver les options de rendu et d'affichage
 - Basculer entre l'interface anglaise/française

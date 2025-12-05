@@ -366,9 +366,9 @@ rtoqmd_dir <- function(dir_path,
     if (language == "fr") {
       index_content <- paste0(
         "# Bienvenue\n\n",
-        "Cette documentation a été générée automatiquement à partir de scripts R.\n\n",
+        "Cette documentation a \u00e9t\u00e9 g\u00e9n\u00e9r\u00e9e automatiquement \u00e0 partir de scripts R.\n\n",
         "## Navigation\n\n",
-        "Utilisez la barre latérale pour naviguer entre les différents chapitres.\n\n",
+        "Utilisez la barre lat\u00e9rale pour naviguer entre les diff\u00e9rents chapitres.\n\n",
         "## Contenu\n\n",
         "Cette documentation contient ", length(successful_qmd), " script(s) R converti(s) en Quarto.\n"
       )
@@ -451,7 +451,7 @@ rtoqmd_dir <- function(dir_path,
         
         # Capture output but filter out WARNING lines
         output <- capture.output({
-          result <- quarto::quarto_render(quiet = FALSE)
+          result <- quarto::quarto_render(quiet = FALSE, as_job = FALSE)
         }, type = "output")
         
         # Print all lines except those starting with [WARNING]

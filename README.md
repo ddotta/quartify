@@ -38,14 +38,18 @@ If you have a working R script that contains comments, you may want to generate 
 ## Features
 
 - **Automatic conversion**: Transforms your R scripts (.R) into Quarto documents (.qmd)
+- **Multiple file conversion**: Convert single files, multiple files, or entire directories at once
+- **Quarto Book creation**: Automatically generate navigable Quarto books from directories (enabled by default)
 - **RStudio code sections support**: Recognizes RStudio code sections (`####`, `====`, `----`) and converts them to proper markdown headers with correct indentation levels
 - **Comment preservation**: Regular comments are converted into explanatory text
 - **Code organization**: R code is automatically organized into executable blocks
 - **Customizable YAML header**: Ability to define title, author, and other parameters  
 - **Table of contents**: Automatic generation of a table of contents in the Quarto document with proper depth
-- **Automatic HTML rendering**: Optionally renders the .qmd file to HTML and opens it in your browser (disabled by default)
+  - French language support: Displays "Sommaire" instead of "Table of contents" when language is set to French
+- **Automatic HTML rendering**: Optionally renders the .qmd file to HTML and opens it in your browser
 - **Customizable themes**: Choose from 25+ Quarto themes to customize the appearance of your HTML documents
 - **Source line numbers**: Optionally display original line numbers from the R script in code chunks for traceability
+- **Output directory customization**: Specify custom output directories for book generation (defaults to `_book`)
 - **Web deployment ready**: Includes `quartify_app_web()` for deploying on web servers with file upload/download capabilities
 
 ## Installation
@@ -66,8 +70,9 @@ devtools::install_github("ddotta/quartify")
 ### **→ [https://quartify.lab.sspcloud.fr/](https://quartify.lab.sspcloud.fr/) ←**
 
 The web version allows you to:
-- ✅ Upload your R script directly from your computer **OR select a directory** containing R scripts for batch conversion
-- ✅ Configure conversion options (title, author, theme, etc.)
+- ✅ Upload **one or multiple R scripts** directly from your computer **OR select a directory** containing R scripts for batch conversion
+- ✅ **Create Quarto Books** automatically from multiple files with navigation structure
+- ✅ Configure conversion options (title, author, theme, book creation, etc.)
 - ✅ Download generated .qmd and .html files (or .zip archive for batch mode)
 - ✅ No R installation required!
 
@@ -85,8 +90,11 @@ quartify_app()  # Opens in your default web browser
 ```
 
 This launches a browser-based interface where you can:
-- Select input R script using a file browser
-- Choose output file location
+- Convert **one or multiple files** OR an entire **directory** of R scripts
+- **Create Quarto Books** with automatic navigation (enabled by default for directories)
+- Select custom **output directory** for book generation
+- Select input files/directories using a file browser
+- Choose output file location for individual files
 - Customize document title, author, and theme
 - Toggle rendering and display options
 - Switch between English/French interface
