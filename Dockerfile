@@ -24,8 +24,9 @@ RUN Rscript -e 'remotes::install_deps("/quartify")'
 RUN Rscript -e 'install.packages("/quartify", repos = NULL, type="source")'
 
 # Ensure man/figures images are accessible (they may not be installed with package)
-RUN mkdir -p /usr/local/lib/R/site-library/quartify/figures && \
-    cp /quartify/man/figures/*.png /usr/local/lib/R/site-library/quartify/figures/
+RUN ls -la /quartify/man/figures/ && \
+    mkdir -p /usr/local/lib/R/site-library/quartify/figures && \
+    cp /quartify/man/figures/*.png /usr/local/lib/R/site-library/quartify/figures/ || true
 
 # Verify Quarto installation and add to PATH
 RUN quarto --version
