@@ -16,13 +16,13 @@ rtoqmd_dir(
   theme = NULL,
   render = FALSE,
   output_html_dir = NULL,
-  open_html = FALSE,
+  open_html = TRUE,
   code_fold = FALSE,
   number_sections = TRUE,
   recursive = TRUE,
   pattern = "\\.R$",
   exclude_pattern = NULL,
-  create_book = NULL,
+  create_book = TRUE,
   book_title = "R Scripts Documentation",
   output_dir = NULL,
   language = "en"
@@ -92,8 +92,7 @@ rtoqmd_dir(
 - create_book:
 
   Logical, whether to create a Quarto book structure with \_quarto.yml
-  (default: NULL, auto-enabled when output_html_dir is specified with
-  render=TRUE)
+  (default: TRUE)
 
 - book_title:
 

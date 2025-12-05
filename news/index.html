@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,45 @@
       <small>Source: <a href="https://github.com/ddotta/quartify/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.7" id="quartify-007">quartify 0.0.7<a class="anchor" aria-label="anchor" href="#quartify-007"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-0-7">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-7"></a></h3>
+<ul><li>
+<strong>Quarto Book Creation</strong>:
+<ul><li>
+<code>create_book</code> parameter now defaults to TRUE in <code><a href="../reference/rtoqmd_dir.html">rtoqmd_dir()</a></code>
+</li>
+<li>Automatically creates Quarto book structure with navigation and index</li>
+<li>Books created in French now display “Sommaire” instead of “Table of contents”</li>
+</ul></li>
+<li>
+<strong>Improved File Management</strong>:
+<ul><li>Automatic cleanup of existing book files before regeneration</li>
+<li>Temporary backup of <code>_quarto.yml</code> when rendering individual files</li>
+<li>Prevents Quarto from detecting book structure during individual file renders</li>
+</ul></li>
+<li>
+<strong>Enhanced User Experience</strong>:
+<ul><li>Changed loader background from opaque white to semi-transparent dark overlay</li>
+<li>Better visual feedback during conversion process</li>
+<li>Success notifications with emoji indicators</li>
+<li>HTML output opens automatically by default (<code>open_html = TRUE</code>)</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-0-7">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-7"></a></h3>
+<ul><li>Fixed “Book chapter ‘index.qmd’ not found” error during directory conversion</li>
+<li>Fixed <code>index.html</code> generation issues in Quarto books</li>
+<li>Resolved conflicts between individual file rendering and book structure</li>
+<li>Corrected file path detection for HTML output in book projects</li>
+</ul></div>
+<div class="section level3">
+<h3 id="cicd-0-0-7">CI/CD<a class="anchor" aria-label="anchor" href="#cicd-0-0-7"></a></h3>
+<ul><li>Docker image build now triggered manually via <code>workflow_dispatch</code> instead of automatic on push</li>
+<li>Reduced unnecessary Docker builds during development</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.6" id="quartify-006">quartify 0.0.6<a class="anchor" aria-label="anchor" href="#quartify-006"></a></h2>
 <div class="section level3">

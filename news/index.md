@@ -1,5 +1,43 @@
 # Changelog
 
+## quartify 0.0.7
+
+### New Features
+
+- **Quarto Book Creation**:
+  - `create_book` parameter now defaults to TRUE in
+    [`rtoqmd_dir()`](https://ddotta.github.io/quartify/reference/rtoqmd_dir.md)
+  - Automatically creates Quarto book structure with navigation and
+    index
+  - Books created in French now display “Sommaire” instead of “Table of
+    contents”
+- **Improved File Management**:
+  - Automatic cleanup of existing book files before regeneration
+  - Temporary backup of `_quarto.yml` when rendering individual files
+  - Prevents Quarto from detecting book structure during individual file
+    renders
+- **Enhanced User Experience**:
+  - Changed loader background from opaque white to semi-transparent dark
+    overlay
+  - Better visual feedback during conversion process
+  - Success notifications with emoji indicators
+  - HTML output opens automatically by default (`open_html = TRUE`)
+
+### Bug Fixes
+
+- Fixed “Book chapter ‘index.qmd’ not found” error during directory
+  conversion
+- Fixed `index.html` generation issues in Quarto books
+- Resolved conflicts between individual file rendering and book
+  structure
+- Corrected file path detection for HTML output in book projects
+
+### CI/CD
+
+- Docker image build now triggered manually via `workflow_dispatch`
+  instead of automatic on push
+- Reduced unnecessary Docker builds during development
+
 ## quartify 0.0.6
 
 ### New Features
