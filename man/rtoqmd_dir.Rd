@@ -17,7 +17,10 @@ rtoqmd_dir(
   number_sections = TRUE,
   recursive = TRUE,
   pattern = "\\\\.R$",
-  exclude_pattern = NULL
+  exclude_pattern = NULL,
+  create_book = NULL,
+  book_title = "R Scripts Documentation",
+  output_dir = NULL
 )
 }
 \arguments{
@@ -46,6 +49,12 @@ rtoqmd_dir(
 \item{pattern}{Regular expression pattern to filter R files (default: "\\.R$")}
 
 \item{exclude_pattern}{Optional regular expression pattern to exclude certain files (default: NULL)}
+
+\item{create_book}{Logical, whether to create a Quarto book structure with _quarto.yml (default: NULL, auto-enabled when output_html_dir is specified with render=TRUE)}
+
+\item{book_title}{Title for the Quarto book (default: "R Scripts Documentation")}
+
+\item{output_dir}{Output directory for the book (required if create_book=TRUE, default: NULL uses input_dir/output)}
 }
 \value{
 Invisibly returns a data frame with conversion results (file paths and status)
@@ -66,6 +75,9 @@ Supports all features of \code{\link{rtoqmd}}, including:
 
 See \code{\link{rtoqmd}} for details on callout syntax and metadata detection.
 }
+\note{
+When creating a Quarto book, you may see warnings like "Could not fetch resource ./file.html" during rendering. These are harmless and occur because Quarto is processing cross-references between chapters. The final book will render correctly.
+}
 \examples{
 \dontrun{
 # Convert all R scripts in a directory
@@ -73,6 +85,16 @@ rtoqmd_dir("path/to/scripts")
 
 # Convert and render all scripts
 rtoqmd_dir("path/to/scripts", render = TRUE)
+
+# Create a Quarto book with automatic navigation
+rtoqmd_dir(
+  dir_path = "path/to/scripts",
+  output_html_dir = "path/to/scripts/documentation",
+  render = TRUE,
+  author = "Your Name",
+  book_title = "My R Scripts Documentation",
+  open_html = TRUE
+)
 
 # Convert with custom author and title prefix
 rtoqmd_dir("path/to/scripts", 
@@ -85,5 +107,16 @@ rtoqmd_dir("path/to/scripts",
 
 # Non-recursive (only current directory)
 rtoqmd_dir("path/to/scripts", recursive = FALSE)
+
+# Reproducible example with sample scripts
+example_dir <- system.file("examples", "book_example", package = "quartify")
+if (example_dir != "") {
+  rtoqmd_dir(
+    dir_path = example_dir,
+    output_html_dir = file.path(example_dir, "documentation"),
+    render = TRUE,
+    open_html = TRUE
+  )
+}
 }
 }

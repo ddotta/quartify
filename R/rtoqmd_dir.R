@@ -27,10 +27,11 @@
 #' @param recursive Logical, whether to search subdirectories recursively (default: TRUE)
 #' @param pattern Regular expression pattern to filter R files (default: "\\.R$")
 #' @param exclude_pattern Optional regular expression pattern to exclude certain files (default: NULL)
-#' @param create_book Logical, whether to create a Quarto book structure with _quarto.yml (default: FALSE)
+#' @param create_book Logical, whether to create a Quarto book structure with _quarto.yml (default: NULL, auto-enabled when output_html_dir is specified with render=TRUE)
 #' @param book_title Title for the Quarto book (default: "R Scripts Documentation")
 #' @param output_dir Output directory for the book (required if create_book=TRUE, default: NULL uses input_dir/output)
 #' @returns Invisibly returns a data frame with conversion results (file paths and status)
+#' @note When creating a Quarto book, you may see warnings like "Could not fetch resource ./file.html" during rendering. These are harmless and occur because Quarto is processing cross-references between chapters. The final book will render correctly.
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_warning cli_alert_danger cli_h1 cli_h2
 #' @export
 #' @examples
@@ -40,6 +41,16 @@
 #' 
 #' # Convert and render all scripts
 #' rtoqmd_dir("path/to/scripts", render = TRUE)
+#' 
+#' # Create a Quarto book with automatic navigation
+#' rtoqmd_dir(
+#'   dir_path = "path/to/scripts",
+#'   output_html_dir = "path/to/scripts/documentation",
+#'   render = TRUE,
+#'   author = "Your Name",
+#'   book_title = "My R Scripts Documentation",
+#'   open_html = TRUE
+#' )
 #' 
 #' # Convert with custom author and title prefix
 #' rtoqmd_dir("path/to/scripts", 
@@ -52,6 +63,17 @@
 #' 
 #' # Non-recursive (only current directory)
 #' rtoqmd_dir("path/to/scripts", recursive = FALSE)
+#' 
+#' # Reproducible example with sample scripts
+#' example_dir <- system.file("examples", "book_example", package = "quartify")
+#' if (example_dir != "") {
+#'   rtoqmd_dir(
+#'     dir_path = example_dir,
+#'     output_html_dir = file.path(example_dir, "documentation"),
+#'     render = TRUE,
+#'     open_html = TRUE
+#'   )
+#' }
 #' }
 rtoqmd_dir <- function(dir_path,
                        title_prefix = NULL,
@@ -273,9 +295,11 @@ rtoqmd_dir <- function(dir_path,
     index_path <- file.path(dir_path, "index.qmd")
     if (!file.exists(index_path)) {
       index_content <- paste0(
+        "---\n",
+        "title: \"Documentation\"\n",
+        "author: \"", author, "\"\n",
+        "---\n\n",
         "# ", book_title, "\n\n",
-        "Welcome to the ", book_title, " documentation.\n\n",
-        "This book contains documentation generated from R scripts.\n\n",
         "Navigate through the chapters using the sidebar.\n"
       )
       writeLines(index_content, index_path)
