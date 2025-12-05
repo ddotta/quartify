@@ -27,6 +27,9 @@
 #' @param recursive Logical, whether to search subdirectories recursively (default: TRUE)
 #' @param pattern Regular expression pattern to filter R files (default: "\\.R$")
 #' @param exclude_pattern Optional regular expression pattern to exclude certain files (default: NULL)
+#' @param create_book Logical, whether to create a Quarto book structure with _quarto.yml (default: FALSE)
+#' @param book_title Title for the Quarto book (default: "R Scripts Documentation")
+#' @param output_dir Output directory for the book (required if create_book=TRUE, default: NULL uses input_dir/output)
 #' @returns Invisibly returns a data frame with conversion results (file paths and status)
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_warning cli_alert_danger cli_h1 cli_h2
 #' @export
@@ -62,7 +65,10 @@ rtoqmd_dir <- function(dir_path,
                        number_sections = TRUE,
                        recursive = TRUE,
                        pattern = "\\.R$",
-                       exclude_pattern = NULL) {
+                       exclude_pattern = NULL,
+                       create_book = NULL,
+                       book_title = "R Scripts Documentation",
+                       output_dir = NULL) {
   
   # Check if directory exists
   if (!dir.exists(dir_path)) {
@@ -72,6 +78,11 @@ rtoqmd_dir <- function(dir_path,
   
   # Get absolute path
   dir_path <- normalizePath(dir_path, winslash = "/")
+  
+  # Auto-enable book creation if output_html_dir is specified and render is TRUE
+  if (is.null(create_book)) {
+    create_book <- !is.null(output_html_dir) && render
+  }
   
   cli::cli_h1("Converting R Scripts to Quarto Markdown")
   cli::cli_alert_info("Searching directory: {.file {dir_path}}")
@@ -159,6 +170,9 @@ rtoqmd_dir <- function(dir_path,
     }
     
     # Convert the file
+    # Skip rendering individual files if creating a book (book will render all files)
+    render_individual <- render && !create_book
+    
     tryCatch({
       rtoqmd(
         input_file = r_file,
@@ -167,9 +181,9 @@ rtoqmd_dir <- function(dir_path,
         author = author,
         format = format,
         theme = theme,
-        render = render,
+        render = render_individual,
         output_html_file = html_file,
-        open_html = open_html,
+        open_html = FALSE,  # Never open individual files when creating a book
         code_fold = code_fold,
         number_sections = number_sections
       )
@@ -191,6 +205,159 @@ rtoqmd_dir <- function(dir_path,
   cli::cli_alert_success("Successfully converted: {n_success} file{?s}")
   if (n_failed > 0) {
     cli::cli_alert_danger("Failed: {n_failed} file{?s}")
+  }
+  
+  # Create Quarto book if requested
+  if (create_book && n_success > 0) {
+    cli::cli_h2("Creating Quarto Book")
+    
+    # Determine book output directory
+    book_output_dir <- if (!is.null(output_dir)) {
+      output_dir
+    } else if (!is.null(output_html_dir)) {
+      output_html_dir
+    } else {
+      file.path(dir_path, "_book")
+    }
+    
+    # Create book output directory if needed
+    if (!dir.exists(book_output_dir)) {
+      dir.create(book_output_dir, recursive = TRUE, showWarnings = FALSE)
+    }
+    
+    # Get successfully converted qmd files relative to dir_path
+    successful_qmd <- results$output[results$status == "success"]
+    
+    # Build chapter structure respecting directory hierarchy
+    chapters <- list()
+    for (qmd_file in successful_qmd) {
+      rel_path <- gsub(paste0("^", dir_path, "/?"), "", qmd_file)
+      rel_path <- gsub("\\\\", "/", rel_path)  # Normalize path separators
+      
+      # Extract directory structure
+      path_parts <- strsplit(rel_path, "/")[[1]]
+      
+      if (length(path_parts) == 1) {
+        # Root level file
+        chapters[[length(chapters) + 1]] <- rel_path
+      } else {
+        # Nested file - create section structure
+        dir_name <- path_parts[1]
+        
+        # Find or create section for this directory
+        section_idx <- NULL
+        for (i in seq_along(chapters)) {
+          if (is.list(chapters[[i]]) && !is.null(names(chapters[[i]])) && 
+              names(chapters[[i]])[1] == "part") {
+            if (chapters[[i]]$part == dir_name) {
+              section_idx <- i
+              break
+            }
+          }
+        }
+        
+        if (is.null(section_idx)) {
+          # Create new section
+          chapters[[length(chapters) + 1]] <- list(
+            part = dir_name,
+            chapters = list(rel_path)
+          )
+        } else {
+          # Add to existing section
+          chapters[[section_idx]]$chapters[[length(chapters[[section_idx]]$chapters) + 1]] <- rel_path
+        }
+      }
+    }
+    
+    # Create index.qmd (required for Quarto books)
+    index_path <- file.path(dir_path, "index.qmd")
+    if (!file.exists(index_path)) {
+      index_content <- paste0(
+        "# ", book_title, "\n\n",
+        "Welcome to the ", book_title, " documentation.\n\n",
+        "This book contains documentation generated from R scripts.\n\n",
+        "Navigate through the chapters using the sidebar.\n"
+      )
+      writeLines(index_content, index_path)
+      cli::cli_alert_success("Created: {.file {index_path}}")
+    }
+    
+    # Create _quarto.yml
+    # Calculate relative path from dir_path to book_output_dir
+    output_dir_for_yml <- if (startsWith(book_output_dir, dir_path)) {
+      # If book_output_dir is inside dir_path, use relative path
+      gsub(paste0("^", dir_path, "/?"), "", book_output_dir)
+    } else {
+      # If outside, use absolute path
+      book_output_dir
+    }
+    
+    # Build _quarto.yml content manually to avoid yaml package boolean formatting issues
+    quarto_yml_path <- file.path(dir_path, "_quarto.yml")
+    
+    # Convert booleans to proper YAML literals
+    code_fold_yaml <- if (code_fold) "true" else "false"
+    number_sections_yaml <- if (number_sections) "true" else "false"
+    
+    # Build chapters YAML - start with index.qmd
+    chapters_yaml <- "    - index.qmd\n"
+    for (chapter in chapters) {
+      if (is.character(chapter)) {
+        chapters_yaml <- paste0(chapters_yaml, "    - ", chapter, "\n")
+      } else if (is.list(chapter) && !is.null(chapter$part)) {
+        chapters_yaml <- paste0(chapters_yaml, "    - part: \"", chapter$part, "\"\n")
+        chapters_yaml <- paste0(chapters_yaml, "      chapters:\n")
+        for (subchapter in chapter$chapters) {
+          chapters_yaml <- paste0(chapters_yaml, "        - ", subchapter, "\n")
+        }
+      }
+    }
+    
+    # Build complete YAML
+    yaml_content <- paste0(
+      "project:\n",
+      "  type: book\n",
+      "  output-dir: ", output_dir_for_yml, "\n",
+      "\n",
+      "book:\n",
+      "  title: \"", book_title, "\"\n",
+      "  author: \"", author, "\"\n",
+      "  chapters:\n",
+      chapters_yaml,
+      "\n",
+      "format:\n",
+      "  html:\n",
+      "    theme: ", if (!is.null(theme)) theme else "cosmo", "\n",
+      "    code-fold: ", code_fold_yaml, "\n",
+      "    number-sections: ", number_sections_yaml, "\n"
+    )
+    
+    writeLines(yaml_content, quarto_yml_path)
+    cli::cli_alert_success("Created: {.file {quarto_yml_path}}")
+    
+    # Render book if requested
+    if (render) {
+      cli::cli_alert_info("Rendering Quarto book...")
+      tryCatch({
+        old_wd <- getwd()
+        setwd(dir_path)
+        quarto::quarto_render()
+        setwd(old_wd)
+        
+        cli::cli_alert_success("Book rendered to: {.file {book_output_dir}}")
+        
+        # Open index.html if requested
+        if (open_html) {
+          index_html <- file.path(book_output_dir, "index.html")
+          if (file.exists(index_html)) {
+            utils::browseURL(index_html)
+          }
+        }
+      }, error = function(e) {
+        setwd(old_wd)
+        cli::cli_alert_danger("Failed to render book: {e$message}")
+      })
+    }
   }
   
   invisible(results)

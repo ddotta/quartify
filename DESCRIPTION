@@ -21,7 +21,8 @@ Imports:
     miniUI,
     base64enc,
     shinyFiles,
-    quarto
+    quarto,
+    yaml
 Suggests: 
     testthat (>= 3.0.0),
     dplyr
