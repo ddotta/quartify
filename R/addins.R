@@ -565,7 +565,7 @@ rtoqmd_addin <- function() {
             render = render,
             code_fold = code_fold,
             number_sections = number_sections,
-            lang = lang()
+            language = lang()
           )
           
         } else {
@@ -1159,7 +1159,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
             render = render,
             code_fold = code_fold,
             number_sections = number_sections,
-            lang = lang()
+            language = lang()
           )
           
         } else {
@@ -1751,7 +1751,8 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
             number_sections = input$number_sections,
             create_book = create_book_opt,
             book_title = input$doc_title,
-            output_dir = if (create_book_opt) output_dir else NULL
+            output_dir = if (create_book_opt) output_dir else NULL,
+            language = rv$lang
           )
           
           # Collect generated files
