@@ -548,7 +548,23 @@ quarto::quarto_render("analyse_iris.qmd")
 
 ## Conversion de répertoires entiers
 
-Pour convertir tous les scripts R d'un répertoire (y compris les sous-répertoires), utilisez `rtoqmd_dir()` :
+### Utilisation de l'Interface Web
+
+La façon la plus simple de convertir plusieurs fichiers est d'utiliser l'interface web :
+
+```{r eval=FALSE}
+quartify_app_web()
+```
+
+En mode batch, vous pouvez :
+- **Télécharger plusieurs fichiers R** en même temps
+- **Sélectionner un répertoire** contenant vos scripts R (nouvelle fonctionnalité !)
+
+L'interface convertira tous les fichiers et fournira une archive .zip téléchargeable.
+
+### Utilisation des Fonctions R
+
+Pour convertir tous les scripts R d'un répertoire (y compris les sous-répertoires) de manière programmatique, utilisez `rtoqmd_dir()` :
 
 ```{r eval=FALSE}
 # Convertir tous les scripts R d'un répertoire
