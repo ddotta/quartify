@@ -1038,13 +1038,19 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
 #' }
 quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
   
-  # Get resources for UI
+  # Get resources for UI (try multiple paths for compatibility)
   hex_path <- system.file("man", "figures", "hex_quartify.png", package = "quartify")
+  if (hex_path == "" || !file.exists(hex_path)) {
+    hex_path <- system.file("figures", "hex_quartify.png", package = "quartify")
+  }
   if (hex_path == "" || !file.exists(hex_path)) {
     hex_path <- NULL
   }
   
   english_flag_path <- system.file("man", "figures", "english_flag.png", package = "quartify")
+  if (english_flag_path == "" || !file.exists(english_flag_path)) {
+    english_flag_path <- system.file("figures", "english_flag.png", package = "quartify")
+  }
   if (english_flag_path == "" || !file.exists(english_flag_path)) {
     english_flag_path <- NULL
   }
