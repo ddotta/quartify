@@ -394,8 +394,17 @@ rtoqmd_dir <- function(dir_path,
         old_wd <- getwd()
         setwd(dir_path)
         
-        # Render with quiet mode to suppress warnings
-        quarto::quarto_render(quiet = TRUE)
+        # Capture output but filter out WARNING lines
+        output <- capture.output({
+          result <- quarto::quarto_render(quiet = FALSE)
+        }, type = "output")
+        
+        # Print all lines except those starting with [WARNING]
+        for (line in output) {
+          if (!grepl("^\\[WARNING\\]", line)) {
+            cat(line, "\n", sep = "")
+          }
+        }
         
         setwd(old_wd)
         
