@@ -2,6 +2,8 @@
 
 ### All vignettes
 
+- [Fonctionnalités
+  avancées](https://ddotta.github.io/quartify/articles/advanced-features_FR.md):
 - [Advanced
   Features](https://ddotta.github.io/quartify/articles/advanced-features.md):
 - [Démarrage avec

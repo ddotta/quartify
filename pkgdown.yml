@@ -2,10 +2,11 @@ pandoc: 3.1.11
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
+  advanced-features_FR: advanced-features_FR.html
   advanced-features: advanced-features.html
   getting-started_FR: getting-started_FR.html
   getting-started: getting-started.html
-last_built: 2025-12-08T16:46Z
+last_built: 2025-12-08T20:14Z
 urls:
   reference: https://ddotta.github.io/quartify/reference
   article: https://ddotta.github.io/quartify/articles
