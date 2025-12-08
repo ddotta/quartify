@@ -11,7 +11,7 @@ Description: Converts R scripts (.R) into Quarto markdown documents (.qmd) with
     programmatic functions and an interactive 'RStudio' add-in for easy conversion.
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 URL: https://ddotta.github.io/quartify/, https://github.com/ddotta/quartify
 BugReports: https://github.com/ddotta/quartify/issues
 Imports:
@@ -22,10 +22,10 @@ Imports:
     base64enc,
     shinyFiles,
     quarto,
-    utils
-Suggests: 
-    testthat (>= 3.0.0),
-    dplyr,
+    utils,
     styler,
     lintr
+Suggests: 
+    testthat (>= 3.0.0),
+    dplyr
 Config/testthat/edition: 3
