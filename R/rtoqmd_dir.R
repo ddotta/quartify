@@ -31,6 +31,8 @@
 #' @param book_title Title for the Quarto book (default: "R Scripts Documentation")
 #' @param output_dir Output directory for the book (required if create_book=TRUE, default: NULL uses input_dir/output)
 #' @param language Language for the documentation ("en" or "fr", default: "en")
+#' @param use_styler Logical, whether to apply styler code formatting and show differences in tabsets (default: FALSE). Requires the styler package to be installed.
+#' @param use_lintr Logical, whether to run lintr code quality checks and display issues in tabsets (default: FALSE). Requires the lintr package to be installed.
 #' @returns Invisibly returns a data frame with conversion results (file paths and status)
 #' @note Existing .qmd and .html files will be automatically overwritten during generation to ensure fresh output.
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_warning cli_alert_danger cli_h1 cli_h2
@@ -103,7 +105,9 @@ rtoqmd_dir <- function(dir_path,
                        create_book = TRUE,
                        book_title = "R Scripts Documentation",
                        output_dir = NULL,
-                       language = "en") {
+                       language = "en",
+                       use_styler = FALSE,
+                       use_lintr = FALSE) {
   
   # Check if directory exists
   if (!dir.exists(dir_path)) {
@@ -257,7 +261,9 @@ rtoqmd_dir <- function(dir_path,
         output_html_file = html_file,
         open_html = FALSE,  # Never open individual files when creating a book
         code_fold = code_fold,
-        number_sections = number_sections
+        number_sections = number_sections,
+        use_styler = use_styler,
+        use_lintr = use_lintr
       )
       
       results$status[i] <- "success"

@@ -2,6 +2,14 @@
 
 ## New Features
 
+* **Code Quality Integration**: New `use_styler` and `use_lintr` parameters for code quality checks:
+  - `use_styler`: Automatically format code using styler and show differences in tabsets
+  - `use_lintr`: Run lintr quality checks and display issues in tabsets
+  - Available in both `rtoqmd()` and `rtoqmd_dir()` functions
+  - Tabsets show Original Code, Styled Code (if changes), and Lint Issues (if found)
+  - Only creates tabsets when there are actual issues or changes to report
+  - Example file: `inst/examples/example_code_quality.R`
+
 * **RStudio Snippets Installation**: New `install_quartify_snippets()` function to automatically install useful snippets:
   - `header`: R script header template with Title, Author, Date, Description
   - `callout`: Quarto callout structure

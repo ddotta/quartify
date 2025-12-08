@@ -85,6 +85,8 @@
 #' @param number_sections Logical, whether to number sections automatically in the output (default: TRUE)
 #' @param lang Language for interface elements like table of contents title - "en" or "fr" (default: "en")
 #' @param show_source_lines Logical, whether to add comments indicating original line numbers from the source R script at the beginning of each code chunk (default: TRUE). This helps maintain traceability between the documentation and the source code.
+#' @param use_styler Logical, whether to apply styler code formatting and show differences in tabsets (default: FALSE). Requires the styler package to be installed.
+#' @param use_lintr Logical, whether to run lintr code quality checks and display issues in tabsets (default: FALSE). Requires the lintr package to be installed.
 #' @returns Invisibly returns NULL. Creates a .qmd file and optionally renders it to HTML.
 #' @importFrom utils browseURL
 #' @importFrom cli cli_alert_success cli_alert_info cli_alert_danger cli_alert_warning
@@ -115,7 +117,26 @@
 #' 
 #' # Convert - metadata will override function parameters
 #' rtoqmd(script_with_metadata, "output_with_metadata.qmd")
+#' 
+#' # Example with code quality checks (requires styler and lintr packages)
+#' script_with_style_issues <- tempfile(fileext = ".R")
+#' writeLines(c(
+#'   "# Script with style issues",
+#'   "",
+#'   "x = 3  # Should use <- instead of =",
+#'   "y <- 2",
+#'   "",
+#'   "z <- 10"
+#' ), script_with_style_issues)
+#' 
+#' # Convert with styler formatting
+#' rtoqmd(script_with_style_issues, "output_styled.qmd", use_styler = TRUE)
+#' 
+#' # Convert with both styler and lintr
+#' rtoqmd(script_with_style_issues, "output_quality.qmd", 
+#'        use_styler = TRUE, use_lintr = TRUE)
 #' }
+
 rtoqmd <- function(input_file, output_file = NULL, 
                    title = "My title", 
                    author = "Your name",
@@ -127,7 +148,9 @@ rtoqmd <- function(input_file, output_file = NULL,
                    code_fold = FALSE,
                    number_sections = TRUE,
                    lang = "en",
-                   show_source_lines = TRUE) {
+                   show_source_lines = TRUE,
+                   use_styler = FALSE,
+                   use_lintr = FALSE) {
   
   # Check if input file exists
   if (!file.exists(input_file)) {
@@ -252,22 +275,87 @@ rtoqmd <- function(input_file, output_file = NULL,
   code_chunk_start <- NULL
   code_chunk_lines <- integer()
   
-  # Helper function to create code chunk with optional line numbers
+  # Helper function to create code chunk with optional line numbers and code quality checks
   flush_code_block <- function(code, chunk_lines, add_line_info) {
     if (length(code) == 0) return(character())
     
-    result <- "```{r}"
-    if (add_line_info && length(chunk_lines) > 0) {
-      line_label <- if (lang == "fr") "Lignes" else "Lines"
-      line_range <- if (min(chunk_lines) == max(chunk_lines)) {
-        paste0("# ", line_label, " ", min(chunk_lines))
-      } else {
-        paste0("# ", line_label, " ", min(chunk_lines), "-", max(chunk_lines))
+    # Check code quality if requested
+    quality_check <- check_code_quality(code, use_styler, use_lintr, 
+                                       chunk_id = paste(chunk_lines, collapse = "-"))
+    
+    # If there are style changes or lint issues, create a tabset
+    if (quality_check$has_style_changes || quality_check$has_lint_issues) {
+      # Build tabset with line info in original code tab
+      result <- character()
+      result <- c(result, "::: {.panel-tabset}")
+      result <- c(result, "")
+      
+      # Original code tab
+      result <- c(result, "## Original Code")
+      result <- c(result, "")
+      result <- c(result, "```{r}")
+      if (add_line_info && length(chunk_lines) > 0) {
+        line_label <- if (lang == "fr") "Lignes" else "Lines"
+        line_range <- if (min(chunk_lines) == max(chunk_lines)) {
+          paste0("# ", line_label, " ", min(chunk_lines))
+        } else {
+          paste0("# ", line_label, " ", min(chunk_lines), "-", max(chunk_lines))
+        }
+        result <- c(result, line_range)
       }
-      result <- c(result, line_range)
+      result <- c(result, code)
+      result <- c(result, "```")
+      result <- c(result, "")
+      
+      # Styled code tab (if changes detected)
+      if (quality_check$has_style_changes) {
+        result <- c(result, "## Styled Code")
+        result <- c(result, "")
+        result <- c(result, "```{r}")
+        if (add_line_info && length(chunk_lines) > 0) {
+          line_label <- if (lang == "fr") "Lignes" else "Lines"
+          line_range <- if (min(chunk_lines) == max(chunk_lines)) {
+            paste0("# ", line_label, " ", min(chunk_lines))
+          } else {
+            paste0("# ", line_label, " ", min(chunk_lines), "-", max(chunk_lines))
+          }
+          result <- c(result, line_range)
+        }
+        result <- c(result, quality_check$styled_code)
+        result <- c(result, "```")
+        result <- c(result, "")
+      }
+      
+      # Lint issues tab (if issues detected)
+      if (quality_check$has_lint_issues) {
+        result <- c(result, "## Lint Issues")
+        result <- c(result, "")
+        for (msg in quality_check$lint_messages) {
+          result <- c(result, paste0("- ", msg))
+        }
+        result <- c(result, "")
+      }
+      
+      # Close tabset
+      result <- c(result, ":::")
+      result <- c(result, "")
+      
+      return(result)
+    } else {
+      # No issues, generate standard chunk
+      result <- "```{r}"
+      if (add_line_info && length(chunk_lines) > 0) {
+        line_label <- if (lang == "fr") "Lignes" else "Lines"
+        line_range <- if (min(chunk_lines) == max(chunk_lines)) {
+          paste0("# ", line_label, " ", min(chunk_lines))
+        } else {
+          paste0("# ", line_label, " ", min(chunk_lines), "-", max(chunk_lines))
+        }
+        result <- c(result, line_range)
+      }
+      result <- c(result, code, "```", "")
+      return(result)
     }
-    result <- c(result, code, "```", "")
-    return(result)
   }
   
   while (i <= length(lines)) {

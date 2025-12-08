@@ -21,7 +21,9 @@ rtoqmd_dir(
   create_book = TRUE,
   book_title = "R Scripts Documentation",
   output_dir = NULL,
-  language = "en"
+  language = "en",
+  use_styler = FALSE,
+  use_lintr = FALSE
 )
 }
 \arguments{
@@ -58,6 +60,10 @@ rtoqmd_dir(
 \item{output_dir}{Output directory for the book (required if create_book=TRUE, default: NULL uses input_dir/output)}
 
 \item{language}{Language for the documentation ("en" or "fr", default: "en")}
+
+\item{use_styler}{Logical, whether to apply styler code formatting and show differences in tabsets (default: FALSE). Requires the styler package to be installed.}
+
+\item{use_lintr}{Logical, whether to run lintr code quality checks and display issues in tabsets (default: FALSE). Requires the lintr package to be installed.}
 }
 \value{
 Invisibly returns a data frame with conversion results (file paths and status)
