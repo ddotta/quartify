@@ -124,6 +124,8 @@
 <li>
 <strong>Source line numbers</strong>: Optionally display original line numbers from the R script in code chunks for traceability</li>
 <li>
+<strong>Code quality integration</strong>: Optional integration with <a href="https://styler.r-lib.org/" class="external-link">styler</a> and <a href="https://lintr.r-lib.org/" class="external-link">lintr</a> to show code formatting suggestions and quality issues in interactive tabsets</li>
+<li>
 <strong>Output directory customization</strong>: Specify custom output directories for book generation (defaults to <code>_book</code>)</li>
 <li>
 <strong>Web deployment ready</strong>: Includes <code><a href="reference/quartify_app_web.html">quartify_app_web()</a></code> for deploying on web servers with file upload/download capabilities</li>
@@ -265,10 +267,59 @@
 </div>
 </div>
 <div class="section level2">
+<h2 id="code-quality-integration">Code Quality Integration<a class="anchor" aria-label="anchor" href="#code-quality-integration"></a>
+</h2>
+<p><code>quartify</code> optionally integrates with <strong>styler</strong> and <strong>lintr</strong> to help you improve code quality:</p>
+<div class="section level3">
+<h3 id="features-1">Features<a class="anchor" aria-label="anchor" href="#features-1"></a>
+</h3>
+<ul>
+<li>
+<strong><code>use_styler</code></strong>: Shows formatted code according to the <a href="https://style.tidyverse.org/" class="external-link">tidyverse style guide</a>
+</li>
+<li>
+<strong><code>use_lintr</code></strong>: Identifies code quality issues and potential problems</li>
+<li>
+<strong><code>apply_styler</code></strong>: Directly applies styling to your original R script (⚠️ modifies source file)</li>
+</ul>
+<p>When quality issues are detected, <code>quartify</code> creates <strong>interactive tabsets</strong> in the HTML output with: - <strong>Original Code</strong>: Your original code - <strong>Styled Code</strong>: Formatted version (if <code>use_styler = TRUE</code> and changes detected) - <strong>Lint Issues</strong>: Quality warnings (if <code>use_lintr = TRUE</code> and issues found)</p>
+</div>
+<div class="section level3">
+<h3 id="installation-1">Installation<a class="anchor" aria-label="anchor" href="#installation-1"></a>
+</h3>
+<p>These packages are optional and only needed if you want to use code quality features:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"styler"</span>, <span class="st">"lintr"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Show styling suggestions in tabs</span></span>
+<span><span class="fu"><a href="reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"my_script.R"</span>, <span class="st">"output.qmd"</span>, </span>
+<span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Show both styling and lint issues</span></span>
+<span><span class="fu"><a href="reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"my_script.R"</span>, <span class="st">"output.qmd"</span>,</span>
+<span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>       use_lintr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Apply styling directly to source file (⚠️ modifies original)</span></span>
+<span><span class="fu"><a href="reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"my_script.R"</span>, <span class="st">"output.qmd"</span>,</span>
+<span>       apply_styler <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="in-shiny-apps">In Shiny Apps<a class="anchor" aria-label="anchor" href="#in-shiny-apps"></a>
+</h3>
+<p>All three Shiny applications (<code><a href="reference/rtoqmd_addin.html">rtoqmd_addin()</a></code>, <code><a href="reference/quartify_app.html">quartify_app()</a></code>, and <code><a href="reference/quartify_app_web.html">quartify_app_web()</a></code>) include checkboxes for these options in the interface.</p>
+<p>📖 <strong>For detailed information</strong>, see the <a href="inst/examples/CODE_QUALITY_README.html">Code Quality Guide</a> and the <a href="https://ddotta.github.io/quartify/">package vignettes</a>.</p>
+</div>
+</div>
+<div class="section level2">
 <h2 id="source-r-script-format">Source R script format<a class="anchor" aria-label="anchor" href="#source-r-script-format"></a>
 </h2>
 <p>For the conversion to work properly, structure your R script using RStudio code sections:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Title : Iris Data Analysis</span></span>
 <span><span class="co">#</span></span>
 <span><span class="co"># Author : Jane Doe</span></span>
@@ -339,7 +390,7 @@
 <p><strong>Behavior:</strong> - Metadata found in script <strong>overrides</strong> function parameters - Metadata lines are <strong>removed</strong> from document body (only in YAML) - If no metadata in script, function parameters are used</p>
 <blockquote>
 <p><strong>📝 Note:</strong> The <code>Description</code> field can span multiple lines. To continue the description, start the next line with <code>#</code> followed by at least one space. Continuation lines are automatically concatenated. Example:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Description : This analysis explores differences between iris species</span></span>
 <span><span class="co"># using various statistical methods and visualization techniques</span></span>
 <span><span class="co"># to identify patterns and correlations.</span></span></code></pre></div>
@@ -364,7 +415,7 @@
 <h4 id="id_2-regular-comments-text">2. Regular Comments (Text)<a class="anchor" aria-label="anchor" href="#id_2-regular-comments-text"></a>
 </h4>
 <p>Single <code>#</code> comments <strong>at the start of a line (no leading space)</strong> become explanatory text:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># This is a standalone comment</span></span>
 <span><span class="co"># It becomes plain text in the Quarto document</span></span></code></pre></div>
 <blockquote>
@@ -379,14 +430,14 @@
 <h4 id="id_3-code-lines">3. Code Lines<a class="anchor" aria-label="anchor" href="#id_3-code-lines"></a>
 </h4>
 <p>Uncommented lines become executable R code chunks:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="id_4-inline-comments-within-code">4. Inline Comments (Within Code)<a class="anchor" aria-label="anchor" href="#id_4-inline-comments-within-code"></a>
 </h4>
 <p>Comments <strong>within code blocks</strong> are preserved inside the R code chunk:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="co"># This comment stays in the code block</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
@@ -396,7 +447,7 @@
 </h4>
 <p>Callouts are special blocks that highlight important information. Five types are supported: <code>note</code>, <code>tip</code>, <code>warning</code>, <code>caution</code>, <code>important</code>.</p>
 <p><strong>Syntax in R script:</strong></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># callout-note - Important Note</span></span>
 <span><span class="co"># This is the content of the callout.</span></span>
 <span><span class="co"># It can span multiple lines.</span></span>
@@ -404,12 +455,12 @@
 <span><span class="co"># Empty line or code ends the callout</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></code></pre></div>
 <p><strong>Converts to Quarto:</strong></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>::: {.callout-note title="Important Note"}</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>This is the content of the callout.</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>It can span multiple lines.</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>::: {.callout-note title="Important Note"}</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>This is the content of the callout.</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>It can span multiple lines.</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Without title:</strong></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># callout-tip</span></span>
 <span><span class="co"># This is a tip without a title.</span></span></code></pre></div>
 <p>Callouts end when encountering an empty line, code, or another section.</p>
@@ -419,13 +470,13 @@
 </h4>
 <p>Create flowcharts, sequence diagrams, and other visualizations using Mermaid syntax.</p>
 <p><strong>Syntax in R script:</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>flowchart TD</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    A[Start] <span class="sc">-</span><span class="ot">-&gt;</span> B[Process]</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C{Decision}</span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>Yes<span class="sc">|</span> D[End]</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>No<span class="sc">|</span> B</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>flowchart TD</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    A[Start] <span class="sc">-</span><span class="ot">-&gt;</span> B[Process]</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C{Decision}</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>Yes<span class="sc">|</span> D[End]</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>No<span class="sc">|</span> B</span></code></pre></div>
 <p><strong>Converts to Quarto Mermaid chunk</strong> with proper formatting for diagram rendering in HTML output.</p>
 <p><strong>Supported diagram types:</strong> - Flowcharts (<code>flowchart TD</code>, <code>flowchart LR</code>) - Sequence diagrams (<code>sequenceDiagram</code>) - Class diagrams (<code>classDiagram</code>) - State diagrams, Gantt charts, and more</p>
 <p><strong>Rules:</strong> - Start with <code>#| mermaid</code> comment - Add chunk options with <code>#|</code> (e.g., <code>#| eval: true</code>) - Diagram content follows without <code>#</code> prefix - Chunk ends at first blank line or comment</p>
@@ -436,7 +487,7 @@
 </h4>
 <p>Organize related content in interactive tabs for better presentation and navigation.</p>
 <p><strong>Syntax in R script:</strong></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tabset</span></span>
 <span></span>
 <span><span class="co"># tab - Summary</span></span>
@@ -485,7 +536,7 @@
 <p><strong>Light themes</strong>: cosmo, flatly, journal, litera, lumen, lux, materia, minty, morph, pulse, quartz, sandstone, simplex, sketchy, spacelab, united, vapor, yeti, zephyr</p>
 <p><strong>Dark themes</strong>: darkly, cyborg, slate, solar, superhero</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use the "flatly" theme</span></span>
 <span><span class="fu"><a href="reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"my_script.R"</span>, theme <span class="op">=</span> <span class="st">"flatly"</span><span class="op">)</span></span>
 <span></span>
@@ -508,27 +559,27 @@
 </h2>
 <p>Use <code>quartify</code> in your CI/CD pipelines to automatically generate documentation:</p>
 <p><strong>GitHub Actions</strong> (<code>.github/workflows/generate-docs.yml</code>):</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generate documentation</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    library(quartify)</span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    rtoqmd_dir("scripts/", render = TRUE, author = "Data Team")</span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="at">  </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v4</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="at">  </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> documentation</span></span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="fu">    path</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>      scripts/**/*.qmd</span>
-<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>      scripts/**/*.html</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generate documentation</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    library(quartify)</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    rtoqmd_dir("scripts/", render = TRUE, author = "Data Team")</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="at">  </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v4</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="at">  </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> documentation</span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="fu">    path</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>      scripts/**/*.qmd</span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>      scripts/**/*.html</span></code></pre></div>
 <p><strong>GitLab CI</strong> (<code>.gitlab-ci.yml</code>):</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">generate-docs</span><span class="kw">:</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> rocker/r-ver:4.5.1</span></span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="at">  </span><span class="fu">script</span><span class="kw">:</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> R -e "quartify::rtoqmd_dir('scripts/', render = TRUE, author = 'Data Team')"</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="at">  </span><span class="fu">artifacts</span><span class="kw">:</span></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> scripts/**/*.qmd</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> scripts/**/*.html</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">generate-docs</span><span class="kw">:</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> rocker/r-ver:4.5.1</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="at">  </span><span class="fu">script</span><span class="kw">:</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> R -e "quartify::rtoqmd_dir('scripts/', render = TRUE, author = 'Data Team')"</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="at">  </span><span class="fu">artifacts</span><span class="kw">:</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> scripts/**/*.qmd</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> scripts/**/*.html</span></span></code></pre></div>
 <p>📘 <strong>Full CI/CD guide</strong> with complete examples: <a href="https://ddotta.github.io/quartify/articles/getting-started.html#cicd-integration">CI/CD Integration</a></p>
 </div>
 <div class="section level2">

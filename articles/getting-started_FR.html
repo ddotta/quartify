@@ -1740,6 +1740,76 @@ dans les blocs de code</li>
 </div>
 </div>
 <div class="section level2">
+<h2 id="intégration-de-la-qualité-du-code">Intégration de la qualité du code<a class="anchor" aria-label="anchor" href="#int%C3%A9gration-de-la-qualit%C3%A9-du-code"></a>
+</h2>
+<p>quartify s’intègre avec <code>styler</code> et <code>lintr</code>
+pour fournir des vérifications automatiques de la qualité du code dans
+votre documentation.</p>
+<div class="section level3">
+<h3 id="utilisation-de-styler">Utilisation de styler<a class="anchor" aria-label="anchor" href="#utilisation-de-styler"></a>
+</h3>
+<p>Le paramètre <code>use_styler</code> formate automatiquement votre
+code selon le guide de style tidyverse :</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Créer un script avec des problèmes de style</span></span>
+<span><span class="va">temp_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".R"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"x = 3  # Devrait utiliser &lt;- au lieu de ="</span>,</span>
+<span>  <span class="st">"y&lt;-2   # Espaces manquants"</span>,</span>
+<span>  <span class="st">"z &lt;- mean(c(1,2,3))  # Espaces manquants dans l'appel de fonction"</span></span>
+<span><span class="op">)</span>, <span class="va">temp_script</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Convertir avec styler</span></span>
+<span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">temp_script</span>, <span class="st">"sortie_stylee.qmd"</span>, use_styler <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Le document généré inclura des tabsets montrant : - <strong>Original
+Code</strong> : Votre code tel qu’écrit - <strong>Styled Code</strong> :
+La version formatée selon tidyverse</p>
+</div>
+<div class="section level3">
+<h3 id="utilisation-de-lintr">Utilisation de lintr<a class="anchor" aria-label="anchor" href="#utilisation-de-lintr"></a>
+</h3>
+<p>Le paramètre <code>use_lintr</code> effectue des vérifications de
+qualité du code :</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Convertir avec styler et lintr</span></span>
+<span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">temp_script</span>, <span class="st">"sortie_qualite.qmd"</span>, </span>
+<span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>       use_lintr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Les tabsets incluront : - <strong>Original Code</strong> : Votre code
+- <strong>Styled Code</strong> : Version formatée - <strong>Lint
+Issues</strong> : Liste des violations de style et suggestions</p>
+</div>
+<div class="section level3">
+<h3 id="application-de-styler-aux-fichiers-source">Application de styler aux fichiers source<a class="anchor" aria-label="anchor" href="#application-de-styler-aux-fichiers-source"></a>
+</h3>
+<p>Utilisez <code>apply_styler = TRUE</code> pour modifier directement
+votre script R source :</p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Ceci modifiera le fichier R original</span></span>
+<span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"mon_script.R"</span>, <span class="st">"sortie.qmd"</span>, </span>
+<span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>       apply_styler <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="alert alert-warning">
+<p><strong>Attention :</strong> <code>apply_styler = TRUE</code> modifie
+votre fichier de script R original. Considérez utiliser un contrôle de
+version ou des sauvegardes avant d’utiliser cette option.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="exemple-de-sortie">Exemple de sortie<a class="anchor" aria-label="anchor" href="#exemple-de-sortie"></a>
+</h3>
+<p>Essayez l’exemple inclus :</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fichier_exemple</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example_code_quality.R"</span>, </span>
+<span>                              package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">fichier_exemple</span>, <span class="st">"demo_qualite.qmd"</span>, </span>
+<span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>       use_lintr <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>       render_html <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>       open_html <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="conseils-et-bonnes-pratiques">Conseils et bonnes pratiques<a class="anchor" aria-label="anchor" href="#conseils-et-bonnes-pratiques"></a>
 </h2>
 <ol style="list-style-type: decimal">
@@ -1764,6 +1834,10 @@ plan du document (Ctrl+Shift+O) pour voir votre structure</li>
 <li>
 <strong>Commentez généreusement</strong> : Plus de commentaires =
 meilleure documentation dans le document Quarto final</li>
+<li>
+<strong>Utilisez les vérifications de qualité</strong> : Activez
+<code>use_styler</code> et <code>use_lintr</code> pour le matériel
+pédagogique ou les revues de code</li>
 </ol>
 </div>
 <div class="section level2">

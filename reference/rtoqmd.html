@@ -61,7 +61,7 @@ modern themes, native callouts, Mermaid diagrams, and the full Quarto ecosystem.
 <span>  author <span class="op">=</span> <span class="st">"Your name"</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"html"</span>,</span>
 <span>  theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  render <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  render_html <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  output_html_file <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  open_html <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  code_fold <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -69,7 +69,8 @@ modern themes, native callouts, Mermaid diagrams, and the full Quarto ecosystem.
 <span>  lang <span class="op">=</span> <span class="st">"en"</span>,</span>
 <span>  show_source_lines <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  use_styler <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  use_lintr <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  use_lintr <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  apply_styler <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -101,7 +102,7 @@ modern themes, native callouts, Mermaid diagrams, and the full Quarto ecosystem.
 <dd><p>Quarto theme for HTML output (default: NULL uses Quarto's default). See <a href="https://quarto.org/docs/output-formats/html-themes.html" class="external-link">https://quarto.org/docs/output-formats/html-themes.html</a> for available themes (e.g., "cosmo", "flatly", "darkly", "solar", "united")</p></dd>
 
 
-<dt id="arg-render">render<a class="anchor" aria-label="anchor" href="#arg-render"></a></dt>
+<dt id="arg-render-html">render_html<a class="anchor" aria-label="anchor" href="#arg-render-html"></a></dt>
 <dd><p>Logical, whether to render the .qmd file to HTML after creation (default: TRUE)</p></dd>
 
 
@@ -110,7 +111,7 @@ modern themes, native callouts, Mermaid diagrams, and the full Quarto ecosystem.
 
 
 <dt id="arg-open-html">open_html<a class="anchor" aria-label="anchor" href="#arg-open-html"></a></dt>
-<dd><p>Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render = TRUE)</p></dd>
+<dd><p>Logical, whether to open the HTML file in browser after rendering (default: FALSE, only used if render_html = TRUE)</p></dd>
 
 
 <dt id="arg-code-fold">code_fold<a class="anchor" aria-label="anchor" href="#arg-code-fold"></a></dt>
@@ -135,6 +136,10 @@ modern themes, native callouts, Mermaid diagrams, and the full Quarto ecosystem.
 
 <dt id="arg-use-lintr">use_lintr<a class="anchor" aria-label="anchor" href="#arg-use-lintr"></a></dt>
 <dd><p>Logical, whether to run lintr code quality checks and display issues in tabsets (default: FALSE). Requires the lintr package to be installed.</p></dd>
+
+
+<dt id="arg-apply-styler">apply_styler<a class="anchor" aria-label="anchor" href="#arg-apply-styler"></a></dt>
+<dd><p>Logical, whether to apply styler formatting directly to the source R script file (default: FALSE). If TRUE, the input file will be modified with styled code. Requires use_styler = TRUE to take effect.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -221,7 +226,7 @@ Example: hash tabset, hash tab - Plot A, code or text content, hash tab - Plot B
 <span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"output.qmd"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert only, without rendering</span></span></span>
-<span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"output.qmd"</span>, render <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"output.qmd"</span>, render_html <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example with metadata in the R script:</span></span></span>
 <span class="r-in"><span><span class="co"># Create a script with metadata</span></span></span>

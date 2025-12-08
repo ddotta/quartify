@@ -1392,6 +1392,79 @@ modèle de tabset.
 6.  **Raccourci clavier** : Utilisez `Ctrl+Shift+C` (Windows/Linux) ou
     `Cmd+Shift+C` (Mac) pour commenter/décommenter rapidement
 
+## Intégration de la qualité du code
+
+quartify s’intègre avec `styler` et `lintr` pour fournir des
+vérifications automatiques de la qualité du code dans votre
+documentation.
+
+### Utilisation de styler
+
+Le paramètre `use_styler` formate automatiquement votre code selon le
+guide de style tidyverse :
+
+``` r
+# Créer un script avec des problèmes de style
+temp_script <- tempfile(fileext = ".R")
+writeLines(c(
+  "x = 3  # Devrait utiliser <- au lieu de =",
+  "y<-2   # Espaces manquants",
+  "z <- mean(c(1,2,3))  # Espaces manquants dans l'appel de fonction"
+), temp_script)
+
+# Convertir avec styler
+rtoqmd(temp_script, "sortie_stylee.qmd", use_styler = TRUE)
+```
+
+Le document généré inclura des tabsets montrant : - **Original Code** :
+Votre code tel qu’écrit - **Styled Code** : La version formatée selon
+tidyverse
+
+### Utilisation de lintr
+
+Le paramètre `use_lintr` effectue des vérifications de qualité du code :
+
+``` r
+# Convertir avec styler et lintr
+rtoqmd(temp_script, "sortie_qualite.qmd", 
+       use_styler = TRUE, 
+       use_lintr = TRUE)
+```
+
+Les tabsets incluront : - **Original Code** : Votre code - **Styled
+Code** : Version formatée - **Lint Issues** : Liste des violations de
+style et suggestions
+
+### Application de styler aux fichiers source
+
+Utilisez `apply_styler = TRUE` pour modifier directement votre script R
+source :
+
+``` r
+# Ceci modifiera le fichier R original
+rtoqmd("mon_script.R", "sortie.qmd", 
+       use_styler = TRUE, 
+       apply_styler = TRUE)
+```
+
+**Attention :** `apply_styler = TRUE` modifie votre fichier de script R
+original. Considérez utiliser un contrôle de version ou des sauvegardes
+avant d’utiliser cette option.
+
+### Exemple de sortie
+
+Essayez l’exemple inclus :
+
+``` r
+fichier_exemple <- system.file("examples", "example_code_quality.R", 
+                              package = "quartify")
+rtoqmd(fichier_exemple, "demo_qualite.qmd", 
+       use_styler = TRUE, 
+       use_lintr = TRUE,
+       render_html = TRUE,
+       open_html = TRUE)
+```
+
 ## Conseils et bonnes pratiques
 
 1.  **Commencez par la structure** : Définissez d’abord vos titres de
@@ -1408,6 +1481,8 @@ modèle de tabset.
     (Ctrl+Shift+O) pour voir votre structure
 7.  **Commentez généreusement** : Plus de commentaires = meilleure
     documentation dans le document Quarto final
+8.  **Utilisez les vérifications de qualité** : Activez `use_styler` et
+    `use_lintr` pour le matériel pédagogique ou les revues de code
 
 ## Conclusion
 

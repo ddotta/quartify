@@ -14,7 +14,7 @@ rtoqmd_dir(
   author = "Your name",
   format = "html",
   theme = NULL,
-  render = FALSE,
+  render_html = FALSE,
   output_html_dir = NULL,
   open_html = TRUE,
   code_fold = FALSE,
@@ -27,7 +27,8 @@ rtoqmd_dir(
   output_dir = NULL,
   language = "en",
   use_styler = FALSE,
-  use_lintr = FALSE
+  use_lintr = FALSE,
+  apply_styler = FALSE
 )
 ```
 
@@ -55,10 +56,10 @@ rtoqmd_dir(
   Quarto theme for HTML output (default: NULL uses Quarto's default).
   See <https://quarto.org/docs/output-formats/html-themes.html>
 
-- render:
+- render_html:
 
-  Logical, whether to render the .qmd files after creation (default:
-  FALSE)
+  Logical, whether to render the .qmd files to HTML after creation
+  (default: FALSE)
 
 - output_html_dir:
 
@@ -121,6 +122,12 @@ rtoqmd_dir(
   in tabsets (default: FALSE). Requires the lintr package to be
   installed.
 
+- apply_styler:
+
+  Logical, whether to apply styler formatting directly to the source R
+  script files (default: FALSE). If TRUE, all input files will be
+  modified with styled code. Requires use_styler = TRUE to take effect.
+
 ## Value
 
 Invisibly returns a data frame with conversion results (file paths and
@@ -156,13 +163,13 @@ if (FALSE) { # \dontrun{
 rtoqmd_dir("path/to/scripts")
 
 # Convert and render all scripts
-rtoqmd_dir("path/to/scripts", render = TRUE)
+rtoqmd_dir("path/to/scripts", render_html = TRUE)
 
 # Create a Quarto book with automatic navigation
 rtoqmd_dir(
   dir_path = "path/to/scripts",
   output_html_dir = "path/to/scripts/documentation",
-  render = TRUE,
+  render_html = TRUE,
   author = "Your Name",
   book_title = "My R Scripts Documentation",
   open_html = TRUE
@@ -172,7 +179,7 @@ rtoqmd_dir(
 rtoqmd_dir(
   dir_path = "path/to/scripts",
   output_html_dir = "path/to/scripts/documentation",
-  render = TRUE,
+  render_html = TRUE,
   author = "Votre Nom",
   book_title = "Documentation des Scripts R",
   language = "fr"
@@ -196,7 +203,7 @@ if (example_dir != "") {
   rtoqmd_dir(
     dir_path = example_dir,
     output_html_dir = file.path(example_dir, "documentation"),
-    render = TRUE,
+    render_html = TRUE,
     open_html = TRUE
   )
 }
