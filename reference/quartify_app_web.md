@@ -3,9 +3,6 @@
 Web-friendly version of quartify_app() designed for deployment on web
 servers. Uses file upload/download instead of local file system access.
 
-Web-friendly version of quartify_app() designed for deployment on web
-servers. Uses file upload/download instead of local file system access.
-
 ## Usage
 
 ``` r

@@ -3,15 +3,11 @@
 This function provides the same interface as the RStudio add-in but works
 in any R environment including Positron, VS Code, RStudio, or command line.
 Unlike the add-in, this function requires you to manually select input files
-using the file browser in the interface.
-Launches a Shiny application for converting R scripts to Quarto documents.
-Provides a user-friendly interface with options for single file or batch processing."><meta property="og:description" content="Opens the Quartify conversion interface in your default web browser.
+using the file browser in the interface."><meta property="og:description" content="Opens the Quartify conversion interface in your default web browser.
 This function provides the same interface as the RStudio add-in but works
 in any R environment including Positron, VS Code, RStudio, or command line.
 Unlike the add-in, this function requires you to manually select input files
-using the file browser in the interface.
-Launches a Shiny application for converting R scripts to Quarto documents.
-Provides a user-friendly interface with options for single file or batch processing."></head><body>
+using the file browser in the interface."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -49,7 +45,7 @@ Provides a user-friendly interface with options for single file or batch process
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Launch Quartify Shiny Interface</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/main/R/addins.R" class="external-link"><code>R/addins.R</code></a>, <a href="https://github.com/ddotta/quartify/blob/main/R/quartify_app.R" class="external-link"><code>R/quartify_app.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/main/R/addins.R" class="external-link"><code>R/addins.R</code></a></small>
       <div class="d-none name"><code>quartify_app.Rd</code></div>
     </div>
 
@@ -59,15 +55,11 @@ This function provides the same interface as the RStudio add-in but works
 in any R environment including Positron, VS Code, RStudio, or command line.
 Unlike the add-in, this function requires you to manually select input files
 using the file browser in the interface.</p>
-<p>Launches a Shiny application for converting R scripts to Quarto documents.
-Provides a user-friendly interface with options for single file or batch processing.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">quartify_app</span><span class="op">(</span>launch.browser <span class="op">=</span> <span class="cn">TRUE</span>, port <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">quartify_app</span><span class="op">(</span>launch.browser <span class="op">=</span> <span class="cn">TRUE</span>, port <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">quartify_app</span><span class="op">(</span>launch.browser <span class="op">=</span> <span class="cn">TRUE</span>, port <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,17 +67,17 @@ Provides a user-friendly interface with options for single file or batch process
 
 
 <dl><dt id="arg-launch-browser">launch.browser<a class="anchor" aria-label="anchor" href="#arg-launch-browser"></a></dt>
-<dd><p>Logical, whether to launch browser (default: TRUE)</p></dd>
+<dd><p>Logical, whether to open in browser (default: TRUE).
+Set to FALSE to run in RStudio Viewer pane if available.</p></dd>
 
 
 <dt id="arg-port">port<a class="anchor" aria-label="anchor" href="#arg-port"></a></dt>
-<dd><p>Integer, port number for the application (default: NULL for random port)</p></dd>
+<dd><p>The port to run the app on (default: random available port)</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Invisibly returns NULL when the app is closed</p>
-<p>Invisible NULL</p>
     </div>
 
     <div class="section level2">
@@ -101,10 +93,6 @@ Provides a user-friendly interface with options for single file or batch process
 <span class="r-in"><span><span class="co"># Specify a port</span></span></span>
 <span class="r-in"><span><span class="fu">quartify_app</span><span class="op">(</span>port <span class="op">=</span> <span class="fl">3838</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu">quartify_app</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

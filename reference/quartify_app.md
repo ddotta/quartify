@@ -6,15 +6,9 @@ works in any R environment including Positron, VS Code, RStudio, or
 command line. Unlike the add-in, this function requires you to manually
 select input files using the file browser in the interface.
 
-Launches a Shiny application for converting R scripts to Quarto
-documents. Provides a user-friendly interface with options for single
-file or batch processing.
-
 ## Usage
 
 ``` r
-quartify_app(launch.browser = TRUE, port = NULL)
-
 quartify_app(launch.browser = TRUE, port = NULL)
 ```
 
@@ -22,18 +16,16 @@ quartify_app(launch.browser = TRUE, port = NULL)
 
 - launch.browser:
 
-  Logical, whether to launch browser (default: TRUE)
+  Logical, whether to open in browser (default: TRUE). Set to FALSE to
+  run in RStudio Viewer pane if available.
 
 - port:
 
-  Integer, port number for the application (default: NULL for random
-  port)
+  The port to run the app on (default: random available port)
 
 ## Value
 
 Invisibly returns NULL when the app is closed
-
-Invisible NULL
 
 ## Examples
 
@@ -48,8 +40,5 @@ quartify_app()
 
 # Specify a port
 quartify_app(port = 3838)
-} # }
-if (FALSE) { # \dontrun{
-quartify_app()
 } # }
 ```
