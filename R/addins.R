@@ -470,7 +470,7 @@ rtoqmd_addin <- function() {
     output$html_file_display <- shiny::renderText({
       path <- html_file_path()
       if (is.null(path)) {
-        if (lang() == "fr") "(emplacement par d\u00e9faut)" else "(default location)"
+        if (lang() == "fr") "(emplacement par defaut)" else "(default location)"
       } else {
         basename(path)
       }
@@ -503,13 +503,13 @@ rtoqmd_addin <- function() {
     output$selected_directory <- shiny::renderText({
       if (!is.null(selected_dir())) {
         if (lang() == "fr") {
-          paste0("S\u00e9lectionn\u00e9 : ", selected_dir())
+          paste0("Selectionne : ", selected_dir())
         } else {
           paste0("Selected: ", selected_dir())
         }
       } else {
         if (lang() == "fr") {
-          "Aucun r\u00e9pertoire s\u00e9lectionn\u00e9"
+          "Aucun repertoire selectionne"
         } else {
           "No directory selected"
         }
@@ -519,13 +519,13 @@ rtoqmd_addin <- function() {
     output$selected_output_directory <- shiny::renderText({
       if (!is.null(selected_output_dir())) {
         if (lang() == "fr") {
-          paste0("S\u00e9lectionn\u00e9 : ", selected_output_dir())
+          paste0("Selectionne : ", selected_output_dir())
         } else {
           paste0("Selected: ", selected_output_dir())
         }
       } else {
         if (lang() == "fr") {
-          "Aucun r\u00e9pertoire (d\u00e9faut : _book)"
+          "Aucun repertoire (defaut : _book)"
         } else {
           "None (default: _book)"
         }
@@ -556,23 +556,23 @@ rtoqmd_addin <- function() {
       ),
       fr = list(
         mode = "Mode de conversion :",
-        input_file = "Fichier(s) d'entr\u00e9e :",
-        input_directory = "R\u00e9pertoire d'entr\u00e9e :",
-        output_directory = "R\u00e9pertoire de sortie (pour le book) :",
-        button_select_directory = "S\u00e9lectionner un R\u00e9pertoire",
-        create_book = "Cr\u00e9er un Quarto Book",
+        input_file = "Fichier(s) d'entree :",
+        input_directory = "Repertoire d'entree :",
+        output_directory = "Repertoire de sortie (pour le book) :",
+        button_select_directory = "Selectionner un Repertoire",
+        create_book = "Creer un Quarto Book",
         output_file = "Chemin du fichier de sortie :",
         html_file = "Chemin du fichier HTML :",
-        html_file_optional = "(optionnel - laisser vide pour l'emplacement par d\u00e9faut)",
+        html_file_optional = "(optionnel - laisser vide pour l'emplacement par defaut)",
         title = "Titre du document :",
         author = "Nom de l'auteur :",
         theme = "Th\u00e8me HTML :",
-        render = "G\u00e9n\u00e9rer Html apr\u00e8s conversion",
+        render = "Generer Html apr\u00e8s conversion",
         open_html = "Ouvrir le fichier Html apr\u00e8s rendu",
-        open_qmd = "Ouvrir le fichier .qmd dans l'\u00e9diteur apr\u00e8s conversion",
-        code_fold = "Replier les blocs de code par d\u00e9faut",
-        number_sections = "Num\u00e9roter les sections automatiquement (pas utile si vos sections sont d\u00e9j\u00e0 num\u00e9rot\u00e9es)",
-        show_source_lines = "Afficher les num\u00e9ros de ligne originaux dans les chunks"
+        open_qmd = "Ouvrir le fichier .qmd dans l'editeur apr\u00e8s conversion",
+        code_fold = "Replier les blocs de code par defaut",
+        number_sections = "Numeroter les sections automatiquement (pas utile si vos sections sont dej\u00e0 numerotees)",
+        show_source_lines = "Afficher les numeros de ligne originaux dans les chunks"
       )
     )
     
@@ -581,7 +581,7 @@ rtoqmd_addin <- function() {
       if (lang() == "fr") {
         shiny::radioButtons("conversion_mode", 
                           translations[["fr"]]$mode,
-                          choices = c("Un ou plusieurs fichiers" = "single", "R\u00e9pertoire" = "directory"),
+                          choices = c("Un ou plusieurs fichiers" = "single", "Repertoire" = "directory"),
                           selected = "single",
                           inline = TRUE)
       } else {
@@ -708,7 +708,7 @@ rtoqmd_addin <- function() {
         
         # Show success message based on language
         success_msg <- if (lang() == "fr") {
-          "\u2705 Conversion termin\u00e9e avec succ\u00e8s !"
+          "\u2705 Conversion terminee avec succ\u00e8s !"
         } else {
           "\u2705 Conversion completed successfully!"
         }
@@ -908,7 +908,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
               condition = "output.current_lang == 'fr'",
               shiny::radioButtons("conversion_mode", 
                                 shiny::textOutput("label_mode", inline = TRUE),
-                                choices = c("Un ou plusieurs fichiers" = "single", "R\u00e9pertoire" = "directory"),
+                                choices = c("Un ou plusieurs fichiers" = "single", "Repertoire" = "directory"),
                                 selected = "single",
                                 inline = TRUE)
             )
@@ -1137,13 +1137,13 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
     output$selected_directory <- shiny::renderText({
       if (!is.null(selected_dir())) {
         if (lang() == "fr") {
-          paste0("S\u00e9lectionn\u00e9 : ", selected_dir())
+          paste0("Selectionne : ", selected_dir())
         } else {
           paste0("Selected: ", selected_dir())
         }
       } else {
         if (lang() == "fr") {
-          "Aucun r\u00e9pertoire s\u00e9lectionn\u00e9"
+          "Aucun repertoire selectionne"
         } else {
           "No directory selected"
         }
@@ -1153,13 +1153,13 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
     output$selected_output_directory <- shiny::renderText({
       if (!is.null(selected_output_dir())) {
         if (lang() == "fr") {
-          paste0("S\u00e9lectionn\u00e9 : ", selected_output_dir())
+          paste0("Selectionne : ", selected_output_dir())
         } else {
           paste0("Selected: ", selected_output_dir())
         }
       } else {
         if (lang() == "fr") {
-          "Aucun r\u00e9pertoire (d\u00e9faut : _book)"
+          "Aucun repertoire (defaut : _book)"
         } else {
           "None (default: _book)"
         }
@@ -1196,7 +1196,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
     output$input_file_display <- shiny::renderText({
       path <- input_file_path()
       if (is.null(path)) {
-        if (lang() == "fr") "(s\u00E9lectionner un fichier)" else "(select a file)"
+        if (lang() == "fr") "(selectionner un fichier)" else "(select a file)"
       } else {
         basename(path)
       }
@@ -1205,7 +1205,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
     output$output_file_display <- shiny::renderText({
       path <- output_file_path()
       if (is.null(path)) {
-        if (lang() == "fr") "(s\u00E9lectionner un fichier)" else "(select a file)"
+        if (lang() == "fr") "(selectionner un fichier)" else "(select a file)"
       } else {
         basename(path)
       }
@@ -1214,7 +1214,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
     output$html_file_display <- shiny::renderText({
       path <- html_file_path()
       if (is.null(path)) {
-        if (lang() == "fr") "(emplacement par d\u00E9faut)" else "(default location)"
+        if (lang() == "fr") "(emplacement par defaut)" else "(default location)"
       } else {
         basename(path)
       }
@@ -1243,23 +1243,23 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
       ),
       fr = list(
         mode = "Mode de conversion :",
-        input_file = "Fichier(s) d'entr\u00E9e :",
-        input_directory = "R\u00E9pertoire d'entr\u00E9e :",
-        output_directory = "R\u00E9pertoire de sortie (pour le book) :",
-        button_select_directory = "S\u00E9lectionner un R\u00E9pertoire",
-        create_book = "Cr\u00E9er un Quarto Book",
+        input_file = "Fichier(s) d'entree :",
+        input_directory = "Repertoire d'entree :",
+        output_directory = "Repertoire de sortie (pour le book) :",
+        button_select_directory = "Selectionner un Repertoire",
+        create_book = "Creer un Quarto Book",
         output_file = "Chemin du fichier de sortie :",
         html_file = "Chemin du fichier HTML :",
-        html_file_optional = "(optionnel - laisser vide pour l'emplacement par d\u00E9faut)",
+        html_file_optional = "(optionnel - laisser vide pour l'emplacement par defaut)",
         title = "Titre du document :",
         author = "Nom de l'auteur :",
         theme = "Th\u00E8me HTML :",
-        render = "G\u00E9n\u00E9rer Html apr\u00E8s conversion",
+        render = "Generer Html apr\u00E8s conversion",
         open_html = "Ouvrir le fichier Html apr\u00E8s rendu",
-        open_qmd = "Ouvrir le fichier .qmd dans l'\u00E9diteur apr\u00E8s conversion",
-        code_fold = "Replier les blocs de code par d\u00E9faut",
-        number_sections = "Num\u00E9roter les sections automatiquement (pas utile si vos sections sont d\u00E9j\u00E0 num\u00E9rot\u00E9es)",
-        show_source_lines = "Afficher les num\u00E9ros de ligne originaux dans les chunks"
+        open_qmd = "Ouvrir le fichier .qmd dans l'editeur apr\u00E8s conversion",
+        code_fold = "Replier les blocs de code par defaut",
+        number_sections = "Numeroter les sections automatiquement (pas utile si vos sections sont dej\u00E0 numerotees)",
+        show_source_lines = "Afficher les numeros de ligne originaux dans les chunks"
       )
     )
     
@@ -1291,7 +1291,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
       if (is_directory_mode) {
         if (is.null(selected_dir())) {
           shiny::showNotification(
-            if (lang() == "fr") "Veuillez s\u00E9lectionner un r\u00E9pertoire" else "Please select a directory",
+            if (lang() == "fr") "Veuillez selectionner un repertoire" else "Please select a directory",
             type = "error",
             duration = 5
           )
@@ -1303,7 +1303,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         
         if (is.null(input_file_final) || is.null(output_file_final)) {
           shiny::showNotification(
-            if (lang() == "fr") "Veuillez s\u00E9lectionner les fichiers d'entr\u00E9e et de sortie" else "Please select input and output files",
+            if (lang() == "fr") "Veuillez selectionner les fichiers d'entree et de sortie" else "Please select input and output files",
             type = "error",
             duration = 5
           )
@@ -1393,7 +1393,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         session$sendCustomMessage('toggleLoader', FALSE)
         
         success_msg <- if (lang() == "fr") {
-          "\u2705 Conversion termin\u00e9e avec succ\u00e8s !"
+          "\u2705 Conversion terminee avec succ\u00e8s !"
         } else {
           "\u2705 Conversion completed successfully!"
         }
@@ -1794,13 +1794,13 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         if (rv$lang == "en") {
           paste0("Selected: ", rv$selected_dir)
         } else {
-          paste0("S\u00E9lectionn\u00E9 : ", rv$selected_dir)
+          paste0("Selectionne : ", rv$selected_dir)
         }
       } else {
         if (rv$lang == "en") {
           "No directory selected"
         } else {
-          "Aucun r\u00E9pertoire s\u00E9lectionn\u00E9"
+          "Aucun repertoire selectionne"
         }
       }
     })
@@ -1814,7 +1814,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
       if (rv$lang == "fr") {
         shiny::radioButtons("conversion_mode", 
                           "Mode de conversion :",
-                          choices = c("Un fichier" = "single", "R\u00e9pertoire (plusieurs fichiers)" = "batch"),
+                          choices = c("Un fichier" = "single", "Repertoire (plusieurs fichiers)" = "batch"),
                           selected = "single",
                           inline = TRUE)
       } else {
@@ -1832,11 +1832,11 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
     })
     
     output$label_upload_file <- shiny::renderText({
-      if (rv$lang == "en") "Upload R Script (.R)" else "T\u00E9l\u00E9charger le Script R (.R)"
+      if (rv$lang == "en") "Upload R Script (.R)" else "Telecharger le Script R (.R)"
     })
     
     output$label_upload_files <- shiny::renderText({
-      if (rv$lang == "en") "Upload Multiple R Scripts (.R)" else "T\u00E9l\u00E9charger Plusieurs Scripts R (.R)"
+      if (rv$lang == "en") "Upload Multiple R Scripts (.R)" else "Telecharger Plusieurs Scripts R (.R)"
     })
     
     output$label_batch_source <- shiny::renderText({
@@ -1852,7 +1852,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
     })
     
     output$button_select_directory <- shiny::renderText({
-      if (rv$lang == "en") "Select Directory" else "S\u00E9lectionner un R\u00E9pertoire"
+      if (rv$lang == "en") "Select Directory" else "Selectionner un Repertoire"
     })
     
     output$label_title <- shiny::renderText({
@@ -1868,30 +1868,30 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
     })
     
     output$label_render <- shiny::renderText({
-      if (rv$lang == "en") "Generate HTML" else "G\u00E9n\u00E9rer le HTML"
+      if (rv$lang == "en") "Generate HTML" else "Generer le HTML"
     })
     
     output$label_code_fold <- shiny::renderText({
-      if (rv$lang == "en") "Fold code blocks by default" else "Replier les blocs de code par d\u00E9faut"
+      if (rv$lang == "en") "Fold code blocks by default" else "Replier les blocs de code par defaut"
     })
     
     output$label_number_sections <- shiny::renderText({
-      if (rv$lang == "en") "Number sections automatically" else "Num\u00E9roter les sections automatiquement"
+      if (rv$lang == "en") "Number sections automatically" else "Numeroter les sections automatiquement"
     })
     
     output$label_show_source_lines <- shiny::renderText({
-      if (rv$lang == "en") "Show original line numbers" else "Afficher les num\u00E9ros de ligne originaux"
+      if (rv$lang == "en") "Show original line numbers" else "Afficher les numeros de ligne originaux"
     })
     
     output$label_create_book <- shiny::renderText({
-      if (rv$lang == "en") "Create Quarto Book (with table of contents)" else "Cr\u00E9er un Quarto Book (avec table des mati\u00E8res)"
+      if (rv$lang == "en") "Create Quarto Book (with table of contents)" else "Creer un Quarto Book (avec table des mati\u00E8res)"
     })
     
     output$label_book_description <- shiny::renderText({
       if (rv$lang == "en") {
         "Creates a Quarto book with _quarto.yml that respects the directory structure and provides a unified navigation."
       } else {
-        "Cr\u00E9e un Quarto book avec _quarto.yml qui respecte la structure des r\u00E9pertoires et fournit une navigation unifi\u00E9e."
+        "Cree un Quarto book avec _quarto.yml qui respecte la structure des repertoires et fournit une navigation unifiee."
       }
     })
     
@@ -1908,7 +1908,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         
         if (!has_files && !has_directory) {
           shiny::showNotification(
-            if (rv$lang == "en") "Please upload R scripts or select a directory" else "Veuillez t\u00E9l\u00E9charger des scripts R ou s\u00E9lectionner un r\u00E9pertoire",
+            if (rv$lang == "en") "Please upload R scripts or select a directory" else "Veuillez telecharger des scripts R ou selectionner un repertoire",
             type = "error"
           )
           return()
@@ -1916,7 +1916,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
       } else {
         if (is.null(input$input_file)) {
           shiny::showNotification(
-            if (rv$lang == "en") "Please upload an R script first" else "Veuillez d'abord t\u00E9l\u00E9charger un script R",
+            if (rv$lang == "en") "Please upload an R script first" else "Veuillez d'abord telecharger un script R",
             type = "error"
           )
           return()
@@ -2052,12 +2052,12 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
             sprintf("\u2714 %d files generated successfully! Check the download section below.", 
                    length(rv$qmd_files))
           } else {
-            sprintf("\u2714 %d fichiers g\u00E9n\u00E9r\u00E9s avec succ\u00E8s ! Consultez la section de t\u00E9l\u00E9chargement ci-dessous.", 
+            sprintf("\u2714 %d fichiers generes avec succ\u00E8s ! Consultez la section de telechargement ci-dessous.", 
                    length(rv$qmd_files))
           }
         } else {
           if (rv$lang == "en") "\u2714 Files generated successfully! Check the download section below." 
-          else "\u2714 Fichiers g\u00E9n\u00E9r\u00E9s avec succ\u00E8s ! Consultez la section de t\u00E9l\u00E9chargement ci-dessous."
+          else "\u2714 Fichiers generes avec succ\u00E8s ! Consultez la section de telechargement ci-dessous."
         }
         
         shiny::showNotification(
@@ -2088,17 +2088,17 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
             if (rv$lang == "en") {
               sprintf("\u2714 %d Files Ready for Download", length(rv$qmd_files))
             } else {
-              sprintf("\u2714 %d Fichiers Pr\u00EAts \u00E0 T\u00E9l\u00E9charger", length(rv$qmd_files))
+              sprintf("\u2714 %d Fichiers Pr\u00EAts \u00E0 Telecharger", length(rv$qmd_files))
             }
           ),
           shiny::p(
             if (rv$lang == "en") "Download all files as ZIP archive:" 
-            else "T\u00E9l\u00E9charger tous les fichiers en archive ZIP :"
+            else "Telecharger tous les fichiers en archive ZIP :"
           ),
           shiny::fluidRow(
             shiny::column(12,
               shiny::downloadButton("download_zip", 
-                                  if (rv$lang == "en") "Download ZIP" else "T\u00E9l\u00E9charger ZIP",
+                                  if (rv$lang == "en") "Download ZIP" else "Telecharger ZIP",
                                   class = "btn-success btn-lg btn-block")
             )
           )
@@ -2107,17 +2107,17 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         # SINGLE MODE: Download individual files
         shiny::div(
           class = "download-section",
-          shiny::h4(if (rv$lang == "en") "\u2714 Files Ready for Download" else "\u2714 Fichiers Pr\u00EAts \u00E0 T\u00E9l\u00E9charger"),
+          shiny::h4(if (rv$lang == "en") "\u2714 Files Ready for Download" else "\u2714 Fichiers Pr\u00EAts \u00E0 Telecharger"),
           shiny::fluidRow(
             shiny::column(6,
               shiny::downloadButton("download_qmd", 
-                                  if (rv$lang == "en") "Download .qmd" else "T\u00E9l\u00E9charger .qmd",
+                                  if (rv$lang == "en") "Download .qmd" else "Telecharger .qmd",
                                   class = "btn-success btn-block")
             ),
             if (!is.null(rv$html_file)) {
               shiny::column(6,
                 shiny::downloadButton("download_html", 
-                                    if (rv$lang == "en") "Download .html" else "T\u00E9l\u00E9charger .html",
+                                    if (rv$lang == "en") "Download .html" else "Telecharger .html",
                                     class = "btn-success btn-block")
               )
             } else {
