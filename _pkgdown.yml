@@ -53,6 +53,10 @@ reference:
     - rtoqmd_addin
     - quartify_app
     - quartify_app_web
+  - title: Utilities
+    desc: Helper functions for workflow enhancement
+    contents:
+    - install_quartify_snippets
 
 authors:
   Damien Dotta:
