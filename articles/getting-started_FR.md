@@ -1158,14 +1158,10 @@ iris %>% head()
   - Une autre section ou callout
 - Le titre est optionnel (omettre la partie `- Titre`)
 
-**Conseil :** Créez des snippets RStudio pour les callouts pour
-accélérer votre flux de travail :
-
-    snippet callout
-        # callout-${1:note} - ${2:Titre}
-        # ${0}
-
-Tapez `callout` suivi de `Tab` pour insérer le modèle.
+**Conseil :** Utilisez la fonction
+[`install_quartify_snippets()`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+pour ajouter un snippet `callout` à votre RStudio. Tapez `callout` suivi
+de `Tab` pour insérer rapidement le modèle de callout.
 
 ## Diagrammes Mermaid
 
@@ -1261,6 +1257,11 @@ mermaid_file <- system.file("examples", "example_mermaid.R", package = "quartify
 rtoqmd(mermaid_file, render = TRUE, open_html = TRUE)
 ```
 
+**Conseil :** Utilisez
+[`install_quartify_snippets()`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+pour ajouter un snippet `mermaid`. Tapez `mermaid` + `Tab` pour insérer
+le modèle de diagramme.
+
 **Plus de ressources Mermaid :**
 
 - [Documentation Mermaid](https://mermaid.js.org/)
@@ -1296,14 +1297,6 @@ Pour créer un tabset :
 # tab - Statistiques résumées
 # Voici les statistiques résumées pour le jeu de données iris :
 summary(iris)
-
-# tab - Structure des données
-# Examinons la structure des données :
-str(iris)
-
-# tab - Premières lignes
-# Voici les premières lignes :
-head(iris)
 ```
 
 **Quarto résultant :**
@@ -1334,35 +1327,6 @@ summary(iris)
 #> 
 ```
 
-## Structure des données
-
-Examinons la structure des données :
-
-``` r
-str(iris)
-#> 'data.frame':    150 obs. of  5 variables:
-#>  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
-#>  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
-#>  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
-#>  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
-#>  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-```
-
-## Premières lignes
-
-Voici les premières lignes :
-
-``` r
-head(iris)
-#>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#> 1          5.1         3.5          1.4         0.2  setosa
-#> 2          4.9         3.0          1.4         0.2  setosa
-#> 3          4.7         3.2          1.3         0.2  setosa
-#> 4          4.6         3.1          1.5         0.2  setosa
-#> 5          5.0         3.6          1.4         0.2  setosa
-#> 6          5.4         3.9          1.7         0.4  setosa
-```
-
 :::
 
     ### Règles
@@ -1384,6 +1348,11 @@ head(iris)
 
     # Convertir et rendre
     rtoqmd(tabset_file, render = TRUE, open_html = TRUE)
+
+**Conseil :** Utilisez
+[`install_quartify_snippets()`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+pour ajouter un snippet `tabset`. Tapez `tabset` + `Tab` pour insérer le
+modèle de tabset.
 
 **Plus de ressources sur les tabsets :**
 

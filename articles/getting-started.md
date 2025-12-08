@@ -312,23 +312,23 @@ appear in the YAML header of the generated Quarto document.
 - **Date**: `# Date : 2025-11-28`
 - **Description**: `# Description : Description of your script`
 
-**Tip - RStudio Snippets:** To save time, you can create an [RStudio
-snippet](https://docs.posit.co/ide/user/ide/guide/productivity/snippets.html)
-to automatically insert this metadata header. Add this snippet to your R
-snippets (Tools \> Edit Code Snippets \> R):
+**Tip - RStudio Snippets:** quartify provides a function to
+automatically install useful snippets including `header`, `callout`,
+`mermaid`, and `tabset`:
 
-    snippet header
-        # Title : ${1}
-        #
-        # Author : ${2}
-        #
-        # Date : ${3}
-        #
-        # Description : ${4}
-        #
+``` r
+# Install quartify snippets
+install_quartify_snippets()
+```
 
-Once defined, type `header` followed by `Tab` in your R script to
-automatically insert the metadata structure.
+After installation and restarting RStudio, type the snippet name (e.g.,
+`header`) followed by `Tab` in your R script to automatically insert the
+template.
+
+You can also manually add snippets via Tools \> Edit Code Snippets \> R.
+See
+[`?install_quartify_snippets`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+for more details.
 
 **Complete example with metadata:**
 
@@ -1104,13 +1104,10 @@ iris %>% head()
   - Another section or callout
 - Title is optional (omit the `- Title` part)
 
-**Tip:** Create RStudio snippets for callouts to speed up your workflow:
-
-    snippet callout
-        # callout-${1:note} - ${2:Title}
-        # ${0}
-
-Type `callout` followed by `Tab` to insert the template.
+**Tip:** Use the
+[`install_quartify_snippets()`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+function to add a `callout` snippet to your RStudio. Type `callout`
+followed by `Tab` to quickly insert the callout template.
 
 ## Mermaid Diagrams
 
@@ -1205,6 +1202,11 @@ mermaid_file <- system.file("examples", "example_mermaid.R", package = "quartify
 rtoqmd(mermaid_file, render = TRUE, open_html = TRUE)
 ```
 
+**Tip:** Use
+[`install_quartify_snippets()`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+to add a `mermaid` snippet. Type `mermaid` + `Tab` to insert the diagram
+template.
+
 **More Mermaid Resources:**
 
 - [Mermaid Documentation](https://mermaid.js.org/)
@@ -1234,14 +1236,6 @@ To create a tabset:
 # tab - Summary Statistics
 # Here are the basic summary statistics for the iris dataset:
 summary(iris)
-
-# tab - Data Structure
-# Let's examine the structure of the data:
-str(iris)
-
-# tab - First Rows
-# Here are the first few rows:
-head(iris)
 ```
 
 **Resulting Quarto:**
@@ -1272,35 +1266,6 @@ summary(iris)
 #> 
 ```
 
-## Data Structure
-
-Let’s examine the structure of the data:
-
-``` r
-str(iris)
-#> 'data.frame':    150 obs. of  5 variables:
-#>  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
-#>  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
-#>  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
-#>  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
-#>  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-```
-
-## First Rows
-
-Here are the first few rows:
-
-``` r
-head(iris)
-#>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#> 1          5.1         3.5          1.4         0.2  setosa
-#> 2          4.9         3.0          1.4         0.2  setosa
-#> 3          4.7         3.2          1.3         0.2  setosa
-#> 4          4.6         3.1          1.5         0.2  setosa
-#> 5          5.0         3.6          1.4         0.2  setosa
-#> 6          5.4         3.9          1.7         0.4  setosa
-```
-
 :::
 
     ### Rules
@@ -1322,6 +1287,11 @@ head(iris)
 
     # Convert and render
     rtoqmd(tabset_file, render = TRUE, open_html = TRUE)
+
+**Tip:** Use
+[`install_quartify_snippets()`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+to add a `tabset` snippet. Type `tabset` + `Tab` to insert the tabset
+template.
 
 **More Tabset Resources:**
 

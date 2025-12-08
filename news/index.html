@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,9 +35,36 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/ddotta/quartify/blob/v0.0.7/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/ddotta/quartify/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.8" id="quartify-008">quartify 0.0.8<a class="anchor" aria-label="anchor" href="#quartify-008"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-0-8">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-8"></a></h3>
+<ul><li>
+<strong>RStudio Snippets Installation</strong>: New <code><a href="../reference/install_quartify_snippets.html">install_quartify_snippets()</a></code> function to automatically install useful snippets:
+<ul><li>
+<code>header</code>: R script header template with Title, Author, Date, Description</li>
+<li>
+<code>callout</code>: Quarto callout structure</li>
+<li>
+<code>mermaid</code>: Mermaid diagram chunk with options</li>
+<li>
+<code>tabset</code>: Tabset structure with tabs</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-0-8">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-8"></a></h3>
+<ul><li>Fixed <code><a href="../reference/rtoqmd_addin.html">rtoqmd_addin()</a></code> error when no document is active or unsaved (handled NULL/empty path cases)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-0-8">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-8"></a></h3>
+<ul><li>Updated vignettes to reference <code><a href="../reference/install_quartify_snippets.html">install_quartify_snippets()</a></code> function</li>
+<li>Simplified tabset examples (removed “Data Structure” and “First Rows” tabs)</li>
+<li>Added snippet tips for callouts, mermaid diagrams, and tabsets in both English and French vignettes</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.7" id="quartify-007">quartify 0.0.7<a class="anchor" aria-label="anchor" href="#quartify-007"></a></h2>
 <div class="section level3">

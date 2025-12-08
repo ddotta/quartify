@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
       <h1>Démarrage avec quartify</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/v0.0.7/vignettes/getting-started_FR.Rmd" class="external-link"><code>vignettes/getting-started_FR.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/main/vignettes/getting-started_FR.Rmd" class="external-link"><code>vignettes/getting-started_FR.Rmd</code></a></small>
       <div class="d-none name"><code>getting-started_FR.Rmd</code></div>
     </div>
 
@@ -1426,13 +1426,10 @@ du callout</li>
 <li>Le titre est optionnel (omettre la partie <code>- Titre</code>)</li>
 </ul>
 <div class="alert alert-info">
-<p><strong>Conseil :</strong> Créez des snippets RStudio pour les
-callouts pour accélérer votre flux de travail :</p>
-<pre><code>snippet callout
-    # callout-${1:note} - ${2:Titre}
-    # ${0}</code></pre>
-<p>Tapez <code>callout</code> suivi de <code>Tab</code> pour insérer le
-modèle.</p>
+<p><strong>Conseil :</strong> Utilisez la fonction
+<code><a href="../reference/install_quartify_snippets.html">install_quartify_snippets()</a></code> pour ajouter un snippet
+<code>callout</code> à votre RStudio. Tapez <code>callout</code> suivi
+de <code>Tab</code> pour insérer rapidement le modèle de callout.</p>
 </div>
 </div>
 </div>
@@ -1447,15 +1444,15 @@ rendus directement dans la sortie HTML.</p>
 </h3>
 <p>Dans votre script R, commencez par <code>#| mermaid</code>, ajoutez
 des options avec <code>#|</code>, puis le contenu du diagramme :</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
-<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>flowchart TD</span>
-<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>    A[Début] <span class="sc">-</span><span class="ot">-&gt;</span> B[Traiter les données]</span>
-<span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C{Valide ?}</span>
-<span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>Oui<span class="sc">|</span> D[Sauvegarder]</span>
-<span id="cb45-7"><a href="#cb45-7" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>Non<span class="sc">|</span> E[Erreur]</span>
-<span id="cb45-8"><a href="#cb45-8" tabindex="-1"></a>    D <span class="sc">-</span><span class="ot">-&gt;</span> F[Fin]</span>
-<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a>    E <span class="sc">-</span><span class="ot">-&gt;</span> F</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>flowchart TD</span>
+<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a>    A[Début] <span class="sc">-</span><span class="ot">-&gt;</span> B[Traiter les données]</span>
+<span id="cb44-5"><a href="#cb44-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C{Valide ?}</span>
+<span id="cb44-6"><a href="#cb44-6" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>Oui<span class="sc">|</span> D[Sauvegarder]</span>
+<span id="cb44-7"><a href="#cb44-7" tabindex="-1"></a>    C <span class="sc">-</span><span class="ot">-&gt;</span><span class="er">|</span>Non<span class="sc">|</span> E[Erreur]</span>
+<span id="cb44-8"><a href="#cb44-8" tabindex="-1"></a>    D <span class="sc">-</span><span class="ot">-&gt;</span> F[Fin]</span>
+<span id="cb44-9"><a href="#cb44-9" tabindex="-1"></a>    E <span class="sc">-</span><span class="ot">-&gt;</span> F</span></code></pre></div>
 <p>Ceci se convertit en un chunk Mermaid Quarto qui se rend comme un
 diagramme interactif en HTML.</p>
 </div>
@@ -1464,36 +1461,36 @@ diagramme interactif en HTML.</p>
 </h3>
 <p>Mermaid supporte de nombreux types de diagrammes :</p>
 <p><strong>Organigrammes :</strong></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>flowchart LR</span>
+<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>    A[Entrée] <span class="sc">-</span><span class="ot">-&gt;</span> B[Traitement]</span>
+<span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C[Sortie]</span></code></pre></div>
+<p><strong>Diagrammes de séquence :</strong></p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
 <span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>flowchart LR</span>
-<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>    A[Entrée] <span class="sc">-</span><span class="ot">-&gt;</span> B[Traitement]</span>
-<span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a>    B <span class="sc">-</span><span class="ot">-&gt;</span> C[Sortie]</span></code></pre></div>
-<p><strong>Diagrammes de séquence :</strong></p>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>sequenceDiagram</span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>    participant Utilisateur</span>
+<span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a>    participant API</span>
+<span id="cb46-6"><a href="#cb46-6" tabindex="-1"></a>    participant BDD</span>
+<span id="cb46-7"><a href="#cb46-7" tabindex="-1"></a>    Utilisateur<span class="ot">-&gt;&gt;</span>API<span class="sc">:</span> Demande</span>
+<span id="cb46-8"><a href="#cb46-8" tabindex="-1"></a>    API<span class="ot">-&gt;&gt;</span>BDD<span class="sc">:</span> Requête</span>
+<span id="cb46-9"><a href="#cb46-9" tabindex="-1"></a>    BDD<span class="sc">-</span><span class="ot">-&gt;&gt;</span>API<span class="sc">:</span> Résultats</span>
+<span id="cb46-10"><a href="#cb46-10" tabindex="-1"></a>    API<span class="sc">-</span><span class="ot">-&gt;&gt;</span>Utilisateur<span class="sc">:</span> Réponse</span></code></pre></div>
+<p><strong>Diagrammes de classes :</strong></p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
 <span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a>sequenceDiagram</span>
-<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>    participant Utilisateur</span>
-<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a>    participant API</span>
-<span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a>    participant BDD</span>
-<span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a>    Utilisateur<span class="ot">-&gt;&gt;</span>API<span class="sc">:</span> Demande</span>
-<span id="cb47-8"><a href="#cb47-8" tabindex="-1"></a>    API<span class="ot">-&gt;&gt;</span>BDD<span class="sc">:</span> Requête</span>
-<span id="cb47-9"><a href="#cb47-9" tabindex="-1"></a>    BDD<span class="sc">-</span><span class="ot">-&gt;&gt;</span>API<span class="sc">:</span> Résultats</span>
-<span id="cb47-10"><a href="#cb47-10" tabindex="-1"></a>    API<span class="sc">-</span><span class="ot">-&gt;&gt;</span>Utilisateur<span class="sc">:</span> Réponse</span></code></pre></div>
-<p><strong>Diagrammes de classes :</strong></p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="co">#| mermaid</span></span>
-<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>classDiagram</span>
-<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a>    class Animal {</span>
-<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a>        <span class="sc">+</span>String nom</span>
-<span id="cb48-6"><a href="#cb48-6" tabindex="-1"></a>        <span class="sc">+</span>int age</span>
-<span id="cb48-7"><a href="#cb48-7" tabindex="-1"></a>        <span class="sc">+</span><span class="fu">faireUnSon</span>()</span>
-<span id="cb48-8"><a href="#cb48-8" tabindex="-1"></a>    }</span>
-<span id="cb48-9"><a href="#cb48-9" tabindex="-1"></a>    class Chien {</span>
-<span id="cb48-10"><a href="#cb48-10" tabindex="-1"></a>        <span class="sc">+</span>String race</span>
-<span id="cb48-11"><a href="#cb48-11" tabindex="-1"></a>        <span class="sc">+</span><span class="fu">aboyer</span>()</span>
-<span id="cb48-12"><a href="#cb48-12" tabindex="-1"></a>    }</span>
-<span id="cb48-13"><a href="#cb48-13" tabindex="-1"></a>    Animal <span class="sc">&lt;</span><span class="er">|</span><span class="sc">--</span> Chien</span></code></pre></div>
+<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a>classDiagram</span>
+<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>    class Animal {</span>
+<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a>        <span class="sc">+</span>String nom</span>
+<span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a>        <span class="sc">+</span>int age</span>
+<span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a>        <span class="sc">+</span><span class="fu">faireUnSon</span>()</span>
+<span id="cb47-8"><a href="#cb47-8" tabindex="-1"></a>    }</span>
+<span id="cb47-9"><a href="#cb47-9" tabindex="-1"></a>    class Chien {</span>
+<span id="cb47-10"><a href="#cb47-10" tabindex="-1"></a>        <span class="sc">+</span>String race</span>
+<span id="cb47-11"><a href="#cb47-11" tabindex="-1"></a>        <span class="sc">+</span><span class="fu">aboyer</span>()</span>
+<span id="cb47-12"><a href="#cb47-12" tabindex="-1"></a>    }</span>
+<span id="cb47-13"><a href="#cb47-13" tabindex="-1"></a>    Animal <span class="sc">&lt;</span><span class="er">|</span><span class="sc">--</span> Chien</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="règles-1">Règles<a class="anchor" aria-label="anchor" href="#r%C3%A8gles-1"></a>
@@ -1517,13 +1514,17 @@ commentaire</li>
 </h3>
 <p>Voir le fichier d’exemple complet avec plusieurs types de diagrammes
 :</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Localiser le fichier exemple Mermaid</span></span>
 <span><span class="va">mermaid_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example_mermaid.R"</span>, package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Convertir et rendre</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">mermaid_file</span>, render <span class="op">=</span> <span class="cn">TRUE</span>, open_html <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="alert alert-info">
+<p><strong>Conseil :</strong> Utilisez
+<code><a href="../reference/install_quartify_snippets.html">install_quartify_snippets()</a></code> pour ajouter un snippet
+<code>mermaid</code>. Tapez <code>mermaid</code> + <code>Tab</code> pour
+insérer le modèle de diagramme.</p>
 <p><strong>Plus de ressources Mermaid :</strong></p>
 <ul>
 <li><a href="https://mermaid.js.org/" class="external-link">Documentation Mermaid</a></li>
@@ -1562,71 +1563,35 @@ code pour chaque onglet</li>
 prochain en-tête de section</li>
 </ol>
 <p><strong>Syntaxe dans le script R :</strong></p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tabset</span></span>
 <span><span class="co"># tab - Statistiques résumées</span></span>
 <span><span class="co"># Voici les statistiques résumées pour le jeu de données iris :</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># tab - Structure des données</span></span>
-<span><span class="co"># Examinons la structure des données :</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># tab - Premières lignes</span></span>
-<span><span class="co"># Voici les premières lignes :</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Quarto résultant :</strong></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a>::: {.panel-tabset}</span>
-<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a><span class="fu">## Statistiques résumées</span></span>
-<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="#cb51-5" tabindex="-1"></a>Voici les statistiques résumées pour le jeu de données iris :</span>
-<span id="cb51-6"><a href="#cb51-6" tabindex="-1"></a></span>
-<span id="cb51-7"><a href="#cb51-7" tabindex="-1"></a></span>
-<span id="cb51-8"><a href="#cb51-8" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb51-9"><a href="#cb51-9" tabindex="-1"></a><span class="fu">summary</span>(iris)</span>
-<span id="cb51-10"><a href="#cb51-10" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   </span></span>
-<span id="cb51-11"><a href="#cb51-11" tabindex="-1"></a><span class="co">#&gt;  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  </span></span>
-<span id="cb51-12"><a href="#cb51-12" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  </span></span>
-<span id="cb51-13"><a href="#cb51-13" tabindex="-1"></a><span class="co">#&gt;  Median :5.800   Median :3.000   Median :4.350   Median :1.300  </span></span>
-<span id="cb51-14"><a href="#cb51-14" tabindex="-1"></a><span class="co">#&gt;  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  </span></span>
-<span id="cb51-15"><a href="#cb51-15" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  </span></span>
-<span id="cb51-16"><a href="#cb51-16" tabindex="-1"></a><span class="co">#&gt;  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  </span></span>
-<span id="cb51-17"><a href="#cb51-17" tabindex="-1"></a><span class="co">#&gt;        Species  </span></span>
-<span id="cb51-18"><a href="#cb51-18" tabindex="-1"></a><span class="co">#&gt;  setosa    :50  </span></span>
-<span id="cb51-19"><a href="#cb51-19" tabindex="-1"></a><span class="co">#&gt;  versicolor:50  </span></span>
-<span id="cb51-20"><a href="#cb51-20" tabindex="-1"></a><span class="co">#&gt;  virginica :50  </span></span>
-<span id="cb51-21"><a href="#cb51-21" tabindex="-1"></a><span class="co">#&gt;                 </span></span>
-<span id="cb51-22"><a href="#cb51-22" tabindex="-1"></a><span class="co">#&gt;                 </span></span>
-<span id="cb51-23"><a href="#cb51-23" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="structure-des-données">Structure des données<a class="anchor" aria-label="anchor" href="#structure-des-donn%C3%A9es"></a>
-</h2>
-<p>Examinons la structure des données :</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    150 obs. of  5 variables:</span></span>
-<span><span class="co">#&gt;  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span></span>
-<span><span class="co">#&gt;  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span></span>
-<span><span class="co">#&gt;  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span></span>
-<span><span class="co">#&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span></span>
-<span><span class="co">#&gt;  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="premières-lignes">Premières lignes<a class="anchor" aria-label="anchor" href="#premi%C3%A8res-lignes"></a>
-</h2>
-<p>Voici les premières lignes :</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
-<span><span class="co">#&gt; 1          5.1         3.5          1.4         0.2  setosa</span></span>
-<span><span class="co">#&gt; 2          4.9         3.0          1.4         0.2  setosa</span></span>
-<span><span class="co">#&gt; 3          4.7         3.2          1.3         0.2  setosa</span></span>
-<span><span class="co">#&gt; 4          4.6         3.1          1.5         0.2  setosa</span></span>
-<span><span class="co">#&gt; 5          5.0         3.6          1.4         0.2  setosa</span></span>
-<span><span class="co">#&gt; 6          5.4         3.9          1.7         0.4  setosa</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a><span class="fu">## Statistiques résumées</span></span>
+<span id="cb50-4"><a href="#cb50-4" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" tabindex="-1"></a>Voici les statistiques résumées pour le jeu de données iris :</span>
+<span id="cb50-6"><a href="#cb50-6" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb50-9"><a href="#cb50-9" tabindex="-1"></a><span class="fu">summary</span>(iris)</span>
+<span id="cb50-10"><a href="#cb50-10" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   </span></span>
+<span id="cb50-11"><a href="#cb50-11" tabindex="-1"></a><span class="co">#&gt;  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  </span></span>
+<span id="cb50-12"><a href="#cb50-12" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  </span></span>
+<span id="cb50-13"><a href="#cb50-13" tabindex="-1"></a><span class="co">#&gt;  Median :5.800   Median :3.000   Median :4.350   Median :1.300  </span></span>
+<span id="cb50-14"><a href="#cb50-14" tabindex="-1"></a><span class="co">#&gt;  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  </span></span>
+<span id="cb50-15"><a href="#cb50-15" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  </span></span>
+<span id="cb50-16"><a href="#cb50-16" tabindex="-1"></a><span class="co">#&gt;  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  </span></span>
+<span id="cb50-17"><a href="#cb50-17" tabindex="-1"></a><span class="co">#&gt;        Species  </span></span>
+<span id="cb50-18"><a href="#cb50-18" tabindex="-1"></a><span class="co">#&gt;  setosa    :50  </span></span>
+<span id="cb50-19"><a href="#cb50-19" tabindex="-1"></a><span class="co">#&gt;  versicolor:50  </span></span>
+<span id="cb50-20"><a href="#cb50-20" tabindex="-1"></a><span class="co">#&gt;  virginica :50  </span></span>
+<span id="cb50-21"><a href="#cb50-21" tabindex="-1"></a><span class="co">#&gt;                 </span></span>
+<span id="cb50-22"><a href="#cb50-22" tabindex="-1"></a><span class="co">#&gt;                 </span></span>
+<span id="cb50-23"><a href="#cb50-23" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
 <p>:::</p>
 <pre><code>
 ### Règles
@@ -1649,6 +1614,10 @@ tabset_file &lt;- system.file("examples", "example_tabset.R", package = "quartif
 # Convertir et rendre
 rtoqmd(tabset_file, render = TRUE, open_html = TRUE)</code></pre>
 <div class="alert alert-info">
+<p><strong>Conseil :</strong> Utilisez
+<code><a href="../reference/install_quartify_snippets.html">install_quartify_snippets()</a></code> pour ajouter un snippet
+<code>tabset</code>. Tapez <code>tabset</code> + <code>Tab</code> pour
+insérer le modèle de tabset.</p>
 <p><strong>Plus de ressources sur les tabsets :</strong></p>
 <ul>
 <li><a href="https://quarto.org/docs/interactive/layout.html#tabset-panel" class="external-link">Documentation
@@ -1656,6 +1625,7 @@ Quarto Tabset</a></li>
 <li>Combinez les tabsets avec les callouts pour une documentation riche
 et organisée</li>
 </ul>
+</div>
 </div>
 </div>
 <div class="section level2">

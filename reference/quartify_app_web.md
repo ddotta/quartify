@@ -3,9 +3,14 @@
 Web-friendly version of quartify_app() designed for deployment on web
 servers. Uses file upload/download instead of local file system access.
 
+Web-friendly version of quartify_app() designed for deployment on web
+servers. Uses file upload/download instead of local file system access.
+
 ## Usage
 
 ``` r
+quartify_app_web(launch.browser = TRUE, port = NULL)
+
 quartify_app_web(launch.browser = TRUE, port = NULL)
 ```
 
@@ -24,9 +29,14 @@ quartify_app_web(launch.browser = TRUE, port = NULL)
 
 Invisible NULL
 
+Invisible NULL
+
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
+quartify_app_web()
+} # }
 if (FALSE) { # \dontrun{
 quartify_app_web()
 } # }

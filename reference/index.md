@@ -16,6 +16,13 @@ Interactive conversion interfaces
 - [`rtoqmd_addin()`](https://ddotta.github.io/quartify/reference/rtoqmd_addin.md)
   : Convert Active R Script to Quarto Markdown
 - [`quartify_app()`](https://ddotta.github.io/quartify/reference/quartify_app.md)
-  : Launch Quartify Standalone Application
+  : Launch Quartify Shiny Interface
 - [`quartify_app_web()`](https://ddotta.github.io/quartify/reference/quartify_app_web.md)
   : Launch Quartify Web Application (for deployment)
+
+## Utilities
+
+Helper functions for workflow enhancement
+
+- [`install_quartify_snippets()`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+  : Install quartify RStudio Snippets
