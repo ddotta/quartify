@@ -2,6 +2,37 @@
 
 ## quartify 0.0.8
 
+### CRAN Submission Fixes
+
+- **Documentation Compliance**:
+  - Added ‘Quarto’ in single quotes in DESCRIPTION per CRAN policy
+  - Added `@return` documentation for all exported functions
+    (`rtoqmd_addin`, `quartify_app`, `quartify_app_web`)
+  - Changed `\dontrun{}` to `\donttest{}` for executable examples in
+    [`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md)
+    and
+    [`rtoqmd_dir()`](https://ddotta.github.io/quartify/reference/rtoqmd_dir.md)
+  - Updated all examples to write to
+    [`tempdir()`](https://rdrr.io/r/base/tempfile.html) instead of
+    current directory
+- **Code Quality**:
+  - Replaced [`cat()`](https://rdrr.io/r/base/cat.html) calls with
+    [`message()`](https://rdrr.io/r/base/message.html) for user-facing
+    messages per CRAN guidelines
+  - Fixed partial argument matching: changed all `render` arguments to
+    `render_html` in Shiny apps
+  - Fixed ERROR in R CMD check: changed non-executable example in
+    [`rtoqmd_dir()`](https://ddotta.github.io/quartify/reference/rtoqmd_dir.md)
+    back to `\dontrun{}`
+- **User Interface Improvements**:
+  - Integrated **shinyalert** package for better user notifications
+  - Replaced `showNotification()` with elegant modal dialogs using
+    `shinyalert()`
+  - Success and error messages now displayed in centered modal windows
+  - Bilingual support: titles and messages adapt to selected language
+    (EN/FR)
+  - Added `shinyalert` to package dependencies
+
 ### New Features
 
 - **Code Quality Integration**: New `use_styler` and `use_lintr`

@@ -43,6 +43,33 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.8" id="quartify-008">quartify 0.0.8<a class="anchor" aria-label="anchor" href="#quartify-008"></a></h2>
 <div class="section level3">
+<h3 id="cran-submission-fixes-0-0-8">CRAN Submission Fixes<a class="anchor" aria-label="anchor" href="#cran-submission-fixes-0-0-8"></a></h3>
+<ul><li>
+<strong>Documentation Compliance</strong>:
+<ul><li>Added ‘Quarto’ in single quotes in DESCRIPTION per CRAN policy</li>
+<li>Added <code>@return</code> documentation for all exported functions (<code>rtoqmd_addin</code>, <code>quartify_app</code>, <code>quartify_app_web</code>)</li>
+<li>Changed <code>\dontrun{}</code> to <code>\donttest{}</code> for executable examples in <code><a href="../reference/rtoqmd.html">rtoqmd()</a></code> and <code><a href="../reference/rtoqmd_dir.html">rtoqmd_dir()</a></code>
+</li>
+<li>Updated all examples to write to <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code> instead of current directory</li>
+</ul></li>
+<li>
+<strong>Code Quality</strong>:
+<ul><li>Replaced <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code> calls with <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> for user-facing messages per CRAN guidelines</li>
+<li>Fixed partial argument matching: changed all <code>render</code> arguments to <code>render_html</code> in Shiny apps</li>
+<li>Fixed ERROR in R CMD check: changed non-executable example in <code><a href="../reference/rtoqmd_dir.html">rtoqmd_dir()</a></code> back to <code>\dontrun{}</code>
+</li>
+</ul></li>
+<li>
+<strong>User Interface Improvements</strong>:
+<ul><li>Integrated <strong>shinyalert</strong> package for better user notifications</li>
+<li>Replaced <code>showNotification()</code> with elegant modal dialogs using <code>shinyalert()</code>
+</li>
+<li>Success and error messages now displayed in centered modal windows</li>
+<li>Bilingual support: titles and messages adapt to selected language (EN/FR)</li>
+<li>Added <code>shinyalert</code> to package dependencies</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-features-0-0-8">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-8"></a></h3>
 <ul><li>
 <strong>Code Quality Integration</strong>: New <code>use_styler</code> and <code>use_lintr</code> parameters for code quality checks:
