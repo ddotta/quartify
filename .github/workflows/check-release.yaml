@@ -39,19 +39,18 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: Clear pak cache on macOS
+      - name: Install dependencies manually (macOS workaround)
         if: runner.os == 'macOS'
         run: |
-          # Clear pak cache to avoid corruption issues
-          rm -rf ~/.cache/R/pak
-          rm -rf ~/Library/Caches/R/pak
-        shell: bash
+          install.packages(c("remotes", "rcmdcheck"))
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
+        if: runner.os != 'macOS'
         with:
           extra-packages: any::rcmdcheck
           needs: check
-          pak-version: devel
 
       - uses: r-lib/actions/check-r-package@v2
         with:
