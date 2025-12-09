@@ -42,8 +42,13 @@ jobs:
       - name: Install dependencies manually (macOS workaround)
         if: runner.os == 'macOS'
         run: |
-          install.packages(c("remotes", "rcmdcheck"))
-          remotes::install_deps(dependencies = TRUE)
+          options(repos = c(CRAN = "https://cloud.r-project.org"))
+          install.packages(c("remotes", "rcmdcheck"), type = "binary")
+          remotes::install_deps(dependencies = TRUE, type = "binary", upgrade = "never")
+          # Verify shiny is installed
+          if (!requireNamespace("shiny", quietly = TRUE)) {
+            install.packages("shiny", type = "binary")
+          }
         shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
