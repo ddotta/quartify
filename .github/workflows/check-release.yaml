@@ -43,12 +43,16 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           options(repos = c(CRAN = "https://cloud.r-project.org"))
-          install.packages(c("remotes", "rcmdcheck"), type = "binary")
-          remotes::install_deps(dependencies = TRUE, type = "binary", upgrade = "never")
-          # Verify shiny is installed
-          if (!requireNamespace("shiny", quietly = TRUE)) {
-            install.packages("shiny", type = "binary")
-          }
+          # Install all required packages explicitly
+          pkgs <- c(
+            "remotes", "rcmdcheck",
+            # Imports from DESCRIPTION
+            "rstudioapi", "cli", "shiny", "miniUI", "base64enc",
+            "shinyFiles", "shinyalert", "quarto", "utils", "styler", "lintr",
+            # Suggests from DESCRIPTION
+            "testthat", "dplyr"
+          )
+          install.packages(pkgs, type = "binary", dependencies = TRUE)
         shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
