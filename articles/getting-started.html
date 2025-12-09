@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@
       <h1>Getting Started with quartify</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/v0.0.8/vignettes/getting-started.Rmd" class="external-link"><code>vignettes/getting-started.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/main/vignettes/getting-started.Rmd" class="external-link"><code>vignettes/getting-started.Rmd</code></a></small>
       <div class="d-none name"><code>getting-started.Rmd</code></div>
     </div>
 
@@ -745,15 +745,67 @@ shortcut</a> (<code>Ctrl+Shift+C</code> on Windows/Linux or
 your code.</p>
 </div>
 <div class="section level3">
-<h3 id="code-lines">3. Code Lines<a class="anchor" aria-label="anchor" href="#code-lines"></a>
+<h3 id="roxygen2-documentation">3. Roxygen2 Documentation<a class="anchor" aria-label="anchor" href="#roxygen2-documentation"></a>
 </h3>
-<p>Any line that is NOT a comment becomes executable R code:</p>
+<p>If your R script contains roxygen2 documentation blocks (lines
+starting with <code>#'</code>), <strong>quartify</strong> automatically
+converts them into elegant callout-note sections with the function
+name:</p>
+<p><strong>Input (R script):</strong></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>mean_length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#' Add two numbers together</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @param x A numeric value</span></span>
+<span><span class="co">#' @param y A numeric value</span></span>
+<span><span class="co">#' @return The sum of x and y</span></span>
+<span><span class="co">#' @examples</span></span>
+<span><span class="co">#' add_numbers(2, 3)</span></span>
+<span><span class="co">#' @export</span></span>
+<span><span class="va">add_numbers</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>Output (Quarto document):</strong></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">## Documentation - add_numbers</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>Add two numbers together</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>@param x A numeric value</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>@param y A numeric value</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>@return The sum of x and y</span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>@examples</span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a>add_numbers(2, 3)</span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a>@export</span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a>:::</span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a>add_numbers <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a>  <span class="fu">return</span>(x <span class="sc">+</span> y)</span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>
+**Rules:**
+
+- Roxygen2 blocks (lines starting with `#'`) are automatically detected
+- The function name is extracted from the following function definition
+- All roxygen2 tags (@param, @return, @examples, @export, etc.) are preserved
+- The documentation appears as a beautiful callout box above the code
+- Works with `rtoqmd()`, `rtoqmd_dir()`, and all Shiny applications
+
+::: {.callout-tip title="Tip: Package Development"}
+This feature is particularly useful when documenting R packages or sharing code with full API documentation. The roxygen2 blocks remain readable in the Quarto output without requiring users to build package documentation.
+:::
+
+### 4. Code Lines
+
+Any line that is NOT a comment becomes executable R code:
+
+```r
+library(dplyr)
+
+iris |&gt; 
+  filter(Species == "setosa") |&gt;
+  summarize(mean_length = mean(Sepal.Length))</code></pre>
 <p><strong>Rules:</strong></p>
 <ul>
 <li>Consecutive code lines are grouped into a single code chunk</li>
@@ -762,17 +814,17 @@ your code.</p>
 </ul>
 <p><strong>Important:</strong> You can include comments WITHIN code
 blocks. These comments will be preserved inside the R code chunk:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="co"># Select a column</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <p>This will render as:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  <span class="co"># Select a column</span></span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>  <span class="co"># Select a column</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>The difference:<br>
 - <strong>Comments at the start of a line</strong> (standalone) → become
 text OUTSIDE code blocks<br>
@@ -784,7 +836,7 @@ text OUTSIDE code blocks<br>
 <h2 id="complete-example-example-r">Complete Example: example.R<a class="anchor" aria-label="anchor" href="#complete-example-example-r"></a>
 </h2>
 <p>Here’s the complete example R script included in the package:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Title 2 ####</span></span>
@@ -835,7 +887,7 @@ sections</li>
 <h2 id="converting-the-example">Converting the Example<a class="anchor" aria-label="anchor" href="#converting-the-example"></a>
 </h2>
 <p>Try converting the example script:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the example file path</span></span>
 <span><span class="va">example_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example.R"</span>, package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span>
 <span></span>

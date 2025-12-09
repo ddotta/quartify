@@ -8,16 +8,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/ddotta/quartify/blob/v0.0.8/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/ddotta/quartify/blob/main/DESCRIPTION)
 
 Dotta D (2025). *quartify: Convert R Scripts to Quarto Markdown
-Documents*. R package version 0.0.8,
+Documents*. R package version 0.0.9,
 <https://ddotta.github.io/quartify/>.
 
     @Manual{,
       title = {quartify: Convert R Scripts to Quarto Markdown Documents},
       author = {Damien Dotta},
       year = {2025},
-      note = {R package version 0.0.8},
+      note = {R package version 0.0.9},
       url = {https://ddotta.github.io/quartify/},
     }

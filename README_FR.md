@@ -82,6 +82,9 @@ affichable. Ceci est particulièrement utile pour :
   [styler](https://styler.r-lib.org/) et
   [lintr](https://lintr.r-lib.org/) pour afficher les suggestions de
   formatage et les problèmes de qualité dans des onglets interactifs
+- **Support de la documentation roxygen2** : Conversion automatique des
+  blocs de documentation roxygen2 (`#'`) en sections callout-note avec
+  les noms des fonctions
 - **Support des snippets RStudio** : Insertion rapide de métadonnées et
   de structure via des snippets de code personnalisables
 - **Fonctionnalités spéciales** : Support des diagrammes Mermaid, des

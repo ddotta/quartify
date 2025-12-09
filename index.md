@@ -74,6 +74,9 @@ particularly useful for:
   [styler](https://styler.r-lib.org/) and
   [lintr](https://lintr.r-lib.org/) to show code formatting suggestions
   and quality issues in interactive tabsets
+- **Roxygen2 documentation support**: Automatically converts roxygen2
+  documentation blocks (`#'`) into callout-note sections with function
+  names
 - **RStudio snippets support**: Quick metadata and structure insertion
   using customizable code snippets
 - **Special features**: Support for Mermaid diagrams, callouts (note,
