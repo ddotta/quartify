@@ -40,7 +40,7 @@
 #' @importFrom utils capture.output
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Convert all R scripts in a directory
 #' rtoqmd_dir("path/to/scripts")
 #' 

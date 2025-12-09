@@ -21,6 +21,7 @@ Imports:
     miniUI,
     base64enc,
     shinyFiles,
+    shinyalert,
     quarto,
     utils,
     styler,
