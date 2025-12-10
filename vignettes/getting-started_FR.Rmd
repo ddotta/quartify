@@ -469,7 +469,7 @@ add_numbers <- function(x, y) {
 
 **Sortie (document Quarto) :**
 
-```markdown
+````markdown
 ::: {.callout-note}
 ## Documentation - add_numbers
 
@@ -488,7 +488,7 @@ add_numbers <- function(x, y) {
   return(x + y)
 }
 ```
-```
+````
 
 ::: {.alert .alert-info}
 **Règles :**
