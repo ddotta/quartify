@@ -566,7 +566,7 @@ add_numbers <- function(x, y) {
 
 **Sortie (document Quarto) :**
 
-``` markdown
+```` markdown
 ::: {.callout-note}
 ## Documentation - add_numbers
 
@@ -586,32 +586,39 @@ add_numbers <- function(x, y) {
   return(x + y)
 }
 ```
+````
 
-    ::: {.alert .alert-info}
-    **Règles :**
+**Règles :**
 
-    - Les blocs roxygen2 (lignes commençant par `#'`) sont automatiquement détectés
-    - Le nom de la fonction est extrait de la définition de fonction suivante
-    - Toutes les balises roxygen2 (@param, @return, @examples, @export, etc.) sont préservées
-    - La documentation apparaît sous forme d'un beau bloc callout au-dessus du code
-    - Fonctionne avec `rtoqmd()`, `rtoqmd_dir()`, et toutes les applications Shiny
-    :::
+- Les blocs roxygen2 (lignes commençant par `#'`) sont automatiquement
+  détectés
+- Le nom de la fonction est extrait de la définition de fonction
+  suivante
+- Toutes les balises roxygen2 (@param, @return, @examples, @export,
+  etc.) sont préservées
+- La documentation apparaît sous forme d’un beau bloc callout au-dessus
+  du code
+- Fonctionne avec
+  [`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md),
+  [`rtoqmd_dir()`](https://ddotta.github.io/quartify/reference/rtoqmd_dir.md),
+  et toutes les applications Shiny
 
-    ::: {.callout-tip title="Astuce : Développement de packages"}
-    Cette fonctionnalité est particulièrement utile lors de la documentation de packages R ou du partage de code avec une documentation API complète. Les blocs roxygen2 restent lisibles dans la sortie Quarto sans nécessiter de construire la documentation du package.
-    :::
+Cette fonctionnalité est particulièrement utile lors de la documentation
+de packages R ou du partage de code avec une documentation API complète.
+Les blocs roxygen2 restent lisibles dans la sortie Quarto sans
+nécessiter de construire la documentation du package.
 
+### 4. Lignes de code
 
-    ### 4. Lignes de code
+Toute ligne qui N’EST PAS un commentaire devient du code R exécutable :
 
-    Toute ligne qui N'EST PAS un commentaire devient du code R exécutable :
+``` r
+library(dplyr)
 
-    ```r
-    library(dplyr)
-
-    iris |> 
-      filter(Species == "setosa") |>
-      summarize(mean_length = mean(Sepal.Length))
+iris |> 
+  filter(Species == "setosa") |>
+  summarize(mean_length = mean(Sepal.Length))
+```
 
 **Règles :**
 

@@ -579,7 +579,7 @@ add_numbers <- function(x, y) {
 
 **Output (Quarto document):**
 
-``` markdown
+```` markdown
 ::: {.callout-note}
 ## Documentation - add_numbers
 
@@ -599,33 +599,36 @@ add_numbers <- function(x, y) {
   return(x + y)
 }
 ```
+````
 
-    ::: {.alert .alert-info}
+**Rules:**
 
-    **Rules:**
+- Roxygen2 blocks (lines starting with `#'`) are automatically detected
+- The function name is extracted from the following function definition
+- All roxygen2 tags (@param, @return, @examples, @export, etc.) are
+  preserved
+- The documentation appears as a beautiful callout box above the code
+- Works with
+  [`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md),
+  [`rtoqmd_dir()`](https://ddotta.github.io/quartify/reference/rtoqmd_dir.md),
+  and all Shiny applications
 
-    - Roxygen2 blocks (lines starting with `#'`) are automatically detected
-    - The function name is extracted from the following function definition
-    - All roxygen2 tags (@param, @return, @examples, @export, etc.) are preserved
-    - The documentation appears as a beautiful callout box above the code
-    - Works with `rtoqmd()`, `rtoqmd_dir()`, and all Shiny applications
-    :::
+This feature is particularly useful when documenting R packages or
+sharing code with full API documentation. The roxygen2 blocks remain
+readable in the Quarto output without requiring users to build package
+documentation.
 
-    ::: {.callout-tip title="Tip: Package Development"}
-    This feature is particularly useful when documenting R packages or sharing code with full API documentation. The roxygen2 blocks remain readable in the Quarto output without requiring users to build package documentation.
-    :::
+### 4. Code Lines
 
+Any line that is NOT a comment becomes executable R code:
 
-    ### 4. Code Lines
+``` r
+library(dplyr)
 
-    Any line that is NOT a comment becomes executable R code:
-
-    ```r
-    library(dplyr)
-
-    iris |> 
-      filter(Species == "setosa") |>
-      summarize(mean_length = mean(Sepal.Length))
+iris |> 
+  filter(Species == "setosa") |>
+  summarize(mean_length = mean(Sepal.Length))
+```
 
 **Rules:**
 

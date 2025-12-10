@@ -817,34 +817,39 @@ name:</p>
 <span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="in">``` r</span></span>
 <span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a>add_numbers <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
 <span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>  <span class="fu">return</span>(x <span class="sc">+</span> y)</span>
-<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>
-::: {.alert .alert-info}
-
-**Rules:**
-
-- Roxygen2 blocks (lines starting with `#'`) are automatically detected
-- The function name is extracted from the following function definition
-- All roxygen2 tags (@param, @return, @examples, @export, etc.) are preserved
-- The documentation appears as a beautiful callout box above the code
-- Works with `rtoqmd()`, `rtoqmd_dir()`, and all Shiny applications
-:::
-
-::: {.callout-tip title="Tip: Package Development"}
-This feature is particularly useful when documenting R packages or sharing code with full API documentation. The roxygen2 blocks remain readable in the Quarto output without requiring users to build package documentation.
-:::
-
-
-### 4. Code Lines
-
-Any line that is NOT a comment becomes executable R code:
-
-```r
-library(dplyr)
-
-iris |&gt; 
-  filter(Species == "setosa") |&gt;
-  summarize(mean_length = mean(Sepal.Length))</code></pre>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a>}</span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="alert alert-info">
+<p><strong>Rules:</strong></p>
+<ul>
+<li>Roxygen2 blocks (lines starting with <code>#'</code>) are
+automatically detected</li>
+<li>The function name is extracted from the following function
+definition</li>
+<li>All roxygen2 tags (<span class="citation">@param</span>, <span class="citation">@return</span>, <span class="citation">@examples</span>, <span class="citation">@export</span>, etc.) are preserved</li>
+<li>The documentation appears as a beautiful callout box above the
+code</li>
+<li>Works with <code><a href="../reference/rtoqmd.html">rtoqmd()</a></code>, <code><a href="../reference/rtoqmd_dir.html">rtoqmd_dir()</a></code>, and all
+Shiny applications</li>
+</ul>
+</div>
+<div class="callout-tip" title="Tip: Package Development">
+<p>This feature is particularly useful when documenting R packages or
+sharing code with full API documentation. The roxygen2 blocks remain
+readable in the Quarto output without requiring users to build package
+documentation.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="code-lines">4. Code Lines<a class="anchor" aria-label="anchor" href="#code-lines"></a>
+</h3>
+<p>Any line that is NOT a comment becomes executable R code:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>mean_length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Rules:</strong></p>
 <ul>
 <li>Consecutive code lines are grouped into a single code chunk</li>

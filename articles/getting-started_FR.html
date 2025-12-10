@@ -817,33 +817,41 @@ de la fonction :</p>
 <span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="in">``` r</span></span>
 <span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a>add_numbers <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
 <span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a>  <span class="fu">return</span>(x <span class="sc">+</span> y)</span>
-<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>
-::: {.alert .alert-info}
-**Règles :**
-
-- Les blocs roxygen2 (lignes commençant par `#'`) sont automatiquement détectés
-- Le nom de la fonction est extrait de la définition de fonction suivante
-- Toutes les balises roxygen2 (@param, @return, @examples, @export, etc.) sont préservées
-- La documentation apparaît sous forme d'un beau bloc callout au-dessus du code
-- Fonctionne avec `rtoqmd()`, `rtoqmd_dir()`, et toutes les applications Shiny
-:::
-
-::: {.callout-tip title="Astuce : Développement de packages"}
-Cette fonctionnalité est particulièrement utile lors de la documentation de packages R ou du partage de code avec une documentation API complète. Les blocs roxygen2 restent lisibles dans la sortie Quarto sans nécessiter de construire la documentation du package.
-:::
-
-
-### 4. Lignes de code
-
-Toute ligne qui N'EST PAS un commentaire devient du code R exécutable :
-
-```r
-library(dplyr)
-
-iris |&gt; 
-  filter(Species == "setosa") |&gt;
-  summarize(mean_length = mean(Sepal.Length))</code></pre>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a>}</span>
+<span id="cb20-19"><a href="#cb20-19" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="alert alert-info">
+<p><strong>Règles :</strong></p>
+<ul>
+<li>Les blocs roxygen2 (lignes commençant par <code>#'</code>) sont
+automatiquement détectés</li>
+<li>Le nom de la fonction est extrait de la définition de fonction
+suivante</li>
+<li>Toutes les balises roxygen2 (<span class="citation">@param</span>,
+<span class="citation">@return</span>, <span class="citation">@examples</span>, <span class="citation">@export</span>, etc.) sont préservées</li>
+<li>La documentation apparaît sous forme d’un beau bloc callout
+au-dessus du code</li>
+<li>Fonctionne avec <code><a href="../reference/rtoqmd.html">rtoqmd()</a></code>, <code><a href="../reference/rtoqmd_dir.html">rtoqmd_dir()</a></code>, et
+toutes les applications Shiny</li>
+</ul>
+</div>
+<div class="callout-tip" title="Astuce : Développement de packages">
+<p>Cette fonctionnalité est particulièrement utile lors de la
+documentation de packages R ou du partage de code avec une documentation
+API complète. Les blocs roxygen2 restent lisibles dans la sortie Quarto
+sans nécessiter de construire la documentation du package.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="lignes-de-code">4. Lignes de code<a class="anchor" aria-label="anchor" href="#lignes-de-code"></a>
+</h3>
+<p>Toute ligne qui N’EST PAS un commentaire devient du code R exécutable
+:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>mean_length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Règles :</strong></p>
 <ul>
 <li>Les lignes de code consécutives sont regroupées dans un seul chunk
