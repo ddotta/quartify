@@ -425,27 +425,107 @@ version control or create backups before using this option.</p>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"my_script.R"</span>, <span class="st">"output.qmd"</span>,</span>
 <span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>       apply_styler <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Important</strong>: When
-<code>apply_styler = TRUE</code>:</p>
+<div class="section level4">
+<h4 id="how-apply_styler-works">How apply_styler Works<a class="anchor" aria-label="anchor" href="#how-apply_styler-works"></a>
+</h4>
+<p>The <code>apply_styler</code> parameter provides a way to
+<strong>permanently</strong> format your R script files according to the
+tidyverse style guide.</p>
+<p><strong>Important requirements</strong>:</p>
 <ol style="list-style-type: decimal">
-<li>Your source R file is modified before conversion</li>
-<li>No tabsets are created (source is already styled)</li>
+<li><p><strong><code>use_styler</code> must be TRUE</strong>: The
+<code>apply_styler</code> parameter only works when
+<code>use_styler = TRUE</code>. If you set
+<code>apply_styler = TRUE</code> but <code>use_styler = FALSE</code>,
+you’ll get a warning and the source file won’t be modified.</p></li>
 <li>
-<code>use_styler</code> must also be TRUE</li>
-<li>The conversion uses the styled source file</li>
-</ol>
-<p>This is useful for:</p>
+<p><strong>Source file is modified BEFORE conversion</strong>: When
+both parameters are TRUE:</p>
 <ul>
-<li>Cleaning up code before committing to version control</li>
-<li>Batch formatting multiple scripts</li>
-<li>Preparing code for publication or teaching</li>
+<li>Your original R script is formatted in-place using
+<code><a href="https://styler.r-lib.org/reference/style_file.html" class="external-link">styler::style_file()</a></code>
+</li>
+<li>The formatted file is then used for the conversion to .qmd</li>
+<li>No tabsets are created (since the source is already styled)</li>
 </ul>
+</li>
+<li><p><strong>Permanent changes</strong>: Unlike
+<code>use_styler</code> alone (which only shows suggestions),
+<code>apply_styler</code> modifies your actual R file on disk.</p></li>
+</ol>
+<p><strong>Comparison of parameters</strong>:</p>
+<table class="table">
+<colgroup>
+<col width="24%">
+<col width="26%">
+<col width="31%">
+<col width="17%">
+</colgroup>
+<thead><tr class="header">
+<th>Parameter</th>
+<th>use_styler</th>
+<th>apply_styler</th>
+<th>Result</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Show suggestions only</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>Tabsets show original vs styled code</td>
+</tr>
+<tr class="even">
+<td>Apply formatting</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>Source file modified, no tabsets</td>
+</tr>
+<tr class="odd">
+<td>Invalid combination</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>Warning displayed, no changes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example workflow</strong>:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Step 1: Preview style changes first (safe)</span></span>
+<span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"script.R"</span>, <span class="st">"preview.qmd"</span>,</span>
+<span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>       apply_styler <span class="op">=</span> <span class="cn">FALSE</span>,  <span class="co"># Safe: doesn't modify source</span></span>
+<span>       render_html <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Step 2: If happy with suggestions, apply them</span></span>
+<span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"script.R"</span>, <span class="st">"output.qmd"</span>,</span>
+<span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>       apply_styler <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>   <span class="co"># Modifies script.R permanently</span></span></code></pre></div>
+<p><strong>Use cases for apply_styler</strong>:</p>
+<ul>
+<li>
+<strong>Code cleanup</strong>: Reformat old scripts to modern
+standards</li>
+<li>
+<strong>Team consistency</strong>: Ensure all team members follow
+the same style</li>
+<li>
+<strong>Pre-commit formatting</strong>: Automatically style code
+before version control commits</li>
+<li>
+<strong>Batch processing</strong>: Format multiple scripts using
+<code><a href="../reference/rtoqmd_dir.html">rtoqmd_dir()</a></code> with <code>apply_styler = TRUE</code>
+</li>
+<li>
+<strong>Teaching prep</strong>: Clean up code examples before
+sharing with students</li>
+</ul>
+</div>
 </div>
 <div class="section level3">
 <h3 id="example-with-code-quality">Example with Code Quality<a class="anchor" aria-label="anchor" href="#example-with-code-quality"></a>
 </h3>
 <p>Try the included example that demonstrates code quality features:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Locate the example file</span></span>
 <span><span class="va">example_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example_code_quality.R"</span>, </span>
 <span>                           package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span>
@@ -460,7 +540,7 @@ version control or create backups before using this option.</p>
 <span>       render_html <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>       open_html <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The example file includes intentional style issues:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Here we have some code with style issues</span></span>
 <span><span class="va">x</span> <span class="op">=</span> <span class="fl">3</span>  <span class="co"># Should use &lt;- instead of =</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
@@ -476,19 +556,19 @@ version control or create backups before using this option.</p>
 <h3 id="example-output">Example Output<a class="anchor" aria-label="anchor" href="#example-output"></a>
 </h3>
 <p>Given code with style issues:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">=</span> <span class="fl">3</span>  <span class="co"># Should use &lt;- instead of =</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span><span class="va">z</span><span class="op">&lt;-</span><span class="fl">10</span>  <span class="co"># Missing spaces</span></span></code></pre></div>
 <p>With <code>use_styler = TRUE</code> and
 <code>use_lintr = TRUE</code>, you’ll see a tabset:</p>
 <p><strong>Original Code tab:</strong></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">=</span> <span class="fl">3</span>  <span class="co"># Should use &lt;- instead of =</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span><span class="va">z</span><span class="op">&lt;-</span><span class="fl">10</span>  <span class="co"># Missing spaces</span></span></code></pre></div>
 <p><strong>Styled Code tab:</strong></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="co"># Should use &lt;- instead of =</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fl">10</span> <span class="co"># Missing spaces</span></span></code></pre></div>
@@ -500,7 +580,7 @@ spaces around all infix operators.</p>
 <h3 id="batch-processing-with-quality-checks">Batch Processing with Quality Checks<a class="anchor" aria-label="anchor" href="#batch-processing-with-quality-checks"></a>
 </h3>
 <p>Apply code quality checks to entire directories:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert directory with quality checks</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd_dir.html">rtoqmd_dir</a></span><span class="op">(</span></span>
 <span>  dir_path <span class="op">=</span> <span class="st">"my_scripts/"</span>,</span>
@@ -583,7 +663,7 @@ second per chunk)</li>
 <h3 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
 </h3>
 <p><strong>Packages not found:</strong></p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"styler"</span><span class="op">)</span>  <span class="co"># For formatting</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"lintr"</span><span class="op">)</span>   <span class="co"># For linting</span></span></code></pre></div>
 <p><strong>Checks fail for specific chunks:</strong></p>
@@ -601,7 +681,7 @@ conversion continues normally.</p>
 <p><code>quartify</code> supports <a href="https://mermaid-js.github.io/" class="external-link">Mermaid</a> diagrams in your R
 scripts. Use special comments to include diagrams in your
 documentation:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># mermaid-start</span></span>
 <span><span class="co"># graph TD</span></span>
 <span><span class="co">#   A[Start] --&gt; B{Is it working?}</span></span>
@@ -615,7 +695,7 @@ documentation:</p>
 <h3 id="callouts">Callouts<a class="anchor" aria-label="anchor" href="#callouts"></a>
 </h3>
 <p>Create callouts in your R scripts using special comment syntax:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># callout-note - Important Note</span></span>
 <span><span class="co"># This is a note callout</span></span>
 <span><span class="co"># It can span multiple lines</span></span>
@@ -632,7 +712,7 @@ documentation:</p>
 <h3 id="rstudio-snippets">RStudio Snippets<a class="anchor" aria-label="anchor" href="#rstudio-snippets"></a>
 </h3>
 <p>Install useful code snippets for faster R script writing:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/install_quartify_snippets.html">install_quartify_snippets</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>After installation and restarting RStudio, you can use:</p>
 <ul>
