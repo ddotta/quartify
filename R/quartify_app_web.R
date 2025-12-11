@@ -145,7 +145,6 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
         shiny::actionButton("lang_fr", french_flag_html, class = "btn-sm")
       )
     ),
-    shinyalert::useShinyalert(),
 
     # Loader
     shiny::div(id = "loader", class = "loader", shiny::div(class = "spinner")),
@@ -233,10 +232,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
               12,
               shiny::div(
                 style = "margin-bottom: 20px;",
-                shinyFiles::shinyDirButton("input_directory",
-                  label = shiny::textOutput("button_select_directory", inline = TRUE),
-                  title = "Select a directory containing R scripts"
-                ),
+                shiny::uiOutput("dir_button_ui"),
                 shiny::br(),
                 shiny::verbatimTextOutput("selected_directory", placeholder = TRUE)
               )
@@ -347,7 +343,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
 
     # Initialize directory chooser
     volumes <- c(Home = path.expand("~"), shinyFiles::getVolumes()())
-    shinyFiles::shinyDirChoose(input, "input_directory", roots = volumes, session = session)
+    shinyFiles::shinyDirChoose(input, "input_directory", roots = volumes, session = session, restrictions = system.file(package = "base"))
 
     # Display selected directory
     shiny::observeEvent(input$input_directory, {
@@ -429,6 +425,16 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
 
     output$button_select_directory <- shiny::renderText({
       if (rv$lang == "en") "Select Directory" else "Selectionner un Repertoire"
+    })
+
+    # Dynamic UI for directory selection button
+    output$dir_button_ui <- shiny::renderUI({
+      label_text <- if (rv$lang == "en") "Select Directory" else "Selectionner un Repertoire"
+      title_text <- if (rv$lang == "en") "Select a directory containing R scripts" else "Selectionner un repertoire contenant des scripts R"
+      shinyFiles::shinyDirButton("input_directory",
+        label = label_text,
+        title = title_text
+      )
     })
 
     output$label_title <- shiny::renderText({

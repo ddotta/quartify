@@ -6,6 +6,10 @@ docs/
 inst/doc
 *.html
 /*.qmd
+*.js
+*.css
+*.json
+*.woff
 output_files/libs/
 
 /.quarto/

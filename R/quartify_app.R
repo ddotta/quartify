@@ -116,7 +116,6 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         });
       "))
     ),
-    shinyalert::useShinyalert(),
 
     # Title bar
     shiny::div(
@@ -150,24 +149,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
           12,
           shiny::div(
             style = "margin-bottom: 20px;",
-            shiny::conditionalPanel(
-              condition = "output.current_lang == 'en'",
-              shiny::radioButtons("conversion_mode",
-                shiny::textOutput("label_mode", inline = TRUE),
-                choices = c("One or more files" = "single", "Directory" = "directory"),
-                selected = "single",
-                inline = TRUE
-              )
-            ),
-            shiny::conditionalPanel(
-              condition = "output.current_lang == 'fr'",
-              shiny::radioButtons("conversion_mode",
-                shiny::textOutput("label_mode", inline = TRUE),
-                choices = c("Un ou plusieurs fichiers" = "single", "Repertoire" = "directory"),
-                selected = "single",
-                inline = TRUE
-              )
-            )
+            shiny::uiOutput("mode_selector")
           )
         )
       ),
@@ -526,6 +508,25 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         apply_styler = "Appliquer styler au fichier source (modifie le fichier R original)"
       )
     )
+
+    # Dynamic UI for mode selection
+    output$mode_selector <- shiny::renderUI({
+      if (lang() == "fr") {
+        shiny::radioButtons("conversion_mode",
+          translations[["fr"]]$mode,
+          choices = c("Un ou plusieurs fichiers" = "single", "Repertoire" = "directory"),
+          selected = "single",
+          inline = TRUE
+        )
+      } else {
+        shiny::radioButtons("conversion_mode",
+          translations[["en"]]$mode,
+          choices = c("One or more files" = "single", "Directory" = "directory"),
+          selected = "single",
+          inline = TRUE
+        )
+      }
+    })
 
     output$label_mode <- shiny::renderText({
       translations[[lang()]]$mode

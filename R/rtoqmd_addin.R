@@ -122,7 +122,6 @@ rtoqmd_addin <- function() {
         });
       "))
     ),
-    shinyalert::useShinyalert(),
     miniUI::gadgetTitleBar(
       "Convert R Script to Quarto",
       left = miniUI::miniTitleBarCancelButton("cancel", "\u21a9"),
