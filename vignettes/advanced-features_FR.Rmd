@@ -234,18 +234,51 @@ rtoqmd("mon_script.R", "output.qmd",
        apply_styler = TRUE)
 ```
 
-**Important** : Quand `apply_styler = TRUE` :
+#### Comment fonctionne apply_styler
 
-1. Votre fichier R source est modifié avant la conversion
-2. Aucun tabset n'est créé (le source est déjà stylisé)
-3. `use_styler` doit également être TRUE
-4. La conversion utilise le fichier source stylisé
+Le paramètre `apply_styler` permet de formater **définitivement** vos fichiers de scripts R selon le guide de style tidyverse.
 
-Ceci est utile pour :
+**Exigences importantes** :
 
-- Nettoyer le code avant de le valider dans le contrôle de version
-- Formater plusieurs scripts par lots
-- Préparer le code pour publication ou enseignement
+1. **`use_styler` doit être TRUE** : Le paramètre `apply_styler` ne fonctionne que si `use_styler = TRUE`. Si vous définissez `apply_styler = TRUE` mais `use_styler = FALSE`, vous recevrez un avertissement et le fichier source ne sera pas modifié.
+
+2. **Le fichier source est modifié AVANT la conversion** : Quand les deux paramètres sont TRUE :
+   - Votre script R original est formaté sur place avec `styler::style_file()`
+   - Le fichier formaté est ensuite utilisé pour la conversion en .qmd
+   - Aucun tabset n'est créé (puisque le source est déjà stylisé)
+
+3. **Modifications permanentes** : Contrairement à `use_styler` seul (qui montre seulement des suggestions), `apply_styler` modifie réellement votre fichier R sur le disque.
+
+**Comparaison des paramètres** :
+
+| Paramètre | use_styler | apply_styler | Résultat |
+|-----------|------------|--------------|----------|
+| Suggestions uniquement | TRUE | FALSE | Les tabsets montrent le code original vs stylisé |
+| Appliquer le formatage | TRUE | TRUE | Fichier source modifié, pas de tabsets |
+| Combinaison invalide | FALSE | TRUE | Avertissement affiché, aucun changement |
+
+**Exemple de flux de travail** :
+
+```{r eval=FALSE}
+# Étape 1 : Prévisualiser d'abord les changements de style (sûr)
+rtoqmd("script.R", "apercu.qmd",
+       use_styler = TRUE,
+       apply_styler = FALSE,  # Sûr : ne modifie pas le source
+       render_html = TRUE)
+
+# Étape 2 : Si satisfait des suggestions, les appliquer
+rtoqmd("script.R", "output.qmd",
+       use_styler = TRUE,
+       apply_styler = TRUE)   # Modifie script.R de façon permanente
+```
+
+**Cas d'usage pour apply_styler** :
+
+- **Nettoyage de code** : Reformater d'anciens scripts selon les standards modernes
+- **Cohérence d'équipe** : Assurer que tous les membres suivent le même style
+- **Formatage pré-commit** : Styler automatiquement le code avant les commits
+- **Traitement par lots** : Formater plusieurs scripts avec `rtoqmd_dir()` et `apply_styler = TRUE`
+- **Préparation pédagogique** : Nettoyer les exemples de code avant de les partager avec les étudiants
 
 ### Exemple avec qualité du code
 
