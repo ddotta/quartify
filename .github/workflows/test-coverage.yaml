@@ -1,19 +1,17 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+name: test
+
 on:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
 
-name: test-coverage
-
 jobs:
-  test-coverage:
+  test:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -24,22 +22,16 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr
-          needs: coverage
+          needs: check
 
-      - name: Test coverage
+      - name: Run tests
         run: |
-          covr::codecov(
-            quiet = FALSE,
-            clean = FALSE,
-            install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package")
-          )
+          testthat::test_dir("tests/testthat", reporter = "summary")
         shell: Rscript {0}
 
       - name: Show testthat output
         if: always()
         run: |
-          ## --------------------------------------------------------------------
           find ${{ runner.temp }}/package -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
 
@@ -47,5 +39,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-test-failures
+          name: test-failures
           path: ${{ runner.temp }}/package
