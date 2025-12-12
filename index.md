@@ -4,11 +4,11 @@
 
 ## TL;DR
 
-[English
-presentation](https://ddotta.github.io/quartify_presentation/index_en.html)
-[Official
-documentation](https://ddotta.github.io/quartify_presentation/) [Online
-version](https://quartify.lab.sspcloud.fr/)
+- 💻 [English
+  presentation](https://ddotta.github.io/quartify_presentation/index_en.html)  
+- 📖 [Official
+  documentation](https://ddotta.github.io/quartify_presentation/)  
+- 📖 [Online version](https://quartify.lab.sspcloud.fr/)
 
 ## Description
 

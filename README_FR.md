@@ -8,11 +8,11 @@ check](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](http
 
 ## TL;DR
 
-[Présentation en
-français](https://ddotta.github.io/quartify_presentation/)
-[Documentation
-officielle](https://ddotta.github.io/quartify_presentation/) [Version en
-ligne](https://quartify.lab.sspcloud.fr/)
+- 💻️ [Présentation en
+  français](https://ddotta.github.io/quartify_presentation/)  
+- 📖 [Documentation
+  officielle](https://ddotta.github.io/quartify_presentation/)  
+- 🌐 [Version en ligne](https://quartify.lab.sspcloud.fr/)
 
 ## Description
 
