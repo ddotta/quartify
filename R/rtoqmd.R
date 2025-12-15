@@ -158,6 +158,15 @@ rtoqmd <- function(input_file, output_file = NULL,
                    use_lintr = FALSE,
                    apply_styler = FALSE) {
   
+  # Expand paths with ~ to absolute paths
+  input_file <- path.expand(input_file)
+  if (!is.null(output_file)) {
+    output_file <- path.expand(output_file)
+  }
+  if (!is.null(output_html_file)) {
+    output_html_file <- path.expand(output_html_file)
+  }
+  
   # Check if input file exists
   if (!file.exists(input_file)) {
     cli::cli_alert_danger("Input file does not exist: {.file {input_file}}")
