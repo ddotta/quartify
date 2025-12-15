@@ -29,7 +29,7 @@ No return value, called for side effects (launches a Shiny application).
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-quartify_app_web()
-} # }
+if (interactive()) {
+  quartify_app_web()
+}
 ```

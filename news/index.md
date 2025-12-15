@@ -1,5 +1,86 @@
 # Changelog
 
+## quartify 1.0.0
+
+### CRAN Release
+
+This is the first CRAN release of quartify! The package is now fully
+compliant with CRAN policies.
+
+### CRAN Compliance Fixes
+
+- **Interactive Examples**:
+  - Replaced `\dontrun{}` with `if(interactive()){}` in Shiny function
+    examples
+  - [`quartify_app()`](https://ddotta.github.io/quartify/reference/quartify_app.md)
+    and
+    [`quartify_app_web()`](https://ddotta.github.io/quartify/reference/quartify_app_web.md)
+    examples now properly indicate interactive-only usage
+  - Users can see examples are meant for interactive sessions, not
+    scripts
+- **Working Directory Management**:
+  - Added immediate `on.exit(setwd(old_wd), add = TRUE)` after all
+    [`setwd()`](https://rdrr.io/r/base/getwd.html) calls
+  - Ensures working directory is always restored, even if function
+    errors
+  - Fixed in `rtoqmd.R`, `rtoqmd_dir.R`, and `quartify_app_web.R`
+  - Removed manual [`setwd()`](https://rdrr.io/r/base/getwd.html)
+    restoration in error handlers (now handled by
+    [`on.exit()`](https://rdrr.io/r/base/on.exit.html))
+- **Console Output**:
+  - Replaced [`cat()`](https://rdrr.io/r/base/cat.html) with
+    [`message()`](https://rdrr.io/r/base/message.html) in `rtoqmd_dir.R`
+    per CRAN guidelines
+  - Messages can now be suppressed with
+    [`suppressMessages()`](https://rdrr.io/r/base/message.html) if
+    needed
+  - More R-like behavior for console output
+- **File Writing**:
+  - [`install_quartify_snippets()`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+    no longer writes to home directory by default in examples
+  - Added `path` parameter to allow custom snippet file location
+  - Examples now write to
+    [`tempdir()`](https://rdrr.io/r/base/tempfile.html) for testing
+  - Interactive examples properly wrapped in `if(interactive())`
+- **Path Handling**:
+  - Fixed tilde (~) path expansion issue in
+    [`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md)
+  - Added [`path.expand()`](https://rdrr.io/r/base/path.expand.html) for
+    `input_file`, `output_file`, and `output_html_file`
+  - Quarto now receives absolute paths instead of tilde shortcuts
+  - Resolves “No valid input files” error when using paths like
+    “~/file.qmd”
+
+### Documentation Improvements
+
+- **apply_styler Parameter**:
+  - Added comprehensive documentation in vignettes (EN and FR)
+  - Clarified that `use_styler` must be TRUE for `apply_styler` to work
+  - Added comparison table showing parameter combinations and results
+  - Included workflow example showing safe preview before applying
+    changes
+  - Listed practical use cases for permanent code formatting
+- **Mode Selection**:
+  - Fixed missing mode selector in
+    [`quartify_app()`](https://ddotta.github.io/quartify/reference/quartify_app.md)
+  - Now matches
+    [`rtoqmd_addin()`](https://ddotta.github.io/quartify/reference/rtoqmd_addin.md)
+    with dynamic mode selection (single/directory)
+  - Mode selector properly updates with language changes
+- **Directory Selection UI**:
+  - Fixed directory button display issue (no more “span…” in label)
+  - Directory browser now opens correctly when selecting folders
+  - Dynamic button rendering with proper language support
+
+### Package Readiness
+
+- **Version 1.0.0**: Stable release ready for CRAN submission
+- **Zero R CMD check issues**: 0 errors, 0 warnings, 0 notes
+- **Full CRAN policy compliance**: All guidelines followed
+- **Comprehensive documentation**: Examples, vignettes, and help files
+  complete
+- **Tested across platforms**: Works on Windows, macOS, and Linux
+
 ## quartify 0.0.9
 
 ### New Features

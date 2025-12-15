@@ -7,7 +7,7 @@ scripts that will be converted to Quarto documents.
 ## Usage
 
 ``` r
-install_quartify_snippets(backup = TRUE)
+install_quartify_snippets(backup = TRUE, path = NULL)
 ```
 
 ## Arguments
@@ -16,6 +16,12 @@ install_quartify_snippets(backup = TRUE)
 
   Logical. If TRUE (default), creates a backup of your existing snippets
   file before modifying it.
+
+- path:
+
+  Character. Custom path for the snippets file. If NULL (default), uses
+  the standard RStudio snippets location. For examples/tests, use
+  tempdir().
 
 ## Value
 
@@ -43,11 +49,27 @@ snippets to become available. Then, simply type the snippet name (e.g.,
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Install quartify snippets
-install_quartify_snippets()
+if (interactive()) {
+  # Install quartify snippets to RStudio
+  install_quartify_snippets()
 
-# Install without backup
-install_quartify_snippets(backup = FALSE)
-} # }
+  # Install without backup
+  install_quartify_snippets(backup = FALSE)
+}
+
+# For testing: install to temp directory
+temp_snippets <- file.path(tempdir(), "r.snippets")
+install_quartify_snippets(path = temp_snippets)
+#> Created new snippets file: /tmp/RtmpYZ38Z2/r.snippets
+#> 
+#> Snippets installed successfully!
+#> Please restart RStudio to use the new snippets.
+#> 
+#> Available snippets:
+#>   - header  : R script header template
+#>   - callout : Quarto callout structure
+#>   - mermaid : Mermaid diagram chunk
+#>   - tabset  : Tabset structure
+#> 
+#> Type the snippet name and press Tab to use it.
 ```

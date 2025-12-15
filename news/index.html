@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,92 @@
       <small>Source: <a href="https://github.com/ddotta/quartify/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.0" id="quartify-100">quartify 1.0.0<a class="anchor" aria-label="anchor" href="#quartify-100"></a></h2>
+<div class="section level3">
+<h3 id="cran-release-1-0-0">CRAN Release<a class="anchor" aria-label="anchor" href="#cran-release-1-0-0"></a></h3>
+<p>This is the first CRAN release of quartify! The package is now fully compliant with CRAN policies.</p>
+</div>
+<div class="section level3">
+<h3 id="cran-compliance-fixes-1-0-0">CRAN Compliance Fixes<a class="anchor" aria-label="anchor" href="#cran-compliance-fixes-1-0-0"></a></h3>
+<ul><li>
+<strong>Interactive Examples</strong>:
+<ul><li>Replaced <code>\dontrun{}</code> with <code>if(interactive()){}</code> in Shiny function examples</li>
+<li>
+<code><a href="../reference/quartify_app.html">quartify_app()</a></code> and <code><a href="../reference/quartify_app_web.html">quartify_app_web()</a></code> examples now properly indicate interactive-only usage</li>
+<li>Users can see examples are meant for interactive sessions, not scripts</li>
+</ul></li>
+<li>
+<strong>Working Directory Management</strong>:
+<ul><li>Added immediate <code>on.exit(setwd(old_wd), add = TRUE)</code> after all <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code> calls</li>
+<li>Ensures working directory is always restored, even if function errors</li>
+<li>Fixed in <code>rtoqmd.R</code>, <code>rtoqmd_dir.R</code>, and <code>quartify_app_web.R</code>
+</li>
+<li>Removed manual <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code> restoration in error handlers (now handled by <code><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit()</a></code>)</li>
+</ul></li>
+<li>
+<strong>Console Output</strong>:
+<ul><li>Replaced <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code> with <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> in <code>rtoqmd_dir.R</code> per CRAN guidelines</li>
+<li>Messages can now be suppressed with <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code> if needed</li>
+<li>More R-like behavior for console output</li>
+</ul></li>
+<li>
+<strong>File Writing</strong>:
+<ul><li>
+<code><a href="../reference/install_quartify_snippets.html">install_quartify_snippets()</a></code> no longer writes to home directory by default in examples</li>
+<li>Added <code>path</code> parameter to allow custom snippet file location</li>
+<li>Examples now write to <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code> for testing</li>
+<li>Interactive examples properly wrapped in <code>if(interactive())</code>
+</li>
+</ul></li>
+<li>
+<strong>Path Handling</strong>:
+<ul><li>Fixed tilde (~) path expansion issue in <code><a href="../reference/rtoqmd.html">rtoqmd()</a></code>
+</li>
+<li>Added <code><a href="https://rdrr.io/r/base/path.expand.html" class="external-link">path.expand()</a></code> for <code>input_file</code>, <code>output_file</code>, and <code>output_html_file</code>
+</li>
+<li>Quarto now receives absolute paths instead of tilde shortcuts</li>
+<li>Resolves “No valid input files” error when using paths like “~/file.qmd”</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-improvements-1-0-0">Documentation Improvements<a class="anchor" aria-label="anchor" href="#documentation-improvements-1-0-0"></a></h3>
+<ul><li>
+<strong>apply_styler Parameter</strong>:
+<ul><li>Added comprehensive documentation in vignettes (EN and FR)</li>
+<li>Clarified that <code>use_styler</code> must be TRUE for <code>apply_styler</code> to work</li>
+<li>Added comparison table showing parameter combinations and results</li>
+<li>Included workflow example showing safe preview before applying changes</li>
+<li>Listed practical use cases for permanent code formatting</li>
+</ul></li>
+<li>
+<strong>Mode Selection</strong>:
+<ul><li>Fixed missing mode selector in <code><a href="../reference/quartify_app.html">quartify_app()</a></code>
+</li>
+<li>Now matches <code><a href="../reference/rtoqmd_addin.html">rtoqmd_addin()</a></code> with dynamic mode selection (single/directory)</li>
+<li>Mode selector properly updates with language changes</li>
+</ul></li>
+<li>
+<strong>Directory Selection UI</strong>:
+<ul><li>Fixed directory button display issue (no more “span…” in label)</li>
+<li>Directory browser now opens correctly when selecting folders</li>
+<li>Dynamic button rendering with proper language support</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="package-readiness-1-0-0">Package Readiness<a class="anchor" aria-label="anchor" href="#package-readiness-1-0-0"></a></h3>
+<ul><li>
+<strong>Version 1.0.0</strong>: Stable release ready for CRAN submission</li>
+<li>
+<strong>Zero R CMD check issues</strong>: 0 errors, 0 warnings, 0 notes</li>
+<li>
+<strong>Full CRAN policy compliance</strong>: All guidelines followed</li>
+<li>
+<strong>Comprehensive documentation</strong>: Examples, vignettes, and help files complete</li>
+<li>
+<strong>Tested across platforms</strong>: Works on Windows, macOS, and Linux</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.9" id="quartify-009">quartify 0.0.9<a class="anchor" aria-label="anchor" href="#quartify-009"></a></h2>
 <div class="section level3">
