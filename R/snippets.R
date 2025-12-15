@@ -25,20 +25,26 @@
 #'
 #' @param backup Logical. If TRUE (default), creates a backup of your existing
 #'   snippets file before modifying it.
+#' @param path Character. Custom path for the snippets file. If NULL (default),
+#'   uses the standard RStudio snippets location. For examples/tests, use tempdir().
 #'
 #' @return Invisibly returns the path to the snippets file.
 #'
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' # Install quartify snippets
-#' install_quartify_snippets()
+#' if (interactive()) {
+#'   # Install quartify snippets to RStudio
+#'   install_quartify_snippets()
 #'
-#' # Install without backup
-#' install_quartify_snippets(backup = FALSE)
+#'   # Install without backup
+#'   install_quartify_snippets(backup = FALSE)
 #' }
-install_quartify_snippets <- function(backup = TRUE) {
+#'
+#' # For testing: install to temp directory
+#' temp_snippets <- file.path(tempdir(), "r.snippets")
+#' install_quartify_snippets(path = temp_snippets)
+install_quartify_snippets <- function(backup = TRUE, path = NULL) {
   
   # Define the snippets content
   snippets <- '
@@ -69,20 +75,32 @@ snippet tabset
 	# ${0}
 '
   
-  # Get the RStudio snippets directory
-  if (.Platform$OS.type == "windows") {
-    snippets_dir <- file.path(Sys.getenv("APPDATA"), "RStudio", "snippets")
+  # Determine snippets file path
+  if (is.null(path)) {
+    # Get the RStudio snippets directory
+    if (.Platform$OS.type == "windows") {
+      snippets_dir <- file.path(Sys.getenv("APPDATA"), "RStudio", "snippets")
+    } else {
+      snippets_dir <- file.path(Sys.getenv("HOME"), ".R", "snippets")
+    }
+    
+    # Create directory if it doesn't exist
+    if (!dir.exists(snippets_dir)) {
+      dir.create(snippets_dir, recursive = TRUE)
+      message("Created snippets directory: ", snippets_dir)
+    }
+    
+    snippets_file <- file.path(snippets_dir, "r.snippets")
   } else {
-    snippets_dir <- file.path(Sys.getenv("HOME"), ".R", "snippets")
+    # Use custom path
+    snippets_file <- path
+    snippets_dir <- dirname(snippets_file)
+    
+    # Create directory if it doesn't exist
+    if (!dir.exists(snippets_dir)) {
+      dir.create(snippets_dir, recursive = TRUE)
+    }
   }
-  
-  # Create directory if it doesn't exist
-  if (!dir.exists(snippets_dir)) {
-    dir.create(snippets_dir, recursive = TRUE)
-    message("Created snippets directory: ", snippets_dir)
-  }
-  
-  snippets_file <- file.path(snippets_dir, "r.snippets")
   
   # Check if file exists and backup if requested
   if (file.exists(snippets_file)) {

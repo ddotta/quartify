@@ -456,6 +456,7 @@ rtoqmd_dir <- function(dir_path,
       cli::cli_alert_info("Rendering Quarto book...")
       tryCatch({
         old_wd <- getwd()
+        on.exit(setwd(old_wd), add = TRUE)
         setwd(dir_path)
         
         # Capture output but filter out WARNING lines
@@ -466,11 +467,9 @@ rtoqmd_dir <- function(dir_path,
         # Print all lines except those starting with [WARNING]
         for (line in output) {
           if (!grepl("^\\[WARNING\\]", line)) {
-            cat(line, "\n", sep = "")
+            message(line)
           }
         }
-        
-        setwd(old_wd)
         
         cli::cli_alert_success("Book rendered to: {.file {book_output_dir}}")
         
@@ -482,7 +481,6 @@ rtoqmd_dir <- function(dir_path,
           }
         }
       }, error = function(e) {
-        setwd(old_wd)
         cli::cli_alert_danger("Failed to render book: {e$message}")
       })
     }

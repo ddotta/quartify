@@ -12,16 +12,16 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' # Launch the Shiny app in browser (works in any IDE)
-#' quartify_app()
+#' if (interactive()) {
+#'   # Launch the Shiny app in browser (works in any IDE)
+#'   quartify_app()
 #'
-#' # Use in Positron or VS Code
-#' library(quartify)
-#' quartify_app()
+#'   # Use in Positron or VS Code
+#'   library(quartify)
+#'   quartify_app()
 #'
-#' # Specify a port
-#' quartify_app(port = 3838)
+#'   # Specify a port
+#'   quartify_app(port = 3838)
 #' }
 quartify_app <- function(launch.browser = TRUE, port = NULL) {
   # Get resources for UI

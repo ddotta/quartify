@@ -4,11 +4,14 @@
 \alias{install_quartify_snippets}
 \title{Install quartify RStudio Snippets}
 \usage{
-install_quartify_snippets(backup = TRUE)
+install_quartify_snippets(backup = TRUE, path = NULL)
 }
 \arguments{
 \item{backup}{Logical. If TRUE (default), creates a backup of your existing
 snippets file before modifying it.}
+
+\item{path}{Character. Custom path for the snippets file. If NULL (default),
+uses the standard RStudio snippets location. For examples/tests, use tempdir().}
 }
 \value{
 Invisibly returns the path to the snippets file.
@@ -39,11 +42,15 @@ to become available. Then, simply type the snippet name (e.g., `header`)
 and press Tab to insert the template.
 }
 \examples{
-\dontrun{
-# Install quartify snippets
-install_quartify_snippets()
+if (interactive()) {
+  # Install quartify snippets to RStudio
+  install_quartify_snippets()
 
-# Install without backup
-install_quartify_snippets(backup = FALSE)
+  # Install without backup
+  install_quartify_snippets(backup = FALSE)
 }
+
+# For testing: install to temp directory
+temp_snippets <- file.path(tempdir(), "r.snippets")
+install_quartify_snippets(path = temp_snippets)
 }

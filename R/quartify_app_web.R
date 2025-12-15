@@ -12,8 +12,8 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' quartify_app_web()
+#' if (interactive()) {
+#'   quartify_app_web()
 #' }
 quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
   # Get resources for UI (try multiple paths for compatibility)
@@ -657,12 +657,13 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
             if (input$render_html) {
               # Change working directory to temp_dir to avoid path issues with Quarto
               old_wd <- getwd()
+              on.exit(setwd(old_wd), add = TRUE)
               setwd(temp_dir)
               tryCatch({
                 quarto::quarto_render("output.qmd", output_file = "output.html")
                 rv$html_file <- file.path(temp_dir, "output.html")
-              }, finally = {
-                setwd(old_wd)
+              }, error = function(e) {
+                cli::cli_alert_danger("Failed to render: {e$message}")
               })
             } else {
               rv$html_file <- NULL
@@ -811,9 +812,9 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
 
         # Create ZIP
         old_wd <- getwd()
+        on.exit(setwd(old_wd), add = TRUE)
         setwd(temp_zip_dir)
         utils::zip(file, files = list.files())
-        setwd(old_wd)
       }
     )
   }

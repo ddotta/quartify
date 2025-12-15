@@ -20,7 +20,7 @@ for converting R scripts to Quarto markdown documents. Suitable for deployment
 on Shiny Server, ShinyApps.io, or other web hosting platforms.
 }
 \examples{
-\dontrun{
-quartify_app_web()
+if (interactive()) {
+  quartify_app_web()
 }
 }
