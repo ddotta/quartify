@@ -544,7 +544,7 @@ Utilisez `quartify` dans vos pipelines CI/CD pour générer automatiquement la d
 **GitLab CI** (`.gitlab-ci.yml`) :
 ```yaml
 generate-docs:
-  image: rocker/r-ver:4.5.1
+  image: ddottaagr/quartify:latest
   script:
     - R -e "quartify::rtoqmd_dir('scripts/', render = TRUE, author = 'Équipe Data')"
   artifacts:
