@@ -640,7 +640,7 @@ documentation:
 
 ``` yaml
 generate-docs:
-  image: rocker/r-ver:4.5.1
+  image: ddottaagr/quartify:latest
   script:
     - R -e "quartify::rtoqmd_dir('scripts/', render = TRUE, author = 'Data Team')"
   artifacts:
