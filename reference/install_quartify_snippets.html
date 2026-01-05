@@ -82,13 +82,15 @@ uses the standard RStudio snippets location. For examples/tests, use tempdir().<
 - **mermaid**: Insert a Mermaid diagram chunk
 - **tabset**: Insert a tabset structure</p>
 
-<p>The snippets are installed in your RStudio snippets file for R
-(`~/.R/snippets/r.snippets` on Unix/Mac or
-`<!-- %APPDATA%/RStudio/snippets/r.snippets` on Windows). --></p>
+<p>The snippets are installed in your RStudio snippets file for R:
+- Windows: `<!-- %APPDATA%/RStudio/snippets/r.snippets` -->
+- Mac/Linux: `~/.config/rstudio/snippets/r.snippets`</p>
 <p>If you already have custom snippets, this function will append the quartify
-snippets to your existing file, avoiding duplicates.</p>
-<p>After installation, restart RStudio or reload the window for the snippets
-to become available. Then, simply type the snippet name (e.g., `header`)
+snippets to your existing file. If quartify snippets were previously installed,
+they will be automatically removed and replaced with the new version.</p>
+<p>The function will automatically open the snippets file in RStudio if available.
+Simply save the file (Ctrl+S / Cmd+S) to reload the snippets immediately
+without restarting RStudio. Then type the snippet name (e.g., `header`)
 and press Tab to insert the template.</p>
     </div>
 
@@ -105,10 +107,11 @@ and press Tab to insert the template.</p>
 <span class="r-in"><span><span class="co"># For testing: install to temp directory</span></span></span>
 <span class="r-in"><span><span class="va">temp_snippets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"r.snippets"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">install_quartify_snippets</span><span class="op">(</span>path <span class="op">=</span> <span class="va">temp_snippets</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Created new snippets file: /tmp/Rtmp0OlTJ5/r.snippets</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Created new snippets file: /tmp/RtmpRUjJOL/r.snippets</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Snippets installed successfully!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Please restart RStudio to use the new snippets.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> If they do not appear, ouvrez le fichier ci-dessous dans RStudio et sauvegardez-le pour recharger les snippets immédiatement.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> /tmp/RtmpRUjJOL/r.snippets</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Available snippets:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   - header  : R script header template</span>

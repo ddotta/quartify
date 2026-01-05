@@ -576,23 +576,21 @@ Quarto généré.</p>
 </li>
 </ul>
 <div class="alert alert-success">
-<p><strong>Astuce - Snippets RStudio :</strong> Pour gagner du temps,
-vous pouvez créer un <a href="https://docs.posit.co/ide/user/ide/guide/productivity/snippets.html" class="external-link">snippet
-RStudio</a> pour insérer automatiquement cet en-tête de métadonnées.
-Ajoutez ce snippet dans vos snippets R (Tools &gt; Edit Code Snippets
-&gt; R) :</p>
-<pre><code>snippet header
-    # Title : ${1}
-    #
-    # Auteur : ${2}
-    #
-    # Date : ${3}
-    #
-    # Description : ${4}
-    #</code></pre>
-<p>Une fois défini, tapez <code>header</code> suivi de <code>Tab</code>
-dans votre script R pour insérer automatiquement la structure de
-métadonnées.</p>
+<p><strong>Astuce - Snippets RStudio :</strong> quartify fournit une
+fonction pour installer automatiquement des snippets utiles incluant
+<code>header</code>, <code>callout</code>, <code>mermaid</code>, et
+<code>tabset</code> :</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Installer les snippets quartify</span></span>
+<span><span class="fu"><a href="../reference/install_quartify_snippets.html">install_quartify_snippets</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Après installation, le fichier de snippets s’ouvrira automatiquement
+dans RStudio. Sauvegardez-le (Ctrl+S / Cmd+S) pour recharger les
+snippets immédiatement. Ensuite, tapez le nom du snippet (ex:
+<code>header</code>) suivi de <code>Tab</code> dans votre script R pour
+insérer automatiquement le modèle.</p>
+<p>Vous pouvez aussi ajouter manuellement des snippets via Tools &gt;
+Edit Code Snippets &gt; R. Voir <code><a href="../reference/install_quartify_snippets.html">?install_quartify_snippets</a></code>
+pour plus de détails.</p>
 </div>
 <p><strong>Exemple complet avec métadonnées :</strong></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">

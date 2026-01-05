@@ -338,24 +338,25 @@ Quarto généré.
 - **Date** : `# Date : 2025-11-28`
 - **Description** : `# Description : Description de votre script`
 
-**Astuce - Snippets RStudio :** Pour gagner du temps, vous pouvez créer
-un [snippet
-RStudio](https://docs.posit.co/ide/user/ide/guide/productivity/snippets.html)
-pour insérer automatiquement cet en-tête de métadonnées. Ajoutez ce
-snippet dans vos snippets R (Tools \> Edit Code Snippets \> R) :
+**Astuce - Snippets RStudio :** quartify fournit une fonction pour
+installer automatiquement des snippets utiles incluant `header`,
+`callout`, `mermaid`, et `tabset` :
 
-    snippet header
-        # Title : ${1}
-        #
-        # Auteur : ${2}
-        #
-        # Date : ${3}
-        #
-        # Description : ${4}
-        #
+``` r
+# Installer les snippets quartify
+install_quartify_snippets()
+```
 
-Une fois défini, tapez `header` suivi de `Tab` dans votre script R pour
-insérer automatiquement la structure de métadonnées.
+Après installation, le fichier de snippets s’ouvrira automatiquement
+dans RStudio. Sauvegardez-le (Ctrl+S / Cmd+S) pour recharger les
+snippets immédiatement. Ensuite, tapez le nom du snippet (ex: `header`)
+suivi de `Tab` dans votre script R pour insérer automatiquement le
+modèle.
+
+Vous pouvez aussi ajouter manuellement des snippets via Tools \> Edit
+Code Snippets \> R. Voir
+[`?install_quartify_snippets`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
+pour plus de détails.
 
 **Exemple complet avec métadonnées :**
 

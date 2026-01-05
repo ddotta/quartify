@@ -323,9 +323,10 @@ automatically install useful snippets including `header`, `callout`,
 install_quartify_snippets()
 ```
 
-After installation and restarting RStudio, type the snippet name (e.g.,
-`header`) followed by `Tab` in your R script to automatically insert the
-template.
+After installation, the snippets file will automatically open in
+RStudio. Save it (Ctrl+S / Cmd+S) to reload snippets immediately without
+restarting. Then type the snippet name (e.g., `header`) followed by
+`Tab` in your R script to automatically insert the template.
 
 You can also manually add snippets via Tools \> Edit Code Snippets \> R.
 See

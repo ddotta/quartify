@@ -36,15 +36,18 @@ Date, and Description - \*\*callout\*\*: Insert a Quarto callout
 structure - \*\*mermaid\*\*: Insert a Mermaid diagram chunk -
 \*\*tabset\*\*: Insert a tabset structure
 
-The snippets are installed in your RStudio snippets file for R
-(\`~/.R/snippets/r.snippets\` on Unix/Mac or \`
+The snippets are installed in your RStudio snippets file for R: -
+Windows: \` - Mac/Linux: \`~/.config/rstudio/snippets/r.snippets\`
 
 If you already have custom snippets, this function will append the
-quartify snippets to your existing file, avoiding duplicates.
+quartify snippets to your existing file. If quartify snippets were
+previously installed, they will be automatically removed and replaced
+with the new version.
 
-After installation, restart RStudio or reload the window for the
-snippets to become available. Then, simply type the snippet name (e.g.,
-\`header\`) and press Tab to insert the template.
+The function will automatically open the snippets file in RStudio if
+available. Simply save the file (Ctrl+S / Cmd+S) to reload the snippets
+immediately without restarting RStudio. Then type the snippet name
+(e.g., \`header\`) and press Tab to insert the template.
 
 ## Examples
 
@@ -60,10 +63,11 @@ if (interactive()) {
 # For testing: install to temp directory
 temp_snippets <- file.path(tempdir(), "r.snippets")
 install_quartify_snippets(path = temp_snippets)
-#> Created new snippets file: /tmp/Rtmp0OlTJ5/r.snippets
+#> Created new snippets file: /tmp/RtmpRUjJOL/r.snippets
 #> 
 #> Snippets installed successfully!
-#> Please restart RStudio to use the new snippets.
+#> If they do not appear, ouvrez le fichier ci-dessous dans RStudio et sauvegardez-le pour recharger les snippets immédiatement.
+#> /tmp/RtmpRUjJOL/r.snippets
 #> 
 #> Available snippets:
 #>   - header  : R script header template
