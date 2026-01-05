@@ -30,15 +30,17 @@ The following snippets are installed:
 - **tabset**: Insert a tabset structure
 
 
-The snippets are installed in your RStudio snippets file for R
-(`~/.R/snippets/r.snippets` on Unix/Mac or
-`%APPDATA%/RStudio/snippets/r.snippets` on Windows).
+The snippets are installed in your RStudio snippets file for R:
+- Windows: `%APPDATA%/RStudio/snippets/r.snippets`
+- Mac/Linux: `~/.config/rstudio/snippets/r.snippets`
 
 If you already have custom snippets, this function will append the quartify
-snippets to your existing file, avoiding duplicates.
+snippets to your existing file. If quartify snippets were previously installed,
+they will be automatically removed and replaced with the new version.
 
-After installation, restart RStudio or reload the window for the snippets
-to become available. Then, simply type the snippet name (e.g., `header`)
+The function will automatically open the snippets file in RStudio if available.
+Simply save the file (Ctrl+S / Cmd+S) to reload the snippets immediately
+without restarting RStudio. Then type the snippet name (e.g., `header`)
 and press Tab to insert the template.
 }
 \examples{

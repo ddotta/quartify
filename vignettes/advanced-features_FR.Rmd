@@ -456,7 +456,7 @@ Installez des snippets de code utiles pour une écriture de script R plus rapide
 install_quartify_snippets()
 ```
 
-Après installation et redémarrage de RStudio, vous pouvez utiliser :
+Le fichier de snippets s'ouvrira automatiquement dans RStudio. Sauvegardez-le pour recharger les snippets immédiatement sans redémarrer. Vous pouvez ensuite utiliser :
 
 - **`header`** + Tab : Insérer un modèle de métadonnées de document
 - **`callout`** + Tab : Insérer un modèle de callout

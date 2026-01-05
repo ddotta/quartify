@@ -12,15 +12,17 @@
 #' - **tabset**: Insert a tabset structure
 #'
 #' @details
-#' The snippets are installed in your RStudio snippets file for R
-#' (`~/.R/snippets/r.snippets` on Unix/Mac or
-#' `%APPDATA%/RStudio/snippets/r.snippets` on Windows).
+#' The snippets are installed in your RStudio snippets file for R:
+#' - Windows: `%APPDATA%/RStudio/snippets/r.snippets`
+#' - Mac/Linux: `~/.config/rstudio/snippets/r.snippets`
 #'
 #' If you already have custom snippets, this function will append the quartify
-#' snippets to your existing file, avoiding duplicates.
+#' snippets to your existing file. If quartify snippets were previously installed,
+#' they will be automatically removed and replaced with the new version.
 #'
-#' After installation, restart RStudio or reload the window for the snippets
-#' to become available. Then, simply type the snippet name (e.g., `header`)
+#' The function will automatically open the snippets file in RStudio if available.
+#' Simply save the file (Ctrl+S / Cmd+S) to reload the snippets immediately
+#' without restarting RStudio. Then type the snippet name (e.g., `header`)
 #' and press Tab to insert the template.
 #'
 #' @param backup Logical. If TRUE (default), creates a backup of your existing
@@ -45,8 +47,7 @@
 #' temp_snippets <- file.path(tempdir(), "r.snippets")
 #' install_quartify_snippets(path = temp_snippets)
 install_quartify_snippets <- function(backup = TRUE, path = NULL) {
-  
-  # Define the snippets content
+  # Définition des snippets
   snippets <- '
 # quartify snippets
 
@@ -74,75 +75,88 @@ snippet tabset
 	# tab - ${1:Tab Title}
 	# ${0}
 '
-  
-  # Determine snippets file path
-  if (is.null(path)) {
-    # Get the RStudio snippets directory
+
+  # Détection robuste du chemin du fichier snippets
+  get_rstudio_snippets_path <- function() {
+    if (!is.null(path)) return(normalizePath(path, mustWork = FALSE))
+    # Windows
     if (.Platform$OS.type == "windows") {
-      snippets_dir <- file.path(Sys.getenv("APPDATA"), "RStudio", "snippets")
-    } else {
-      snippets_dir <- file.path(Sys.getenv("HOME"), ".R", "snippets")
+      appdata <- Sys.getenv("APPDATA")
+      if (nzchar(appdata)) {
+        return(file.path(appdata, "RStudio", "snippets", "r.snippets"))
+      }
     }
-    
-    # Create directory if it doesn't exist
-    if (!dir.exists(snippets_dir)) {
-      dir.create(snippets_dir, recursive = TRUE)
-      message("Created snippets directory: ", snippets_dir)
+    # XDG (Linux)
+    xdg <- Sys.getenv("XDG_CONFIG_HOME")
+    if (nzchar(xdg)) {
+      p <- file.path(xdg, "rstudio", "snippets", "r.snippets")
+      if (file.exists(dirname(p)) || dir.create(dirname(p), recursive = TRUE, showWarnings = FALSE)) return(p)
     }
-    
-    snippets_file <- file.path(snippets_dir, "r.snippets")
-  } else {
-    # Use custom path
-    snippets_file <- path
-    snippets_dir <- dirname(snippets_file)
-    
-    # Create directory if it doesn't exist
-    if (!dir.exists(snippets_dir)) {
-      dir.create(snippets_dir, recursive = TRUE)
+    # RStudio Workbench/Server/Desktop (Linux/Mac)
+    home <- Sys.getenv("HOME")
+    if (nzchar(home)) {
+      # Modern config path
+      p1 <- file.path(home, ".config", "rstudio", "snippets", "r.snippets")
+      if (file.exists(dirname(p1)) || dir.create(dirname(p1), recursive = TRUE, showWarnings = FALSE)) return(p1)
+      # Legacy path
+      p2 <- file.path(home, ".R", "snippets", "r.snippets")
+      if (file.exists(dirname(p2)) || dir.create(dirname(p2), recursive = TRUE, showWarnings = FALSE)) return(p2)
     }
+    stop("Impossible de déterminer le chemin du fichier de snippets RStudio.")
   }
-  
-  # Check if file exists and backup if requested
+
+  snippets_file <- get_rstudio_snippets_path()
+  snippets_dir <- dirname(snippets_file)
+  if (!dir.exists(snippets_dir)) dir.create(snippets_dir, recursive = TRUE)
+
+  # Lecture, sauvegarde, suppression de l'ancien bloc quartify
   if (file.exists(snippets_file)) {
-    # Read existing content
     existing_content <- readLines(snippets_file, warn = FALSE)
-    
-    # Create backup if requested
+    # Sauvegarde
     if (backup) {
       backup_file <- paste0(snippets_file, ".backup.", format(Sys.time(), "%Y%m%d_%H%M%S"))
-      file.copy(snippets_file, backup_file)
+      file.copy(snippets_file, backup_file, overwrite = TRUE)
       message("Created backup: ", backup_file)
     }
-    
-    # Check if quartify snippets already exist
-    if (any(grepl("# quartify snippets", existing_content, fixed = TRUE))) {
-      message("quartify snippets already installed in: ", snippets_file)
-      message("To update, manually remove the existing quartify snippets section and run this function again.")
-      return(invisible(snippets_file))
+    # Suppression de l'ancien bloc quartify
+    start <- grep("# quartify snippets", existing_content, fixed = TRUE)
+    if (length(start) > 0) {
+      end <- which(seq_along(existing_content) > start[1] & existing_content == "")
+      if (length(end) > 0) {
+        end <- end[1] - 1
+      } else {
+        end <- length(existing_content)
+      }
+      existing_content <- existing_content[-c(start[1]:end)]
     }
-    
-    # Append new snippets after existing content
-    # Add blank line separator if file doesn't end with blank line
+    # Réécriture du fichier (préserve les autres snippets)
+    writeLines(existing_content, snippets_file)
+    # Ajout d'une ligne vide si besoin
     if (length(existing_content) > 0 && existing_content[length(existing_content)] != "") {
       cat("\n", file = snippets_file, append = TRUE)
     }
     cat(snippets, file = snippets_file, append = TRUE)
-    message("Appended quartify snippets to existing file: ", snippets_file)
-    
+    message("quartify snippets installed/updated in: ", snippets_file)
   } else {
-    # Create new file
     cat(snippets, file = snippets_file)
     message("Created new snippets file: ", snippets_file)
   }
-  
+
   message("\nSnippets installed successfully!")
-  message("Please restart RStudio to use the new snippets.")
+  message("If they do not appear, ouvrez le fichier ci-dessous dans RStudio et sauvegardez-le pour recharger les snippets immédiatement.")
+  message(snippets_file)
   message("\nAvailable snippets:")
   message("  - header  : R script header template")
   message("  - callout : Quarto callout structure")
   message("  - mermaid : Mermaid diagram chunk")
   message("  - tabset  : Tabset structure")
   message("\nType the snippet name and press Tab to use it.")
-  
+
+  # Ouvre dans RStudio si possible
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    try(rstudioapi::navigateToFile(snippets_file), silent = TRUE)
+    message("Le fichier de snippets a été ouvert dans RStudio. Sauvegardez-le pour recharger les snippets immédiatement.")
+  }
+
   invisible(snippets_file)
 }

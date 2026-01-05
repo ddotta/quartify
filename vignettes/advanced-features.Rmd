@@ -515,7 +515,7 @@ Install useful code snippets for faster R script writing:
 install_quartify_snippets()
 ```
 
-After installation and restarting RStudio, you can use:
+The snippets file will automatically open in RStudio. Save it to reload snippets immediately without restarting. You can then use:
 
 - **`header`** + Tab: Insert document metadata template
 - **`callout`** + Tab: Insert callout template
