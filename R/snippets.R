@@ -47,7 +47,7 @@
 #' temp_snippets <- file.path(tempdir(), "r.snippets")
 #' install_quartify_snippets(path = temp_snippets)
 install_quartify_snippets <- function(backup = TRUE, path = NULL) {
-  # Définition des snippets
+  # Define the snippets content
   snippets <- '
 # quartify snippets
 
@@ -76,7 +76,7 @@ snippet tabset
 	# ${0}
 '
 
-  # Détection robuste du chemin du fichier snippets
+  # Robust detection of RStudio snippets file path
   get_rstudio_snippets_path <- function() {
     if (!is.null(path)) return(normalizePath(path, mustWork = FALSE))
     # Windows
@@ -102,23 +102,23 @@ snippet tabset
       p2 <- file.path(home, ".R", "snippets", "r.snippets")
       if (file.exists(dirname(p2)) || dir.create(dirname(p2), recursive = TRUE, showWarnings = FALSE)) return(p2)
     }
-    stop("Impossible de déterminer le chemin du fichier de snippets RStudio.")
+    stop("Unable to determine RStudio snippets file path.")
   }
 
   snippets_file <- get_rstudio_snippets_path()
   snippets_dir <- dirname(snippets_file)
   if (!dir.exists(snippets_dir)) dir.create(snippets_dir, recursive = TRUE)
 
-  # Lecture, sauvegarde, suppression de l'ancien bloc quartify
+  # Read existing file, backup, and remove old quartify block
   if (file.exists(snippets_file)) {
     existing_content <- readLines(snippets_file, warn = FALSE)
-    # Sauvegarde
+    # Backup existing file
     if (backup) {
       backup_file <- paste0(snippets_file, ".backup.", format(Sys.time(), "%Y%m%d_%H%M%S"))
       file.copy(snippets_file, backup_file, overwrite = TRUE)
       message("Created backup: ", backup_file)
     }
-    # Suppression de l'ancien bloc quartify
+    # Remove old quartify block if exists
     start <- grep("# quartify snippets", existing_content, fixed = TRUE)
     if (length(start) > 0) {
       end <- which(seq_along(existing_content) > start[1] & existing_content == "")
@@ -129,9 +129,9 @@ snippet tabset
       }
       existing_content <- existing_content[-c(start[1]:end)]
     }
-    # Réécriture du fichier (préserve les autres snippets)
+    # Write back content (preserves other snippets)
     writeLines(existing_content, snippets_file)
-    # Ajout d'une ligne vide si besoin
+    # Add blank line if needed
     if (length(existing_content) > 0 && existing_content[length(existing_content)] != "") {
       cat("\n", file = snippets_file, append = TRUE)
     }
@@ -143,7 +143,7 @@ snippet tabset
   }
 
   message("\nSnippets installed successfully!")
-  message("If they do not appear, ouvrez le fichier ci-dessous dans RStudio et sauvegardez-le pour recharger les snippets immédiatement.")
+  message("If snippets do not appear, open the file below in RStudio and save it to reload snippets immediately.")
   message(snippets_file)
   message("\nAvailable snippets:")
   message("  - header  : R script header template")
@@ -152,10 +152,10 @@ snippet tabset
   message("  - tabset  : Tabset structure")
   message("\nType the snippet name and press Tab to use it.")
 
-  # Ouvre dans RStudio si possible
+  # Open in RStudio if available
   if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
     try(rstudioapi::navigateToFile(snippets_file), silent = TRUE)
-    message("Le fichier de snippets a été ouvert dans RStudio. Sauvegardez-le pour recharger les snippets immédiatement.")
+    message("The snippets file has been opened in RStudio. Save it to reload snippets immediately.")
   }
 
   invisible(snippets_file)
