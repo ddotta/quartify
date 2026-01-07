@@ -4,7 +4,7 @@
 available](https://ddotta.github.io/quartify/articles/getting-started.md)**
 / **Version anglaise disponible**
 
-## Introduction
+### Introduction
 
 `quartify` est un package R qui convertit automatiquement des scripts R
 en documents Quarto markdown (.qmd). Le package reconnaît les sections
@@ -12,7 +12,7 @@ de code RStudio pour créer des documents correctement structurés avec
 navigation. Cette vignette vous guidera à travers l’utilisation basique
 et les fonctionnalités du package.
 
-### Comparaison avec knitr::spin()
+#### Comparaison avec knitr::spin()
 
 Si vous connaissez
 [`knitr::spin()`](https://yihui.org/knitr/demo/stitch/), vous vous
@@ -39,7 +39,7 @@ demandez peut-être en quoi `quartify` diffère :
 4.  **Pérennité** : Quarto est activement développé par Posit comme
     successeur de R Markdown
 
-## Installation
+### Installation
 
 Vous pouvez installer la version de développement de quartify depuis
 GitHub :
@@ -49,7 +49,7 @@ GitHub :
 devtools::install_github("ddotta/quartify")
 ```
 
-## Utilisation basique
+### Utilisation basique
 
 La fonction principale du package est
 [`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md).
@@ -72,7 +72,7 @@ Par défaut,
 2. Le générer en HTML avec Quarto  
 3. Ouvrir le fichier HTML dans votre navigateur (si `open_html = TRUE`)
 
-### Emplacement des fichiers de sortie
+#### Emplacement des fichiers de sortie
 
 Comprendre où les fichiers sont créés :
 
@@ -104,13 +104,13 @@ rtoqmd("/home/utilisateur/scripts/script.R")
 rtoqmd("script.R", "sortie.qmd")
 ```
 
-## Utiliser l’Addin RStudio
+### Utiliser l’Addin RStudio
 
 `quartify` fournit un addin RStudio interactif pour une conversion
 facile sans écrire de code. C’est parfait pour des conversions rapides
 en travaillant dans RStudio.
 
-### Accéder à l’Addin
+#### Accéder à l’Addin
 
 Pour utiliser l’addin :
 
@@ -123,7 +123,7 @@ pour un accès encore plus rapide. Allez dans **Tools** \> **Modify
 Keyboard Shortcuts** et recherchez “quartify” pour attribuer votre
 raccourci préféré.
 
-### Aperçu de l’Interface
+#### Aperçu de l’Interface
 
 L’addin présente une interface moderne et intuitive avec :
 
@@ -135,7 +135,7 @@ L’addin présente une interface moderne et intuitive avec :
 - **Navigateur de fichiers/répertoires** pour une sélection facile
 - **Validation en temps réel** et messages d’erreur
 
-### Mode Fichier Unique
+#### Mode Fichier Unique
 
 Parfait pour convertir un script R à la fois :
 
@@ -156,7 +156,7 @@ Parfait pour convertir un script R à la fois :
 L’addin affichera des messages de succès/erreur et fournira des liens
 cliquables vers les fichiers de sortie.
 
-### Mode Répertoire
+#### Mode Répertoire
 
 Convertir tous les scripts R d’un répertoire en une seule fois :
 
@@ -179,7 +179,7 @@ vous permettant de générer tous les documents convertis comme un livre
 Quarto unifié avec navigation automatique et style cohérent. Ceci est
 idéal pour la documentation de projet ou les collections d’analyses.
 
-### Fonctionnalités Avancées
+#### Fonctionnalités Avancées
 
 L’addin inclut plusieurs améliorations de qualité de vie :
 
@@ -194,7 +194,7 @@ L’addin inclut plusieurs améliorations de qualité de vie :
 - **Retour détaillé** : Messages de succès/erreur clairs avec comptes de
   fichiers et emplacements
 
-### Quand Utiliser l’Addin
+#### Quand Utiliser l’Addin
 
 L’addin RStudio est idéal pour :
 
@@ -214,13 +214,13 @@ l’utilisation des fonctions programmatiques
 ([`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md),
 [`rtoqmd_dir()`](https://ddotta.github.io/quartify/reference/rtoqmd_dir.md)).
 
-## Utiliser l’Application Shiny Autonome
+### Utiliser l’Application Shiny Autonome
 
 Pour les utilisateurs travaillant en dehors de RStudio ou souhaitant
 partager un outil de conversion avec leur équipe, `quartify` fournit une
 application Shiny autonome.
 
-### Lancer l’Application
+#### Lancer l’Application
 
 Exécutez simplement :
 
@@ -242,7 +242,7 @@ n’importe quel système avec R installé, ce qui la rend parfaite pour :
 - **Travail à distance** : Accéder depuis n’importe quel navigateur si
   hébergé sur un serveur
 
-### Fonctionnalités
+#### Fonctionnalités
 
 L’application autonome inclut toutes les mêmes fonctionnalités que
 l’addin RStudio :
@@ -259,7 +259,7 @@ l’addin RStudio :
 - **Interface Moderne** : Barre de titre bleue, bouton GENERATE en
   évidence et mise en page intuitive
 
-### Comparaison avec l’Addin
+#### Comparaison avec l’Addin
 
 | Fonctionnalité                 | Addin RStudio             | Application Autonome                                                            |
 |--------------------------------|---------------------------|---------------------------------------------------------------------------------|
@@ -270,7 +270,7 @@ l’addin RStudio :
 | **Toutes les Fonctionnalités** | ✓                         | ✓                                                                               |
 | **Partageable**                | Non                       | Oui (peut déployer)                                                             |
 
-### Options de Déploiement
+#### Options de Déploiement
 
 L’application autonome peut être déployée pour un accès en équipe :
 
@@ -286,7 +286,7 @@ shiny::runApp(system.file("shiny", "quartify_app", package = "quartify"),
 **RStudio Connect / Shiny Server :** Déployer comme une application
 Shiny standard pour un accès à l’échelle de l’entreprise.
 
-### Version Web
+#### Version Web
 
 Pour les environnements où l’accès au système de fichiers est restreint
 (déploiements cloud, environnements sandboxés), utilisez la version web
@@ -318,13 +318,13 @@ Parfait pour les déploiements cloud où l’accès direct au système de
 fichiers n’est pas disponible. Le ZIP téléchargé est prêt à extraire et
 visualiser immédiatement dans n’importe quel navigateur.
 
-## Structurer votre script R
+### Structurer votre script R
 
 Pour une conversion optimale, vous devez suivre des règles de
 commentaires spécifiques dans votre script R. `quartify` reconnaît trois
 types de lignes :
 
-### 0. Métadonnées du document (Optionnel)
+#### 0. Métadonnées du document (Optionnel)
 
 Vous pouvez définir les métadonnées de votre document directement dans
 votre script R en utilisant des commentaires spéciaux au début du
@@ -358,28 +358,62 @@ Code Snippets \> R. Voir
 [`?install_quartify_snippets`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
 pour plus de détails.
 
-**Exemple complet avec métadonnées :**
+#### Commentaires cachés
+
+Vous pouvez inclure des notes privées ou des commentaires de
+développement dans vos scripts R qui n’apparaîtront pas dans le rendu
+final. Les commentaires qui commencent par `#` immédiatement suivi d’un
+caractère non-espace sont complètement ignorés :
 
 ``` r
-# Title : Analyse des données Iris
-#
-# Auteur : Jean Dupont
-#
-# Date : 2025-11-28
-#
-# Description : Explorer les différences entre espèces d'iris
-#
+# Ce commentaire APPARAITRA dans la sortie
 
-library(dplyr)
+#NOTE: Ceci n'apparaitra PAS (pas d'espace après #)
+#TODO: Ceci non plus
+#DEBUG code ci-dessous
 
-## Analyse descriptive ####
-
-# Calculer les statistiques par espèce
-
-iris |> 
-  group_by(Species) |>
-  summarize(mean_sepal = mean(Sepal.Length))
+# Ce commentaire régulier APPARAITRA à nouveau
 ```
+
+Cette fonctionnalité est utile pour :
+
+- **Notes de développement** : `#TODO:`, `#FIXME:`, `#NOTE:`
+- **Marqueurs de débogage** : `#DEBUG`, `#TEST`
+- **Documentation interne** : `#INTERNAL:`, `#PRIVATE:`
+- **Annotations de code** : `#HACK:`, `#OPTIMIZE:`
+
+**Exemple complet avec métadonnées :** \#DEBUG code ci-dessous
+
+## Ce commentaire régulier APPARAITRA à nouveau
+
+    Cette fonctionnalité est utile pour :
+
+    - **Notes de développement** : `#TODO:`, `#FIXME:`, `#NOTE:`
+    - **Marqueurs de débogage** : `#DEBUG`, `#TEST`
+    - **Documentation interne** : `#INTERNAL:`, `#PRIVATE:`
+    - **Annotations de code** : `#HACK:`, `#OPTIMIZE:`
+
+    **Exemple complet avec métadonnées :**
+
+    ```r
+    # Title : Analyse des données Iris
+    #
+    # Auteur : Jean Dupont
+    #
+    # Date : 2025-11-28
+    #
+    # Description : Explorer les différences entre espèces d'iris
+    #
+
+    library(dplyr)
+
+    ## Analyse descriptive ####
+
+    # Calculer les statistiques par espèce
+
+    iris |> 
+      group_by(Species) |>
+      summarize(mean_sepal = mean(Sepal.Length))
 
 **Comportement :**
 
@@ -427,7 +461,7 @@ Ceci produira dans le YAML :
 description: Cette analyse explore les différences entre les espèces d'iris en utilisant diverses méthodes statistiques et techniques de visualisation pour identifier les patterns et corrélations.
 ```
 
-### 1. Sections de code (En-têtes)
+#### 1. Sections de code (En-têtes)
 
 Utilisez la syntaxe des sections de code RStudio pour créer des en-têtes
 à différents niveaux. Ces sections DOIVENT suivre ce modèle exact :
@@ -457,7 +491,7 @@ Utilisez la syntaxe des sections de code RStudio pour créer des en-têtes
 #### Vérification valeurs manquantes ----
 ```
 
-### 2. Commentaires réguliers (Texte)
+#### 2. Commentaires réguliers (Texte)
 
 Les commentaires simples avec `#` deviennent du texte explicatif dans le
 document Quarto :
@@ -543,7 +577,7 @@ Commenter/Décommenter](https://docs.posit.co/ide/user/ide/guide/productivity/te
 de RStudio (`Ctrl+Shift+C` sur Windows/Linux ou `Cmd+Shift+C` sur Mac)
 pour ajouter ou retirer rapidement des commentaires de votre code.
 
-### 3. Documentation roxygen2
+#### 3. Documentation roxygen2
 
 Si votre script R contient des blocs de documentation roxygen2 (lignes
 commençant par `#'`), **quartify** les convertit automatiquement en
@@ -609,7 +643,7 @@ de packages R ou du partage de code avec une documentation API complète.
 Les blocs roxygen2 restent lisibles dans la sortie Quarto sans
 nécessiter de construire la documentation du package.
 
-### 4. Lignes de code
+#### 4. Lignes de code
 
 Toute ligne qui N’EST PAS un commentaire devient du code R exécutable :
 
@@ -655,7 +689,7 @@ blocs de code
 - **Commentaires dans le code** (indentés ou partie d’un pipeline) →
 restent À L’INTÉRIEUR des blocs de code
 
-## Exemple complet : example.R
+### Exemple complet : example.R
 
 Voici le script R exemple complet inclus dans le package :
 
@@ -702,7 +736,7 @@ Ce script démontre :
 5.  **Blocs de code** : Séparés par des commentaires autonomes ou des
     sections
 
-## Options de personnalisation
+### Options de personnalisation
 
 Vous pouvez personnaliser le document de sortie avec plusieurs
 paramètres :
@@ -717,7 +751,7 @@ rtoqmd(
 )
 ```
 
-### Paramètres
+#### Paramètres
 
 - `input_file` : Chemin vers votre script R
 - `output_file` : Chemin pour le document Quarto de sortie (optionnel)
@@ -731,7 +765,7 @@ rtoqmd(
 - `number_sections` : Numéroter les sections automatiquement (par défaut
   : TRUE)
 
-## Conversion de l’exemple
+### Conversion de l’exemple
 
 Pour convertir le script exemple ci-dessus :
 
@@ -748,7 +782,7 @@ rtoqmd(
 )
 ```
 
-### Sortie générée
+#### Sortie générée
 
 Ceci produit le document Quarto suivant :
 
@@ -845,9 +879,9 @@ Cette approche est idéale pour :
 - S’assurer que le processus de documentation n’interfère pas avec le
   comportement de votre script original
 
-## Rendu de la sortie
+### Rendu de la sortie
 
-### Rendu automatique (Recommandé)
+#### Rendu automatique (Recommandé)
 
 Par défaut,
 [`rtoqmd()`](https://ddotta.github.io/quartify/reference/rtoqmd.md)
@@ -870,7 +904,7 @@ Si vous ne voulez pas de rendu automatique en HTML, définissez
 rtoqmd(example_file, "analyse_iris.qmd", render = FALSE)
 ```
 
-### Rendu manuel
+#### Rendu manuel
 
 Vous pouvez bien sûr également générer manuellement le fichier HTML en
 utilisant :
@@ -888,15 +922,15 @@ quarto::quarto_render("analyse_iris.qmd")
 **Note :** Quarto doit être installé sur votre système. Téléchargez-le
 depuis [quarto.org](https://quarto.org/docs/get-started/).
 
-## Conversion de répertoires entiers
+### Conversion de répertoires entiers
 
-## Conversion par Lots de Répertoires
+### Conversion par Lots de Répertoires
 
 `quartify` v0.0.7 introduit des capacités puissantes de conversion par
 lots à travers plusieurs interfaces. Choisissez la méthode qui
 correspond le mieux à votre flux de travail.
 
-### Utilisation de l’Addin RStudio ou de l’Application Autonome
+#### Utilisation de l’Addin RStudio ou de l’Application Autonome
 
 La façon la plus intuitive de convertir des fichiers par lots est via le
 **Mode Répertoire** dans l’addin RStudio ou l’application autonome :
@@ -937,7 +971,7 @@ collection de scripts R.
 - Activer “Créer un Livre” : Génère `~/mon-projet/docs/_quarto.yml`
 - Résultat : Livre Quarto complet prêt à générer avec `quarto render`
 
-### Utilisation de l’Interface Web
+#### Utilisation de l’Interface Web
 
 Pour les environnements sans accès direct au système de fichiers :
 
@@ -952,7 +986,7 @@ En mode batch, vous pouvez :
 L’interface convertira tous les fichiers et fournira une archive .zip
 téléchargeable.
 
-### Utilisation des Fonctions R
+#### Utilisation des Fonctions R
 
 Pour convertir tous les scripts R d’un répertoire (y compris les
 sous-répertoires) de manière programmatique, utilisez
@@ -987,7 +1021,7 @@ emplacement - Affiche un résumé de la conversion avec le nombre de
 succès/échecs - Retourne un data frame avec les résultats pour chaque
 fichier
 
-## Intégration CI/CD
+### Intégration CI/CD
 
 Vous pouvez utiliser `quartify` dans vos pipelines CI/CD pour générer
 automatiquement la documentation à partir de vos scripts R. Ceci est
@@ -998,7 +1032,7 @@ utile pour :
 - Fournir des artefacts de documentation pour chaque commit/merge
   request
 
-### GitHub Actions
+#### GitHub Actions
 
 Créez `.github/workflows/generate-docs.yml` :
 
@@ -1047,7 +1081,7 @@ jobs:
             scripts/**/*.html
 ```
 
-### GitLab CI
+#### GitLab CI
 
 Créez `.gitlab-ci.yml` :
 
@@ -1081,7 +1115,7 @@ generate-docs:
     - merge_requests
 ```
 
-### Conversion d’un fichier unique en CI/CD
+#### Conversion d’un fichier unique en CI/CD
 
 Pour convertir un seul script R :
 
@@ -1101,7 +1135,7 @@ script:
   - R -e "quartify::rtoqmd('analyse.R', 'analyse.qmd', title = 'Mon Analyse', author = 'Équipe Data', render = TRUE)"
 ```
 
-### Bonnes pratiques pour le CI/CD
+#### Bonnes pratiques pour le CI/CD
 
 1.  **Ajouter au .gitignore** : Exclure les fichiers générés du contrôle
     de version
@@ -1137,7 +1171,7 @@ script:
     # Puis générer séparément si nécessaire
     ```
 
-## Cas d’usage
+### Cas d’usage
 
 `quartify` est particulièrement utile pour :
 
@@ -1147,13 +1181,13 @@ script:
 3.  **Conversion en masse** : Convertir automatiquement tous les scripts
     d’un projet
 
-## Callouts (Encadrés)
+### Callouts (Encadrés)
 
 Les callouts sont des blocs spéciaux qui mettent en évidence des
 informations importantes dans vos documents Quarto. `quartify` supporte
 la conversion automatique des commentaires callout.
 
-### Syntaxe
+#### Syntaxe
 
 Dans votre script R, utilisez cette syntaxe :
 
@@ -1175,7 +1209,7 @@ Il peut s'étendre sur plusieurs lignes.
 :::
 ```
 
-### Types de callouts
+#### Types de callouts
 
 Cinq types de callouts sont supportés :
 
@@ -1185,7 +1219,7 @@ Cinq types de callouts sont supportés :
 - `# callout-caution` - Boîte de précaution rouge
 - `# callout-important` - Boîte importante rouge
 
-### Avec ou sans titre
+#### Avec ou sans titre
 
 **Avec titre :**
 
@@ -1201,7 +1235,7 @@ Cinq types de callouts sont supportés :
 # Utilisez les callouts pour mettre en évidence les informations clés.
 ```
 
-### Exemples
+#### Exemples
 
 ``` r
 # callout-note - Exigences des données
@@ -1217,7 +1251,7 @@ library(dplyr)
 iris %>% head()
 ```
 
-### Règles
+#### Règles
 
 - Le callout commence par `# callout-TYPE` (suivi optionnellement de
   `- Titre`)
@@ -1234,33 +1268,35 @@ iris %>% head()
 pour ajouter un snippet `callout` à votre RStudio. Tapez `callout` suivi
 de `Tab` pour insérer rapidement le modèle de callout.
 
-## Diagrammes Mermaid
+### Diagrammes Mermaid
 
 Créez des organigrammes, des diagrammes de séquence et d’autres
 visualisations avec la syntaxe Mermaid. Les diagrammes Mermaid sont
 rendus directement dans la sortie HTML.
 
-### Syntaxe
+#### Syntaxe
 
 Dans votre script R, commencez par `#| mermaid`, ajoutez des options
-avec `#|`, puis le contenu du diagramme :
+avec `#|`, puis le contenu du diagramme (préfixé avec `#` pour garder
+une syntaxe R valide) :
 
 ``` r
 #| mermaid
 #| eval: true
-flowchart TD
-    A[Début] --> B[Traiter les données]
-    B --> C{Valide ?}
-    C -->|Oui| D[Sauvegarder]
-    C -->|Non| E[Erreur]
-    D --> F[Fin]
-    E --> F
+# flowchart TD
+#     A[Début] --> B[Traiter les données]
+#     B --> C{Valide ?}
+#     C -->|Oui| D[Sauvegarder]
+#     C -->|Non| E[Erreur]
+#     D --> F[Fin]
+#     E --> F
 ```
 
 Ceci se convertit en un chunk Mermaid Quarto qui se rend comme un
-diagramme interactif en HTML.
+diagramme interactif en HTML. Le préfixe `#` est automatiquement
+supprimé lors de la conversion.
 
-### Types de diagrammes
+#### Types de diagrammes
 
 Mermaid supporte de nombreux types de diagrammes :
 
@@ -1269,9 +1305,9 @@ Mermaid supporte de nombreux types de diagrammes :
 ``` r
 #| mermaid
 #| eval: true
-flowchart LR
-    A[Entrée] --> B[Traitement]
-    B --> C[Sortie]
+# flowchart LR
+#     A[Entrée] --> B[Traitement]
+#     B --> C[Sortie]
 ```
 
 **Diagrammes de séquence :**
@@ -1279,14 +1315,14 @@ flowchart LR
 ``` r
 #| mermaid
 #| eval: true
-sequenceDiagram
-    participant Utilisateur
-    participant API
-    participant BDD
-    Utilisateur->>API: Demande
-    API->>BDD: Requête
-    BDD-->>API: Résultats
-    API-->>Utilisateur: Réponse
+# sequenceDiagram
+#     participant Utilisateur
+#     participant API
+#     participant BDD
+#     Utilisateur->>API: Demande
+#     API->>BDD: Requête
+#     BDD-->>API: Résultats
+#     API-->>Utilisateur: Réponse
 ```
 
 **Diagrammes de classes :**
@@ -1294,29 +1330,31 @@ sequenceDiagram
 ``` r
 #| mermaid
 #| eval: true
-classDiagram
-    class Animal {
-        +String nom
-        +int age
-        +faireUnSon()
-    }
-    class Chien {
-        +String race
-        +aboyer()
-    }
-    Animal <|-- Chien
+# classDiagram
+#     class Animal {
+#         +String nom
+#         +int age
+#         +faireUnSon()
+#     }
+#     class Chien {
+#         +String race
+#         +aboyer()
+#     }
+#     Animal <|-- Chien
 ```
 
-### Règles
+#### Règles
 
 - Commencer par le commentaire `#| mermaid`
 - Ajouter les options de chunk avec le préfixe `#|` (ex:
   `#| eval: true`)
-- Le contenu du diagramme suit **sans préfixe `#`**
-- Le chunk se termine à la première ligne vide ou ligne de commentaire
+- Le contenu du diagramme suit **avec préfixe `#` sur chaque ligne**
+  (pour garder une syntaxe R valide)
+- Le chunk se termine à la première ligne vide
+- Le préfixe `#` est automatiquement supprimé dans la sortie Quarto
 - Les options sont automatiquement converties au format Quarto (`%%|`)
 
-### Exemple complet
+#### Exemple complet
 
 Voir le fichier d’exemple complet avec plusieurs types de diagrammes :
 
@@ -1341,14 +1379,14 @@ le modèle de diagramme.
 - [Guide Quarto
   Mermaid](https://quarto.org/docs/authoring/diagrams.html)
 
-## Tabsets (Onglets)
+### Tabsets (Onglets)
 
 Les tabsets vous permettent d’organiser du contenu connexe dans des
 onglets interactifs, parfait pour afficher des vues alternatives,
 différentes analyses ou des visualisations groupées. Cette
 fonctionnalité utilise la même syntaxe intuitive que les callouts.
 
-### Syntaxe de base
+#### Syntaxe de base
 
 Pour créer un tabset :
 
@@ -1432,7 +1470,7 @@ modèle de tabset.
 - Combinez les tabsets avec les callouts pour une documentation riche et
   organisée
 
-## Résumé des règles de commentaires
+### Résumé des règles de commentaires
 
 | Type                     | Syntaxe                     | Résultat                | Exemple                      |
 |--------------------------|-----------------------------|-------------------------|------------------------------|
@@ -1463,13 +1501,13 @@ modèle de tabset.
 6.  **Raccourci clavier** : Utilisez `Ctrl+Shift+C` (Windows/Linux) ou
     `Cmd+Shift+C` (Mac) pour commenter/décommenter rapidement
 
-## Intégration de la qualité du code
+### Intégration de la qualité du code
 
 quartify s’intègre avec `styler` et `lintr` pour fournir des
 vérifications automatiques de la qualité du code dans votre
 documentation.
 
-### Utilisation de styler
+#### Utilisation de styler
 
 Le paramètre `use_styler` formate automatiquement votre code selon le
 guide de style tidyverse :
@@ -1491,7 +1529,7 @@ Le document généré inclura des tabsets montrant : - **Original Code** :
 Votre code tel qu’écrit - **Styled Code** : La version formatée selon
 tidyverse
 
-### Utilisation de lintr
+#### Utilisation de lintr
 
 Le paramètre `use_lintr` effectue des vérifications de qualité du code :
 
@@ -1507,7 +1545,7 @@ Les tabsets incluront : - **Original Code** : Votre code - **Styled
 Code** : Version formatée - **Lint Issues** : Liste des violations de
 style et suggestions
 
-### Application de styler aux fichiers source
+#### Application de styler aux fichiers source
 
 Utilisez `apply_styler = TRUE` pour modifier directement votre script R
 source :
@@ -1524,7 +1562,7 @@ rtoqmd("mon_script.R", "sortie.qmd",
 original. Considérez utiliser un contrôle de version ou des sauvegardes
 avant d’utiliser cette option.
 
-### Exemple de sortie
+#### Exemple de sortie
 
 Essayez l’exemple inclus :
 
@@ -1540,7 +1578,7 @@ rtoqmd(fichier_exemple, "demo_qualite.qmd",
 )
 ```
 
-## Conseils et bonnes pratiques
+### Conseils et bonnes pratiques
 
 1.  **Commencez par la structure** : Définissez d’abord vos titres de
     section pour créer le plan du document
@@ -1559,7 +1597,7 @@ rtoqmd(fichier_exemple, "demo_qualite.qmd",
 8.  **Utilisez les vérifications de qualité** : Activez `use_styler` et
     `use_lintr` pour le matériel pédagogique ou les revues de code
 
-## Conclusion
+### Conclusion
 
 `quartify` facilite la transformation de vos scripts R en documents
 Quarto sans reformatage manuel. En suivant les conventions des sections

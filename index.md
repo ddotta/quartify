@@ -417,17 +417,31 @@ symbols (e.g., `## Title ====` or `### Title ----` will work).
 
 #### 2. Regular Comments (Text)
 
-Single `#` comments **at the start of a line (no leading space)** become
-explanatory text:
+Single `#` comments **at the start of a line (no leading space)** with a
+space after `#` become explanatory text:
 
 ``` r
 # This is a standalone comment
 # It becomes plain text in the Quarto document
 ```
 
+**Hidden Comments:** Comments that start with `#` immediately followed
+by a non-space character (e.g., `#NOTE:`, `#TODO:`, `#DEBUG`) are
+completely ignored and will not appear in the output. This allows you to
+include private development notes:
+
+``` r
+# This comment appears in output
+
+#TODO: Fix this later - NOT visible in output
+#NOTE: Internal reminder - NOT visible
+
+# This comment appears again
+```
+
 > **⚠️ Important:** For a comment to be converted to text, the line must
-> start with `#` **without any leading space**. Indented comments (with
-> spaces before `#`) remain in the code.
+> start with `#` **followed by a space**. Indented comments (with spaces
+> before `#`) remain in the code.
 
 > **💡 Tip:** To **split a long chunk into multiple parts**, insert a
 > **comment at the start of a line** (no space before `#`) between two
@@ -501,11 +515,11 @@ Mermaid syntax.
 ``` r
 #| mermaid
 #| eval: true
-flowchart TD
-    A[Start] --> B[Process]
-    B --> C{Decision}
-    C -->|Yes| D[End]
-    C -->|No| B
+# flowchart TD
+#     A[Start] --> B[Process]
+#     B --> C{Decision}
+#     C -->|Yes| D[End]
+#     C -->|No| B
 ```
 
 **Converts to Quarto Mermaid chunk** with proper formatting for diagram
@@ -516,8 +530,9 @@ rendering in HTML output.
 (`classDiagram`) - State diagrams, Gantt charts, and more
 
 **Rules:** - Start with `#| mermaid` comment - Add chunk options with
-`#|` (e.g., `#| eval: true`) - Diagram content follows without `#`
-prefix - Chunk ends at first blank line or comment
+`#|` (e.g., `#| eval: true`) - Diagram content follows **with `#` prefix
+on each line** (keeps valid R syntax) - The `#` prefix is automatically
+removed in Quarto output - Chunk ends at first blank line
 
 See complete example in
 [`inst/examples/example_mermaid.R`](https://github.com/ddotta/quartify/blob/main/inst/examples/example_mermaid.R)

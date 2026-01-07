@@ -333,6 +333,29 @@ See
 [`?install_quartify_snippets`](https://ddotta.github.io/quartify/reference/install_quartify_snippets.md)
 for more details.
 
+### Hidden Comments
+
+You can include private notes or development comments in your R scripts
+that won’t appear in the rendered output. Comments that start with `#`
+immediately followed by a non-space character are completely ignored:
+
+``` r
+# This comment WILL appear in the output
+
+#NOTE: This will NOT appear (no space after #)
+#TODO: This will NOT appear either
+#DEBUG code below
+
+# This regular comment WILL appear again
+```
+
+This feature is useful for:
+
+- **Development notes**: `#TODO:`, `#FIXME:`, `#NOTE:`
+- **Debugging markers**: `#DEBUG`, `#TEST`
+- **Internal documentation**: `#INTERNAL:`, `#PRIVATE:`
+- **Code annotations**: `#HACK:`, `#OPTIMIZE:`
+
 **Complete example with metadata:**
 
 ``` r
@@ -1222,22 +1245,23 @@ Mermaid syntax. Mermaid diagrams render directly in HTML output.
 ### Syntax
 
 In your R script, start with `#| mermaid`, add options with `#|`, then
-the diagram content:
+the diagram content (prefixed with `#` to keep valid R syntax):
 
 ``` r
 #| mermaid
 #| eval: true
-flowchart TD
-    A[Start] --> B[Process Data]
-    B --> C{Valid?}
-    C -->|Yes| D[Save]
-    C -->|No| E[Error]
-    D --> F[End]
-    E --> F
+# flowchart TD
+#     A[Start] --> B[Process Data]
+#     B --> C{Valid?}
+#     C -->|Yes| D[Save]
+#     C -->|No| E[Error]
+#     D --> F[End]
+#     E --> F
 ```
 
 This converts to a Quarto Mermaid chunk that renders as an interactive
-diagram in HTML.
+diagram in HTML. The `#` prefix is automatically removed during
+conversion.
 
 ### Diagram Types
 
@@ -1248,9 +1272,9 @@ Mermaid supports many diagram types:
 ``` r
 #| mermaid
 #| eval: true
-flowchart LR
-    A[Input] --> B[Processing]
-    B --> C[Output]
+# flowchart LR
+#     A[Input] --> B[Processing]
+#     B --> C[Output]
 ```
 
 **Sequence Diagrams:**
@@ -1258,14 +1282,14 @@ flowchart LR
 ``` r
 #| mermaid
 #| eval: true
-sequenceDiagram
-    participant User
-    participant API
-    participant DB
-    User->>API: Request
-    API->>DB: Query
-    DB-->>API: Results
-    API-->>User: Response
+# sequenceDiagram
+#     participant User
+#     participant API
+#     participant DB
+#     User->>API: Request
+#     API->>DB: Query
+#     DB-->>API: Results
+#     API-->>User: Response
 ```
 
 **Class Diagrams:**
@@ -1273,25 +1297,27 @@ sequenceDiagram
 ``` r
 #| mermaid
 #| eval: true
-classDiagram
-    class Animal {
-        +String name
-        +int age
-        +makeSound()
-    }
-    class Dog {
-        +String breed
-        +bark()
-    }
-    Animal <|-- Dog
+# classDiagram
+#     class Animal {
+#         +String name
+#         +int age
+#         +makeSound()
+#     }
+#     class Dog {
+#         +String breed
+#         +bark()
+#     }
+#     Animal <|-- Dog
 ```
 
 ### Rules
 
 - Start with the `#| mermaid` comment
 - Add chunk options with `#|` prefix (e.g., `#| eval: true`)
-- Diagram content follows **without `#` prefix**
-- Chunk ends at the first empty line or comment line
+- Diagram content follows **with `#` prefix on each line** (to keep
+  valid R syntax)
+- Chunk ends at the first empty line
+- The `#` prefix is automatically removed in the Quarto output
 - Options are automatically converted to Quarto format (`%%|`)
 
 ### Complete Example

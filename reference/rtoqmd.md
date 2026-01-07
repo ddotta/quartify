@@ -155,6 +155,18 @@ The Description field supports multi-line content. Continuation lines
 should start with `#` followed by spaces and the text. The description
 ends at an empty line or a line without `#`.
 
+## Hidden Comments
+
+Comments that start with `#` immediately followed by a non-space
+character (e.g., `#NOTE:`, `#TODO:`, `#DEBUG`) are completely ignored
+during conversion and will not appear in the Quarto output. This allows
+you to include private notes, debugging comments, or development
+annotations in your R scripts that won't be visible in the rendered
+documentation.
+
+Only comments with a space after `#` (e.g., `# This is a comment`) are
+converted to text in the output.
+
 ## Callouts
 
 The function converts special comment patterns into Quarto callouts.
@@ -215,14 +227,14 @@ example_file <- system.file("examples", "example.R", package = "quartify")
 # Convert and render to HTML (output in temp directory)
 output_qmd <- file.path(tempdir(), "output.qmd")
 rtoqmd(example_file, output_qmd)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3UO5Ki/output.qmd
+#> ✔ Quarto markdown file created: /tmp/RtmphXZWcu/output.qmd
 #> Rendering Quarto document to HTML...
 #> ! Quarto is not installed or not available in PATH
 #> ℹ Install Quarto from <https://quarto.org/docs/get-started/>
 
 # Convert only, without rendering
 rtoqmd(example_file, output_qmd, render_html = FALSE)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3UO5Ki/output.qmd
+#> ✔ Quarto markdown file created: /tmp/RtmphXZWcu/output.qmd
 
 # Example with metadata in the R script:
 # Create a script with metadata
@@ -240,7 +252,7 @@ writeLines(c(
 # Convert - metadata will override function parameters
 output_meta <- file.path(tempdir(), "output_with_metadata.qmd")
 rtoqmd(script_with_metadata, output_meta)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3UO5Ki/output_with_metadata.qmd
+#> ✔ Quarto markdown file created: /tmp/RtmphXZWcu/output_with_metadata.qmd
 #> Rendering Quarto document to HTML...
 #> ! Quarto is not installed or not available in PATH
 #> ℹ Install Quarto from <https://quarto.org/docs/get-started/>
@@ -259,7 +271,7 @@ writeLines(c(
 # Convert with styler formatting
 output_styled <- file.path(tempdir(), "output_styled.qmd")
 rtoqmd(script_with_style_issues, output_styled, use_styler = TRUE)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3UO5Ki/output_styled.qmd
+#> ✔ Quarto markdown file created: /tmp/RtmphXZWcu/output_styled.qmd
 #> Rendering Quarto document to HTML...
 #> ! Quarto is not installed or not available in PATH
 #> ℹ Install Quarto from <https://quarto.org/docs/get-started/>
@@ -268,7 +280,7 @@ rtoqmd(script_with_style_issues, output_styled, use_styler = TRUE)
 output_quality <- file.path(tempdir(), "output_quality.qmd")
 rtoqmd(script_with_style_issues, output_quality, 
        use_styler = TRUE, use_lintr = TRUE)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3UO5Ki/output_quality.qmd
+#> ✔ Quarto markdown file created: /tmp/RtmphXZWcu/output_quality.qmd
 #> Rendering Quarto document to HTML...
 #> ! Quarto is not installed or not available in PATH
 #> ℹ Install Quarto from <https://quarto.org/docs/get-started/>

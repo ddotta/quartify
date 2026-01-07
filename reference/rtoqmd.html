@@ -13,7 +13,7 @@ modern themes, native callouts, Mermaid diagrams, and the full Quarto ecosystem.
 
     <a class="navbar-brand me-2" href="../index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,6 +174,16 @@ These metadata lines are removed from the document body and only appear in the Y
 followed by spaces and the text. The description ends at an empty line or a line without <code>#</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="hidden-comments">Hidden Comments<a class="anchor" aria-label="anchor" href="#hidden-comments"></a></h2>
+
+
+<p>Comments that start with <code>#</code> immediately followed by a non-space character (e.g., <code>#NOTE:</code>, <code>#TODO:</code>, <code>#DEBUG</code>)
+are completely ignored during conversion and will not appear in the Quarto output.
+This allows you to include private notes, debugging comments, or development annotations in your R scripts
+that won't be visible in the rendered documentation.</p>
+<p>Only comments with a space after <code>#</code> (e.g., <code># This is a comment</code>) are converted to text in the output.</p>
+    </div>
+    <div class="section level2">
     <h2 id="callouts">Callouts<a class="anchor" aria-label="anchor" href="#callouts"></a></h2>
 
 
@@ -227,14 +237,14 @@ Example: hash tabset, hash tab - Plot A, code or text content, hash tab - Plot B
 <span class="r-in"><span><span class="co"># Convert and render to HTML (output in temp directory)</span></span></span>
 <span class="r-in"><span><span class="va">output_qmd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"output.qmd"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">example_file</span>, <span class="va">output_qmd</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/Rtmp3UO5Ki/output.qmd</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/RtmphXZWcu/output.qmd</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Rendering Quarto document to HTML...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Quarto is not installed or not available in PATH</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Install Quarto from <span style="color: #0000BB; font-style: italic;">&lt;https://quarto.org/docs/get-started/&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert only, without rendering</span></span></span>
 <span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">example_file</span>, <span class="va">output_qmd</span>, render_html <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/Rtmp3UO5Ki/output.qmd</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/RtmphXZWcu/output.qmd</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example with metadata in the R script:</span></span></span>
 <span class="r-in"><span><span class="co"># Create a script with metadata</span></span></span>
@@ -252,7 +262,7 @@ Example: hash tabset, hash tab - Plot A, code or text content, hash tab - Plot B
 <span class="r-in"><span><span class="co"># Convert - metadata will override function parameters</span></span></span>
 <span class="r-in"><span><span class="va">output_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"output_with_metadata.qmd"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">script_with_metadata</span>, <span class="va">output_meta</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/Rtmp3UO5Ki/output_with_metadata.qmd</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/RtmphXZWcu/output_with_metadata.qmd</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Rendering Quarto document to HTML...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Quarto is not installed or not available in PATH</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Install Quarto from <span style="color: #0000BB; font-style: italic;">&lt;https://quarto.org/docs/get-started/&gt;</span></span>
@@ -271,7 +281,7 @@ Example: hash tabset, hash tab - Plot A, code or text content, hash tab - Plot B
 <span class="r-in"><span><span class="co"># Convert with styler formatting</span></span></span>
 <span class="r-in"><span><span class="va">output_styled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"output_styled.qmd"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">script_with_style_issues</span>, <span class="va">output_styled</span>, use_styler <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/Rtmp3UO5Ki/output_styled.qmd</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/RtmphXZWcu/output_styled.qmd</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Rendering Quarto document to HTML...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Quarto is not installed or not available in PATH</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Install Quarto from <span style="color: #0000BB; font-style: italic;">&lt;https://quarto.org/docs/get-started/&gt;</span></span>
@@ -280,7 +290,7 @@ Example: hash tabset, hash tab - Plot A, code or text content, hash tab - Plot B
 <span class="r-in"><span><span class="va">output_quality</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"output_quality.qmd"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rtoqmd</span><span class="op">(</span><span class="va">script_with_style_issues</span>, <span class="va">output_quality</span>, </span></span>
 <span class="r-in"><span>       use_styler <span class="op">=</span> <span class="cn">TRUE</span>, use_lintr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/Rtmp3UO5Ki/output_quality.qmd</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Quarto markdown file created: <span style="color: #0000BB;">/tmp/RtmphXZWcu/output_quality.qmd</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Rendering Quarto document to HTML...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Quarto is not installed or not available in PATH</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Install Quarto from <span style="color: #0000BB; font-style: italic;">&lt;https://quarto.org/docs/get-started/&gt;</span></span>

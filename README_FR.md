@@ -439,15 +439,29 @@ fonctionneront).
 #### 2. Commentaires réguliers (Texte)
 
 Les commentaires simples avec `#` **en début de ligne (sans espace
-avant)** deviennent du texte explicatif :
+avant)** suivis d’un espace deviennent du texte explicatif :
 
 ``` r
 # Ceci est un commentaire autonome
 # Il devient du texte simple dans le document Quarto
 ```
 
+**Commentaires cachés :** Les commentaires qui commencent par `#`
+immédiatement suivi d’un caractère non-espace (ex: `#NOTE:`, `#TODO:`,
+`#DEBUG`) sont complètement ignorés et n’apparaîtront pas dans la
+sortie. Cela permet d’inclure des notes de développement privées :
+
+``` r
+# Ce commentaire apparaît dans la sortie
+
+#TODO: À corriger plus tard - NON visible dans la sortie
+#NOTE: Rappel interne - NON visible
+
+# Ce commentaire apparaît à nouveau
+```
+
 > **⚠️ Important :** Pour qu’un commentaire soit converti en texte, la
-> ligne doit commencer par `#` **sans espace avant**. Les commentaires
+> ligne doit commencer par `#` **suivi d’un espace**. Les commentaires
 > indentés (avec des espaces avant `#`) restent dans le code.
 
 > **💡 Astuce :** Pour **diviser un long chunk en plusieurs parties**,
@@ -526,10 +540,10 @@ sortie HTML.
 ``` r
 #| mermaid
 #| eval: true
-flowchart LR
-  A[Démarrer] --> B{Décision}
-  B -->|Oui| C[Résultat 1]
-  B -->|Non| D[Résultat 2]
+# flowchart LR
+#   A[Démarrer] --> B{Décision}
+#   B -->|Oui| C[Résultat 1]
+#   B -->|Non| D[Résultat 2]
 ```
 
 **Se convertit en Quarto :**
@@ -542,6 +556,8 @@ flowchart LR
   B -->|Oui| C[Résultat 1]
   B -->|Non| D[Résultat 2]
 ```
+
+    **Remarque :** Les lignes du diagramme sont préfixées avec `#` dans le script R pour maintenir une syntaxe R valide. Le préfixe `#` est automatiquement supprimé lors de la conversion en Quarto.
 
     Pour plus d'informations : [Documentation Mermaid](https://mermaid.js.org/)
 

@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/ddotta/quartify/blob/main/DESCRIPTION)
 
 Dotta D (2026). *quartify: Convert R Scripts to Quarto Markdown
-Documents*. R package version 1.0.0,
+Documents*. R package version 1.1.0,
 <https://ddotta.github.io/quartify/>.
 
     @Manual{,
       title = {quartify: Convert R Scripts to Quarto Markdown Documents},
       author = {Damien Dotta},
       year = {2026},
-      note = {R package version 1.0.0},
+      note = {R package version 1.1.0},
       url = {https://ddotta.github.io/quartify/},
     }

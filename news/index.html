@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">quartify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,62 @@
       <small>Source: <a href="https://github.com/ddotta/quartify/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.1.0" id="quartify-110">quartify 1.1.0<a class="anchor" aria-label="anchor" href="#quartify-110"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-1-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h3>
+<ul><li>
+<strong>Hidden Comments</strong>:
+<ul><li>Comments starting with <code>#</code> immediately followed by a non-space character (e.g., <code>#NOTE:</code>, <code>#TODO:</code>, <code>#DEBUG</code>) are now completely ignored during conversion</li>
+<li>Allows including private development notes, debugging markers, and internal annotations in R scripts that won’t appear in rendered documentation</li>
+<li>Useful for <code>#TODO:</code>, <code>#FIXME:</code>, <code>#NOTE:</code>, <code>#DEBUG</code>, <code>#INTERNAL:</code>, <code>#PRIVATE:</code>, <code>#HACK:</code>, <code>#OPTIMIZE:</code> markers</li>
+<li>Only comments with a space after <code>#</code> (e.g., <code># This is a comment</code>) are converted to text in the output</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-1-1-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-1-0"></a></h3>
+<ul><li>
+<strong>RStudio Snippets Installation</strong>:
+<ul><li>
+<code><a href="../reference/install_quartify_snippets.html">install_quartify_snippets()</a></code> now uses correct paths for all platforms:
+<ul><li>Windows: <code>%APPDATA%/RStudio/snippets</code>
+</li>
+<li>Mac/Linux: <code>~/.config/rstudio/snippets</code>
+</li>
+</ul></li>
+<li>Automatically removes and replaces old quartify snippets when re-running the function</li>
+<li>Opens snippets file automatically in RStudio after installation</li>
+<li>Snippets can be reloaded immediately by saving the file (Ctrl+S / Cmd+S) without restarting RStudio</li>
+<li>Improved cross-platform compatibility for RStudio Desktop, Pro, and Server</li>
+</ul></li>
+<li>
+<strong>Mermaid Diagram Syntax</strong>:
+<ul><li>Mermaid diagram content in R scripts now uses commented lines (with <code>#</code> prefix) to maintain valid R syntax</li>
+<li>Example: <code># flowchart TD</code>, <code># A[Start] --&gt; B[End]</code>
+</li>
+<li>The <code>#</code> prefix is automatically removed during conversion to Quarto</li>
+<li>Ensures R scripts remain valid and executable while containing Mermaid diagrams</li>
+<li>Updated mermaid snippet to generate commented diagram lines</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-1-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0"></a></h3>
+<ul><li>
+<strong>Code Quality</strong>: All non-ASCII characters removed from code to pass CRAN checks
+<ul><li>Comments and messages in <code>R/snippets.R</code> converted to English</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-1-1-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-1-0"></a></h3>
+<ul><li>Added comprehensive documentation for hidden comments feature in:
+<ul><li>Function documentation (<code><a href="../reference/rtoqmd.html">?rtoqmd</a></code>)</li>
+<li>Getting Started vignettes (EN and FR)</li>
+<li>README files (EN and FR)</li>
+</ul></li>
+<li>Updated all Mermaid diagram examples to show commented syntax</li>
+<li>Clarified snippet installation process and immediate reload capability</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="quartify-100">quartify 1.0.0<a class="anchor" aria-label="anchor" href="#quartify-100"></a></h2>
 <div class="section level3">
