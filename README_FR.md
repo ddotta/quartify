@@ -329,14 +329,25 @@ Les sections de code RStudio deviennent des en-têtes markdown. **Critique** : l
 
 #### 2. Commentaires réguliers (Texte)
 
-Les commentaires simples avec `#` **en début de ligne (sans espace avant)** deviennent du texte explicatif :
+Les commentaires simples avec `#` **en début de ligne (sans espace avant)** suivis d'un espace deviennent du texte explicatif :
 
 ```r
 # Ceci est un commentaire autonome
 # Il devient du texte simple dans le document Quarto
 ```
 
-> **⚠️ Important :** Pour qu'un commentaire soit converti en texte, la ligne doit commencer par `#` **sans espace avant**. Les commentaires indentés (avec des espaces avant `#`) restent dans le code.
+**Commentaires cachés :** Les commentaires qui commencent par `#` immédiatement suivi d'un caractère non-espace (ex: `#NOTE:`, `#TODO:`, `#DEBUG`) sont complètement ignorés et n'apparaîtront pas dans la sortie. Cela permet d'inclure des notes de développement privées :
+
+```r
+# Ce commentaire apparaît dans la sortie
+
+#TODO: À corriger plus tard - NON visible dans la sortie
+#NOTE: Rappel interne - NON visible
+
+# Ce commentaire apparaît à nouveau
+```
+
+> **⚠️ Important :** Pour qu'un commentaire soit converti en texte, la ligne doit commencer par `#` **suivi d'un espace**. Les commentaires indentés (avec des espaces avant `#`) restent dans le code.
 
 > **💡 Astuce :** Pour **diviser un long chunk en plusieurs parties**, insérez un **commentaire en début de ligne** (sans espace avant `#`) entre deux blocs de code. Ce commentaire sera converti en texte et créera naturellement deux chunks séparés.
 

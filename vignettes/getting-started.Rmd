@@ -267,7 +267,7 @@ You can define your document's metadata directly in your R script using special 
 - **Date**: `# Date : 2025-11-28`
 - **Description**: `# Description : Description of your script`
 
-::: {.alert .alert-success}
+::: {.alert .alert-info}
 **Tip - RStudio Snippets:** quartify provides a function to automatically install useful snippets including `header`, `callout`, `mermaid`, and `tabset`:
 
 ```{r eval=FALSE}
@@ -279,6 +279,27 @@ After installation, the snippets file will automatically open in RStudio. Save i
 
 You can also manually add snippets via Tools > Edit Code Snippets > R. See `?install_quartify_snippets` for more details.
 :::
+
+### Hidden Comments
+
+You can include private notes or development comments in your R scripts that won't appear in the rendered output. Comments that start with `#` immediately followed by a non-space character are completely ignored:
+
+```r
+# This comment WILL appear in the output
+
+#NOTE: This will NOT appear (no space after #)
+#TODO: This will NOT appear either
+#DEBUG code below
+
+# This regular comment WILL appear again
+```
+
+This feature is useful for:
+
+- **Development notes**: `#TODO:`, `#FIXME:`, `#NOTE:`
+- **Debugging markers**: `#DEBUG`, `#TEST`
+- **Internal documentation**: `#INTERNAL:`, `#PRIVATE:`
+- **Code annotations**: `#HACK:`, `#OPTIMIZE:`
 
 **Complete example with metadata:**
 

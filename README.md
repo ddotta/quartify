@@ -337,14 +337,25 @@ RStudio code sections become markdown headers. **Critical**: trailing symbols mu
 
 #### 2. Regular Comments (Text)
 
-Single `#` comments **at the start of a line (no leading space)** become explanatory text:
+Single `#` comments **at the start of a line (no leading space)** with a space after `#` become explanatory text:
 
 ```r
 # This is a standalone comment
 # It becomes plain text in the Quarto document
 ```
 
-> **⚠️ Important:** For a comment to be converted to text, the line must start with `#` **without any leading space**. Indented comments (with spaces before `#`) remain in the code.
+**Hidden Comments:** Comments that start with `#` immediately followed by a non-space character (e.g., `#NOTE:`, `#TODO:`, `#DEBUG`) are completely ignored and will not appear in the output. This allows you to include private development notes:
+
+```r
+# This comment appears in output
+
+#TODO: Fix this later - NOT visible in output
+#NOTE: Internal reminder - NOT visible
+
+# This comment appears again
+```
+
+> **⚠️ Important:** For a comment to be converted to text, the line must start with `#` **followed by a space**. Indented comments (with spaces before `#`) remain in the code.
 
 > **💡 Tip:** To **split a long chunk into multiple parts**, insert a **comment at the start of a line** (no space before `#`) between two code blocks. This comment will be converted to text and naturally create two separate chunks.
 

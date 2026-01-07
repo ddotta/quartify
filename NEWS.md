@@ -1,3 +1,45 @@
+# quartify 1.1.0
+
+## New Features
+
+* **Hidden Comments**:
+  - Comments starting with `#` immediately followed by a non-space character (e.g., `#NOTE:`, `#TODO:`, `#DEBUG`) are now completely ignored during conversion
+  - Allows including private development notes, debugging markers, and internal annotations in R scripts that won't appear in rendered documentation
+  - Useful for `#TODO:`, `#FIXME:`, `#NOTE:`, `#DEBUG`, `#INTERNAL:`, `#PRIVATE:`, `#HACK:`, `#OPTIMIZE:` markers
+  - Only comments with a space after `#` (e.g., `# This is a comment`) are converted to text in the output
+
+## Improvements
+
+* **RStudio Snippets Installation**:
+  - `install_quartify_snippets()` now uses correct paths for all platforms:
+    - Windows: `%APPDATA%/RStudio/snippets`
+    - Mac/Linux: `~/.config/rstudio/snippets`
+  - Automatically removes and replaces old quartify snippets when re-running the function
+  - Opens snippets file automatically in RStudio after installation
+  - Snippets can be reloaded immediately by saving the file (Ctrl+S / Cmd+S) without restarting RStudio
+  - Improved cross-platform compatibility for RStudio Desktop, Pro, and Server
+
+* **Mermaid Diagram Syntax**:
+  - Mermaid diagram content in R scripts now uses commented lines (with `#` prefix) to maintain valid R syntax
+  - Example: `# flowchart TD`, `# A[Start] --> B[End]`
+  - The `#` prefix is automatically removed during conversion to Quarto
+  - Ensures R scripts remain valid and executable while containing Mermaid diagrams
+  - Updated mermaid snippet to generate commented diagram lines
+
+## Bug Fixes
+
+* **Code Quality**: All non-ASCII characters removed from code to pass CRAN checks
+  - Comments and messages in `R/snippets.R` converted to English
+
+## Documentation
+
+* Added comprehensive documentation for hidden comments feature in:
+  - Function documentation (`?rtoqmd`)
+  - Getting Started vignettes (EN and FR)
+  - README files (EN and FR)
+* Updated all Mermaid diagram examples to show commented syntax
+* Clarified snippet installation process and immediate reload capability
+
 # quartify 1.0.0
 
 ## CRAN Release

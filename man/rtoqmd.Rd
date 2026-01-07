@@ -92,6 +92,16 @@ The Description field supports multi-line content. Continuation lines should sta
 followed by spaces and the text. The description ends at an empty line or a line without \code{#}.
 }
 
+\section{Hidden Comments}{
+
+Comments that start with \code{#} immediately followed by a non-space character (e.g., \code{#NOTE:}, \code{#TODO:}, \code{#DEBUG})
+are completely ignored during conversion and will not appear in the Quarto output.
+This allows you to include private notes, debugging comments, or development annotations in your R scripts
+that won't be visible in the rendered documentation.
+
+Only comments with a space after \code{#} (e.g., \code{# This is a comment}) are converted to text in the output.
+}
+
 \section{Callouts}{
 
 The function converts special comment patterns into Quarto callouts.

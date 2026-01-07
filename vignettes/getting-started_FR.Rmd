@@ -279,6 +279,40 @@ Après installation, le fichier de snippets s'ouvrira automatiquement dans RStud
 Vous pouvez aussi ajouter manuellement des snippets via Tools > Edit Code Snippets > R. Voir `?install_quartify_snippets` pour plus de détails.
 :::
 
+### Commentaires cachés
+
+Vous pouvez inclure des notes privées ou des commentaires de développement dans vos scripts R qui n'apparaîtront pas dans le rendu final. Les commentaires qui commencent par `#` immédiatement suivi d'un caractère non-espace sont complètement ignorés :
+
+```r
+# Ce commentaire APPARAITRA dans la sortie
+
+#NOTE: Ceci n'apparaitra PAS (pas d'espace après #)
+#TODO: Ceci non plus
+#DEBUG code ci-dessous
+
+# Ce commentaire régulier APPARAITRA à nouveau
+```
+
+Cette fonctionnalité est utile pour :
+
+- **Notes de développement** : `#TODO:`, `#FIXME:`, `#NOTE:`
+- **Marqueurs de débogage** : `#DEBUG`, `#TEST`
+- **Documentation interne** : `#INTERNAL:`, `#PRIVATE:`
+- **Annotations de code** : `#HACK:`, `#OPTIMIZE:`
+
+**Exemple complet avec métadonnées :**
+#DEBUG code ci-dessous
+
+# Ce commentaire régulier APPARAITRA à nouveau
+```
+
+Cette fonctionnalité est utile pour :
+
+- **Notes de développement** : `#TODO:`, `#FIXME:`, `#NOTE:`
+- **Marqueurs de débogage** : `#DEBUG`, `#TEST`
+- **Documentation interne** : `#INTERNAL:`, `#PRIVATE:`
+- **Annotations de code** : `#HACK:`, `#OPTIMIZE:`
+
 **Exemple complet avec métadonnées :**
 
 ```r
