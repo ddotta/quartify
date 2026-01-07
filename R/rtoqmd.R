@@ -592,9 +592,27 @@ rtoqmd <- function(input_file, output_file = NULL,
         i <- i + 1
       }
       
-      # Collect mermaid content (non-comment, non-empty lines)
-      while (i <= length(lines) && !grepl("^\\s*$", lines[i]) && !grepl("^#", lines[i])) {
-        mermaid_content <- c(mermaid_content, lines[i])
+      # Collect mermaid content (lines starting with # but not #|, or non-comment lines)
+      while (i <= length(lines) && !grepl("^\\s*$", lines[i])) {
+        current_line <- lines[i]
+        # Stop if we hit a comment that's not part of mermaid (e.g., regular comment)
+        if (grepl("^#\\|", current_line)) {
+          break  # Hit another chunk option
+        }
+        # Remove leading # if present (mermaid content is commented in R)
+        if (grepl("^#\\s", current_line)) {
+          current_line <- sub("^#\\s", "", current_line)
+        } else if (grepl("^#", current_line) && !grepl("^#[^\\s]", current_line)) {
+          # Handle case where # has no space after it but is followed by nothing
+          current_line <- sub("^#", "", current_line)
+        } else if (!grepl("^#", current_line)) {
+          # Non-commented line (legacy support)
+          # Keep as-is
+        } else {
+          # Line starting with # but not mermaid content (e.g., ## heading)
+          break
+        }
+        mermaid_content <- c(mermaid_content, current_line)
         i <- i + 1
       }
       

@@ -1071,21 +1071,21 @@ Créez des organigrammes, des diagrammes de séquence et d'autres visualisations
 
 ### Syntaxe
 
-Dans votre script R, commencez par `#| mermaid`, ajoutez des options avec `#|`, puis le contenu du diagramme :
+Dans votre script R, commencez par `#| mermaid`, ajoutez des options avec `#|`, puis le contenu du diagramme (préfixé avec `#` pour garder une syntaxe R valide) :
 
 ```r
 #| mermaid
 #| eval: true
-flowchart TD
-    A[Début] --> B[Traiter les données]
-    B --> C{Valide ?}
-    C -->|Oui| D[Sauvegarder]
-    C -->|Non| E[Erreur]
-    D --> F[Fin]
-    E --> F
+# flowchart TD
+#     A[Début] --> B[Traiter les données]
+#     B --> C{Valide ?}
+#     C -->|Oui| D[Sauvegarder]
+#     C -->|Non| E[Erreur]
+#     D --> F[Fin]
+#     E --> F
 ```
 
-Ceci se convertit en un chunk Mermaid Quarto qui se rend comme un diagramme interactif en HTML.
+Ceci se convertit en un chunk Mermaid Quarto qui se rend comme un diagramme interactif en HTML. Le préfixe `#` est automatiquement supprimé lors de la conversion.
 
 ### Types de diagrammes
 
@@ -1095,48 +1095,49 @@ Mermaid supporte de nombreux types de diagrammes :
 ```r
 #| mermaid
 #| eval: true
-flowchart LR
-    A[Entrée] --> B[Traitement]
-    B --> C[Sortie]
+# flowchart LR
+#     A[Entrée] --> B[Traitement]
+#     B --> C[Sortie]
 ```
 
 **Diagrammes de séquence :**
 ```r
 #| mermaid
 #| eval: true
-sequenceDiagram
-    participant Utilisateur
-    participant API
-    participant BDD
-    Utilisateur->>API: Demande
-    API->>BDD: Requête
-    BDD-->>API: Résultats
-    API-->>Utilisateur: Réponse
+# sequenceDiagram
+#     participant Utilisateur
+#     participant API
+#     participant BDD
+#     Utilisateur->>API: Demande
+#     API->>BDD: Requête
+#     BDD-->>API: Résultats
+#     API-->>Utilisateur: Réponse
 ```
 
 **Diagrammes de classes :**
 ```r
 #| mermaid
 #| eval: true
-classDiagram
-    class Animal {
-        +String nom
-        +int age
-        +faireUnSon()
-    }
-    class Chien {
-        +String race
-        +aboyer()
-    }
-    Animal <|-- Chien
+# classDiagram
+#     class Animal {
+#         +String nom
+#         +int age
+#         +faireUnSon()
+#     }
+#     class Chien {
+#         +String race
+#         +aboyer()
+#     }
+#     Animal <|-- Chien
 ```
 
 ### Règles
 
 - Commencer par le commentaire `#| mermaid`
 - Ajouter les options de chunk avec le préfixe `#|` (ex: `#| eval: true`)
-- Le contenu du diagramme suit **sans préfixe `#`**
-- Le chunk se termine à la première ligne vide ou ligne de commentaire
+- Le contenu du diagramme suit **avec préfixe `#` sur chaque ligne** (pour garder une syntaxe R valide)
+- Le chunk se termine à la première ligne vide
+- Le préfixe `#` est automatiquement supprimé dans la sortie Quarto
 - Les options sont automatiquement converties au format Quarto (`%%|`)
 
 ### Exemple complet

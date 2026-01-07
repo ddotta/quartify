@@ -402,10 +402,10 @@ Créez des organigrammes, des diagrammes de séquence et d'autres visualisations
 ```r
 #| mermaid
 #| eval: true
-flowchart LR
-  A[Démarrer] --> B{Décision}
-  B -->|Oui| C[Résultat 1]
-  B -->|Non| D[Résultat 2]
+# flowchart LR
+#   A[Démarrer] --> B{Décision}
+#   B -->|Oui| C[Résultat 1]
+#   B -->|Non| D[Résultat 2]
 ```
 
 **Se convertit en Quarto :**
@@ -419,6 +419,8 @@ flowchart LR
   B -->|Non| D[Résultat 2]
 ```
 ```
+
+**Remarque :** Les lignes du diagramme sont préfixées avec `#` dans le script R pour maintenir une syntaxe R valide. Le préfixe `#` est automatiquement supprimé lors de la conversion en Quarto.
 
 Pour plus d'informations : [Documentation Mermaid](https://mermaid.js.org/)
 

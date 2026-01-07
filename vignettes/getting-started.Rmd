@@ -1107,21 +1107,21 @@ Create flowcharts, sequence diagrams, and other visualizations with Mermaid synt
 
 ### Syntax
 
-In your R script, start with `#| mermaid`, add options with `#|`, then the diagram content:
+In your R script, start with `#| mermaid`, add options with `#|`, then the diagram content (prefixed with `#` to keep valid R syntax):
 
 ```r
 #| mermaid
 #| eval: true
-flowchart TD
-    A[Start] --> B[Process Data]
-    B --> C{Valid?}
-    C -->|Yes| D[Save]
-    C -->|No| E[Error]
-    D --> F[End]
-    E --> F
+# flowchart TD
+#     A[Start] --> B[Process Data]
+#     B --> C{Valid?}
+#     C -->|Yes| D[Save]
+#     C -->|No| E[Error]
+#     D --> F[End]
+#     E --> F
 ```
 
-This converts to a Quarto Mermaid chunk that renders as an interactive diagram in HTML.
+This converts to a Quarto Mermaid chunk that renders as an interactive diagram in HTML. The `#` prefix is automatically removed during conversion.
 
 ### Diagram Types
 
@@ -1131,48 +1131,49 @@ Mermaid supports many diagram types:
 ```r
 #| mermaid
 #| eval: true
-flowchart LR
-    A[Input] --> B[Processing]
-    B --> C[Output]
+# flowchart LR
+#     A[Input] --> B[Processing]
+#     B --> C[Output]
 ```
 
 **Sequence Diagrams:**
 ```r
 #| mermaid
 #| eval: true
-sequenceDiagram
-    participant User
-    participant API
-    participant DB
-    User->>API: Request
-    API->>DB: Query
-    DB-->>API: Results
-    API-->>User: Response
+# sequenceDiagram
+#     participant User
+#     participant API
+#     participant DB
+#     User->>API: Request
+#     API->>DB: Query
+#     DB-->>API: Results
+#     API-->>User: Response
 ```
 
 **Class Diagrams:**
 ```r
 #| mermaid
 #| eval: true
-classDiagram
-    class Animal {
-        +String name
-        +int age
-        +makeSound()
-    }
-    class Dog {
-        +String breed
-        +bark()
-    }
-    Animal <|-- Dog
+# classDiagram
+#     class Animal {
+#         +String name
+#         +int age
+#         +makeSound()
+#     }
+#     class Dog {
+#         +String breed
+#         +bark()
+#     }
+#     Animal <|-- Dog
 ```
 
 ### Rules
 
 - Start with the `#| mermaid` comment
 - Add chunk options with `#|` prefix (e.g., `#| eval: true`)
-- Diagram content follows **without `#` prefix**
-- Chunk ends at the first empty line or comment line
+- Diagram content follows **with `#` prefix on each line** (to keep valid R syntax)
+- Chunk ends at the first empty line
+- The `#` prefix is automatically removed in the Quarto output
 - Options are automatically converted to Quarto format (`%%|`)
 
 ### Complete Example

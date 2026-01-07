@@ -68,7 +68,7 @@ snippet callout
 snippet mermaid
 	#| mermaid
 	#| eval: true
-	${0}
+	# ${0}
 
 snippet tabset
 	# tabset

@@ -410,11 +410,11 @@ Create flowcharts, sequence diagrams, and other visualizations using Mermaid syn
 ```r
 #| mermaid
 #| eval: true
-flowchart TD
-    A[Start] --> B[Process]
-    B --> C{Decision}
-    C -->|Yes| D[End]
-    C -->|No| B
+# flowchart TD
+#     A[Start] --> B[Process]
+#     B --> C{Decision}
+#     C -->|Yes| D[End]
+#     C -->|No| B
 ```
 
 **Converts to Quarto Mermaid chunk** with proper formatting for diagram rendering in HTML output.
@@ -428,8 +428,9 @@ flowchart TD
 **Rules:**
 - Start with `#| mermaid` comment
 - Add chunk options with `#|` (e.g., `#| eval: true`)
-- Diagram content follows without `#` prefix
-- Chunk ends at first blank line or comment
+- Diagram content follows **with `#` prefix on each line** (keeps valid R syntax)
+- The `#` prefix is automatically removed in Quarto output
+- Chunk ends at first blank line
 
 See complete example in [`inst/examples/example_mermaid.R`](https://github.com/ddotta/quartify/blob/main/inst/examples/example_mermaid.R)
 
