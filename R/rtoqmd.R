@@ -406,10 +406,10 @@ rtoqmd <- function(input_file, output_file = NULL,
     if (i %in% metadata_lines) {
       # Ignore metadata lines - do nothing
       
-    # Skip hidden comments (# without space after)
-    } else if (grepl("^#[^' |]", line)) {
+    # Skip hidden comments (# without space after, but not multiple #)
+    } else if (grepl("^#[^# '|]", line)) {
       # Ignore comments without space after # (e.g., #NOTE:, #TODO:, #DEBUG)
-      # But allow #' (roxygen), # (space), and #| (chunk options) to pass through
+      # But allow ## (section titles), #' (roxygen), # (space), and #| (chunk options) to pass through
       
     # Process roxygen2 documentation blocks
     } else if (grepl("^#'", line)) {
