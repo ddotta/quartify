@@ -217,6 +217,7 @@ rtoqmd <- function(input_file, output_file = NULL,
   # Track which lines contain metadata (to skip them later)
   metadata_lines <- integer()
   in_description <- FALSE
+  in_metadata_block <- FALSE
   
   for (j in seq_along(lines)) {
     line <- lines[j]
@@ -227,6 +228,7 @@ rtoqmd <- function(input_file, output_file = NULL,
       metadata$title <- trimws(extracted)
       metadata_lines <- c(metadata_lines, j)
       in_description <- FALSE
+      in_metadata_block <- TRUE
     }
     # Check for Author / Auteur
     else if (grepl("^#\\s*(Author|Auteur)\\s*:\\s*(.+)$", line, ignore.case = TRUE)) {
@@ -234,6 +236,7 @@ rtoqmd <- function(input_file, output_file = NULL,
       metadata$author <- trimws(extracted)
       metadata_lines <- c(metadata_lines, j)
       in_description <- FALSE
+      in_metadata_block <- TRUE
     }
     # Check for Date
     else if (grepl("^#\\s*Date\\s*:\\s*(.+)$", line, ignore.case = TRUE)) {
@@ -241,6 +244,7 @@ rtoqmd <- function(input_file, output_file = NULL,
       metadata$date <- trimws(extracted)
       metadata_lines <- c(metadata_lines, j)
       in_description <- FALSE
+      in_metadata_block <- TRUE
     }
     # Check for Description / Objectif / Purpose
     else if (grepl("^#\\s*(Description|Objectif|Purpose)\\s*:\\s*(.+)$", line, ignore.case = TRUE)) {
@@ -248,6 +252,7 @@ rtoqmd <- function(input_file, output_file = NULL,
       metadata$description <- trimws(extracted)
       metadata_lines <- c(metadata_lines, j)
       in_description <- TRUE
+      in_metadata_block <- TRUE
     }
     # Check if we're continuing a description on the next line
     else if (in_description && grepl("^#\\s+(.+)$", line)) {
@@ -255,10 +260,27 @@ rtoqmd <- function(input_file, output_file = NULL,
       continuation <- sub("^#\\s+(.+)$", "\\1", line)
       metadata$description <- paste(metadata$description, trimws(continuation))
       metadata_lines <- c(metadata_lines, j)
+      in_metadata_block <- TRUE
     }
-    # Empty comment line or line without # stops description continuation
-    else if (in_description && (grepl("^#\\s*$", line) || !grepl("^#", line))) {
+    # Empty comment lines or empty lines within metadata block should be skipped
+    else if (in_metadata_block && (grepl("^#\\s*$", line) || grepl("^\\s*$", line))) {
+      metadata_lines <- c(metadata_lines, j)
+      # Continue in metadata block, don't stop
+    }
+    # RStudio section headers stop metadata block
+    else if (in_metadata_block && grepl("^##+ .+ (#{4,}|={4,}|-{4,})\\s*$", line)) {
       in_description <- FALSE
+      in_metadata_block <- FALSE
+    }
+    # Regular comments stop metadata block
+    else if (in_metadata_block && grepl("^#\\s", line)) {
+      in_description <- FALSE
+      in_metadata_block <- FALSE
+    }
+    # Non-empty, non-comment line stops metadata block
+    else if (in_metadata_block && !grepl("^#", line) && !grepl("^\\s*$", line)) {
+      in_description <- FALSE
+      in_metadata_block <- FALSE
     }
   }
   
