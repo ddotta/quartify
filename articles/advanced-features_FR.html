@@ -63,7 +63,7 @@
       <h1>Fonctionnalités avancées</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/v1.1.0/vignettes/advanced-features_FR.Rmd" class="external-link"><code>vignettes/advanced-features_FR.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/main/vignettes/advanced-features_FR.Rmd" class="external-link"><code>vignettes/advanced-features_FR.Rmd</code></a></small>
       <div class="d-none name"><code>advanced-features_FR.Rmd</code></div>
     </div>
 
@@ -643,48 +643,11 @@ avertissement est enregistré. La conversion continue normalement.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="fonctionnalités-spéciales">Fonctionnalités spéciales<a class="anchor" aria-label="anchor" href="#fonctionnalit%C3%A9s-sp%C3%A9ciales"></a>
+<h2 id="snippets-rstudio">Snippets RStudio<a class="anchor" aria-label="anchor" href="#snippets-rstudio"></a>
 </h2>
-<div class="section level3">
-<h3 id="diagrammes-mermaid">Diagrammes Mermaid<a class="anchor" aria-label="anchor" href="#diagrammes-mermaid"></a>
-</h3>
-<p><code>quartify</code> supporte les diagrammes <a href="https://mermaid-js.github.io/" class="external-link">Mermaid</a> dans vos scripts R.
-Utilisez des commentaires spéciaux pour inclure des diagrammes dans
-votre documentation :</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># mermaid-start</span></span>
-<span><span class="co"># graph TD</span></span>
-<span><span class="co">#   A[Début] --&gt; B{Ça fonctionne ?}</span></span>
-<span><span class="co">#   B --&gt;|Oui| C[Super !]</span></span>
-<span><span class="co">#   B --&gt;|Non| D[Déboguer]</span></span>
-<span><span class="co">#   D --&gt; A</span></span>
-<span><span class="co"># mermaid-end</span></span></code></pre></div>
-<p>Cela s’affiche comme un organigramme dans votre document Quarto.</p>
-</div>
-<div class="section level3">
-<h3 id="callouts">Callouts<a class="anchor" aria-label="anchor" href="#callouts"></a>
-</h3>
-<p>Créez des callouts dans vos scripts R en utilisant une syntaxe de
-commentaire spéciale :</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># callout-note - Note importante</span></span>
-<span><span class="co"># Ceci est un callout de note</span></span>
-<span><span class="co"># Il peut s'étendre sur plusieurs lignes</span></span>
-<span></span>
-<span><span class="co"># callout-warning - Soyez prudent</span></span>
-<span><span class="co"># Ceci est un callout d'avertissement</span></span>
-<span></span>
-<span><span class="co"># callout-tip - Conseil de pro</span></span>
-<span><span class="co"># Ceci est un callout de conseil</span></span></code></pre></div>
-<p>Types de callout supportés : <code>note</code>, <code>warning</code>,
-<code>tip</code>, <code>important</code>, <code>caution</code></p>
-</div>
-<div class="section level3">
-<h3 id="snippets-rstudio">Snippets RStudio<a class="anchor" aria-label="anchor" href="#snippets-rstudio"></a>
-</h3>
 <p>Installez des snippets de code utiles pour une écriture de script R
 plus rapide :</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/install_quartify_snippets.html">install_quartify_snippets</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Le fichier de snippets s’ouvrira automatiquement dans RStudio.
 Sauvegardez-le pour recharger les snippets immédiatement sans
@@ -703,7 +666,6 @@ diagramme Mermaid</li>
 <strong><code>tabset</code></strong> + Tab : Insérer un modèle de
 tabset</li>
 </ul>
-</div>
 </div>
 <div class="section level2">
 <h2 id="conseils-et-bonnes-pratiques">Conseils et bonnes pratiques<a class="anchor" aria-label="anchor" href="#conseils-et-bonnes-pratiques"></a>

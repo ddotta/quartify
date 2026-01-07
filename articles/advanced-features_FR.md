@@ -480,48 +480,7 @@ Si les vérifications de qualité du code échouent pour un chunk de code
 particulier, le code original est affiché sans tabset, et un
 avertissement est enregistré. La conversion continue normalement.
 
-## Fonctionnalités spéciales
-
-### Diagrammes Mermaid
-
-`quartify` supporte les diagrammes
-[Mermaid](https://mermaid-js.github.io/) dans vos scripts R. Utilisez
-des commentaires spéciaux pour inclure des diagrammes dans votre
-documentation :
-
-``` r
-# mermaid-start
-# graph TD
-#   A[Début] --> B{Ça fonctionne ?}
-#   B -->|Oui| C[Super !]
-#   B -->|Non| D[Déboguer]
-#   D --> A
-# mermaid-end
-```
-
-Cela s’affiche comme un organigramme dans votre document Quarto.
-
-### Callouts
-
-Créez des callouts dans vos scripts R en utilisant une syntaxe de
-commentaire spéciale :
-
-``` r
-# callout-note - Note importante
-# Ceci est un callout de note
-# Il peut s'étendre sur plusieurs lignes
-
-# callout-warning - Soyez prudent
-# Ceci est un callout d'avertissement
-
-# callout-tip - Conseil de pro
-# Ceci est un callout de conseil
-```
-
-Types de callout supportés : `note`, `warning`, `tip`, `important`,
-`caution`
-
-### Snippets RStudio
+## Snippets RStudio
 
 Installez des snippets de code utiles pour une écriture de script R plus
 rapide :

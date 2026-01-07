@@ -63,7 +63,7 @@
       <h1>Advanced Features</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/v1.1.0/vignettes/advanced-features.Rmd" class="external-link"><code>vignettes/advanced-features.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/main/vignettes/advanced-features.Rmd" class="external-link"><code>vignettes/advanced-features.Rmd</code></a></small>
       <div class="d-none name"><code>advanced-features.Rmd</code></div>
     </div>
 
@@ -673,46 +673,10 @@ conversion continues normally.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="special-features">Special Features<a class="anchor" aria-label="anchor" href="#special-features"></a>
+<h2 id="rstudio-snippets">RStudio Snippets<a class="anchor" aria-label="anchor" href="#rstudio-snippets"></a>
 </h2>
-<div class="section level3">
-<h3 id="mermaid-diagrams">Mermaid Diagrams<a class="anchor" aria-label="anchor" href="#mermaid-diagrams"></a>
-</h3>
-<p><code>quartify</code> supports <a href="https://mermaid-js.github.io/" class="external-link">Mermaid</a> diagrams in your R
-scripts. Use special comments to include diagrams in your
-documentation:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># mermaid-start</span></span>
-<span><span class="co"># graph TD</span></span>
-<span><span class="co">#   A[Start] --&gt; B{Is it working?}</span></span>
-<span><span class="co">#   B --&gt;|Yes| C[Great!]</span></span>
-<span><span class="co">#   B --&gt;|No| D[Debug]</span></span>
-<span><span class="co">#   D --&gt; A</span></span>
-<span><span class="co"># mermaid-end</span></span></code></pre></div>
-<p>This renders as a flowchart in your Quarto document.</p>
-</div>
-<div class="section level3">
-<h3 id="callouts">Callouts<a class="anchor" aria-label="anchor" href="#callouts"></a>
-</h3>
-<p>Create callouts in your R scripts using special comment syntax:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># callout-note - Important Note</span></span>
-<span><span class="co"># This is a note callout</span></span>
-<span><span class="co"># It can span multiple lines</span></span>
-<span></span>
-<span><span class="co"># callout-warning - Be Careful</span></span>
-<span><span class="co"># This is a warning callout</span></span>
-<span></span>
-<span><span class="co"># callout-tip - Pro Tip</span></span>
-<span><span class="co"># This is a tip callout</span></span></code></pre></div>
-<p>Supported callout types: <code>note</code>, <code>warning</code>,
-<code>tip</code>, <code>important</code>, <code>caution</code></p>
-</div>
-<div class="section level3">
-<h3 id="rstudio-snippets">RStudio Snippets<a class="anchor" aria-label="anchor" href="#rstudio-snippets"></a>
-</h3>
 <p>Install useful code snippets for faster R script writing:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/install_quartify_snippets.html">install_quartify_snippets</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The snippets file will automatically open in RStudio. Save it to
 reload snippets immediately without restarting. You can then use:</p>
@@ -730,7 +694,6 @@ template</li>
 <strong><code>tabset</code></strong> + Tab: Insert tabset
 template</li>
 </ul>
-</div>
 </div>
 <div class="section level2">
 <h2 id="tips-and-best-practices">Tips and Best Practices<a class="anchor" aria-label="anchor" href="#tips-and-best-practices"></a>
