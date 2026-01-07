@@ -1,5 +1,22 @@
 # Changelog
 
+## quartify 1.1.1
+
+### Bug Fixes
+
+- **Metadata Processing**: Fixed issue where empty lines and comments
+  between metadata fields were not properly ignored, creating unwanted
+  empty code chunks
+- **Section Header Detection**: Improved regex pattern for hidden
+  comments to correctly exclude RStudio section headers (`##`, `###`,
+  `####`) from being filtered out
+
+### Documentation
+
+- Removed duplicate sections (Mermaid diagrams, Callouts) from
+  advanced-features vignettes - these topics are now only in
+  getting-started vignettes with correct syntax
+
 ## quartify 1.1.0
 
 ### New Features
