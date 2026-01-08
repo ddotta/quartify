@@ -22,14 +22,14 @@ Imports:
     miniUI,
     base64enc,
     shinyFiles,
-    shinyalert,
     quarto,
     utils,
     styler,
     lintr
 Suggests: 
     testthat (>= 3.0.0),
-    dplyr
+    dplyr,
+    shinyalert
 Config/testthat/edition: 3
 Config/Needs/website: pkgdown
 Words: qmd

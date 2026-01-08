@@ -8,7 +8,6 @@
 #' @param port Integer, port number for the application (default: NULL for random port)
 #'
 #' @return No return value, called for side effects (launches a Shiny application).
-#' @importFrom shinyalert useShinyalert shinyalert
 #' @export
 #'
 #' @examples
@@ -24,6 +23,15 @@
 #'   quartify_app(port = 3838)
 #' }
 quartify_app <- function(launch.browser = TRUE, port = NULL) {
+  # Safe wrapper to call shinyalert only if available
+  safe_shinyalert <- function(...) {
+    if (requireNamespace("shinyalert", quietly = TRUE)) {
+      shinyalert::shinyalert(...)
+    } else {
+      cli::cli_alert_warning("Install 'shinyalert' to display alert dialogs in the app")
+    }
+  }
+
   # Get resources for UI
   hex_path <- system.file("man", "figures", "hex_quartify.png", package = "quartify")
   if (hex_path == "" || !file.exists(hex_path)) {
@@ -634,7 +642,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
       # Validation based on mode
       if (is_directory_mode) {
         if (is.null(selected_dir())) {
-          shinyalert::shinyalert(
+          safe_shinyalert(
             title = if (lang() == "fr") "Erreur" else "Error",
             text = if (lang() == "fr") "Veuillez selectionner un repertoire" else "Please select a directory",
             type = "error"
@@ -646,7 +654,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         output_file_final <- output_file_path()
 
         if (is.null(input_file_final) || is.null(output_file_final)) {
-          shinyalert::shinyalert(
+          safe_shinyalert(
             title = if (lang() == "fr") "Erreur" else "Error",
             text = if (lang() == "fr") "Veuillez selectionner les fichiers d'entree et de sortie" else "Please select input and output files",
             type = "error"
@@ -753,7 +761,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
             "Conversion completed successfully!"
           }
 
-          shinyalert::shinyalert(
+          safe_shinyalert(
             title = success_title,
             text = success_msg,
             type = "success"
@@ -761,7 +769,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         },
         error = function(e) {
           session$sendCustomMessage("toggleLoader", FALSE)
-          shinyalert::shinyalert(
+          safe_shinyalert(
             title = "Error",
             text = e$message,
             type = "error"
