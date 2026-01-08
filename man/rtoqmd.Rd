@@ -151,6 +151,28 @@ Each tab can contain text, code, and other content. The tabset closes automatica
 Example: hash tabset, hash tab - Plot A, code or text content, hash tab - Plot B, more content.
 }
 
+\section{Roxygen2 Documentation}{
+
+The function automatically detects and formats roxygen2 documentation blocks (starting with \code{#'})
+into structured callouts that resemble pkgdown reference pages. The formatted documentation includes:
+\itemize{
+  \item \strong{Title}: Extracted from \code{@title} tag or first roxygen comment line
+  \item \strong{Description}: From \code{@description} tag or initial paragraph
+  \item \strong{Usage}: Function signature with parameters
+  \item \strong{Arguments}: Each parameter from \code{@param} tags, formatted with parameter name in bold
+  \item \strong{Value}: Return value description from \code{@return} tag
+  \item \strong{Details}: Additional details from \code{@details} tag
+  \item \strong{Examples}: Code examples from \code{@examples} tag, displayed in R code blocks
+}
+LaTeX-style formatting is automatically converted to Markdown:
+\code{\\href\{url\}\{text\}} becomes \code{[text](url)},
+\code{\\code\{text\}} becomes \code{`text`},
+\code{\\strong\{text\}} becomes \code{**text**}, and
+\code{\\emph\{text\}} becomes \code{*text*}.
+Section headers within the callout use bold text instead of Markdown headers to avoid
+interfering with the document's table of contents. See example file in inst/examples/example_roxygen.R.
+}
+
 \examples{
 \donttest{
 # Use example file included in package

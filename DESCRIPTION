@@ -32,5 +32,4 @@ Suggests:
     dplyr
 Config/testthat/edition: 3
 Config/Needs/website: pkgdown
-Language: en-US
 Words: qmd

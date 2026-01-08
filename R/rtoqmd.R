@@ -80,6 +80,26 @@
 #' Each tab can contain text, code, and other content. The tabset closes automatically when a new section starts.
 #' Example: hash tabset, hash tab - Plot A, code or text content, hash tab - Plot B, more content.
 #'
+#' @section Roxygen2 Documentation:
+#' The function automatically detects and formats roxygen2 documentation blocks (starting with \code{#'})
+#' into structured callouts that resemble pkgdown reference pages. The formatted documentation includes:
+#' \itemize{
+#'   \item \strong{Title}: Extracted from \code{@title} tag or first roxygen comment line
+#'   \item \strong{Description}: From \code{@description} tag or initial paragraph
+#'   \item \strong{Usage}: Function signature with parameters
+#'   \item \strong{Arguments}: Each parameter from \code{@param} tags, formatted with parameter name in bold
+#'   \item \strong{Value}: Return value description from \code{@return} tag
+#'   \item \strong{Details}: Additional details from \code{@details} tag
+#'   \item \strong{Examples}: Code examples from \code{@examples} tag, displayed in R code blocks
+#' }
+#' LaTeX-style formatting is automatically converted to Markdown:
+#' \code{\\href\{url\}\{text\}} becomes \code{[text](url)},
+#' \code{\\code\{text\}} becomes \code{`text`},
+#' \code{\\strong\{text\}} becomes \code{**text**}, and
+#' \code{\\emph\{text\}} becomes \code{*text*}.
+#' Section headers within the callout use bold text instead of Markdown headers to avoid
+#' interfering with the document's table of contents. See example file in inst/examples/example_roxygen.R.
+#'
 #' @param input_file Path to the input R script file
 #' @param output_file Path to the output Quarto markdown file (optional, defaults to same name with .qmd extension)
 #' @param title Title for the Quarto document (default: "My title"). Can be overridden by \code{# Title :} or \code{# Titre :} in the script
@@ -450,6 +470,9 @@ rtoqmd <- function(input_file, output_file = NULL,
         comment_block <- character()
       }
       
+      # Store starting line number for roxygen block
+      roxygen_start_line <- i
+      
       # Collect all roxygen2 lines
       roxygen_lines <- character()
       while (i <= length(lines) && grepl("^#'", lines[i])) {
@@ -459,8 +482,9 @@ rtoqmd <- function(input_file, output_file = NULL,
         i <- i + 1
       }
       
-      # Try to find the function name in the next non-empty, non-comment line
+      # Try to find the function name and signature in the next non-empty, non-comment line
       function_name <- "Function"
+      function_signature <- ""
       temp_i <- i
       while (temp_i <= length(lines)) {
         next_line <- lines[temp_i]
@@ -469,23 +493,293 @@ rtoqmd <- function(input_file, output_file = NULL,
           temp_i <- temp_i + 1
           next
         }
-        # Try to extract function name
+        # Try to extract function name and signature
         if (grepl("<-\\s*function\\s*\\(", next_line)) {
-          func_match <- regmatches(next_line, regexec("^\\s*([a-zA-Z0-9_.]+)\\s*<-\\s*function", next_line))[[1]]
+          # Match function definition that may span multiple lines
+          func_match <- regmatches(next_line, regexec("^\\s*([a-zA-Z0-9_.]+)\\s*<-\\s*function\\s*\\((.*)$", next_line))[[1]]
           if (length(func_match) >= 2) {
             function_name <- func_match[2]
+            if (length(func_match) >= 3) {
+              function_signature <- func_match[3]
+              # Remove trailing { if present
+              function_signature <- sub("\\s*\\{?\\s*$", "", function_signature)
+              # If signature doesn't end with ), continue collecting
+              if (!grepl("\\)\\s*$", function_signature)) {
+                temp_i <- temp_i + 1
+                while (temp_i <= length(lines) && !grepl("\\)", lines[temp_i])) {
+                  function_signature <- paste(function_signature, trimws(lines[temp_i]))
+                  temp_i <- temp_i + 1
+                }
+                if (temp_i <= length(lines)) {
+                  last_part <- sub("\\s*\\{?\\s*$", "", lines[temp_i])
+                  function_signature <- paste(function_signature, trimws(last_part))
+                }
+              }
+            }
           }
         }
         break
       }
       
-      # Create callout-note with roxygen documentation
-      output <- c(output, "::: {.callout-note}")
+      # Parse roxygen documentation structure
+      parsed_doc <- list(
+        name = character(),
+        title = character(),
+        description = character(),
+        details = character(),
+        params = list(),
+        return = character(),
+        examples = character(),
+        section = list(),
+        other = character()
+      )
+      
+      current_section <- "initial"
+      current_tag <- NULL
+      current_param <- NULL
+      in_itemize <- FALSE
+      
+      for (idx in seq_along(roxygen_lines)) {
+        rox_line <- roxygen_lines[idx]
+        
+        # Check for @tags
+        if (grepl("^@name\\s+", rox_line)) {
+          parsed_doc$name <- sub("^@name\\s+", "", rox_line)
+          current_section <- "name"
+          current_tag <- NULL
+        } else if (grepl("^@title\\s+", rox_line)) {
+          parsed_doc$title <- sub("^@title\\s+", "", rox_line)
+          current_section <- "title"
+          current_tag <- NULL
+        } else if (grepl("^@description\\s+", rox_line)) {
+          desc_content <- sub("^@description\\s+", "", rox_line)
+          if (nchar(trimws(desc_content)) > 0) {
+            parsed_doc$description <- desc_content
+          }
+          current_section <- "description"
+          current_tag <- NULL
+        } else if (grepl("^@details\\s*", rox_line)) {
+          detail_content <- sub("^@details\\s+", "", rox_line)
+          if (nchar(trimws(detail_content)) > 0) {
+            parsed_doc$details <- detail_content
+          }
+          current_section <- "details"
+          current_tag <- NULL
+        } else if (grepl("^@param\\s+", rox_line)) {
+          param_match <- regmatches(rox_line, regexec("^@param\\s+(\\S+)\\s+(.*)$", rox_line))[[1]]
+          if (length(param_match) >= 3) {
+            current_param <- param_match[2]
+            parsed_doc$params[[current_param]] <- list(desc = param_match[3])
+          } else if (length(param_match) >= 2) {
+            current_param <- param_match[2]
+            parsed_doc$params[[current_param]] <- list(desc = "")
+          }
+          current_section <- "param"
+          current_tag <- NULL
+        } else if (grepl("^@return\\s*", rox_line)) {
+          return_content <- sub("^@return\\s+", "", rox_line)
+          if (nchar(trimws(return_content)) > 0) {
+            parsed_doc$return <- return_content
+          }
+          current_section <- "return"
+          current_tag <- NULL
+        } else if (grepl("^@examples?\\s*$", rox_line)) {
+          current_section <- "examples"
+          current_tag <- NULL
+        } else if (grepl("^@section\\s+", rox_line)) {
+          section_match <- regmatches(rox_line, regexec("^@section\\s+(.+):\\s*(.*)$", rox_line))[[1]]
+          if (length(section_match) >= 2) {
+            section_name <- section_match[2]
+            section_content <- if (length(section_match) >= 3) section_match[3] else ""
+            parsed_doc$section[[section_name]] <- section_content
+            current_tag <- section_name
+            current_section <- "section"
+          }
+        } else if (grepl("^@export\\s*$", rox_line) || grepl("^@importFrom", rox_line) || grepl("^@import\\s", rox_line)) {
+          # Skip export and import directives
+          current_section <- "skip"
+        } else if (grepl("^@", rox_line)) {
+          # Other tags - store but don't display
+          current_section <- "other"
+          current_tag <- NULL
+        } else {
+          # Content continuation
+          trimmed_line <- trimws(rox_line)
+          
+          if (current_section == "initial" || current_section == "name") {
+            # Before any @tag, this is the title
+            if (nchar(trimmed_line) > 0 && length(parsed_doc$title) == 0) {
+              parsed_doc$title <- rox_line
+            }
+          } else if (current_section == "title") {
+            if (nchar(trimmed_line) > 0) {
+              parsed_doc$title <- paste(parsed_doc$title, rox_line)
+            }
+          } else if (current_section == "description") {
+            if (nchar(trimmed_line) > 0) {
+              parsed_doc$description <- paste(parsed_doc$description, rox_line)
+            } else if (length(parsed_doc$description) > 0) {
+              parsed_doc$description <- paste(parsed_doc$description, "", sep = "\n")
+            }
+          } else if (current_section == "details") {
+            if (nchar(rox_line) > 0 || length(parsed_doc$details) > 0) {
+              if (length(parsed_doc$details) > 0) {
+                parsed_doc$details <- paste(parsed_doc$details, rox_line, sep = "\n")
+              } else {
+                parsed_doc$details <- rox_line
+              }
+            }
+          } else if (current_section == "param" && !is.null(current_param)) {
+            if (nchar(rox_line) > 0 || nchar(parsed_doc$params[[current_param]]$desc) > 0) {
+              if (nchar(parsed_doc$params[[current_param]]$desc) > 0) {
+                parsed_doc$params[[current_param]]$desc <- paste(parsed_doc$params[[current_param]]$desc, rox_line, sep = "\n")
+              } else {
+                parsed_doc$params[[current_param]]$desc <- rox_line
+              }
+            }
+          } else if (current_section == "return") {
+            if (nchar(rox_line) > 0 || nchar(parsed_doc$return) > 0) {
+              if (nchar(parsed_doc$return) > 0) {
+                parsed_doc$return <- paste(parsed_doc$return, rox_line, sep = "\n")
+              } else {
+                parsed_doc$return <- rox_line
+              }
+            }
+          } else if (current_section == "examples") {
+            parsed_doc$examples <- c(parsed_doc$examples, rox_line)
+          } else if (current_section == "section" && !is.null(current_tag)) {
+            if (nchar(rox_line) > 0 || nchar(parsed_doc$section[[current_tag]]) > 0) {
+              if (nchar(parsed_doc$section[[current_tag]]) > 0) {
+                parsed_doc$section[[current_tag]] <- paste(parsed_doc$section[[current_tag]], rox_line, sep = "\n")
+              } else {
+                parsed_doc$section[[current_tag]] <- rox_line
+              }
+            }
+          }
+        }
+      }
+      
+      # Helper function to convert LaTeX-style formatting to Markdown
+      convert_latex_to_markdown <- function(text) {
+        if (is.null(text) || length(text) == 0 || nchar(text) == 0) {
+          return(text)
+        }
+        # Convert \href{url}{text} to [text](url)
+        text <- gsub("\\\\href\\{([^}]+)\\}\\{([^}]+)\\}", "[\\2](\\1)", text)
+        # Convert \code{text} to `text`
+        text <- gsub("\\\\code\\{([^}]+)\\}", "`\\1`", text)
+        # Convert \strong{text} to **text**
+        text <- gsub("\\\\strong\\{([^}]+)\\}", "**\\1**", text)
+        # Convert \emph{text} to *text*
+        text <- gsub("\\\\emph\\{([^}]+)\\}", "*\\1*", text)
+        return(text)
+      }
+      
+      # Create formatted output in pkgdown style
+      output <- c(output, "::: {.callout-note collapse=\"false\"}")
       output <- c(output, "")
-      output <- c(output, paste0("## Documentation - ", function_name))
+      
+      # Title (main heading)
+      if (length(parsed_doc$title) > 0 && nchar(parsed_doc$title) > 0) {
+        output <- c(output, paste0("## ", parsed_doc$title))
+      } else {
+        output <- c(output, paste0("## ", function_name))
+      }
       output <- c(output, "")
-      output <- c(output, roxygen_lines)
+      
+      # Description
+      if (length(parsed_doc$description) > 0 && nchar(parsed_doc$description) > 0) {
+        # Split by newlines and output each line
+        desc_lines <- strsplit(parsed_doc$description, "\n")[[1]]
+        desc_lines <- sapply(desc_lines, convert_latex_to_markdown, USE.NAMES = FALSE)
+        output <- c(output, desc_lines)
+        output <- c(output, "")
+      }
+      
+      # Usage section
+      output <- c(output, "**Usage**")
       output <- c(output, "")
+      output <- c(output, "```r")
+      if (nchar(function_signature) > 0) {
+        # Check if signature already ends with )
+        if (grepl("\\)\\s*$", function_signature)) {
+          output <- c(output, paste0(function_name, "(", sub("\\)\\s*$", "", function_signature), ")"))
+        } else {
+          output <- c(output, paste0(function_name, "(", function_signature, ")"))
+        }
+      } else {
+        output <- c(output, paste0(function_name, "()"))
+      }
+      output <- c(output, "```")
+      output <- c(output, "")
+      
+      # Arguments section
+      if (length(parsed_doc$params) > 0) {
+        output <- c(output, "**Arguments**")
+        output <- c(output, "")
+        for (param_name in names(parsed_doc$params)) {
+          output <- c(output, paste0("**`", param_name, "`**"))
+          output <- c(output, "")
+          # Handle multi-line parameter descriptions
+          param_desc <- parsed_doc$params[[param_name]]$desc
+          if (nchar(trimws(param_desc)) > 0) {
+            desc_lines <- strsplit(param_desc, "\n")[[1]]
+            desc_lines <- sapply(desc_lines, convert_latex_to_markdown, USE.NAMES = FALSE)
+            # Add indentation for continuation lines
+            for (d_idx in seq_along(desc_lines)) {
+              if (d_idx == 1) {
+                output <- c(output, paste0(": ", trimws(desc_lines[d_idx])))
+              } else {
+                output <- c(output, paste0("  ", trimws(desc_lines[d_idx])))
+              }
+            }
+          }
+          output <- c(output, "")
+        }
+      }
+      
+      # Value/Return section
+      if (length(parsed_doc$return) > 0 && nchar(trimws(parsed_doc$return)) > 0) {
+        output <- c(output, "**Value**")
+        output <- c(output, "")
+        return_lines <- strsplit(parsed_doc$return, "\n")[[1]]
+        return_lines <- sapply(return_lines, convert_latex_to_markdown, USE.NAMES = FALSE)
+        output <- c(output, return_lines)
+        output <- c(output, "")
+      }
+      
+      # Details section
+      if (length(parsed_doc$details) > 0 && nchar(trimws(parsed_doc$details)) > 0) {
+        output <- c(output, "**Details**")
+        output <- c(output, "")
+        detail_lines <- strsplit(parsed_doc$details, "\n")[[1]]
+        detail_lines <- sapply(detail_lines, convert_latex_to_markdown, USE.NAMES = FALSE)
+        output <- c(output, detail_lines)
+        output <- c(output, "")
+      }
+      
+      # Custom sections
+      if (length(parsed_doc$section) > 0) {
+        for (section_name in names(parsed_doc$section)) {
+          output <- c(output, paste0("**", section_name, "**"))
+          output <- c(output, "")
+          section_lines <- strsplit(parsed_doc$section[[section_name]], "\n")[[1]]
+          section_lines <- sapply(section_lines, convert_latex_to_markdown, USE.NAMES = FALSE)
+          output <- c(output, section_lines)
+          output <- c(output, "")
+        }
+      }
+      
+      # Examples section
+      if (length(parsed_doc$examples) > 0) {
+        output <- c(output, "**Examples**")
+        output <- c(output, "")
+        output <- c(output, "```r")
+        output <- c(output, parsed_doc$examples)
+        output <- c(output, "```")
+        output <- c(output, "")
+      }
+      
       output <- c(output, ":::")
       output <- c(output, "")
       
