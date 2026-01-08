@@ -9,6 +9,7 @@
 #'
 #' @return No return value, called for side effects (launches a Shiny application).
 #' @export
+#' @importFrom htmltools HTML
 #'
 #' @examples
 #' if (interactive()) {
@@ -26,7 +27,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
   # Safe wrapper to call shinyalert only if available
   safe_shinyalert <- function(...) {
     if (requireNamespace("shinyalert", quietly = TRUE)) {
-      shinyalert::shinyalert(...)
+      getExportedValue("shinyalert", "shinyalert")(...)
     } else {
       cli::cli_alert_warning("Install 'shinyalert' to display alert dialogs in the app")
     }
@@ -58,14 +59,14 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
 
   english_flag_html <- if (!is.null(english_flag_path)) {
     flag_base64 <- paste0("data:image/png;base64,", base64enc::base64encode(english_flag_path))
-    shiny::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> EN'))
+    htmltools::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> EN'))
   } else {
     "EN"
   }
 
   french_flag_html <- if (!is.null(french_flag_path)) {
     flag_base64 <- paste0("data:image/png;base64,", base64enc::base64encode(french_flag_path))
-    shiny::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> FR'))
+    htmltools::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> FR'))
   } else {
     "FR"
   }
@@ -74,7 +75,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
   ui <- shiny::fluidPage(
     title = "Quartify - Convert R Scripts to Quarto",
     shiny::tags$head(
-      shiny::tags$style(shiny::HTML("
+      shiny::tags$style(htmltools::HTML("
         body { padding: 20px; }
         .title-bar {
           background-color: #0073e6;
@@ -113,7 +114,7 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
           100% { transform: rotate(360deg); }
         }
       ")),
-      shiny::tags$script(shiny::HTML("
+      shiny::tags$script(htmltools::HTML("
         Shiny.addCustomMessageHandler('toggleLoader', function(show) {
           var loader = document.getElementById('loader');
           if (show) {
@@ -133,8 +134,8 @@ quartify_app <- function(launch.browser = TRUE, port = NULL) {
         class = "lang-buttons",
         shiny::actionButton("lang_en", english_flag_html, class = "btn-sm"),
         shiny::actionButton("lang_fr", french_flag_html, class = "btn-sm"),
-        shiny::actionButton("done", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GENERATE \u25B6</span>"), class = "btn-primary"),
-        shiny::actionButton("quit_app", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>\u2715</span>"), class = "btn-danger btn-sm", style = "margin-left: 10px;")
+        shiny::actionButton("done", htmltools::HTML("<span style='font-size: 16px; font-weight: bold;'>GENERATE \u25B6</span>"), class = "btn-primary"),
+        shiny::actionButton("quit_app", htmltools::HTML("<span style='font-size: 16px; font-weight: bold;'>\u2715</span>"), class = "btn-danger btn-sm", style = "margin-left: 10px;")
       )
     ),
 

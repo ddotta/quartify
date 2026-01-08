@@ -9,9 +9,17 @@
 #' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel miniTitleBarButton miniTitleBarCancelButton
 #' @importFrom base64enc base64encode
 #' @importFrom shinyFiles shinyFileChoose shinyFileSave parseFilePaths parseSavePath getVolumes
-#' @importFrom shinyalert useShinyalert shinyalert
 #' @export
 rtoqmd_addin <- function() {
+  # Safe wrapper to call shinyalert only if available
+  safe_shinyalert <- function(...) {
+    if (requireNamespace("shinyalert", quietly = TRUE)) {
+      getExportedValue("shinyalert", "shinyalert")(...)
+    } else {
+      cli::cli_alert_warning("Install 'shinyalert' to display alert dialogs in the add-in")
+    }
+  }
+
   # Get the active document context
   context <- rstudioapi::getSourceEditorContext()
 
@@ -761,7 +769,7 @@ rtoqmd_addin <- function() {
             "Conversion completed successfully!"
           }
 
-          shinyalert::shinyalert(
+          safe_shinyalert(
             title = success_title,
             text = success_msg,
             type = "success",
@@ -772,7 +780,7 @@ rtoqmd_addin <- function() {
         error = function(e) {
           # Hide loader on error
           session$sendCustomMessage("toggleLoader", FALSE)
-          shinyalert::shinyalert(
+          safe_shinyalert(
             title = "Error",
             text = e$message,
             type = "error",
