@@ -27,4 +27,5 @@
 ^output_.*\.html$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^CRAN_CHECKLIST_.*\.md$
 ^vignettes$
