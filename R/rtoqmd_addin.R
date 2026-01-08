@@ -11,6 +11,8 @@
 #' @importFrom shinyFiles shinyFileChoose shinyFileSave parseFilePaths parseSavePath getVolumes
 #' @export
 rtoqmd_addin <- function() {
+  ensure_later()
+
   # Safe wrapper to call shinyalert only if available
   safe_shinyalert <- function(...) {
     if (requireNamespace("shinyalert", quietly = TRUE)) {

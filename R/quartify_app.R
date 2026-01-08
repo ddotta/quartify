@@ -23,6 +23,8 @@
 #'   quartify_app(port = 3838)
 #' }
 quartify_app <- function(launch.browser = TRUE, port = NULL) {
+  ensure_later()
+
   # Safe wrapper to call shinyalert only if available
   safe_shinyalert <- function(...) {
     if (requireNamespace("shinyalert", quietly = TRUE)) {
