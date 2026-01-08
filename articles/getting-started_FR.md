@@ -426,6 +426,64 @@ Cette fonctionnalité est utile pour :
   du document (elles n’apparaissent que dans le YAML)
 - Les métadonnées `Date` et `Description` sont optionnelles
 
+#### Documentation Roxygen2
+
+`quartify` détecte et formate automatiquement les blocs de documentation
+roxygen2 (commençant par `#'`) en callouts structurés qui ressemblent
+aux pages de référence pkgdown. Ceci est particulièrement utile pour
+documenter les fonctions dans vos scripts R.
+
+**Exemple de script R avec roxygen2 :**
+
+``` r
+#' Additionner Deux Nombres
+#'
+#' Cette fonction prend deux valeurs numériques et retourne leur somme.
+#'
+#' @param x Une valeur numérique.
+#' @param y Une valeur numérique.
+#'
+#' @return Une valeur numérique représentant la somme de `x` et `y`.
+#'
+#' @examples
+#' add_numbers(3, 5)   # retourne 8
+#' add_numbers(-2, 7)  # retourne 5
+#'
+#' @export
+add_numbers <- function(x, y) {
+  x + y
+}
+```
+
+**Rendu produit :**
+
+Le bloc roxygen2 est converti en callout structuré avec :
+
+- **Titre** : Extrait de la balise `@title` ou de la première ligne de
+  commentaire roxygen
+- **Description** : De la balise `@description` ou du paragraphe initial
+- **Usage** : Signature de la fonction avec ses paramètres
+- **Arguments** : Chaque paramètre des balises `@param` avec
+  descriptions
+- **Value** : Description de la valeur de retour de la balise `@return`
+- **Details** : Détails supplémentaires de la balise `@details` (si
+  présent)
+- **Examples** : Exemples de code de la balise `@examples` dans des
+  blocs de code R
+
+**Conversion LaTeX vers Markdown :**
+
+Le formatage LaTeX de roxygen2 est automatiquement converti :
+
+- `\href{url}{text}` → `[text](url)`
+- `\code{text}` → `` `text` ``
+- `\strong{text}` → `**text**`
+- `\emph{text}` → `*text*`
+
+**Note :** Les en-têtes de section dans les callouts roxygen2 utilisent
+du texte en gras au lieu d’en-têtes Markdown pour éviter d’interférer
+avec la table des matières de votre document.
+
 **Règles pour les descriptions multi-lignes :**
 
 Le champ `Description` peut s’étendre sur plusieurs lignes. Pour

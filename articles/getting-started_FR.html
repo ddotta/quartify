@@ -63,7 +63,7 @@
       <h1>Démarrage avec quartify</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/v1.1.1/vignettes/getting-started_FR.Rmd" class="external-link"><code>vignettes/getting-started_FR.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ddotta/quartify/blob/main/vignettes/getting-started_FR.Rmd" class="external-link"><code>vignettes/getting-started_FR.Rmd</code></a></small>
       <div class="d-none name"><code>getting-started_FR.Rmd</code></div>
     </div>
 
@@ -678,6 +678,78 @@ YAML)</li>
 <li>Les métadonnées <code>Date</code> et <code>Description</code> sont
 optionnelles</li>
 </ul>
+<div class="section level4">
+<h4 id="documentation-roxygen2">Documentation Roxygen2<a class="anchor" aria-label="anchor" href="#documentation-roxygen2"></a>
+</h4>
+<p><code>quartify</code> détecte et formate automatiquement les blocs de
+documentation roxygen2 (commençant par <code>#'</code>) en callouts
+structurés qui ressemblent aux pages de référence pkgdown. Ceci est
+particulièrement utile pour documenter les fonctions dans vos scripts
+R.</p>
+<p><strong>Exemple de script R avec roxygen2 :</strong></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' Additionner Deux Nombres</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' Cette fonction prend deux valeurs numériques et retourne leur somme.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @param x Une valeur numérique.</span></span>
+<span><span class="co">#' @param y Une valeur numérique.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @return Une valeur numérique représentant la somme de `x` et `y`.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @examples</span></span>
+<span><span class="co">#' add_numbers(3, 5)   # retourne 8</span></span>
+<span><span class="co">#' add_numbers(-2, 7)  # retourne 5</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @export</span></span>
+<span><span class="va">add_numbers</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">+</span> <span class="va">y</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p><strong>Rendu produit :</strong></p>
+<p>Le bloc roxygen2 est converti en callout structuré avec :</p>
+<ul>
+<li>
+<strong>Titre</strong> : Extrait de la balise <code>@title</code> ou
+de la première ligne de commentaire roxygen</li>
+<li>
+<strong>Description</strong> : De la balise
+<code>@description</code> ou du paragraphe initial</li>
+<li>
+<strong>Usage</strong> : Signature de la fonction avec ses
+paramètres</li>
+<li>
+<strong>Arguments</strong> : Chaque paramètre des balises
+<code>@param</code> avec descriptions</li>
+<li>
+<strong>Value</strong> : Description de la valeur de retour de la
+balise <code>@return</code>
+</li>
+<li>
+<strong>Details</strong> : Détails supplémentaires de la balise
+<code>@details</code> (si présent)</li>
+<li>
+<strong>Examples</strong> : Exemples de code de la balise
+<code>@examples</code> dans des blocs de code R</li>
+</ul>
+<p><strong>Conversion LaTeX vers Markdown :</strong></p>
+<p>Le formatage LaTeX de roxygen2 est automatiquement converti :</p>
+<ul>
+<li>
+<code>\href{url}{text}</code> → <code>[text](url)</code>
+</li>
+<li>
+<code>\code{text}</code> → <code>`text`</code>
+</li>
+<li>
+<code>\strong{text}</code> → <code>**text**</code>
+</li>
+<li>
+<code>\emph{text}</code> → <code>*text*</code>
+</li>
+</ul>
+<p><strong>Note :</strong> Les en-têtes de section dans les callouts
+roxygen2 utilisent du texte en gras au lieu d’en-têtes Markdown pour
+éviter d’interférer avec la table des matières de votre document.</p>
 <div class="alert alert-info">
 <p><strong>Règles pour les descriptions multi-lignes :</strong></p>
 <p>Le champ <code>Description</code> peut s’étendre sur plusieurs
@@ -691,7 +763,7 @@ espace</li>
 description</li>
 </ul>
 <p><strong>Exemple :</strong></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Title : Analyse des données Iris</span></span>
 <span><span class="co">#</span></span>
 <span><span class="co"># Author : Jean Dupont</span></span>
@@ -705,7 +777,8 @@ description</li>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 <p>Ceci produira dans le YAML :</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> Cette analyse explore les différences entre les espèces d'iris en utilisant diverses méthodes statistiques et techniques de visualisation pour identifier les patterns et corrélations.</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> Cette analyse explore les différences entre les espèces d'iris en utilisant diverses méthodes statistiques et techniques de visualisation pour identifier les patterns et corrélations.</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level4">
 <h4 id="sections-de-code-en-têtes">1. Sections de code (En-têtes)<a class="anchor" aria-label="anchor" href="#sections-de-code-en-t%C3%AAtes"></a>
@@ -740,7 +813,7 @@ des sections de code RStudio</a>
 </ul>
 </div>
 <p><strong>Exemple :</strong></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Chargement des données ####</span></span>
 <span></span>
 <span><span class="co">### Import CSV ====</span></span>
@@ -752,7 +825,7 @@ des sections de code RStudio</a>
 </h4>
 <p>Les commentaires simples avec <code>#</code> deviennent du texte
 explicatif dans le document Quarto :</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ceci est un commentaire régulier</span></span>
 <span><span class="co"># Il apparaîtra comme texte simple dans la sortie</span></span>
 <span><span class="co"># Utilisez-les pour expliquer ce que fait votre code</span></span></code></pre></div>
@@ -778,11 +851,11 @@ avant</strong>. Si vous avez des espaces d’indentation avant le
 <code>#</code>, le commentaire sera ignoré et restera dans le chunk de
 code.</p>
 <p><strong>Exemple correct :</strong></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ceci sera converti en texte</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Exemple incorrect (commentaire dans le code) :</strong></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="va">condition</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Ceci restera un commentaire R dans le chunk</span></span>
 <span>  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -794,7 +867,7 @@ de code en plusieurs parties</strong>. En insérant un commentaire
 <strong>en début de ligne</strong> (sans espace avant le <code>#</code>)
 entre deux blocs de code, ce commentaire sera converti en texte et
 créera naturellement deux chunks séparés :</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"file.csv"</span><span class="op">)</span></span>
 <span><span class="va">data_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span></span>
@@ -812,7 +885,7 @@ garantit que le tableau est traité comme un bloc séparé et sera
 correctement rendu.</p>
 </div>
 <p><strong>Exemple de tableau Markdown :</strong></p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Résultats de l'analyse :</span></span>
 <span></span>
 <span><span class="co"># | fruit  | prix   |</span></span>
@@ -828,14 +901,14 @@ Windows/Linux ou <code>Cmd+Shift+C</code> sur Mac) pour ajouter ou
 retirer rapidement des commentaires de votre code.</p>
 </div>
 <div class="section level4">
-<h4 id="documentation-roxygen2">3. Documentation roxygen2<a class="anchor" aria-label="anchor" href="#documentation-roxygen2"></a>
+<h4 id="documentation-roxygen2-1">3. Documentation roxygen2<a class="anchor" aria-label="anchor" href="#documentation-roxygen2-1"></a>
 </h4>
 <p>Si votre script R contient des blocs de documentation roxygen2
 (lignes commençant par <code>#'</code>), <strong>quartify</strong> les
 convertit automatiquement en élégantes sections callout-note avec le nom
 de la fonction :</p>
 <p><strong>Entrée (script R) :</strong></p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Additionne deux nombres</span></span>
 <span><span class="co">#'</span></span>
 <span><span class="co">#' @param x Une valeur numérique</span></span>
@@ -848,25 +921,25 @@ de la fonction :</p>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><strong>Sortie (document Quarto) :</strong></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">## Documentation - add_numbers</span></span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>Additionne deux nombres</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>@param x Une valeur numérique</span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>@param y Une valeur numérique</span>
-<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>@return La somme de x et y</span>
-<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>@examples</span>
-<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>add_numbers(2, 3)</span>
-<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>@export</span>
-<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>:::</span>
-<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a></span>
-<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a></span>
-<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a>add_numbers <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a>  <span class="fu">return</span>(x <span class="sc">+</span> y)</span>
-<span id="cb21-18"><a href="#cb21-18" tabindex="-1"></a>}</span>
-<span id="cb21-19"><a href="#cb21-19" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">## Documentation - add_numbers</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>Additionne deux nombres</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>@param x Une valeur numérique</span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>@param y Une valeur numérique</span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>@return La somme de x et y</span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>@examples</span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>add_numbers(2, 3)</span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>@export</span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>:::</span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a>add_numbers <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>  <span class="fu">return</span>(x <span class="sc">+</span> y)</span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a>}</span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <div class="alert alert-info">
 <p><strong>Règles :</strong></p>
 <ul>
@@ -894,7 +967,7 @@ sans nécessiter de construire la documentation du package.</p>
 </h4>
 <p>Toute ligne qui N’EST PAS un commentaire devient du code R exécutable
 :</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
@@ -911,17 +984,17 @@ de section</li>
 <p><strong>Important :</strong> Vous pouvez inclure des commentaires À
 L’INTÉRIEUR des blocs de code. Ces commentaires seront préservés dans le
 chunk de code R :</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="co"># Sélectionner une colonne</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <p>Cela sera rendu comme :</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a></span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>  <span class="co"># Sélectionner une colonne</span></span>
-<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
-<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  <span class="co"># Sélectionner une colonne</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>La différence :<br>
 - <strong>Commentaires en début de ligne</strong> → deviennent du texte
 EN DEHORS des blocs de code<br>
@@ -932,7 +1005,7 @@ pipeline) → restent À L’INTÉRIEUR des blocs de code</p>
 <h3 id="exemple-complet-example-r">Exemple complet : example.R<a class="anchor" aria-label="anchor" href="#exemple-complet-example-r"></a>
 </h3>
 <p>Voici le script R exemple complet inclus dans le package :</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Title 2 ####</span></span>
@@ -984,7 +1057,7 @@ autonomes ou des sections</li>
 </h3>
 <p>Vous pouvez personnaliser le document de sortie avec plusieurs
 paramètres :</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span></span>
 <span>  input_file <span class="op">=</span> <span class="st">"mon_script.R"</span>,</span>
 <span>  output_file <span class="op">=</span> <span class="st">"mon_document.qmd"</span>,</span>
@@ -1028,7 +1101,7 @@ automatiquement (par défaut : TRUE)</li>
 <h3 id="conversion-de-lexemple">Conversion de l’exemple<a class="anchor" aria-label="anchor" href="#conversion-de-lexemple"></a>
 </h3>
 <p>Pour convertir le script exemple ci-dessus :</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Obtenir le chemin du fichier exemple</span></span>
 <span><span class="va">example_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example.R"</span>, package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span>
 <span></span>
@@ -1043,65 +1116,65 @@ automatiquement (par défaut : TRUE)</li>
 <h4 id="sortie-générée">Sortie générée<a class="anchor" aria-label="anchor" href="#sortie-g%C3%A9n%C3%A9r%C3%A9e"></a>
 </h4>
 <p>Ceci produit le document Quarto suivant :</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Analyse du jeu de données Iris"</span></span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Analyste de données"</span></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">    embed-resources: true</span></span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="co">    code-fold: false</span></span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="an">toc-title:</span><span class="co"> Sommaire</span></span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a><span class="an">toc-depth:</span><span class="co"> 4  </span></span>
-<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="an">toc-location:</span><span class="co"> left</span></span>
-<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
-<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="co">  eval: false</span></span>
-<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a><span class="co">  echo: true</span></span>
-<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a><span class="an">output:</span><span class="co"> </span></span>
-<span id="cb28-16"><a href="#cb28-16" tabindex="-1"></a><span class="co">  html_document:</span></span>
-<span id="cb28-17"><a href="#cb28-17" tabindex="-1"></a><span class="co">  number_sections: TRUE</span></span>
-<span id="cb28-18"><a href="#cb28-18" tabindex="-1"></a><span class="co">  output-file: analyse_iris.html</span></span>
-<span id="cb28-19"><a href="#cb28-19" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb28-20"><a href="#cb28-20" tabindex="-1"></a></span>
-<span id="cb28-21"><a href="#cb28-21" tabindex="-1"></a></span>
-<span id="cb28-22"><a href="#cb28-22" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb28-23"><a href="#cb28-23" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb28-24"><a href="#cb28-24" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-25"><a href="#cb28-25" tabindex="-1"></a></span>
-<span id="cb28-26"><a href="#cb28-26" tabindex="-1"></a><span class="fu">## Title 2</span></span>
-<span id="cb28-27"><a href="#cb28-27" tabindex="-1"></a></span>
-<span id="cb28-28"><a href="#cb28-28" tabindex="-1"></a><span class="fu">### Title 3</span></span>
-<span id="cb28-29"><a href="#cb28-29" tabindex="-1"></a></span>
-<span id="cb28-30"><a href="#cb28-30" tabindex="-1"></a>Start of statistical processing</span>
-<span id="cb28-31"><a href="#cb28-31" tabindex="-1"></a></span>
-<span id="cb28-32"><a href="#cb28-32" tabindex="-1"></a>Counting the number of observations by species</span>
-<span id="cb28-33"><a href="#cb28-33" tabindex="-1"></a></span>
-<span id="cb28-34"><a href="#cb28-34" tabindex="-1"></a></span>
-<span id="cb28-35"><a href="#cb28-35" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb28-36"><a href="#cb28-36" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
-<span id="cb28-37"><a href="#cb28-37" tabindex="-1"></a>  <span class="fu">count</span>(Species)</span>
-<span id="cb28-38"><a href="#cb28-38" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-39"><a href="#cb28-39" tabindex="-1"></a></span>
-<span id="cb28-40"><a href="#cb28-40" tabindex="-1"></a><span class="fu">### Title 3</span></span>
-<span id="cb28-41"><a href="#cb28-41" tabindex="-1"></a></span>
-<span id="cb28-42"><a href="#cb28-42" tabindex="-1"></a>Filter the data.frame on Species "setosa"</span>
-<span id="cb28-43"><a href="#cb28-43" tabindex="-1"></a></span>
-<span id="cb28-44"><a href="#cb28-44" tabindex="-1"></a></span>
-<span id="cb28-45"><a href="#cb28-45" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb28-46"><a href="#cb28-46" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
-<span id="cb28-47"><a href="#cb28-47" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>)</span>
-<span id="cb28-48"><a href="#cb28-48" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-49"><a href="#cb28-49" tabindex="-1"></a></span>
-<span id="cb28-50"><a href="#cb28-50" tabindex="-1"></a><span class="fu">#### Title 4</span></span>
-<span id="cb28-51"><a href="#cb28-51" tabindex="-1"></a></span>
-<span id="cb28-52"><a href="#cb28-52" tabindex="-1"></a>Select column Species</span>
-<span id="cb28-53"><a href="#cb28-53" tabindex="-1"></a></span>
-<span id="cb28-54"><a href="#cb28-54" tabindex="-1"></a></span>
-<span id="cb28-55"><a href="#cb28-55" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb28-56"><a href="#cb28-56" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb28-57"><a href="#cb28-57" tabindex="-1"></a>  <span class="co"># Select a column</span></span>
-<span id="cb28-58"><a href="#cb28-58" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
-<span id="cb28-59"><a href="#cb28-59" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Analyse du jeu de données Iris"</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Analyste de données"</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="co">    embed-resources: true</span></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a><span class="co">    code-fold: false</span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="an">toc-title:</span><span class="co"> Sommaire</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="an">toc-depth:</span><span class="co"> 4  </span></span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a><span class="an">toc-location:</span><span class="co"> left</span></span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="co">  eval: false</span></span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a><span class="co">  echo: true</span></span>
+<span id="cb29-15"><a href="#cb29-15" tabindex="-1"></a><span class="an">output:</span><span class="co"> </span></span>
+<span id="cb29-16"><a href="#cb29-16" tabindex="-1"></a><span class="co">  html_document:</span></span>
+<span id="cb29-17"><a href="#cb29-17" tabindex="-1"></a><span class="co">  number_sections: TRUE</span></span>
+<span id="cb29-18"><a href="#cb29-18" tabindex="-1"></a><span class="co">  output-file: analyse_iris.html</span></span>
+<span id="cb29-19"><a href="#cb29-19" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb29-20"><a href="#cb29-20" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" tabindex="-1"></a></span>
+<span id="cb29-22"><a href="#cb29-22" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb29-23"><a href="#cb29-23" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb29-24"><a href="#cb29-24" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-25"><a href="#cb29-25" tabindex="-1"></a></span>
+<span id="cb29-26"><a href="#cb29-26" tabindex="-1"></a><span class="fu">## Title 2</span></span>
+<span id="cb29-27"><a href="#cb29-27" tabindex="-1"></a></span>
+<span id="cb29-28"><a href="#cb29-28" tabindex="-1"></a><span class="fu">### Title 3</span></span>
+<span id="cb29-29"><a href="#cb29-29" tabindex="-1"></a></span>
+<span id="cb29-30"><a href="#cb29-30" tabindex="-1"></a>Start of statistical processing</span>
+<span id="cb29-31"><a href="#cb29-31" tabindex="-1"></a></span>
+<span id="cb29-32"><a href="#cb29-32" tabindex="-1"></a>Counting the number of observations by species</span>
+<span id="cb29-33"><a href="#cb29-33" tabindex="-1"></a></span>
+<span id="cb29-34"><a href="#cb29-34" tabindex="-1"></a></span>
+<span id="cb29-35"><a href="#cb29-35" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb29-36"><a href="#cb29-36" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb29-37"><a href="#cb29-37" tabindex="-1"></a>  <span class="fu">count</span>(Species)</span>
+<span id="cb29-38"><a href="#cb29-38" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-39"><a href="#cb29-39" tabindex="-1"></a></span>
+<span id="cb29-40"><a href="#cb29-40" tabindex="-1"></a><span class="fu">### Title 3</span></span>
+<span id="cb29-41"><a href="#cb29-41" tabindex="-1"></a></span>
+<span id="cb29-42"><a href="#cb29-42" tabindex="-1"></a>Filter the data.frame on Species "setosa"</span>
+<span id="cb29-43"><a href="#cb29-43" tabindex="-1"></a></span>
+<span id="cb29-44"><a href="#cb29-44" tabindex="-1"></a></span>
+<span id="cb29-45"><a href="#cb29-45" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb29-46"><a href="#cb29-46" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb29-47"><a href="#cb29-47" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>)</span>
+<span id="cb29-48"><a href="#cb29-48" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-49"><a href="#cb29-49" tabindex="-1"></a></span>
+<span id="cb29-50"><a href="#cb29-50" tabindex="-1"></a><span class="fu">#### Title 4</span></span>
+<span id="cb29-51"><a href="#cb29-51" tabindex="-1"></a></span>
+<span id="cb29-52"><a href="#cb29-52" tabindex="-1"></a>Select column Species</span>
+<span id="cb29-53"><a href="#cb29-53" tabindex="-1"></a></span>
+<span id="cb29-54"><a href="#cb29-54" tabindex="-1"></a></span>
+<span id="cb29-55"><a href="#cb29-55" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb29-56"><a href="#cb29-56" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb29-57"><a href="#cb29-57" tabindex="-1"></a>  <span class="co"># Select a column</span></span>
+<span id="cb29-58"><a href="#cb29-58" tabindex="-1"></a>  <span class="fu">select</span>(Species)</span>
+<span id="cb29-59"><a href="#cb29-59" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Notez comment :</p>
 <ul>
 <li>Chaque section de code devient un titre markdown approprié</li>
@@ -1144,7 +1217,7 @@ comportement de votre script original</li>
 </h4>
 <p>Par défaut, <code><a href="../reference/rtoqmd.html">rtoqmd()</a></code> génère automatiquement votre
 document Quarto en HTML :</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ceci créera les fichiers .qmd et .html, puis ouvrira le HTML</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"analyse_iris.qmd"</span><span class="op">)</span></span></code></pre></div>
 <p>La fonction va : 1. Vérifier si Quarto est installé (par
@@ -1154,7 +1227,7 @@ défaut)<br>
 <code>open_html = TRUE</code>)</p>
 <p>Si vous ne voulez pas de rendu automatique en HTML, définissez
 <code>render = FALSE</code> :</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">example_file</span>, <span class="st">"analyse_iris.qmd"</span>, render <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -1162,9 +1235,9 @@ défaut)<br>
 </h4>
 <p>Vous pouvez bien sûr également générer manuellement le fichier HTML
 en utilisant :</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="ex">quarto</span> render analyse_iris.qmd</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="ex">quarto</span> render analyse_iris.qmd</span></code></pre></div>
 <p>Ou depuis R :</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">quarto</span><span class="fu">::</span><span class="fu"><a href="https://quarto-dev.github.io/quarto-r/reference/quarto_render.html" class="external-link">quarto_render</a></span><span class="op">(</span><span class="st">"analyse_iris.qmd"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Note :</strong> Quarto doit être installé sur votre système.
 Téléchargez-le depuis <a href="https://quarto.org/docs/get-started/" class="external-link">quarto.org</a>.</p>
@@ -1186,7 +1259,7 @@ méthode qui correspond le mieux à votre flux de travail.</p>
 <p>La façon la plus intuitive de convertir des fichiers par lots est via
 le <strong>Mode Répertoire</strong> dans l’addin RStudio ou
 l’application autonome :</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Lancer l'application autonome</span></span>
 <span><span class="fu"><a href="../reference/quartify_app.html">quartify_app</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -1240,7 +1313,7 @@ voulez les fichiers .qmd)</li>
 </h4>
 <p>Pour les environnements sans accès direct au système de fichiers
 :</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/quartify_app_web.html">quartify_app_web</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>En mode batch, vous pouvez :<br>
 - <strong>Télécharger plusieurs fichiers R</strong> en même temps<br>
@@ -1255,7 +1328,7 @@ téléchargeable.</p>
 <p>Pour convertir tous les scripts R d’un répertoire (y compris les
 sous-répertoires) de manière programmatique, utilisez
 <code><a href="../reference/rtoqmd_dir.html">rtoqmd_dir()</a></code> :</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convertir tous les scripts R d'un répertoire</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd_dir.html">rtoqmd_dir</a></span><span class="op">(</span><span class="st">"chemin/vers/scripts"</span><span class="op">)</span></span>
 <span></span>
@@ -1300,98 +1373,98 @@ request</li>
 <h4 id="github-actions">GitHub Actions<a class="anchor" aria-label="anchor" href="#github-actions"></a>
 </h4>
 <p>Créez <code>.github/workflows/generate-docs.yml</code> :</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Générer la Documentation</span></span>
-<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
-<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
-<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
-<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
-<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a></span>
-<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a><span class="at">  </span><span class="fu">generate-docs</span><span class="kw">:</span></span>
-<span id="cb36-11"><a href="#cb36-11" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb36-12"><a href="#cb36-12" tabindex="-1"></a><span class="at">    </span></span>
-<span id="cb36-13"><a href="#cb36-13" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb36-14"><a href="#cb36-14" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
-<span id="cb36-15"><a href="#cb36-15" tabindex="-1"></a><span class="at">      </span></span>
-<span id="cb36-16"><a href="#cb36-16" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-r@v2</span></span>
-<span id="cb36-17"><a href="#cb36-17" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb36-18"><a href="#cb36-18" tabindex="-1"></a><span class="at">          </span><span class="fu">r-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'4.5.1'</span></span>
-<span id="cb36-19"><a href="#cb36-19" tabindex="-1"></a><span class="at">      </span></span>
-<span id="cb36-20"><a href="#cb36-20" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Installer Quarto</span></span>
-<span id="cb36-21"><a href="#cb36-21" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/setup@v2</span></span>
-<span id="cb36-22"><a href="#cb36-22" tabindex="-1"></a><span class="at">      </span></span>
-<span id="cb36-23"><a href="#cb36-23" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Installer les dépendances R</span></span>
-<span id="cb36-24"><a href="#cb36-24" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb36-25"><a href="#cb36-25" tabindex="-1"></a>          install.packages(c("remotes", "dplyr"))</span>
-<span id="cb36-26"><a href="#cb36-26" tabindex="-1"></a>          remotes::install_github("ddotta/quartify")</span>
-<span id="cb36-27"><a href="#cb36-27" tabindex="-1"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span>
-<span id="cb36-28"><a href="#cb36-28" tabindex="-1"></a><span class="at">      </span></span>
-<span id="cb36-29"><a href="#cb36-29" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Convertir les scripts R en Quarto</span></span>
-<span id="cb36-30"><a href="#cb36-30" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb36-31"><a href="#cb36-31" tabindex="-1"></a>          library(quartify)</span>
-<span id="cb36-32"><a href="#cb36-32" tabindex="-1"></a>          # Convertir tous les scripts R d'un répertoire</span>
-<span id="cb36-33"><a href="#cb36-33" tabindex="-1"></a>          rtoqmd_dir("scripts/", render = TRUE, author = "Équipe Data")</span>
-<span id="cb36-34"><a href="#cb36-34" tabindex="-1"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span>
-<span id="cb36-35"><a href="#cb36-35" tabindex="-1"></a><span class="at">      </span></span>
-<span id="cb36-36"><a href="#cb36-36" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Télécharger les artefacts</span></span>
-<span id="cb36-37"><a href="#cb36-37" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v4</span></span>
-<span id="cb36-38"><a href="#cb36-38" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb36-39"><a href="#cb36-39" tabindex="-1"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> documentation</span></span>
-<span id="cb36-40"><a href="#cb36-40" tabindex="-1"></a><span class="fu">          path</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb36-41"><a href="#cb36-41" tabindex="-1"></a>            scripts/**/*.qmd</span>
-<span id="cb36-42"><a href="#cb36-42" tabindex="-1"></a>            scripts/**/*.html</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Générer la Documentation</span></span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
+<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
+<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
+<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a><span class="at">  </span><span class="fu">generate-docs</span><span class="kw">:</span></span>
+<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a><span class="at">    </span></span>
+<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a><span class="at">      </span></span>
+<span id="cb37-16"><a href="#cb37-16" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-r@v2</span></span>
+<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a><span class="at">          </span><span class="fu">r-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'4.5.1'</span></span>
+<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a><span class="at">      </span></span>
+<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Installer Quarto</span></span>
+<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/setup@v2</span></span>
+<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a><span class="at">      </span></span>
+<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Installer les dépendances R</span></span>
+<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a>          install.packages(c("remotes", "dplyr"))</span>
+<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a>          remotes::install_github("ddotta/quartify")</span>
+<span id="cb37-27"><a href="#cb37-27" tabindex="-1"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span>
+<span id="cb37-28"><a href="#cb37-28" tabindex="-1"></a><span class="at">      </span></span>
+<span id="cb37-29"><a href="#cb37-29" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Convertir les scripts R en Quarto</span></span>
+<span id="cb37-30"><a href="#cb37-30" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb37-31"><a href="#cb37-31" tabindex="-1"></a>          library(quartify)</span>
+<span id="cb37-32"><a href="#cb37-32" tabindex="-1"></a>          # Convertir tous les scripts R d'un répertoire</span>
+<span id="cb37-33"><a href="#cb37-33" tabindex="-1"></a>          rtoqmd_dir("scripts/", render = TRUE, author = "Équipe Data")</span>
+<span id="cb37-34"><a href="#cb37-34" tabindex="-1"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span>
+<span id="cb37-35"><a href="#cb37-35" tabindex="-1"></a><span class="at">      </span></span>
+<span id="cb37-36"><a href="#cb37-36" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Télécharger les artefacts</span></span>
+<span id="cb37-37"><a href="#cb37-37" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v4</span></span>
+<span id="cb37-38"><a href="#cb37-38" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb37-39"><a href="#cb37-39" tabindex="-1"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> documentation</span></span>
+<span id="cb37-40"><a href="#cb37-40" tabindex="-1"></a><span class="fu">          path</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb37-41"><a href="#cb37-41" tabindex="-1"></a>            scripts/**/*.qmd</span>
+<span id="cb37-42"><a href="#cb37-42" tabindex="-1"></a>            scripts/**/*.html</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="gitlab-ci">GitLab CI<a class="anchor" aria-label="anchor" href="#gitlab-ci"></a>
 </h4>
 <p>Créez <code>.gitlab-ci.yml</code> :</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="fu">generate-docs</span><span class="kw">:</span></span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> rocker/r-ver:4.5.1</span></span>
-<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a><span class="at">  </span><span class="fu">before_script</span><span class="kw">:</span></span>
-<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a><span class="co">    # Installer Quarto</span></span>
-<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> apt-get update</span></span>
-<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> apt-get install -y curl</span></span>
-<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb</span></span>
-<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> dpkg -i quarto-linux-amd64.deb</span></span>
-<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a><span class="at">    </span></span>
-<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a><span class="co">    # Installer les packages R</span></span>
-<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> R -e "install.packages(c('remotes', 'dplyr'))"</span></span>
-<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> R -e "remotes::install_github('ddotta/quartify')"</span></span>
-<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a><span class="at">  </span><span class="fu">script</span><span class="kw">:</span></span>
-<span id="cb37-16"><a href="#cb37-16" tabindex="-1"></a><span class="co">    # Convertir tous les scripts R en Quarto et générer le HTML</span></span>
-<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> R -e "quartify::rtoqmd_dir('scripts/', render = TRUE, author = 'Équipe Data')"</span></span>
-<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a><span class="at">  </span><span class="fu">artifacts</span><span class="kw">:</span></span>
-<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span></span>
-<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> scripts/**/*.qmd</span></span>
-<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> scripts/**/*.html</span></span>
-<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a><span class="at">    </span><span class="fu">expire_in</span><span class="kw">:</span><span class="at"> 30 days</span></span>
-<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a><span class="at">  </span></span>
-<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a><span class="at">  </span><span class="fu">only</span><span class="kw">:</span></span>
-<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> main</span></span>
-<span id="cb37-27"><a href="#cb37-27" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> merge_requests</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">generate-docs</span><span class="kw">:</span></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> rocker/r-ver:4.5.1</span></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="at">  </span></span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="at">  </span><span class="fu">before_script</span><span class="kw">:</span></span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="co">    # Installer Quarto</span></span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> apt-get update</span></span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> apt-get install -y curl</span></span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb</span></span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> dpkg -i quarto-linux-amd64.deb</span></span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a><span class="at">    </span></span>
+<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a><span class="co">    # Installer les packages R</span></span>
+<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> R -e "install.packages(c('remotes', 'dplyr'))"</span></span>
+<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> R -e "remotes::install_github('ddotta/quartify')"</span></span>
+<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a><span class="at">  </span></span>
+<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a><span class="at">  </span><span class="fu">script</span><span class="kw">:</span></span>
+<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a><span class="co">    # Convertir tous les scripts R en Quarto et générer le HTML</span></span>
+<span id="cb38-17"><a href="#cb38-17" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> R -e "quartify::rtoqmd_dir('scripts/', render = TRUE, author = 'Équipe Data')"</span></span>
+<span id="cb38-18"><a href="#cb38-18" tabindex="-1"></a><span class="at">  </span></span>
+<span id="cb38-19"><a href="#cb38-19" tabindex="-1"></a><span class="at">  </span><span class="fu">artifacts</span><span class="kw">:</span></span>
+<span id="cb38-20"><a href="#cb38-20" tabindex="-1"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span></span>
+<span id="cb38-21"><a href="#cb38-21" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> scripts/**/*.qmd</span></span>
+<span id="cb38-22"><a href="#cb38-22" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> scripts/**/*.html</span></span>
+<span id="cb38-23"><a href="#cb38-23" tabindex="-1"></a><span class="at">    </span><span class="fu">expire_in</span><span class="kw">:</span><span class="at"> 30 days</span></span>
+<span id="cb38-24"><a href="#cb38-24" tabindex="-1"></a><span class="at">  </span></span>
+<span id="cb38-25"><a href="#cb38-25" tabindex="-1"></a><span class="at">  </span><span class="fu">only</span><span class="kw">:</span></span>
+<span id="cb38-26"><a href="#cb38-26" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> main</span></span>
+<span id="cb38-27"><a href="#cb38-27" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> merge_requests</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="conversion-dun-fichier-unique-en-cicd">Conversion d’un fichier unique en CI/CD<a class="anchor" aria-label="anchor" href="#conversion-dun-fichier-unique-en-cicd"></a>
 </h4>
 <p>Pour convertir un seul script R :</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="co"># GitHub Actions</span></span>
-<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Convertir un script unique</span></span>
-<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>    library(quartify)</span>
-<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>    rtoqmd("analyse.R", "analyse.qmd", </span>
-<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a>           title = "Mon Analyse",</span>
-<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a>           author = "Équipe Data",</span>
-<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a>           render = TRUE)</span>
-<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a><span class="at">  </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span>
-<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a></span>
-<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a><span class="co"># GitLab CI</span></span>
-<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a><span class="fu">script</span><span class="kw">:</span></span>
-<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> R -e "quartify::rtoqmd('analyse.R', 'analyse.qmd', title = 'Mon Analyse', author = 'Équipe Data', render = TRUE)"</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="co"># GitHub Actions</span></span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Convertir un script unique</span></span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>    library(quartify)</span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>    rtoqmd("analyse.R", "analyse.qmd", </span>
+<span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a>           title = "Mon Analyse",</span>
+<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a>           author = "Équipe Data",</span>
+<span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a>           render = TRUE)</span>
+<span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a><span class="at">  </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span>
+<span id="cb39-10"><a href="#cb39-10" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" tabindex="-1"></a><span class="co"># GitLab CI</span></span>
+<span id="cb39-12"><a href="#cb39-12" tabindex="-1"></a><span class="fu">script</span><span class="kw">:</span></span>
+<span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> R -e "quartify::rtoqmd('analyse.R', 'analyse.qmd', title = 'Mon Analyse', author = 'Équipe Data', render = TRUE)"</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="bonnes-pratiques-pour-le-cicd">Bonnes pratiques pour le CI/CD<a class="anchor" aria-label="anchor" href="#bonnes-pratiques-pour-le-cicd"></a>
@@ -1416,17 +1489,17 @@ appropriée pour les artefacts</p>
 <li>
 <p><strong>Exécution conditionnelle</strong> : Générer la
 documentation uniquement si les scripts R changent</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="co"># GitHub Actions</span></span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span></span>
-<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">'scripts/**/*.R'</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="co"># GitHub Actions</span></span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span></span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">'scripts/**/*.R'</span></span></code></pre></div>
 </li>
 <li>
 <p><strong>Gestion des erreurs</strong> : Utiliser
 <code>render = FALSE</code> pour déboguer les problèmes de
 conversion</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># D'abord convertir sans générer</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd_dir.html">rtoqmd_dir</a></span><span class="op">(</span><span class="st">"scripts/"</span>, render <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co"># Puis générer séparément si nécessaire</span></span></code></pre></div>
@@ -1461,7 +1534,7 @@ commentaires callout.</p>
 <h4 id="syntaxe">Syntaxe<a class="anchor" aria-label="anchor" href="#syntaxe"></a>
 </h4>
 <p>Dans votre script R, utilisez cette syntaxe :</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># callout-note - Note importante</span></span>
 <span><span class="co"># Ceci est le contenu de la note.</span></span>
 <span><span class="co"># Il peut s'étendre sur plusieurs lignes.</span></span>
@@ -1469,10 +1542,10 @@ commentaires callout.</p>
 <span><span class="co"># Le code ou une ligne vide termine le callout</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></code></pre></div>
 <p>Ceci se convertit en :</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>::: {.callout-note title="Note importante"}</span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>Ceci est le contenu de la note.</span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>Il peut s'étendre sur plusieurs lignes.</span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>::: {.callout-note title="Note importante"}</span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>Ceci est le contenu de la note.</span>
+<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>Il peut s'étendre sur plusieurs lignes.</span>
+<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a>:::</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="types-de-callouts">Types de callouts<a class="anchor" aria-label="anchor" href="#types-de-callouts"></a>
@@ -1495,18 +1568,18 @@ commentaires callout.</p>
 <h4 id="avec-ou-sans-titre">Avec ou sans titre<a class="anchor" aria-label="anchor" href="#avec-ou-sans-titre"></a>
 </h4>
 <p><strong>Avec titre :</strong></p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># callout-tip - Conseil utile</span></span>
 <span><span class="co"># Utilisez les callouts pour mettre en évidence les informations clés.</span></span></code></pre></div>
 <p><strong>Sans titre :</strong></p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># callout-tip</span></span>
 <span><span class="co"># Utilisez les callouts pour mettre en évidence les informations clés.</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="exemples">Exemples<a class="anchor" aria-label="anchor" href="#exemples"></a>
 </h4>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># callout-note - Exigences des données</span></span>
 <span><span class="co"># Les données d'entrée doivent contenir les colonnes : Species, Sepal.Length, Petal.Length</span></span>
 <span></span>
@@ -1556,7 +1629,7 @@ rendus directement dans la sortie HTML.</p>
 <p>Dans votre script R, commencez par <code>#| mermaid</code>, ajoutez
 des options avec <code>#|</code>, puis le contenu du diagramme (préfixé
 avec <code>#</code> pour garder une syntaxe R valide) :</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#| mermaid</span></span>
 <span><span class="co">#| eval: true</span></span>
 <span><span class="co"># flowchart TD</span></span>
@@ -1575,14 +1648,14 @@ automatiquement supprimé lors de la conversion.</p>
 </h4>
 <p>Mermaid supporte de nombreux types de diagrammes :</p>
 <p><strong>Organigrammes :</strong></p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#| mermaid</span></span>
 <span><span class="co">#| eval: true</span></span>
 <span><span class="co"># flowchart LR</span></span>
 <span><span class="co">#     A[Entrée] --&gt; B[Traitement]</span></span>
 <span><span class="co">#     B --&gt; C[Sortie]</span></span></code></pre></div>
 <p><strong>Diagrammes de séquence :</strong></p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#| mermaid</span></span>
 <span><span class="co">#| eval: true</span></span>
 <span><span class="co"># sequenceDiagram</span></span>
@@ -1594,7 +1667,7 @@ automatiquement supprimé lors de la conversion.</p>
 <span><span class="co">#     BDD--&gt;&gt;API: Résultats</span></span>
 <span><span class="co">#     API--&gt;&gt;Utilisateur: Réponse</span></span></code></pre></div>
 <p><strong>Diagrammes de classes :</strong></p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#| mermaid</span></span>
 <span><span class="co">#| eval: true</span></span>
 <span><span class="co"># classDiagram</span></span>
@@ -1631,7 +1704,7 @@ sortie Quarto</li>
 </h4>
 <p>Voir le fichier d’exemple complet avec plusieurs types de diagrammes
 :</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Localiser le fichier exemple Mermaid</span></span>
 <span><span class="va">mermaid_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example_mermaid.R"</span>, package <span class="op">=</span> <span class="st">"quartify"</span><span class="op">)</span></span>
 <span></span>
@@ -1680,35 +1753,35 @@ code pour chaque onglet</li>
 prochain en-tête de section</li>
 </ol>
 <p><strong>Syntaxe dans le script R :</strong></p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tabset</span></span>
 <span><span class="co"># tab - Statistiques résumées</span></span>
 <span><span class="co"># Voici les statistiques résumées pour le jeu de données iris :</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Quarto résultant :</strong></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>::: {.panel-tabset}</span>
-<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a></span>
-<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a><span class="fu">## Statistiques résumées</span></span>
-<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a></span>
-<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a>Voici les statistiques résumées pour le jeu de données iris :</span>
-<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a></span>
-<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a></span>
-<span id="cb53-8"><a href="#cb53-8" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb53-9"><a href="#cb53-9" tabindex="-1"></a><span class="fu">summary</span>(iris)</span>
-<span id="cb53-10"><a href="#cb53-10" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   </span></span>
-<span id="cb53-11"><a href="#cb53-11" tabindex="-1"></a><span class="co">#&gt;  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  </span></span>
-<span id="cb53-12"><a href="#cb53-12" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  </span></span>
-<span id="cb53-13"><a href="#cb53-13" tabindex="-1"></a><span class="co">#&gt;  Median :5.800   Median :3.000   Median :4.350   Median :1.300  </span></span>
-<span id="cb53-14"><a href="#cb53-14" tabindex="-1"></a><span class="co">#&gt;  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  </span></span>
-<span id="cb53-15"><a href="#cb53-15" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  </span></span>
-<span id="cb53-16"><a href="#cb53-16" tabindex="-1"></a><span class="co">#&gt;  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  </span></span>
-<span id="cb53-17"><a href="#cb53-17" tabindex="-1"></a><span class="co">#&gt;        Species  </span></span>
-<span id="cb53-18"><a href="#cb53-18" tabindex="-1"></a><span class="co">#&gt;  setosa    :50  </span></span>
-<span id="cb53-19"><a href="#cb53-19" tabindex="-1"></a><span class="co">#&gt;  versicolor:50  </span></span>
-<span id="cb53-20"><a href="#cb53-20" tabindex="-1"></a><span class="co">#&gt;  virginica :50  </span></span>
-<span id="cb53-21"><a href="#cb53-21" tabindex="-1"></a><span class="co">#&gt;                 </span></span>
-<span id="cb53-22"><a href="#cb53-22" tabindex="-1"></a><span class="co">#&gt;                 </span></span>
-<span id="cb53-23"><a href="#cb53-23" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a><span class="fu">## Statistiques résumées</span></span>
+<span id="cb54-4"><a href="#cb54-4" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="#cb54-5" tabindex="-1"></a>Voici les statistiques résumées pour le jeu de données iris :</span>
+<span id="cb54-6"><a href="#cb54-6" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" tabindex="-1"></a></span>
+<span id="cb54-8"><a href="#cb54-8" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb54-9"><a href="#cb54-9" tabindex="-1"></a><span class="fu">summary</span>(iris)</span>
+<span id="cb54-10"><a href="#cb54-10" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   </span></span>
+<span id="cb54-11"><a href="#cb54-11" tabindex="-1"></a><span class="co">#&gt;  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  </span></span>
+<span id="cb54-12"><a href="#cb54-12" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  </span></span>
+<span id="cb54-13"><a href="#cb54-13" tabindex="-1"></a><span class="co">#&gt;  Median :5.800   Median :3.000   Median :4.350   Median :1.300  </span></span>
+<span id="cb54-14"><a href="#cb54-14" tabindex="-1"></a><span class="co">#&gt;  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  </span></span>
+<span id="cb54-15"><a href="#cb54-15" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  </span></span>
+<span id="cb54-16"><a href="#cb54-16" tabindex="-1"></a><span class="co">#&gt;  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  </span></span>
+<span id="cb54-17"><a href="#cb54-17" tabindex="-1"></a><span class="co">#&gt;        Species  </span></span>
+<span id="cb54-18"><a href="#cb54-18" tabindex="-1"></a><span class="co">#&gt;  setosa    :50  </span></span>
+<span id="cb54-19"><a href="#cb54-19" tabindex="-1"></a><span class="co">#&gt;  versicolor:50  </span></span>
+<span id="cb54-20"><a href="#cb54-20" tabindex="-1"></a><span class="co">#&gt;  virginica :50  </span></span>
+<span id="cb54-21"><a href="#cb54-21" tabindex="-1"></a><span class="co">#&gt;                 </span></span>
+<span id="cb54-22"><a href="#cb54-22" tabindex="-1"></a><span class="co">#&gt;                 </span></span>
+<span id="cb54-23"><a href="#cb54-23" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
 <p>:::</p>
 <pre><code>
 ### Règles
@@ -1867,7 +1940,7 @@ votre documentation.</p>
 </h4>
 <p>Le paramètre <code>use_styler</code> formate automatiquement votre
 code selon le guide de style tidyverse :</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Créer un script avec des problèmes de style</span></span>
 <span><span class="va">temp_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".R"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -1887,7 +1960,7 @@ La version formatée selon tidyverse</p>
 </h4>
 <p>Le paramètre <code>use_lintr</code> effectue des vérifications de
 qualité du code :</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convertir avec styler et lintr</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="va">temp_script</span>, <span class="st">"sortie_qualite.qmd"</span>,</span>
 <span>  use_styler <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -1902,7 +1975,7 @@ Issues</strong> : Liste des violations de style et suggestions</p>
 </h4>
 <p>Utilisez <code>apply_styler = TRUE</code> pour modifier directement
 votre script R source :</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ceci modifiera le fichier R original</span></span>
 <span><span class="fu"><a href="../reference/rtoqmd.html">rtoqmd</a></span><span class="op">(</span><span class="st">"mon_script.R"</span>, <span class="st">"sortie.qmd"</span>,</span>
 <span>  use_styler <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -1918,7 +1991,7 @@ version ou des sauvegardes avant d’utiliser cette option.</p>
 <h4 id="exemple-de-sortie">Exemple de sortie<a class="anchor" aria-label="anchor" href="#exemple-de-sortie"></a>
 </h4>
 <p>Essayez l’exemple inclus :</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fichier_exemple</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"example_code_quality.R"</span>,</span>
 <span>  package <span class="op">=</span> <span class="st">"quartify"</span></span>
 <span><span class="op">)</span></span>

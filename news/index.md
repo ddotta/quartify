@@ -2,8 +2,28 @@
 
 ## quartify 1.1.1
 
+### New Features
+
+- **Roxygen2 Documentation Rendering**:
+  - Roxygen2 documentation blocks (`#'`) are now automatically formatted
+    into structured callouts resembling pkgdown reference pages
+  - Rendered documentation includes: title, source line reference,
+    description, usage with function signature, arguments, return value,
+    details, and examples
+  - LaTeX-style formatting is automatically converted to Markdown:
+    - `\href{url}{text}` becomes `[text](url)`
+    - `\code{text}` becomes `` `text` ``
+    - `\strong{text}` becomes `**text**`
+    - `\emph{text}` becomes `*text*`
+  - Multi-line parameter descriptions and details are properly formatted
+  - Custom sections (via `@section`) are supported and displayed
+
 ### Bug Fixes
 
+- **CRAN Compliance**:
+  - Added `Words: qmd` to DESCRIPTION to prevent spell-check warning
+  - Added pattern `^CRAN_CHECKLIST_.*\.md$` to .Rbuildignore to exclude
+    CRAN checklist files
 - **Metadata Processing**: Fixed issue where empty lines and comments
   between metadata fields were not properly ignored, creating unwanted
   empty code chunks
@@ -16,6 +36,7 @@
 - Removed duplicate sections (Mermaid diagrams, Callouts) from
   advanced-features vignettes - these topics are now only in
   getting-started vignettes with correct syntax
+- Added comprehensive documentation for roxygen2 rendering feature
 
 ## quartify 1.1.0
 

@@ -386,9 +386,62 @@ iris |>
   function parameters
 - If no metadata is found, the function’s `title` and `author`
   parameters are used
-- Metadata lines are **automatically removed** from the document body
-  (they only appear in the YAML)
-- `Date` and `Description` metadata are optional
+
+### Roxygen2 Documentation
+
+`quartify` automatically detects and formats roxygen2 documentation
+blocks (starting with `#'`) into structured callouts that resemble
+pkgdown reference pages. This is particularly useful when documenting
+functions in your R scripts.
+
+**Example R script with roxygen2:**
+
+``` r
+#' Add Two Numbers
+#'
+#' This function takes two numeric values and returns their sum.
+#'
+#' @param x A numeric value.
+#' @param y A numeric value.
+#'
+#' @return A numeric value representing the sum of `x` and `y`.
+#'
+#' @examples
+#' add_numbers(3, 5)   # returns 8
+#' add_numbers(-2, 7)  # returns 5
+#'
+#' @export
+add_numbers <- function(x, y) {
+  x + y
+}
+```
+
+**Rendered output:**
+
+The roxygen2 block is converted into a structured callout with:
+
+- **Title**: Extracted from `@title` tag or first roxygen comment line
+- **Description**: From `@description` tag or initial paragraph
+- **Usage**: Function signature with parameters
+- **Arguments**: Each parameter from `@param` tags with descriptions
+- **Value**: Return value description from `@return` tag
+- **Details**: Additional details from `@details` tag (if present)
+- **Examples**: Code examples from `@examples` tag in R code blocks
+
+**LaTeX to Markdown conversion:**
+
+Roxygen2 LaTeX-style formatting is automatically converted:
+
+- `\href{url}{text}` → `[text](url)`
+- `\code{text}` → `` `text` ``
+- `\strong{text}` → `**text**`
+- `\emph{text}` → `*text*`
+
+**Note:** Section headers within roxygen2 callouts use bold text instead
+of Markdown headers to avoid interfering with your document’s table of
+contents. - Metadata lines are **automatically removed** from the
+document body (they only appear in the YAML) - `Date` and `Description`
+metadata are optional
 
 **Rules for multi-line descriptions:**
 

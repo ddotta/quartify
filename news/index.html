@@ -37,14 +37,43 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/ddotta/quartify/blob/v1.1.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/ddotta/quartify/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.1" id="quartify-111">quartify 1.1.1<a class="anchor" aria-label="anchor" href="#quartify-111"></a></h2>
 <div class="section level3">
+<h3 id="new-features-1-1-1">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-1-1"></a></h3>
+<ul><li>
+<strong>Roxygen2 Documentation Rendering</strong>:
+<ul><li>Roxygen2 documentation blocks (<code>#'</code>) are now automatically formatted into structured callouts resembling pkgdown reference pages</li>
+<li>Rendered documentation includes: title, source line reference, description, usage with function signature, arguments, return value, details, and examples</li>
+<li>LaTeX-style formatting is automatically converted to Markdown:
+<ul><li>
+<code>\href{url}{text}</code> becomes <code>[text](url)</code>
+</li>
+<li>
+<code>\code{text}</code> becomes <code>`text`</code>
+</li>
+<li>
+<code>\strong{text}</code> becomes <code>**text**</code>
+</li>
+<li>
+<code>\emph{text}</code> becomes <code>*text*</code>
+</li>
+</ul></li>
+<li>Multi-line parameter descriptions and details are properly formatted</li>
+<li>Custom sections (via <code>@section</code>) are supported and displayed</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-1-1-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-1"></a></h3>
 <ul><li>
+<strong>CRAN Compliance</strong>:
+<ul><li>Added <code>Words: qmd</code> to DESCRIPTION to prevent spell-check warning</li>
+<li>Added pattern <code>^CRAN_CHECKLIST_.*\.md$</code> to .Rbuildignore to exclude CRAN checklist files</li>
+</ul></li>
+<li>
 <strong>Metadata Processing</strong>: Fixed issue where empty lines and comments between metadata fields were not properly ignored, creating unwanted empty code chunks</li>
 <li>
 <strong>Section Header Detection</strong>: Improved regex pattern for hidden comments to correctly exclude RStudio section headers (<code>##</code>, <code>###</code>, <code>####</code>) from being filtered out</li>
@@ -52,6 +81,7 @@
 <div class="section level3">
 <h3 id="documentation-1-1-1">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-1-1"></a></h3>
 <ul><li>Removed duplicate sections (Mermaid diagrams, Callouts) from advanced-features vignettes - these topics are now only in getting-started vignettes with correct syntax</li>
+<li>Added comprehensive documentation for roxygen2 rendering feature</li>
 </ul></div>
 </div>
     <div class="section level2">

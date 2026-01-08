@@ -217,6 +217,35 @@ and other content. The tabset closes automatically when a new section
 starts. Example: hash tabset, hash tab - Plot A, code or text content,
 hash tab - Plot B, more content.
 
+## Roxygen2 Documentation
+
+The function automatically detects and formats roxygen2 documentation
+blocks (starting with `#'`) into structured callouts that resemble
+pkgdown reference pages. The formatted documentation includes:
+
+- **Title**: Extracted from `@title` tag or first roxygen comment line
+
+- **Description**: From `@description` tag or initial paragraph
+
+- **Usage**: Function signature with parameters
+
+- **Arguments**: Each parameter from `@param` tags, formatted with
+  parameter name in bold
+
+- **Value**: Return value description from `@return` tag
+
+- **Details**: Additional details from `@details` tag
+
+- **Examples**: Code examples from `@examples` tag, displayed in R code
+  blocks
+
+LaTeX-style formatting is automatically converted to Markdown:
+`\href{url}{text}` becomes `[text](url)`, `\code{text}` becomes
+`` `text` ``, `\strong{text}` becomes `**text**`, and `\emph{text}`
+becomes `*text*`. Section headers within the callout use bold text
+instead of Markdown headers to avoid interfering with the document's
+table of contents. See example file in inst/examples/example_roxygen.R.
+
 ## Examples
 
 ``` r
@@ -227,14 +256,14 @@ example_file <- system.file("examples", "example.R", package = "quartify")
 # Convert and render to HTML (output in temp directory)
 output_qmd <- file.path(tempdir(), "output.qmd")
 rtoqmd(example_file, output_qmd)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3xK7mf/output.qmd
+#> ✔ Quarto markdown file created: /tmp/Rtmpky5esZ/output.qmd
 #> Rendering Quarto document to HTML...
 #> ! Quarto is not installed or not available in PATH
 #> ℹ Install Quarto from <https://quarto.org/docs/get-started/>
 
 # Convert only, without rendering
 rtoqmd(example_file, output_qmd, render_html = FALSE)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3xK7mf/output.qmd
+#> ✔ Quarto markdown file created: /tmp/Rtmpky5esZ/output.qmd
 
 # Example with metadata in the R script:
 # Create a script with metadata
@@ -252,7 +281,7 @@ writeLines(c(
 # Convert - metadata will override function parameters
 output_meta <- file.path(tempdir(), "output_with_metadata.qmd")
 rtoqmd(script_with_metadata, output_meta)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3xK7mf/output_with_metadata.qmd
+#> ✔ Quarto markdown file created: /tmp/Rtmpky5esZ/output_with_metadata.qmd
 #> Rendering Quarto document to HTML...
 #> ! Quarto is not installed or not available in PATH
 #> ℹ Install Quarto from <https://quarto.org/docs/get-started/>
@@ -271,7 +300,7 @@ writeLines(c(
 # Convert with styler formatting
 output_styled <- file.path(tempdir(), "output_styled.qmd")
 rtoqmd(script_with_style_issues, output_styled, use_styler = TRUE)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3xK7mf/output_styled.qmd
+#> ✔ Quarto markdown file created: /tmp/Rtmpky5esZ/output_styled.qmd
 #> Rendering Quarto document to HTML...
 #> ! Quarto is not installed or not available in PATH
 #> ℹ Install Quarto from <https://quarto.org/docs/get-started/>
@@ -280,7 +309,7 @@ rtoqmd(script_with_style_issues, output_styled, use_styler = TRUE)
 output_quality <- file.path(tempdir(), "output_quality.qmd")
 rtoqmd(script_with_style_issues, output_quality, 
        use_styler = TRUE, use_lintr = TRUE)
-#> ✔ Quarto markdown file created: /tmp/Rtmp3xK7mf/output_quality.qmd
+#> ✔ Quarto markdown file created: /tmp/Rtmpky5esZ/output_quality.qmd
 #> Rendering Quarto document to HTML...
 #> ! Quarto is not installed or not available in PATH
 #> ℹ Install Quarto from <https://quarto.org/docs/get-started/>
