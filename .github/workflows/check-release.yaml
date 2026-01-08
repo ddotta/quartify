@@ -37,7 +37,8 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
-          use-public-rspm: true
+          # Disable RSPM to avoid missing macOS aarch64 binaries; fall back to CRAN
+          use-public-rspm: false
 
       - name: Install dependencies manually (macOS workaround)
         if: runner.os == 'macOS'
@@ -46,6 +47,8 @@ jobs:
           options(timeout = 300)
           # Install remotes and rcmdcheck first
           install.packages(c("remotes", "rcmdcheck"), type = "binary")
+          # Ensure packages without macOS binaries are installed from source
+          install.packages(c("base64enc", "later"), type = "source")
           # Use remotes to install dependencies (handles binary/source fallback)
           remotes::install_deps(dependencies = TRUE, upgrade = "never")
         shell: Rscript {0}
