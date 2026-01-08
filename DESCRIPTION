@@ -26,7 +26,8 @@ Imports:
     quarto,
     utils,
     styler,
-    lintr
+    lintr,
+    later
 Suggests: 
     testthat (>= 3.0.0),
     dplyr
