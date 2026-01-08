@@ -20,7 +20,6 @@ Imports:
     cli,
     shiny,
     miniUI,
-    htmltools,
     base64enc,
     shinyFiles,
     quarto,

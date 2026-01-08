@@ -9,7 +9,6 @@
 #'
 #' @return No return value, called for side effects (launches a Shiny application).
 #' @export
-#' @importFrom htmltools HTML
 #'
 #' @examples
 #' if (interactive()) {
@@ -60,14 +59,14 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
   
   english_flag_html <- if (!is.null(english_flag_path)) {
     flag_base64 <- paste0("data:image/png;base64,", base64enc::base64encode(english_flag_path))
-    htmltools::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> EN'))
+    shiny::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> EN'))
   } else {
     "EN"
   }
   
   french_flag_html <- if (!is.null(french_flag_path)) {
     flag_base64 <- paste0("data:image/png;base64,", base64enc::base64encode(french_flag_path))
-    htmltools::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> FR'))
+    shiny::HTML(paste0('<img src="', flag_base64, '" width="20" style="margin-right: 5px; vertical-align: middle;"/> FR'))
   } else {
     "FR"
   }
@@ -76,7 +75,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
   ui <- shiny::fluidPage(
     title = "Quartify - Convert R Scripts to Quarto",
     shiny::tags$head(
-      shiny::tags$style(htmltools::HTML("
+      shiny::tags$style(shiny::HTML("
         body { padding: 20px; }
         .title-bar {
           background-color: #0073e6;
@@ -122,7 +121,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
           background-color: #f0f8ff;
         }
       ")),
-      shiny::tags$script(htmltools::HTML("
+      shiny::tags$script(shiny::HTML("
         Shiny.addCustomMessageHandler('toggleLoader', function(show) {
           var loader = document.getElementById('loader');
           if (show) {
@@ -144,7 +143,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
           href = "https://github.com/ddotta/quartify",
           target = "_blank",
           style = "color: white; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 5px;",
-          htmltools::HTML('<svg height="20" width="20" viewBox="0 0 16 16" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>'),
+          shiny::HTML('<svg height="20" width="20" viewBox="0 0 16 16" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>'),
           "GitHub"
         )
       ),
@@ -292,7 +291,7 @@ quartify_app_web <- function(launch.browser = TRUE, port = NULL) {
       # Generate button
       shiny::div(
         style = "text-align: center; margin: 30px 0;",
-        shiny::actionButton("generate", htmltools::HTML("<span style='font-size: 16px; font-weight: bold;'>GENERATE \u25B6</span>"),
+        shiny::actionButton("generate", shiny::HTML("<span style='font-size: 16px; font-weight: bold;'>GENERATE \u25B6</span>"),
                             class = "btn-primary btn-lg"
         )
       ),
