@@ -58,7 +58,7 @@ test_that("rtoqmd handles multiple header levels", {
     "x <- 1"
   ), temp_r)
   
-  rtoqmd(temp_r, temp_qmd)
+  rtoqmd(temp_r, temp_qmd, render_html = FALSE)
   output <- readLines(temp_qmd)
   
   expect_true(any(grepl("^## Level 2$", output)))
@@ -114,9 +114,10 @@ test_that("rtoqmd converts roxygen comments to callouts", {
   
   # Roxygen comments should be converted to callout-note
   expect_true(any(grepl("callout-note", output)))
-  expect_true(any(grepl("Documentation - foo", output)))
   expect_true(any(grepl("This is roxygen", output)))
-  expect_true(any(grepl("@param", output)))
+  expect_true(any(grepl("\\*\\*Arguments\\*\\*", output)))
+  expect_true(any(grepl("`x`", output)))
+  expect_true(any(grepl(": A parameter", output)))
   
   # Regular comment should appear
   expect_true(any(grepl("This is a regular comment", output)))
