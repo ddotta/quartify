@@ -33,4 +33,3 @@ Suggests:
     shinyalert
 Config/testthat/edition: 3
 Config/Needs/website: pkgdown
-Words: qmd
