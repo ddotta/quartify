@@ -4,14 +4,18 @@
 \alias{install_quartify_snippets}
 \title{Install quartify RStudio Snippets}
 \usage{
-install_quartify_snippets(backup = TRUE, path = NULL)
+install_quartify_snippets(
+  backup = TRUE,
+  path = file.path(tempdir(), "r.snippets")
+)
 }
 \arguments{
 \item{backup}{Logical. If TRUE (default), creates a backup of your existing
 snippets file before modifying it.}
 
-\item{path}{Character. Custom path for the snippets file. If NULL (default),
-uses the standard RStudio snippets location. For examples/tests, use tempdir().}
+\item{path}{Character. Path for the snippets file. Defaults to writing in
+`tempdir()` to comply with CRAN policies. Provide an explicit path when you
+intentionally want to install into your RStudio snippets directory.}
 }
 \value{
 Invisibly returns the path to the snippets file.
@@ -30,7 +34,10 @@ The following snippets are installed:
 - **tabset**: Insert a tabset structure
 
 
-The snippets are installed in your RStudio snippets file for R:
+By default the snippets are written to a temporary file (inside `tempdir()`)
+to comply with CRAN's restriction on writing to the user's filespace during
+examples, vignettes, and tests. To install in your actual RStudio snippets
+file, provide the explicit path via `path`, for example:
 - Windows: `%APPDATA%/RStudio/snippets/r.snippets`
 - Mac/Linux: `~/.config/rstudio/snippets/r.snippets`
 
