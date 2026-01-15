@@ -7,7 +7,10 @@ scripts that will be converted to Quarto documents.
 ## Usage
 
 ``` r
-install_quartify_snippets(backup = TRUE, path = NULL)
+install_quartify_snippets(
+  backup = TRUE,
+  path = file.path(tempdir(), "r.snippets")
+)
 ```
 
 ## Arguments
@@ -19,9 +22,10 @@ install_quartify_snippets(backup = TRUE, path = NULL)
 
 - path:
 
-  Character. Custom path for the snippets file. If NULL (default), uses
-  the standard RStudio snippets location. For examples/tests, use
-  tempdir().
+  Character. Path for the snippets file. Defaults to writing in
+  \`tempdir()\` to comply with CRAN policies. Provide an explicit path
+  when you intentionally want to install into your RStudio snippets
+  directory.
 
 ## Value
 
@@ -36,8 +40,12 @@ Date, and Description - \*\*callout\*\*: Insert a Quarto callout
 structure - \*\*mermaid\*\*: Insert a Mermaid diagram chunk -
 \*\*tabset\*\*: Insert a tabset structure
 
-The snippets are installed in your RStudio snippets file for R: -
-Windows: \` - Mac/Linux: \`~/.config/rstudio/snippets/r.snippets\`
+By default the snippets are written to a temporary file (inside
+\`tempdir()\`) to comply with CRAN's restriction on writing to the
+user's filespace during examples, vignettes, and tests. To install in
+your actual RStudio snippets file, provide the explicit path via
+\`path\`, for example: - Windows: \` - Mac/Linux:
+\`~/.config/rstudio/snippets/r.snippets\`
 
 If you already have custom snippets, this function will append the
 quartify snippets to your existing file. If quartify snippets were
@@ -63,11 +71,11 @@ if (interactive()) {
 # For testing: install to temp directory
 temp_snippets <- file.path(tempdir(), "r.snippets")
 install_quartify_snippets(path = temp_snippets)
-#> Created new snippets file: /tmp/RtmpfixiEP/r.snippets
+#> Created new snippets file: /tmp/RtmpVOy2MH/r.snippets
 #> 
 #> Snippets installed successfully!
 #> If snippets do not appear, open the file below in RStudio and save it to reload snippets immediately.
-#> /tmp/RtmpfixiEP/r.snippets
+#> /tmp/RtmpVOy2MH/r.snippets
 #> 
 #> Available snippets:
 #>   - header  : R script header template

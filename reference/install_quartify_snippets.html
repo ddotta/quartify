@@ -53,7 +53,10 @@ be converted to Quarto documents.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">install_quartify_snippets</span><span class="op">(</span>backup <span class="op">=</span> <span class="cn">TRUE</span>, path <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">install_quartify_snippets</span><span class="op">(</span></span>
+<span>  backup <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"r.snippets"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,8 +69,9 @@ snippets file before modifying it.</p></dd>
 
 
 <dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
-<dd><p>Character. Custom path for the snippets file. If NULL (default),
-uses the standard RStudio snippets location. For examples/tests, use tempdir().</p></dd>
+<dd><p>Character. Path for the snippets file. Defaults to writing in
+`tempdir()` to comply with CRAN policies. Provide an explicit path when you
+intentionally want to install into your RStudio snippets directory.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -82,7 +86,10 @@ uses the standard RStudio snippets location. For examples/tests, use tempdir().<
 - **mermaid**: Insert a Mermaid diagram chunk
 - **tabset**: Insert a tabset structure</p>
 
-<p>The snippets are installed in your RStudio snippets file for R:
+<p>By default the snippets are written to a temporary file (inside `tempdir()`)
+to comply with CRAN's restriction on writing to the user's filespace during
+examples, vignettes, and tests. To install in your actual RStudio snippets
+file, provide the explicit path via `path`, for example:
 - Windows: `<!-- %APPDATA%/RStudio/snippets/r.snippets` -->
 - Mac/Linux: `~/.config/rstudio/snippets/r.snippets`</p>
 <p>If you already have custom snippets, this function will append the quartify
@@ -107,11 +114,11 @@ and press Tab to insert the template.</p>
 <span class="r-in"><span><span class="co"># For testing: install to temp directory</span></span></span>
 <span class="r-in"><span><span class="va">temp_snippets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"r.snippets"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">install_quartify_snippets</span><span class="op">(</span>path <span class="op">=</span> <span class="va">temp_snippets</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Created new snippets file: /tmp/RtmpfixiEP/r.snippets</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Created new snippets file: /tmp/RtmpVOy2MH/r.snippets</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Snippets installed successfully!</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> If snippets do not appear, open the file below in RStudio and save it to reload snippets immediately.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> /tmp/RtmpfixiEP/r.snippets</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> /tmp/RtmpVOy2MH/r.snippets</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Available snippets:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   - header  : R script header template</span>
