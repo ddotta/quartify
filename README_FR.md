@@ -1,5 +1,6 @@
 <!-- badges: start -->
 [![Statut R check](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartify/actions/workflows/check-release.yaml)
+[![cranlogs](http://cranlogs.r-pkg.org/badges/quartify)](https://CRAN.R-project.org/package=quartify)
 [![CodeFactor](https://www.codefactor.io/repository/github/ddotta/quartify/badge)](https://www.codefactor.io/repository/github/ddotta/quartify)
 <!-- badges: end -->
 
@@ -55,6 +56,10 @@ Si vous avez un script R fonctionnel qui contient des commentaires, vous pourrie
 - **Prêt pour déploiement web** : Inclut `quartify_app_web()` pour déploiement sur serveurs web avec capacités d'upload/téléchargement
 
 ## Installation
+
+``` r
+install.packages("quartify")
+```
 
 Vous pouvez installer la version de développement de quartify depuis GitHub :
 
