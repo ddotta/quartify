@@ -1,6 +1,7 @@
 <!-- badges: start -->
 [![R check
 status](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartify/actions/workflows/check-release.yaml)
+[![cranlogs](http://cranlogs.r-pkg.org/badges/quartify)](https://CRAN.R-project.org/package=quartify)
 [![CodeFactor](https://www.codefactor.io/repository/github/ddotta/quartify/badge)](https://www.codefactor.io/repository/github/ddotta/quartify)
 <!-- badges: end -->
 
@@ -56,6 +57,10 @@ If you have a working R script that contains comments, you may want to generate 
 - **Web deployment ready**: Includes `quartify_app_web()` for deploying on web servers with file upload/download capabilities
 
 ## Installation
+
+``` r
+install.packages("quartify")
+```
 
 You can install the development version of quartify from GitHub:
 
