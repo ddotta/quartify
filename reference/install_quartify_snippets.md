@@ -71,11 +71,11 @@ if (interactive()) {
 # For testing: install to temp directory
 temp_snippets <- file.path(tempdir(), "r.snippets")
 install_quartify_snippets(path = temp_snippets)
-#> Created new snippets file: /tmp/RtmpnSxj7I/r.snippets
+#> Created new snippets file: /tmp/RtmpKh8wyC/r.snippets
 #> 
 #> Snippets installed successfully!
 #> If snippets do not appear, open the file below in RStudio and save it to reload snippets immediately.
-#> /tmp/RtmpnSxj7I/r.snippets
+#> /tmp/RtmpKh8wyC/r.snippets
 #> 
 #> Available snippets:
 #>   - header  : R script header template
