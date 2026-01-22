@@ -1,6 +1,7 @@
 <!-- badges: start -->
 [![R check
 status](https://github.com/ddotta/quartify/workflows/R-CMD-check/badge.svg)](https://github.com/ddotta/quartify/actions/workflows/check-release.yaml)
+[![version](http://www.r-pkg.org/badges/version/quartify)](https://CRAN.R-project.org/package=quartify)
 [![cranlogs](http://cranlogs.r-pkg.org/badges/quartify)](https://CRAN.R-project.org/package=quartify)
 [![CodeFactor](https://www.codefactor.io/repository/github/ddotta/quartify/badge)](https://www.codefactor.io/repository/github/ddotta/quartify)
 <!-- badges: end -->
