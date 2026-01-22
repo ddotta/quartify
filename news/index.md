@@ -2,6 +2,8 @@
 
 ## quartify 1.1.1
 
+CRAN release: 2026-01-21
+
 ### New Features
 
 - **Roxygen2 Documentation Rendering**:

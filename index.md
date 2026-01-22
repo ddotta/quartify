@@ -97,6 +97,10 @@ particularly useful for:
 
 ## Installation
 
+``` r
+install.packages("quartify")
+```
+
 You can install the development version of quartify from GitHub:
 
 ``` r
